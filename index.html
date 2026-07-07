@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mister Consistency — Scott Coulter</title>
+<meta name="description" content="Songs, structures, and studies by Scott Coulter: music made on Suno, the Iconic Wall reconstruction, the topology of societal decoherence, gold-market topology, and Information Activation Theory.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f12;
+    --bg-raised: #16171c;
+    --line: #26272e;
+    --text: #e8e6e1;
+    --text-dim: #9a978f;
+    --gold: #d0a44c;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- header ---------- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(14,15,18,.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .brand {
+    font-family: var(--serif); font-weight: 600; font-size: 1.05rem;
+    color: var(--text); text-decoration: none; letter-spacing: .02em;
+  }
+  .brand span { color: var(--gold); }
+  nav ul { display: flex; gap: 28px; list-style: none; }
+  nav ul a {
+    color: var(--text-dim); text-decoration: none; font-size: .82rem;
+    font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  }
+  nav ul a:hover { color: var(--gold); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 96px 0 72px; border-bottom: 1px solid var(--line); }
+  .hero .kicker {
+    font-size: .8rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px; font-weight: 500;
+  }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(3rem, 9vw, 6.2rem);
+    line-height: 1.02; letter-spacing: -.01em; margin-bottom: 28px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero p.lede {
+    max-width: 620px; color: var(--text-dim); font-size: 1.06rem; margin-bottom: 40px;
+  }
+  .hero .player { max-width: 620px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 80px 0; border-bottom: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 14px; }
+  .sec-num {
+    font-family: var(--serif); font-style: italic; color: var(--gold);
+    font-size: 1.1rem;
+  }
+  h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.7rem, 4vw, 2.5rem); letter-spacing: -.01em;
+  }
+  .sec-sub { color: var(--text-dim); max-width: 680px; margin-bottom: 44px; }
+  .sec-sub a { color: var(--gold); text-decoration: none; }
+  .sec-sub a:hover { text-decoration: underline; }
+
+  /* ---------- music ---------- */
+  .songs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .songs iframe, .hero iframe {
+    width: 100%; height: 240px; border: 1px solid var(--line);
+    border-radius: 10px; background: var(--bg-raised); display: block;
+  }
+  .all-songs { margin-top: 28px; font-size: .9rem; }
+  .all-songs a { color: var(--gold); text-decoration: none; }
+  .all-songs a:hover { text-decoration: underline; }
+
+  /* ---------- figures ---------- */
+  figure { margin: 0; }
+  figure img, figure video {
+    width: 100%; display: block; border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+  figcaption {
+    font-size: .82rem; color: var(--text-dim); padding-top: 10px; line-height: 1.5;
+  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; }
+  .stack > * + * { margin-top: 20px; }
+
+  /* wall layout: tall photo beside square vector */
+  .wall-grid { display: grid; grid-template-columns: 2fr 3fr; gap: 20px; align-items: start; }
+
+  /* ---------- research cards ---------- */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--bg-raised); border: 1px solid var(--line);
+    border-radius: 12px; padding: 34px 32px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .card .tag {
+    font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600;
+  }
+  .card h3 { font-family: var(--serif); font-weight: 400; font-size: 1.45rem; line-height: 1.25; }
+  .card p { color: var(--text-dim); font-size: .93rem; flex: 1; }
+  .card .btn {
+    align-self: flex-start; margin-top: 6px;
+    color: var(--bg); background: var(--gold); text-decoration: none;
+    font-size: .82rem; font-weight: 600; letter-spacing: .04em;
+    padding: 10px 18px; border-radius: 6px;
+  }
+  .card .btn:hover { filter: brightness(1.1); }
+
+  /* ---------- footer ---------- */
+  footer { padding: 56px 0 72px; }
+  footer .wrap {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  footer p { color: var(--text-dim); font-size: .85rem; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 760px) {
+    nav ul { display: none; }
+    .songs, .grid-2, .grid-3, .cards, .wall-grid { grid-template-columns: 1fr; }
+    section { padding: 60px 0; }
+    .hero { padding: 72px 0 56px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#top">mister<span>consistency</span></a>
+      <ul>
+        <li><a href="#music">Music</a></li>
+        <li><a href="#wall">Iconic Wall</a></li>
+        <li><a href="#decoherence">Decoherence</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#curiosities">Curiosities</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="hero">
+    <div class="wrap">
+      <div class="kicker">Scott Coulter — songs, structures &amp; studies</div>
+      <h1>Mister<br><em>Consistency</em></h1>
+      <p class="lede">
+        One roof for a year of side quests: songs made on Suno, a stone wall of
+        equations redrawn line by line, doughnuts that explain why we can't talk
+        to each other anymore, and a couple of papers that got out of hand.
+        Named after the song. Ironically.
+      </p>
+      <div class="player">
+        <iframe src="https://suno.com/embed/521e11b2-aad0-4d36-a07a-433a2fdcdb83" title="mr. consistency — the title track" loading="lazy" allow="autoplay"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <section id="music">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">01</span><h2>Music</h2></div>
+      <p class="sec-sub">
+        Made on Suno under the handle <a href="https://suno.com/@coultron" target="_blank" rel="noopener">@coultron</a>.
+        Country ballads, gangsta rap about your internet history, and one rawstyle
+        track about time travel — consistency was never the point of the music.
+      </p>
+      <div class="songs">
+        <iframe src="https://suno.com/embed/7086fa66-b120-4b30-9360-a52ee96d9b35" title="what your internet v2" loading="lazy" allow="autoplay"></iframe>
+        <iframe src="https://suno.com/embed/18dd8081-38cc-4699-b5e4-48fb8a127f83" title="If you could, 10 years ago" loading="lazy" allow="autoplay"></iframe>
+        <iframe src="https://suno.com/embed/a8d3dc73-c964-4c14-8224-e8eb05f0569e" title="Time Machine" loading="lazy" allow="autoplay"></iframe>
+        <iframe src="https://suno.com/embed/76cbf91c-606d-4a4b-8caa-d8d62d116b30" title="The Ballad of Beverly" loading="lazy" allow="autoplay"></iframe>
+        <iframe src="https://suno.com/embed/1d8a0df6-4392-4251-af74-f3472a836b67" title="Ms. Veda Suprema" loading="lazy" allow="autoplay"></iframe>
+        <iframe src="https://suno.com/embed/5be9e0d1-c867-46e5-97a5-b69eb888a96c" title="Tough as nails with a hippie smile" loading="lazy" allow="autoplay"></iframe>
+        <iframe src="https://suno.com/embed/6f9c7405-0b8b-4355-85dd-1602e579a1f3" title="The Ballad of Bevy PS 4:04 duet" loading="lazy" allow="autoplay"></iframe>
+        <iframe src="https://suno.com/embed/2a28a391-1266-4012-8bbc-81d3f736c3f6" title="a better bev there'll never be" loading="lazy" allow="autoplay"></iframe>
+      </div>
+      <p class="all-songs">Full catalogue → <a href="https://suno.com/@coultron" target="_blank" rel="noopener">suno.com/@coultron</a></p>
+    </div>
+  </section>
+
+  <section id="wall">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">02</span><h2>The Iconic Wall</h2></div>
+      <p class="sec-sub">
+        The Iconic Wall at the Simons Center for Geometry and Physics (Stony Brook)
+        carves the milestone equations of mathematics and physics into a single
+        two-story stone relief. This project is a faithful vector reconstruction of
+        the wall — every equation, knot, torus, and Dynkin diagram redrawn as clean
+        line art — prepared for fabrication as laser-etched stainless steel panels.
+      </p>
+      <div class="wall-grid">
+        <div class="stack">
+          <figure>
+            <img src="assets/iconic-wall-original.jpg" alt="The original Iconic Wall installed at the Simons Center for Geometry and Physics" loading="lazy">
+            <figcaption>The original: carved limestone behind the Simons Center staircase.</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/iconic-wall-detail.jpg" alt="The original Iconic Wall — full view of the carved relief" loading="lazy">
+            <figcaption>The original wall, full view.</figcaption>
+          </figure>
+        </div>
+        <figure>
+          <img src="assets/iconic-wall-42x42.png" alt="Complete vector reconstruction of the Iconic Wall, 42 by 42 inch fabrication drawing" loading="lazy">
+          <figcaption>The full 42″ × 42″ vector reconstruction — Maxwell to Dirac to
+          Atiyah–Singer, plus the trefoil knot, Lorenz attractor, and one very
+          important torus.</figcaption>
+        </figure>
+      </div>
+      <figure style="margin-top:20px">
+        <video src="assets/iconic-wall-3d.mp4" autoplay loop muted playsinline preload="metadata" aria-label="3D animated flythrough of the Iconic Wall"></video>
+        <figcaption>And for fun: the wall in 3D.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="decoherence">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">03</span><h2>Topology of Societal Decoherence</h2></div>
+      <p class="sec-sub">
+        An academic fine-art piece. Society's shared conversation is modeled as a
+        fiber bundle on a torus: when we agree on what words mean, the fibers wind
+        together into one coherent surface. As algorithmic feeds nudge language
+        apart, the bundle frays — until left and right occupy parallel torus knots
+        that never intersect. The stages below are driven by real linguistic data:
+        the shared feasible space of political language, 1994 → 2023.
+      </p>
+      <div class="stack">
+        <figure>
+          <img src="assets/decoherence-1x5.png" alt="Five-stage progression of a torus fiber bundle fraying from a shared baseline to parallel torus knots" loading="lazy">
+          <figcaption>The fraying fiber bundle: shared baseline → algorithmic nudging →
+          echo chambers → fraying commonality → parallel torus knots.</figcaption>
+        </figure>
+        <div class="grid-2">
+          <figure>
+            <video src="assets/decoherence-societal.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Animated torus fiber bundle fraying over time"></video>
+            <figcaption>Societal decoherence, animated.</figcaption>
+          </figure>
+          <figure>
+            <video src="assets/decoherence-linguistic.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Animation of the linguistic torus: shared feasible space splitting to zero"></video>
+            <figcaption>Empirical version — the shared linguistic feasible space
+            splits to zero.</figcaption>
+          </figure>
+        </div>
+        <figure>
+          <img src="assets/decoherence-exhibition.png" alt="Six-stage engraving-style exhibition print, 1994 to 2023, shared linguistic feasible space declining from 92 to 20 percent" loading="lazy">
+          <figcaption>Exhibition print: six stages, 1994–2023. Shared linguistic
+          feasible space declines from 92% to 20%.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="research">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">04</span><h2>Research</h2></div>
+      <p class="sec-sub">Longer-form studies and one working data venture. The PDFs open in the browser.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="tag">Markets · Topological Data Analysis</span>
+          <h3>Gold's Rally: A Topological Contextualization</h3>
+          <p>
+            Gold ran to $5,500/oz in late 2025 — anomaly or repricing? Persistent
+            homology of cross-asset correlation structure says the market's wiring
+            is normal (43rd percentile) even as price momentum hit the 100th.
+            Extreme move, intact topology: a secular revaluation of gold against
+            fiat, not a dislocation. January 2026, 12 pages.
+          </p>
+          <a class="btn" href="assets/gold-topology-jan-2026.pdf" target="_blank" rel="noopener">Read the study</a>
+        </div>
+        <div class="card">
+          <span class="tag">Cosmology · Information Theory</span>
+          <h3>Information Activation Theory (IAT)</h3>
+          <p>
+            A scalar-field effective action for the dark sector, built on the
+            postulate that information carries a physical accounting. A
+            dimensionless activation field ψ interpolates between noise-like and
+            structured degrees of freedom, with parameter regimes recovering
+            cold-dark-matter and fuzzy-dark-matter behavior — and the Hubble
+            tension treated as a falsifiable target, not a settled claim.
+          </p>
+          <a class="btn" href="assets/information-activation-theory.pdf" target="_blank" rel="noopener">Read the manuscript</a>
+        </div>
+        <div class="card">
+          <span class="tag">LLMs · Pre-Training Data</span>
+          <h3>Palladium Data</h3>
+          <p>
+            The Shannon obsession, put to work. Pre-training corpora filtered by
+            information density — compression ratio as an entropy proxy, crossed
+            with linguistic sophistication — keeping only the "Goldilocks Zone"
+            of the open web. Result: 17% lower training loss than FineWeb at an
+            identical compute budget.
+          </p>
+          <a class="btn" href="https://www.palladiumtrain.com" target="_blank" rel="noopener">palladiumtrain.com ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="curiosities">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">05</span><h2>Curiosities</h2></div>
+      <p class="sec-sub">Things that didn't need a reason.</p>
+      <div class="grid-2">
+        <figure>
+          <img src="assets/pi-walk-3d.png" alt="3D random walk generated from the binary digits of pi" loading="lazy">
+          <figcaption>π, taken for a walk: the binary digits of pi as movement
+          vectors in three dimensions. Perfect randomness has a shape.</figcaption>
+        </figure>
+        <div class="card">
+          <span class="tag">AI · Narrative Experiment</span>
+          <h3>The Story of Bill &amp; Gwen</h3>
+          <p>
+            A "complete the story" exercise designed to draw out frontier-model
+            biases. Four models — ChatGPT, Claude, Gemini, and Grok — were each
+            handed the same unfinished story: a 1940s Tulsa chemical engineer,
+            his beautiful wife, and a lifetime of magazine cutouts. Each model
+            finished it once a year ago, and again today. Same prompt, eight
+            endings. Make of it what you will.
+          </p>
+          <a class="btn" href="assets/bill-and-gwen.pdf" target="_blank" rel="noopener">Read all the endings</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Scott Coulter · misterconsistency.com</p>
+    <p><a href="https://suno.com/@coultron" target="_blank" rel="noopener">Suno ↗</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
