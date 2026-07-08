@@ -421,7 +421,7 @@
 (function () {
   const dates = Object.keys(GWEN_BILL);
   let curDate = dates[dates.length - 1];
-  let curModel = "ChatGPT";
+  let curModel = "The prompt";
 
   const datePills = document.getElementById("date-pills");
   const modelPills = document.getElementById("model-pills");
@@ -438,15 +438,17 @@
   }
 
   function render() {
-    const models = Object.keys(GWEN_BILL[curDate]);
-    if (!models.includes(curModel)) curModel = models[0];
+    const entry = GWEN_BILL[curDate];
+    const tabs = ["The prompt", ...Object.keys(entry.models)];
+    if (!tabs.includes(curModel)) curModel = tabs[0];
 
     datePills.replaceChildren(...dates.map(d =>
       pill(d, d === curDate, () => { curDate = d; render(); })));
-    modelPills.replaceChildren(...models.map(m =>
+    modelPills.replaceChildren(...tabs.map(m =>
       pill(m, m === curModel, () => { curModel = m; render(); })));
 
-    storyEl.replaceChildren(...GWEN_BILL[curDate][curModel].map(t => {
+    const paras = curModel === "The prompt" ? entry.prompt : entry.models[curModel];
+    storyEl.replaceChildren(...paras.map(t => {
       const p = document.createElement("p");
       p.textContent = t;
       return p;
