@@ -823,7 +823,7 @@
   setInterval(() => {
     const el = document.activeElement;
     if (players.includes(el)) {
-      if (active && active !== el) { const s = active.src; active.src = "about:blank"; active.src = s; }
+      if (active && active !== el) { active.src = active.src; }
       active = el;
     }
   }, 400);
