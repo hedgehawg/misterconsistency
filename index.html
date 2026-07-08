@@ -240,6 +240,18 @@
     color: var(--bg); background: var(--gold); font-weight: 600;
   }
   .mcell.disabled { opacity: .3; cursor: default; }
+  .art-tabs { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 480px;
+    border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin: 4px 0 22px;
+    background: var(--bg-raised); }
+  .art-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .art-grid figure { margin: 0; }
+  .art-grid a { display: block; }
+  .art-grid img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--bg-raised);
+    transition: transform .35s ease; }
+  .art-grid a:hover img { transform: scale(1.03); }
+  .art-grid figcaption { font-size: .78rem; color: var(--text-dim); margin-top: 7px; line-height: 1.35; }
+  @media (max-width: 900px) { .art-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 640px) {
     .reader-bar { flex-wrap: wrap; }
     .prompt-tab { flex: 1 0 100%; padding: 9px 0; }
@@ -683,6 +695,17 @@
         <p class="reader-foot">Also available as a <a href="assets/gwen-and-bill.pdf" target="_blank" rel="noopener">compiled PDF</a>.</p>
       </div>
 
+      <div class="analysis" id="gb-art">
+        <h3>The story, illustrated</h3>
+        <p class="sec-sub">
+          Then each model was handed photos of the real Gwen and Bill and asked
+          to illustrate its own ending — eight scenes, the model's own choice of
+          which. Same faces, four different lives. Click any image for full size.
+        </p>
+        <div class="art-tabs" id="gb-art-tabs" role="tablist" aria-label="Model"></div>
+        <div class="art-grid" id="gb-art-grid"></div>
+      </div>
+
       <div class="analysis" id="gb-analysis">
         <h3>The Analysis</h3>
         <p class="sec-sub">
@@ -997,6 +1020,43 @@
     if (heroUI && heroUI.id === curId) heroUI.fill.style.width = "0%";
     curId = null; paint();
   });
+})();
+</script>
+<script src="gb-art.js"></script>
+<script>
+/* Gwen & Bill — the story, illustrated: one tab per model */
+(function () {
+  const DATA = window.GB_ART;
+  const tabs = document.getElementById("gb-art-tabs");
+  const grid = document.getElementById("gb-art-grid");
+  if (!DATA || !tabs || !grid) return;
+  const models = ["ChatGPT", "Claude", "Gemini", "Grok"].filter(m => DATA[m]);
+  let cur = models[0];
+  function render() {
+    tabs.replaceChildren(...models.map(m => {
+      const b = document.createElement("button");
+      b.className = "mcell" + (m === cur ? " active" : "");
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", m === cur);
+      b.textContent = m;
+      b.addEventListener("click", () => { cur = m; render(); });
+      return b;
+    }));
+    grid.replaceChildren(...DATA[cur].map(e => {
+      const fig = document.createElement("figure");
+      const a = document.createElement("a");
+      a.href = e.src; a.target = "_blank"; a.rel = "noopener";
+      const img = document.createElement("img");
+      img.loading = "lazy"; img.src = e.src;
+      img.alt = cur + " — " + e.title;
+      a.appendChild(img);
+      const cap = document.createElement("figcaption");
+      cap.textContent = e.title;
+      fig.appendChild(a); fig.appendChild(cap);
+      return fig;
+    }));
+  }
+  render();
 })();
 </script>
 <script src="pi-digits.js"></script>
