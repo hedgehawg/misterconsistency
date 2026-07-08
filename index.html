@@ -153,21 +153,44 @@
     padding: 26px 32px 20px; scroll-margin-top: 80px;
   }
   .reader-bar {
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 12px; padding-bottom: 18px;
-    border-bottom: 1px solid var(--line);
+    display: flex; align-items: stretch; gap: 14px;
+    padding-bottom: 18px; border-bottom: 1px solid var(--line);
   }
-  .pills { display: flex; gap: 8px; flex-wrap: wrap; }
-  .pill {
+  .prompt-tab {
+    font-family: var(--serif); font-variant: small-caps;
+    font-size: 1.08rem; font-weight: 600; letter-spacing: .07em;
+    color: var(--text-dim); background: none;
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 0 24px; cursor: pointer; flex-shrink: 0;
+  }
+  .prompt-tab:hover { color: var(--text); border-color: var(--text-dim); }
+  .prompt-tab.active {
+    color: var(--bg); background: var(--gold); border-color: var(--gold);
+  }
+  .matrix {
+    flex: 1; border: 1px solid var(--line); border-radius: 10px;
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .mrow { display: grid; }
+  .mrow-dates { grid-template-columns: repeat(3, 1fr); }
+  .mrow-models { grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
+  .mcell {
     font-family: var(--sans); font-size: .78rem; font-weight: 500;
     letter-spacing: .04em; color: var(--text-dim);
-    background: none; border: 1px solid var(--line); border-radius: 999px;
-    padding: 7px 16px; cursor: pointer;
+    background: none; border: none; border-left: 1px solid var(--line);
+    padding: 8px 4px; cursor: pointer; text-align: center;
   }
-  .pill:hover { color: var(--text); border-color: var(--text-dim); }
-  .pill.active {
-    color: var(--bg); background: var(--gold); border-color: var(--gold);
-    font-weight: 600;
+  .mcell:first-child { border-left: none; }
+  .mcell:hover:not(.disabled) { color: var(--text); }
+  .mcell.active {
+    color: var(--bg); background: var(--gold); font-weight: 600;
+  }
+  .mcell.disabled { opacity: .3; cursor: default; }
+  @media (max-width: 640px) {
+    .reader-bar { flex-wrap: wrap; }
+    .prompt-tab { flex: 1 0 100%; padding: 9px 0; }
+    .matrix { flex: 1 0 100%; }
+    .mcell { font-size: .7rem; padding: 8px 2px; }
   }
   .story {
     font-family: var(--serif); font-weight: 400; font-size: 1.04rem;
@@ -423,8 +446,11 @@
       </div>
       <div id="gwen-bill" class="reader">
         <div class="reader-bar">
-          <div class="pills" id="date-pills" role="tablist" aria-label="Session date"></div>
-          <div class="pills" id="model-pills" role="tablist" aria-label="Model"></div>
+          <button class="prompt-tab" id="prompt-tab" role="tab">The Prompt</button>
+          <div class="matrix">
+            <div class="mrow mrow-dates" id="date-pills" role="tablist" aria-label="Session date"></div>
+            <div class="mrow mrow-models" id="model-pills" role="tablist" aria-label="Model"></div>
+          </div>
         </div>
         <div class="story" id="story-text"></div>
         <p class="reader-foot">Also available as a <a href="assets/gwen-and-bill.pdf" target="_blank" rel="noopener">compiled PDF</a>.</p>
@@ -445,34 +471,40 @@
 <script>
 (function () {
   const dates = Object.keys(GWEN_BILL);
+  const MODELS = ["ChatGPT", "Claude", "Gemini", "Grok"];
   let curDate = dates[dates.length - 1];
-  let curModel = "The prompt";
+  let curView = "prompt";   // "prompt" or a model name
 
+  const promptTab = document.getElementById("prompt-tab");
   const datePills = document.getElementById("date-pills");
   const modelPills = document.getElementById("model-pills");
   const storyEl = document.getElementById("story-text");
 
-  function pill(label, active, onClick) {
+  function cell(label, active, disabled, onClick) {
     const b = document.createElement("button");
-    b.className = "pill" + (active ? " active" : "");
+    b.className = "mcell" + (active ? " active" : "") + (disabled ? " disabled" : "");
     b.textContent = label;
     b.setAttribute("role", "tab");
     b.setAttribute("aria-selected", active);
-    b.addEventListener("click", onClick);
+    if (disabled) b.setAttribute("aria-disabled", "true");
+    else b.addEventListener("click", onClick);
     return b;
   }
 
   function render() {
     const entry = GWEN_BILL[curDate];
-    const tabs = ["The prompt", ...Object.keys(entry.models)];
-    if (!tabs.includes(curModel)) curModel = tabs[0];
+    if (curView !== "prompt" && !entry.models[curView]) curView = "prompt";
+
+    promptTab.className = "prompt-tab" + (curView === "prompt" ? " active" : "");
+    promptTab.setAttribute("aria-selected", curView === "prompt");
 
     datePills.replaceChildren(...dates.map(d =>
-      pill(d, d === curDate, () => { curDate = d; render(); })));
-    modelPills.replaceChildren(...tabs.map(m =>
-      pill(m, m === curModel, () => { curModel = m; render(); })));
+      cell(d, d === curDate, false, () => { curDate = d; render(); })));
+    modelPills.replaceChildren(...MODELS.map(m =>
+      cell(m, m === curView, !entry.models[m],
+           () => { curView = m; render(); })));
 
-    const paras = curModel === "The prompt" ? entry.prompt : entry.models[curModel];
+    const paras = curView === "prompt" ? entry.prompt : entry.models[curView];
     storyEl.replaceChildren(...paras.map(t => {
       const p = document.createElement("p");
       p.textContent = t;
@@ -481,6 +513,7 @@
     storyEl.scrollTop = 0;
   }
 
+  promptTab.addEventListener("click", () => { curView = "prompt"; render(); });
   render();
 })();
 </script>
