@@ -110,9 +110,6 @@
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; }
   .stack > * + * { margin-top: 20px; }
 
-  /* wall layout: tall photo beside square vector */
-  .wall-grid { display: grid; grid-template-columns: 2fr 3fr; gap: 20px; align-items: start; }
-
   /* ---------- research cards ---------- */
   .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
   .card {
@@ -184,7 +181,7 @@
 
   @media (max-width: 760px) {
     nav ul { display: none; }
-    .songs, .grid-2, .grid-3, .cards, .wall-grid { grid-template-columns: 1fr; }
+    .songs, .grid-2, .grid-3, .cards { grid-template-columns: 1fr; }
     section { padding: 60px 0; }
     .hero { padding: 72px 0 56px; }
   }
@@ -257,7 +254,7 @@
         the wall — every equation, knot, torus, and Dynkin diagram redrawn as clean
         line art — prepared for fabrication as laser-etched stainless steel panels.
       </p>
-      <div class="wall-grid">
+      <div class="grid-2">
         <div class="stack">
           <figure>
             <img src="assets/iconic-wall-original.jpg" alt="The original Iconic Wall installed at the Simons Center for Geometry and Physics" loading="lazy">
@@ -269,17 +266,22 @@
           </figure>
         </div>
         <figure>
-          <img src="assets/iconic-wall-42x42.png" alt="Complete vector reconstruction of the Iconic Wall, 42 by 42 inch fabrication drawing" loading="lazy">
-          <figcaption>The full 42″ × 42″ vector reconstruction — Maxwell to Dirac to
-          Atiyah–Singer, plus the trefoil knot, Lorenz attractor, and one very
-          important torus.</figcaption>
+          <img src="assets/iconic-wall-original-legend.png" alt="The original wall's key, from the Iconic Wall catalogue: locator map and list of equations and diagrams" loading="lazy">
+          <figcaption>The original key, from the wall's catalogue — equations
+          I–XIII, the Kepler ellipse 1–10, background A–H.</figcaption>
         </figure>
       </div>
+      <figure style="margin-top:20px">
+        <img src="assets/iconic-wall-42x42.png" alt="Complete vector reconstruction of the Iconic Wall, 42 by 42 inch fabrication drawing" loading="lazy">
+        <figcaption>The full 42″ × 42″ vector reconstruction — Maxwell to Dirac to
+        Atiyah–Singer, plus the trefoil knot, Lorenz attractor, and one very
+        important torus.</figcaption>
+      </figure>
       <div class="grid-2" style="margin-top:20px">
         <figure>
           <img src="assets/iconic-wall-legend.png" alt="Legend for the Iconic Wall reconstruction: a locator map and key to every equation and diagram" loading="lazy">
-          <figcaption>The legend — every equation and diagram keyed to its place
-          on the wall, fabricated as a companion panel.</figcaption>
+          <figcaption>The reconstruction's legend — every equation and diagram
+          keyed to its place on the wall, fabricated as a companion panel.</figcaption>
         </figure>
         <figure>
           <video src="assets/iconic-wall-3d.mp4" autoplay loop muted playsinline preload="metadata" aria-label="3D animated flythrough of the Iconic Wall"></video>
