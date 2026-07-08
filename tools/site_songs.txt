@@ -1,0 +1,49 @@
+# misterconsistency.com — songs to feature on the site, in display order.
+#
+# One song per line: the 8-character id first, then anything after is just a label.
+#   - ADD a song to the site:   add its line (copy from the reference list below)
+#   - REMOVE a song:            delete or comment out (#) its line
+#   - REORDER:                  move lines up/down
+#
+# After editing, double-click  tools\publish_music.bat  (or run: python tools\build_music.py)
+# That copies the selected audio + cover art from your Suno Library into the site and
+# rebuilds songs.js. Then review and push to publish.
+#
+# The full list of your published songs is kept at the bottom of this file (auto-refreshed
+# by the publish step) so you always have the ids handy.
+# ------------------------------------------------------------------------------------------
+
+18dd8081  If you could, 10 years ago
+2a28a391  a better bev there'll never be
+6f9c7405  The Ballad of Bevy PS 4:04 duet
+5be9e0d1  Tough as nails with a hippie smile
+1d8a0df6  Ms. Veda Suprema
+76cbf91c  The Ballad of Beverly
+a8d3dc73  Time Machine
+a63c918e  Bisigno-no: Save Social Security
+521e11b2  mr. consistency
+7086fa66  what your internet v2
+8e4204d4  Dr. Sarah
+61b68656  kate's in the kitchen
+71ec26eb  he's so generous
+84d2ad99  not impressed
+a55bf133  give them a reason
+4d30b5ec  Inch deep, mile wide
+
+# === ALL PUBLISHED SONGS (reference — copy an id above to feature it) ===
+#   18dd8081  If you could, 10 years ago
+#   2a28a391  a better bev there'll never be
+#   6f9c7405  The Ballad of Bevy PS 4:04 duet
+#   5be9e0d1  Tough as nails with a hippie smile
+#   1d8a0df6  Ms. Veda Suprema
+#   76cbf91c  The Ballad of Beverly
+#   a8d3dc73  Time Machine
+#   a63c918e  Bisigno-no: Save Social Security
+#   521e11b2  mr. consistency
+#   7086fa66  what your internet v2
+#   8e4204d4  Dr. Sarah
+#   61b68656  kate's in the kitchen
+#   71ec26eb  he's so generous
+#   84d2ad99  not impressed
+#   a55bf133  give them a reason
+#   4d30b5ec  Inch deep, mile wide

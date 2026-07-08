@@ -146,6 +146,53 @@ fig.savefig(ASSETS + r"\gwen-bill-values-heatmap.png", facecolor=BG, dpi=130)
 plt.close(fig)
 print("saved heatmap")
 
+# ================= SELF-SCORING BIAS (dumbbell) =================
+named = {}
+for f in sorted(glob.glob(S + r"\judges_cross\*.json")):
+    n = f.split("\\")[-1].replace(".json", "")
+    n = {"chatgpt": "ChatGPT", "claude": "Claude", "gemini": "Gemini", "grok": "Grok"}[n]
+    named[n] = {r["id"]: r for r in json.load(open(f, encoding="utf-8"))}
+
+bias = {}
+for m in MODELS:
+    own = [c for c, (d, mm) in MAP.items() if mm == m]
+    self_m = np.mean([named[m][c][a] for c in own for a in AXES])
+    peer_m = np.mean([named[o][c][a] for o in MODELS if o != m for c in own for a in AXES])
+    bias[m] = (self_m, peer_m)
+
+fig, ax = plt.subplots(figsize=(8.4, 3.4), facecolor=BG)
+fig.subplots_adjust(left=0.13, right=0.86, top=0.72, bottom=0.18)
+ax.set_facecolor(BG)
+ys = np.arange(len(MODELS))[::-1]
+for y, m in zip(ys, MODELS):
+    self_m, peer_m = bias[m]
+    c = COL[m]
+    ax.plot([peer_m, self_m], [y, y], color=c, lw=2, alpha=0.7, zorder=2)
+    ax.scatter([peer_m], [y], s=70, color=DIM, zorder=3, edgecolors=BG, linewidths=1.5)
+    ax.scatter([self_m], [y], s=90, color=c, zorder=4, edgecolors=BG, linewidths=1.5)
+    d = self_m - peer_m
+    ax.text(max(self_m, peer_m) + 0.28, y, f"{d:+.2f}", va="center", ha="left",
+            color=(GOLD if abs(d) == max(abs(s - p) for s, p in bias.values()) else DIM),
+            fontsize=10, fontweight="bold")
+ax.set_yticks(ys); ax.set_yticklabels(MODELS, fontsize=11)
+ax.set_xlim(0, 10)
+ax.set_xticks(range(0, 11, 2))
+ax.tick_params(axis="x", colors=DIM, labelsize=9, length=0)
+ax.tick_params(axis="y", length=0)
+for t, m in zip(ax.get_yticklabels(), MODELS):
+    t.set_color(COL[m])
+ax.grid(axis="x", color="#2a2b31", lw=0.7)
+ax.set_axisbelow(True)
+for sp in ax.spines.values(): sp.set_visible(False)
+fig.suptitle("Does anyone grade themselves easier?", color=TEXT, fontsize=15, family="serif", y=0.96)
+fig.text(0.13, 0.80, "Mean score each model gave its own endings (colored) vs. what the other three judges gave them (gray).",
+         ha="left", color=DIM, fontsize=8.5)
+fig.savefig(ASSETS + r"\gwen-bill-self-bias.png", facecolor=BG, dpi=150)
+plt.close(fig)
+print("saved self-bias dumbbell")
+for m in MODELS:
+    s_, p_ = bias[m]; print(f"{m:8s} self {s_:.2f}  peers {p_:.2f}  delta {s_-p_:+.2f}")
+
 # print a quick summary table
 print("\n=== panel means ===")
 for c in rows:
