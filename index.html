@@ -271,6 +271,9 @@
   }
   .reader-foot a { color: var(--gold); text-decoration: none; }
   .reader-foot a:hover { text-decoration: underline; }
+  .read-btn { margin-right: 18px; padding: 6px 14px; font-size: .82rem; cursor: pointer;
+    color: var(--gold); background: none; border: 1px solid var(--gold); border-radius: 6px; }
+  .read-btn:hover { background: var(--gold); color: var(--bg); }
 
   /* ---------- Gwen & Bill analysis ---------- */
   .analysis { margin-top: 44px; }
@@ -688,7 +691,8 @@
           </div>
         </div>
         <div class="story" id="story-text"></div>
-        <p class="reader-foot">Also available as a <a href="assets/gwen-and-bill.pdf" target="_blank" rel="noopener">compiled PDF</a>.</p>
+        <p class="reader-foot"><button class="read-btn" id="read-btn" hidden>▷ Read out loud</button>
+        Also available as a <a href="assets/gwen-and-bill.pdf" target="_blank" rel="noopener">compiled PDF</a>.</p>
       </div>
 
       <div class="analysis" id="gb-art">
@@ -923,6 +927,58 @@
 
   promptTab.addEventListener("click", () => { curView = "prompt"; render(); });
   render();
+
+  /* ---- read out loud (browser TTS; one distinct voice per model) ---- */
+  const readBtn = document.getElementById("read-btn");
+  if (readBtn && "speechSynthesis" in window) {
+    const synth = window.speechSynthesis;
+    readBtn.hidden = false;
+    const IDLE = "▷ Read out loud", BUSY = "■ Stop reading";
+    readBtn.textContent = IDLE;
+    // preferred narrator per model, matched against whatever voices this device has
+    const PREF = {
+      ChatGPT: ["Aria", "Samantha", "Google US English", "Jenny"],
+      Claude:  ["Guy", "Daniel", "Google UK English Male", "David"],
+      Gemini:  ["Sonia", "Karen", "Google UK English Female", "Zira"],
+      Grok:    ["Ryan", "Alex", "Mark", "Google US English"]
+    };
+    function pickVoice(model) {
+      const vs = synth.getVoices().filter(v => v.lang.startsWith("en"));
+      if (!vs.length) return null;
+      for (const want of (PREF[model] || [])) {
+        const hit = vs.find(v => v.name.includes(want));
+        if (hit) return hit;
+      }
+      const i = ["ChatGPT", "Claude", "Gemini", "Grok"].indexOf(model);
+      return vs[i >= 0 ? i % vs.length : 0];
+    }
+    let reading = false;
+    function stopReading() {
+      reading = false; synth.cancel(); readBtn.textContent = IDLE;
+    }
+    readBtn.addEventListener("click", () => {
+      if (reading) { stopReading(); return; }
+      const paras = [...storyEl.querySelectorAll("p")].map(p => p.textContent).filter(Boolean);
+      if (!paras.length) return;
+      const voice = curView === "prompt" ? null : pickVoice(curView);
+      reading = true; readBtn.textContent = BUSY;
+      paras.forEach((t, i) => {
+        const u = new SpeechSynthesisUtterance(t);
+        if (voice) u.voice = voice;
+        u.rate = 1.02;
+        if (i === paras.length - 1) u.onend = stopReading;
+        u.onerror = stopReading;
+        synth.speak(u);
+      });
+    });
+    // changing tab, or leaving the page, stops the narration
+    const origRender = render;
+    render = function () { stopReading(); origRender(); };
+    datePills.addEventListener("click", stopReading, true);
+    modelPills.addEventListener("click", stopReading, true);
+    promptTab.addEventListener("click", stopReading, true);
+    window.addEventListener("pagehide", stopReading);
+  }
 })();
 </script>
 <script src="songs.js"></script>
