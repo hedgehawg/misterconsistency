@@ -100,5 +100,5 @@ cov_bytes = sum(os.path.getsize(os.path.join(COV_OUT, f)) for f in os.listdir(CO
 print(f"published to site: {len(songs)} songs | covers total: {cov_bytes/1024/1024:.1f} MB")
 print("order:", " | ".join(s["title"] for s in songs))
 if orphans:
-    print(f"\nOrphaned files (in repo but not on the site now) — delete if you like:")
+    print(f"\nOrphaned files (in repo but not on the site now) - delete if you like:")
     for o in orphans: print("  ", o)
