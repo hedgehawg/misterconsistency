@@ -47,7 +47,7 @@ const GWEN_BILL = {
    ]
   }
  },
- "May 2026": {
+ "May 2025": {
   "prompt": [
    "Please finish this story:",
    "A young couple in their early 20s get married in Oklahoma in the 1930s during World War 2. The husband is a chemical engineer and works for Dow. The wife is a homemaker.",
