@@ -1,128 +1,151 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1418 900" font-family="Helvetica Neue, Arial, sans-serif" role="img" aria-label="2026 Men's World Cup knockout bracket, as of July 7 2026">
-<rect x="0" y="0" width="1418" height="900" rx="10" fill="#0e0f12"/>
-<text x="709.0" y="38" font-size="20" fill="#e8e6e1" text-anchor="middle" font-family="Georgia, serif">2026 Men’s World Cup — Road to the Final</text>
-<text x="109.0" y="72" font-size="12.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="1.5">ROUND OF 16</text>
-<text x="109.0" y="90" font-size="10.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 4–6</text>
-<text x="309.0" y="72" font-size="12.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="1.5">QUARTERFINALS</text>
-<text x="309.0" y="90" font-size="10.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 9–10</text>
-<text x="509.0" y="72" font-size="12.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="1.5">SEMIFINAL</text>
-<text x="509.0" y="90" font-size="10.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 14</text>
-<text x="709.0" y="72" font-size="12.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="1.5">FINAL</text>
-<text x="709.0" y="90" font-size="10.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 19</text>
-<text x="909.0" y="72" font-size="12.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="1.5">SEMIFINAL</text>
-<text x="909.0" y="90" font-size="10.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 15</text>
-<text x="1109.0" y="72" font-size="12.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="1.5">QUARTERFINALS</text>
-<text x="1109.0" y="90" font-size="10.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 11</text>
-<text x="1309.0" y="72" font-size="12.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="1.5">ROUND OF 16</text>
-<text x="1309.0" y="90" font-size="10.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 5–7</text>
-<path d="M198,217.0 H209.0 V302.0 H220" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M198,387.0 H209.0 V302.0" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M198,557.0 H209.0 V642.0 H220" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M198,727.0 H209.0 V642.0" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M398,302.0 H409.0 V472.0 H420" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M398,642.0 H409.0 V472.0" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M1220,217.0 H1209.0 V302.0 H1198" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M1220,387.0 H1209.0 V302.0" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M1220,557.0 H1209.0 V642.0 H1198" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M1220,727.0 H1209.0 V642.0" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M1020,302.0 H1009.0 V472.0 H998" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M1020,642.0 H1009.0 V472.0" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M598,472.0 H620" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<path d="M820,472.0 H798" fill="none" stroke="#3a3b42" stroke-width="1"/>
-<text x="20" y="182" font-size="10" fill="#9a978f">M89 · Jul 4 · Houston</text>
-<rect x="20" y="188" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="20" y1="217.0" x2="198" y2="217.0" stroke="#26272e" stroke-width="1"/>
-<text x="32" y="210" font-size="13" fill="#9a978f" font-weight="normal">Canada</text>
-<text x="186" y="210" font-size="13" fill="#9a978f" font-weight="normal" text-anchor="end">0</text>
-<text x="32" y="238" font-size="13" fill="#d0a44c" font-weight="bold">Morocco</text>
-<text x="186" y="238" font-size="13" fill="#d0a44c" font-weight="bold" text-anchor="end">3</text>
-<text x="20" y="352" font-size="10" fill="#9a978f">M90 · Jul 4 · Philadelphia</text>
-<rect x="20" y="358" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="20" y1="387.0" x2="198" y2="387.0" stroke="#26272e" stroke-width="1"/>
-<text x="32" y="380" font-size="13" fill="#9a978f" font-weight="normal">Paraguay</text>
-<text x="186" y="380" font-size="13" fill="#9a978f" font-weight="normal" text-anchor="end">0</text>
-<text x="32" y="408" font-size="13" fill="#d0a44c" font-weight="bold">France</text>
-<text x="186" y="408" font-size="13" fill="#d0a44c" font-weight="bold" text-anchor="end">1</text>
-<text x="20" y="522" font-size="10" fill="#9a978f">M93 · Jul 6 · Dallas</text>
-<rect x="20" y="528" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="20" y1="557.0" x2="198" y2="557.0" stroke="#26272e" stroke-width="1"/>
-<text x="32" y="550" font-size="13" fill="#9a978f" font-weight="normal">Portugal</text>
-<text x="186" y="550" font-size="13" fill="#9a978f" font-weight="normal" text-anchor="end">0</text>
-<text x="32" y="578" font-size="13" fill="#d0a44c" font-weight="bold">Spain</text>
-<text x="186" y="578" font-size="13" fill="#d0a44c" font-weight="bold" text-anchor="end">1</text>
-<text x="20" y="692" font-size="10" fill="#9a978f">M94 · Jul 6 · Seattle</text>
-<rect x="20" y="698" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="20" y1="727.0" x2="198" y2="727.0" stroke="#26272e" stroke-width="1"/>
-<text x="32" y="720" font-size="13" fill="#9a978f" font-weight="normal">USA</text>
-<text x="186" y="720" font-size="13" fill="#9a978f" font-weight="normal" text-anchor="end">1</text>
-<text x="32" y="748" font-size="13" fill="#d0a44c" font-weight="bold">Belgium</text>
-<text x="186" y="748" font-size="13" fill="#d0a44c" font-weight="bold" text-anchor="end">4</text>
-<text x="220" y="267" font-size="10" fill="#9a978f">M97 · Jul 9, 4 PM · Boston</text>
-<rect x="220" y="273" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="220" y1="302.0" x2="398" y2="302.0" stroke="#26272e" stroke-width="1"/>
-<text x="232" y="295" font-size="13" fill="#e8e6e1" font-weight="normal">Morocco</text>
-<text x="232" y="323" font-size="13" fill="#e8e6e1" font-weight="normal">France</text>
-<text x="220" y="607" font-size="10" fill="#9a978f">M98 · Jul 10, 3 PM · Los Angeles</text>
-<rect x="220" y="613" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="220" y1="642.0" x2="398" y2="642.0" stroke="#26272e" stroke-width="1"/>
-<text x="232" y="635" font-size="13" fill="#e8e6e1" font-weight="normal">Spain</text>
-<text x="232" y="663" font-size="13" fill="#e8e6e1" font-weight="normal">Belgium</text>
-<text x="420" y="437" font-size="10" fill="#9a978f">M101 · Jul 14, 3 PM · Dallas</text>
-<rect x="420" y="443" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="420" y1="472.0" x2="598" y2="472.0" stroke="#26272e" stroke-width="1"/>
-<text x="432" y="465" font-size="13" fill="#9a978f" font-weight="normal" font-style="italic">Winner M97</text>
-<text x="432" y="493" font-size="13" fill="#9a978f" font-weight="normal" font-style="italic">Winner M98</text>
-<text x="620" y="437" font-size="10" fill="#9a978f">M104 · Jul 19, 3 PM · NY/NJ</text>
-<rect x="620" y="443" width="178" height="58" rx="7" fill="#16171c" stroke="#d0a44c" stroke-width="1.6"/>
-<line x1="620" y1="472.0" x2="798" y2="472.0" stroke="#26272e" stroke-width="1"/>
-<text x="709.0" y="422" font-size="11" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="2">FINAL</text>
-<text x="632" y="465" font-size="13" fill="#9a978f" font-weight="normal" font-style="italic">Winner M101</text>
-<text x="632" y="493" font-size="13" fill="#9a978f" font-weight="normal" font-style="italic">Winner M102</text>
-<text x="820" y="437" font-size="10" fill="#9a978f">M102 · Jul 15, 4 PM · Atlanta</text>
-<rect x="820" y="443" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="820" y1="472.0" x2="998" y2="472.0" stroke="#26272e" stroke-width="1"/>
-<text x="832" y="465" font-size="13" fill="#9a978f" font-weight="normal" font-style="italic">Winner M99</text>
-<text x="832" y="493" font-size="13" fill="#9a978f" font-weight="normal" font-style="italic">Winner M100</text>
-<text x="1020" y="267" font-size="10" fill="#9a978f">M99 · Jul 11, 5 PM · Miami</text>
-<rect x="1020" y="273" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="1020" y1="302.0" x2="1198" y2="302.0" stroke="#26272e" stroke-width="1"/>
-<text x="1032" y="295" font-size="13" fill="#e8e6e1" font-weight="normal">Norway</text>
-<text x="1032" y="323" font-size="13" fill="#e8e6e1" font-weight="normal">England</text>
-<text x="1020" y="607" font-size="10" fill="#9a978f">M100 · Jul 11, 9 PM · Kansas City</text>
-<rect x="1020" y="613" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="1020" y1="642.0" x2="1198" y2="642.0" stroke="#26272e" stroke-width="1"/>
-<text x="1032" y="635" font-size="13" fill="#e8e6e1" font-weight="normal">Argentina</text>
-<text x="1032" y="663" font-size="13" fill="#9a978f" font-weight="normal" font-style="italic">Winner M96</text>
-<text x="1220" y="182" font-size="10" fill="#9a978f">M91 · Jul 5 · NY/NJ</text>
-<rect x="1220" y="188" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="1220" y1="217.0" x2="1398" y2="217.0" stroke="#26272e" stroke-width="1"/>
-<text x="1232" y="210" font-size="13" fill="#9a978f" font-weight="normal">Brazil</text>
-<text x="1386" y="210" font-size="13" fill="#9a978f" font-weight="normal" text-anchor="end">1</text>
-<text x="1232" y="238" font-size="13" fill="#d0a44c" font-weight="bold">Norway</text>
-<text x="1386" y="238" font-size="13" fill="#d0a44c" font-weight="bold" text-anchor="end">2</text>
-<text x="1220" y="352" font-size="10" fill="#9a978f">M92 · Jul 5 · Mexico City</text>
-<rect x="1220" y="358" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="1220" y1="387.0" x2="1398" y2="387.0" stroke="#26272e" stroke-width="1"/>
-<text x="1232" y="380" font-size="13" fill="#9a978f" font-weight="normal">Mexico</text>
-<text x="1386" y="380" font-size="13" fill="#9a978f" font-weight="normal" text-anchor="end">2</text>
-<text x="1232" y="408" font-size="13" fill="#d0a44c" font-weight="bold">England</text>
-<text x="1386" y="408" font-size="13" fill="#d0a44c" font-weight="bold" text-anchor="end">3</text>
-<text x="1220" y="522" font-size="10" fill="#9a978f">M95 · Jul 7 · Atlanta</text>
-<rect x="1220" y="528" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="1220" y1="557.0" x2="1398" y2="557.0" stroke="#26272e" stroke-width="1"/>
-<text x="1232" y="550" font-size="13" fill="#9a978f" font-weight="normal">Egypt</text>
-<text x="1386" y="550" font-size="13" fill="#9a978f" font-weight="normal" text-anchor="end">2</text>
-<text x="1232" y="578" font-size="13" fill="#d0a44c" font-weight="bold">Argentina</text>
-<text x="1386" y="578" font-size="13" fill="#d0a44c" font-weight="bold" text-anchor="end">3</text>
-<text x="1220" y="692" font-size="10" fill="#9a978f">M96 · Jul 7, 4 PM · Toronto</text>
-<rect x="1220" y="698" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="1220" y1="727.0" x2="1398" y2="727.0" stroke="#26272e" stroke-width="1"/>
-<text x="1232" y="720" font-size="13" fill="#e8e6e1" font-weight="normal">Switzerland</text>
-<text x="1232" y="748" font-size="13" fill="#e8e6e1" font-weight="normal">Colombia</text>
-<text x="620" y="685" font-size="10" fill="#9a978f">M103 · Jul 18, 4 PM · Miami</text>
-<rect x="620" y="691" width="178" height="58" rx="7" fill="#16171c" stroke="#26272e" stroke-width="1"/>
-<line x1="620" y1="720.0" x2="798" y2="720.0" stroke="#26272e" stroke-width="1"/>
-<text x="709.0" y="670" font-size="10" fill="#d0a44c" text-anchor="middle" letter-spacing="1.5">BRONZE MATCH</text>
-<text x="632" y="713" font-size="13" fill="#9a978f" font-weight="normal" font-style="italic">Loser M101</text>
-<text x="632" y="741" font-size="13" fill="#9a978f" font-weight="normal" font-style="italic">Loser M102</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1868 1200" font-family="Helvetica Neue, Arial, sans-serif" role="img" aria-label="2026 Men's World Cup knockout bracket, as of July 7 2026">
+<rect x="0" y="0" width="1868" height="1200" rx="12" fill="#0e0f12"/>
+<text x="934.0" y="52" font-size="27" fill="#e8e6e1" text-anchor="middle" font-family="Georgia, serif">2026 Men’s World Cup — Road to the Final</text>
+<text x="142.0" y="108" font-size="16.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="2">ROUND OF 16</text>
+<text x="142.0" y="130" font-size="13.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 4–6</text>
+<text x="406.0" y="108" font-size="16.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="2">QUARTERFINALS</text>
+<text x="406.0" y="130" font-size="13.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 9–10</text>
+<text x="670.0" y="108" font-size="16.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="2">SEMIFINAL</text>
+<text x="670.0" y="130" font-size="13.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 14</text>
+<text x="934.0" y="108" font-size="16.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="2">FINAL</text>
+<text x="934.0" y="130" font-size="13.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 19</text>
+<text x="1198.0" y="108" font-size="16.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="2">SEMIFINAL</text>
+<text x="1198.0" y="130" font-size="13.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 15</text>
+<text x="1462.0" y="108" font-size="16.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="2">QUARTERFINALS</text>
+<text x="1462.0" y="130" font-size="13.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 11</text>
+<text x="1726.0" y="108" font-size="16.5" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="2">ROUND OF 16</text>
+<text x="1726.0" y="130" font-size="13.5" fill="#9a978f" text-anchor="middle" font-style="italic">July 5–7</text>
+<path d="M260,291.0 H274.0 V406.0 H288" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M260,521.0 H274.0 V406.0" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M260,751.0 H274.0 V866.0 H288" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M260,981.0 H274.0 V866.0" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M524,406.0 H538.0 V636.0 H552" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M524,866.0 H538.0 V636.0" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M1608,291.0 H1594.0 V406.0 H1580" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M1608,521.0 H1594.0 V406.0" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M1608,751.0 H1594.0 V866.0 H1580" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M1608,981.0 H1594.0 V866.0" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M1344,406.0 H1330.0 V636.0 H1316" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M1344,866.0 H1330.0 V636.0" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M788,636.0 H816" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<path d="M1080,636.0 H1052" fill="none" stroke="#3a3b42" stroke-width="1.2"/>
+<text x="24" y="244" font-size="13" fill="#9a978f">M89 · Jul 4 · Houston</text>
+<rect x="24" y="253" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="24" y1="291.0" x2="260" y2="291.0" stroke="#26272e" stroke-width="1"/>
+<image x="36" y="265" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAMAAADImI+JAAAASFBMVEX/////ubn/oqL/Z2f/Jib/09P/7e3/AAD/+/v/Gxv/W1v/rq7/eXn/nZ3/DAz/OTn/AwP/Pj7//Pz/QED/PT3/g4P/xsb/xcWY5npoAAAAkUlEQVQoz43TyQ7DIAxFUQbDNZCx4///aTdt00ohsXdPHIFsGce33E79nO5AvRjhGCxQVYs41fMbpUIVw9MzwHwKk4sA0aUj6IdW7iNAGEobfBfmBbgC3IAld6HKllhEuzDwV6HfjJ+2OPmjrlP5pJKOx5PfsuSTOWZZY61xlWxYiufDuD3eG2FrRpiSEe5+hRcblQ+AegtNbgAAAABJRU5ErkJggg==" preserveAspectRatio="xMidYMid meet"/>
+<text x="71" y="281" font-size="16.5" fill="#9a978f" font-weight="normal">Canada</text>
+<text x="246" y="281" font-size="16.5" fill="#9a978f" font-weight="normal" text-anchor="end">0</text>
+<image x="36" y="298" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbBAMAAAD8PtBdAAAAG1BMVEXBJy1cRS9uPy+kLy1KSi86TzB8Oy6YMy21Ki2izjvYAAAATUlEQVQoz2NgGMSA2QCLIKMAFsEWDyyCReoYQomCIa6CYuiak4NNzTAMSFRgEsO0PNgU03qWVg8HTMvVkjCtVzVgDsIQLGBgYGcYYgAATKUJThC4RpMAAAAASUVORK5CYII=" preserveAspectRatio="xMidYMid meet"/>
+<text x="71" y="314" font-size="16.5" fill="#d0a44c" font-weight="bold">Morocco</text>
+<text x="246" y="314" font-size="16.5" fill="#d0a44c" font-weight="bold" text-anchor="end">3</text>
+<text x="24" y="474" font-size="13" fill="#9a978f">M90 · Jul 4 · Philadelphia</text>
+<rect x="24" y="483" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="24" y1="521.0" x2="260" y2="521.0" stroke="#26272e" stroke-width="1"/>
+<image x="36" y="495" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAWBAMAAABAoMODAAAAMFBMVEX////VKx4AOKi/zen1ycbn5+fK1M36+vrd3d3BxsPLy8vL5NPm8cva7Mmixq/wxcJuOnMrAAAAQUlEQVQY02MQxAIYBlbQBQb8v8CZDHAQtpQBA7BOmxmAIVj55lw6hmBV7rV2TO3dWzG1M0S0ItjGWACDEhYwsIIA+cwvu1UljOIAAAAASUVORK5CYII=" preserveAspectRatio="xMidYMid meet"/>
+<text x="71" y="511" font-size="16.5" fill="#9a978f" font-weight="normal">Paraguay</text>
+<text x="246" y="511" font-size="16.5" fill="#9a978f" font-weight="normal" text-anchor="end">0</text>
+<image x="36" y="528" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbBAMAAAD8PtBdAAAAD1BMVEUAJlT////OESbvr7aqtsYrjF9NAAAAGUlEQVQoz2NgAAMWQTAwUgIDhlHBUUG8ggBpKyX5efKDZQAAAABJRU5ErkJggg==" preserveAspectRatio="xMidYMid meet"/>
+<text x="71" y="544" font-size="16.5" fill="#d0a44c" font-weight="bold">France</text>
+<text x="246" y="544" font-size="16.5" fill="#d0a44c" font-weight="bold" text-anchor="end">1</text>
+<text x="24" y="704" font-size="13" fill="#9a978f">M93 · Jul 6 · Dallas</text>
+<rect x="24" y="713" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="24" y1="751.0" x2="260" y2="751.0" stroke="#26272e" stroke-width="1"/>
+<image x="36" y="725" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbCAMAAAA5zj1cAAAA3lBMVEX/AAAAZgDjeAn6AAAEYwDcogDtUwqbtwDmXhr5QT76fHz+/v62xOLf5PJ6pgC/zgCpvAD1LwCYswCjuADuYyutwwD6MC/1ZwDXxADjjADuSgDsAADllgDkqgDo3wDkswDvIwDZ1wDSqQBclgDopwDpxADoaxJ+rADcjwreTADrNwCKqwA1fgBRhgDM0gAZbQDq6gDrOgD8EhLvRAr22M3qk1L6OTbsfip4lMmZrNg7hADjFADRggDyBADkmDXcvzH0dFOTrhryRjl9jiS2ozbcXEvrMwAAWgDz9fry9PltbfP7AAAA0ElEQVQ4y+XTxxKCQBAEUNgl56CIAZUgihkQzDn//w95t8rBs/b5naZ7CPItxKf8MKRGEf4CDstl0+s47SLYNaj7KKqvexUYDjTuhuMY9zkvhOBkOg0ZIcsEJtzYGICKMbZ4UZJE3toiBoAGq3ElUZbFEkdXEQDH7ATNF8vlYo7ajg1AljXz/CnLD4unG1UA+gp11WeSNNMPnaAGQMo1zygVhBTtm806dEdFHVxOScLvWi5d0Iw2JI+9fq1RKep6paoaHbT0b9bjM/j/fuYzfAEwIRPN3DfXmAAAAABJRU5ErkJggg==" preserveAspectRatio="xMidYMid meet"/>
+<text x="71" y="741" font-size="16.5" fill="#9a978f" font-weight="normal">Portugal</text>
+<text x="246" y="741" font-size="16.5" fill="#9a978f" font-weight="normal" text-anchor="end">0</text>
+<image x="36" y="758" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbCAMAAAA5zj1cAAAApVBMVEX6vQCtFRnBPxP3tgCkSRTxsQC9miCtkjL3ugDcdwrVkwndpwauUEi3k3ecLQyvGx01YomtXy3Zhha+gw+4LiCzn4jKeBKyYgjmoAOkXUK/RhC1kJmmKh+0oKCbYwN5OAWWHxSVi0HypQNcdGsDAgC9g1j6vgSWhnLfsSXCn169cE24eBuaNwzQaiOYagW8bxWIOhqoKhPLdq4yUHR+UgVZLWaBHkAs3esWAAAAk0lEQVQ4y+WTVxLDIAxESQwBAwb33tKc3sv9j5YbWJp8JvurNzsrzYpMkCI/BU6RIt9phqIcJSOpEGBu7c2WA+iXOWmbtTmTACh42PdelSgwp+d2nXdvTjuAc3X5vL6qJo4XQEZ9qd8PXaR7yDE5GFOf6XbNRrmB8cgcKaUraJm5z4NiE4RLH3FyIUaG6Pb85XN9AIg9CvrV7UGSAAAAAElFTkSuQmCC" preserveAspectRatio="xMidYMid meet"/>
+<text x="71" y="774" font-size="16.5" fill="#d0a44c" font-weight="bold">Spain</text>
+<text x="246" y="774" font-size="16.5" fill="#d0a44c" font-weight="bold" text-anchor="end">1</text>
+<text x="24" y="934" font-size="13" fill="#9a978f">M94 · Jul 6 · Seattle</text>
+<rect x="24" y="943" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="24" y1="981.0" x2="260" y2="981.0" stroke="#26272e" stroke-width="1"/>
+<image x="36" y="955" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAVBAMAAADGNLEtAAAALVBMVEX////GU3LZjKGzGUINM2PsxtAYPWotT3hed5enma46WoBPa46zGkMkR3Jrgp+6ntXWAAAAiklEQVQY02Nwc0lJcQMSxghgw+CRVdaWkVXWooQEGFxaPLxKWjxcGJCBn1fJExAWRAJglUuAKlEEPdyXgA1A0e62LTu9bFt2CopF3iCh9LItKE5yX5tVe31tVgmq9pL0NLcy95RQJMAAdiUQo2ifCQUoKrECY0xgw6CEBWDXLogFYBfECrBahM1JAItMTcEiMDpsAAAAAElFTkSuQmCC" preserveAspectRatio="xMidYMid meet"/>
+<text x="71" y="971" font-size="16.5" fill="#9a978f" font-weight="normal">USA</text>
+<text x="246" y="971" font-size="16.5" fill="#9a978f" font-weight="normal" text-anchor="end">1</text>
+<image x="36" y="988" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAjBAMAAAAUF1WdAAAAD1BMVEXvM0AAAAD92iX4oi2okRgdxzYaAAAAGUlEQVQoz2MQBAMRJTAwYICAUcFRwWEhCADCrTMjCu9IjwAAAABJRU5ErkJggg==" preserveAspectRatio="xMidYMid meet"/>
+<text x="71" y="1004" font-size="16.5" fill="#d0a44c" font-weight="bold">Belgium</text>
+<text x="246" y="1004" font-size="16.5" fill="#d0a44c" font-weight="bold" text-anchor="end">4</text>
+<text x="288" y="359" font-size="13" fill="#9a978f">M97 · Jul 9, 4 PM · Boston</text>
+<rect x="288" y="368" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="288" y1="406.0" x2="524" y2="406.0" stroke="#26272e" stroke-width="1"/>
+<image x="300" y="380" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbBAMAAAD8PtBdAAAAG1BMVEXBJy1cRS9uPy+kLy1KSi86TzB8Oy6YMy21Ki2izjvYAAAATUlEQVQoz2NgGMSA2QCLIKMAFsEWDyyCReoYQomCIa6CYuiak4NNzTAMSFRgEsO0PNgU03qWVg8HTMvVkjCtVzVgDsIQLGBgYGcYYgAATKUJThC4RpMAAAAASUVORK5CYII=" preserveAspectRatio="xMidYMid meet"/>
+<text x="335" y="396" font-size="16.5" fill="#e8e6e1" font-weight="normal">Morocco</text>
+<image x="300" y="413" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbBAMAAAD8PtBdAAAAD1BMVEUAJlT////OESbvr7aqtsYrjF9NAAAAGUlEQVQoz2NgAAMWQTAwUgIDhlHBUUG8ggBpKyX5efKDZQAAAABJRU5ErkJggg==" preserveAspectRatio="xMidYMid meet"/>
+<text x="335" y="429" font-size="16.5" fill="#e8e6e1" font-weight="normal">France</text>
+<text x="288" y="819" font-size="13" fill="#9a978f">M98 · Jul 10, 3 PM · Los Angeles</text>
+<rect x="288" y="828" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="288" y1="866.0" x2="524" y2="866.0" stroke="#26272e" stroke-width="1"/>
+<image x="300" y="840" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbCAMAAAA5zj1cAAAApVBMVEX6vQCtFRnBPxP3tgCkSRTxsQC9miCtkjL3ugDcdwrVkwndpwauUEi3k3ecLQyvGx01YomtXy3Zhha+gw+4LiCzn4jKeBKyYgjmoAOkXUK/RhC1kJmmKh+0oKCbYwN5OAWWHxSVi0HypQNcdGsDAgC9g1j6vgSWhnLfsSXCn169cE24eBuaNwzQaiOYagW8bxWIOhqoKhPLdq4yUHR+UgVZLWaBHkAs3esWAAAAk0lEQVQ4y+WTVxLDIAxESQwBAwb33tKc3sv9j5YbWJp8JvurNzsrzYpMkCI/BU6RIt9phqIcJSOpEGBu7c2WA+iXOWmbtTmTACh42PdelSgwp+d2nXdvTjuAc3X5vL6qJo4XQEZ9qd8PXaR7yDE5GFOf6XbNRrmB8cgcKaUraJm5z4NiE4RLH3FyIUaG6Pb85XN9AIg9CvrV7UGSAAAAAElFTkSuQmCC" preserveAspectRatio="xMidYMid meet"/>
+<text x="335" y="856" font-size="16.5" fill="#e8e6e1" font-weight="normal">Spain</text>
+<image x="300" y="873" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAjBAMAAAAUF1WdAAAAD1BMVEXvM0AAAAD92iX4oi2okRgdxzYaAAAAGUlEQVQoz2MQBAMRJTAwYICAUcFRwWEhCADCrTMjCu9IjwAAAABJRU5ErkJggg==" preserveAspectRatio="xMidYMid meet"/>
+<text x="335" y="889" font-size="16.5" fill="#e8e6e1" font-weight="normal">Belgium</text>
+<text x="552" y="589" font-size="13" fill="#9a978f">M101 · Jul 14, 3 PM · Dallas</text>
+<rect x="552" y="598" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="552" y1="636.0" x2="788" y2="636.0" stroke="#26272e" stroke-width="1"/>
+<text x="599" y="626" font-size="16.5" fill="#9a978f" font-weight="normal" font-style="italic">Winner M97</text>
+<text x="599" y="659" font-size="16.5" fill="#9a978f" font-weight="normal" font-style="italic">Winner M98</text>
+<text x="816" y="589" font-size="13" fill="#9a978f">M104 · Jul 19, 3 PM · NY/NJ</text>
+<rect x="816" y="598" width="236" height="76" rx="9" fill="#16171c" stroke="#d0a44c" stroke-width="1.8"/>
+<line x1="816" y1="636.0" x2="1052" y2="636.0" stroke="#26272e" stroke-width="1"/>
+<text x="934.0" y="568" font-size="15" fill="#d0a44c" text-anchor="middle" font-weight="bold" letter-spacing="2.5">FINAL</text>
+<text x="863" y="626" font-size="16.5" fill="#9a978f" font-weight="normal" font-style="italic">Winner M101</text>
+<text x="863" y="659" font-size="16.5" fill="#9a978f" font-weight="normal" font-style="italic">Winner M102</text>
+<text x="1080" y="589" font-size="13" fill="#9a978f">M102 · Jul 15, 4 PM · Atlanta</text>
+<rect x="1080" y="598" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="1080" y1="636.0" x2="1316" y2="636.0" stroke="#26272e" stroke-width="1"/>
+<text x="1127" y="626" font-size="16.5" fill="#9a978f" font-weight="normal" font-style="italic">Winner M99</text>
+<text x="1127" y="659" font-size="16.5" fill="#9a978f" font-weight="normal" font-style="italic">Winner M100</text>
+<text x="1344" y="359" font-size="13" fill="#9a978f">M99 · Jul 11, 5 PM · Miami</text>
+<rect x="1344" y="368" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="1344" y1="406.0" x2="1580" y2="406.0" stroke="#26272e" stroke-width="1"/>
+<image x="1356" y="380" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAdBAMAAAAqZzNAAAAAJFBMVEUAIFv///+6DC+/x9bNSmS6wtKircPAIUHGN1T//v56iqmMmrWaaF9zAAAAO0lEQVQoz2NQAoHCAIbEJiU4YBh+ghMFQQAoKAgHkgzGYLCBYbExAjBQCLCaidV2FxBwBAq6IMDwC3kAfHpfnYepGtcAAAAASUVORK5CYII=" preserveAspectRatio="xMidYMid meet"/>
+<text x="1391" y="396" font-size="16.5" fill="#e8e6e1" font-weight="normal">Norway</text>
+<image x="1356" y="413" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAYBAMAAAB6qqLzAAAAD1BMVEXjh5bIEC7////pn6vYV2yeF96iAAAAJklEQVQY02NQggJlQUEjGJthqAjCAIugoAOcI4gFUCqI1aKhHHQA6cQ0u5qTX54AAAAASUVORK5CYII=" preserveAspectRatio="xMidYMid meet"/>
+<text x="1391" y="429" font-size="16.5" fill="#e8e6e1" font-weight="normal">England</text>
+<text x="1344" y="819" font-size="13" fill="#9a978f">M100 · Jul 11, 9 PM · Kansas City</text>
+<rect x="1344" y="828" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="1344" y1="866.0" x2="1580" y2="866.0" stroke="#26272e" stroke-width="1"/>
+<image x="1356" y="840" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAZCAMAAAB0BpxXAAAAOVBMVEX////dsWLs1rTw3sb9/Pzlw43qpQ10rN/R4/Tz5tHcr27iuW7q0Kb68+j39fHfmxX79ez78uLani6jcieqAAAAWElEQVQ4y+3SwQ2AMAhAUaCAUmpb3X9YB9AIB4/955cQCLAlgwU/4Z4MHrERGUMYF6lVSgynoKq3M4Tdh+rlPYQH4VBsM55tglUMEtsYlbet03dc//gLvAEAIhV4te0c2QAAAABJRU5ErkJggg==" preserveAspectRatio="xMidYMid meet"/>
+<text x="1391" y="856" font-size="16.5" fill="#e8e6e1" font-weight="normal">Argentina</text>
+<text x="1391" y="889" font-size="16.5" fill="#9a978f" font-weight="normal" font-style="italic">Winner M96</text>
+<text x="1608" y="244" font-size="13" fill="#9a978f">M91 · Jul 5 · NY/NJ</text>
+<rect x="1608" y="253" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="1608" y1="291.0" x2="1844" y2="291.0" stroke="#26272e" stroke-width="1"/>
+<image x="1620" y="265" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAcCAMAAAAkyw3kAAAAkFBMVEUAlED/ywAwJoEOlzwemjdQSI83oDHjxQZKpC2fthhGN3NAM3VZU5fywAjEmyQ/NYf5yQFoU101K4OVd0OvuRRzdKTSwQuOshx8ryFjqifCvQ+p0MFGP4y8w8q+0tKXrLjwyATrxwXltRC+lyhkXp+JdW12XlWkgji0uM+rqnXr8vDS593K4tmZflSJj7ROQ3x/jyqZAAAA70lEQVQ4y82T2RKCMAxFTaEKBSwUcQEUF9y3//87IwVxpEp9cbyPmTNZbpJO56/U7WphxghgZLRzVg9QPasFM20oZX9MOpmDFwaOE4QeLCbv08UAfUYKsT5AbKq5sY8ceQhJf6zyZIiNeawGmYeB4atThhxiPzsektku4i6SW8VQ0hOAtStE6kZZMkVyI2NPTpmDypOqMo2SLGVVdGA2QAchLtnLKWqAdemAins+eifzaaN0PUzICTYniurpWb2hwp6lQzjFjJzQnC5V9lSGr8ppXC5Wbwx/WeH1wwr1j+KLM9M/XPkKvs4r6D/Xz3QDO1IMs+uu/zEAAAAASUVORK5CYII=" preserveAspectRatio="xMidYMid meet"/>
+<text x="1655" y="281" font-size="16.5" fill="#9a978f" font-weight="normal">Brazil</text>
+<text x="1830" y="281" font-size="16.5" fill="#9a978f" font-weight="normal" text-anchor="end">1</text>
+<image x="1620" y="298" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAdBAMAAAAqZzNAAAAAJFBMVEUAIFv///+6DC+/x9bNSmS6wtKircPAIUHGN1T//v56iqmMmrWaaF9zAAAAO0lEQVQoz2NQAoHCAIbEJiU4YBh+ghMFQQAoKAgHkgzGYLCBYbExAjBQCLCaidV2FxBwBAq6IMDwC3kAfHpfnYepGtcAAAAASUVORK5CYII=" preserveAspectRatio="xMidYMid meet"/>
+<text x="1655" y="314" font-size="16.5" fill="#d0a44c" font-weight="bold">Norway</text>
+<text x="1830" y="314" font-size="16.5" fill="#d0a44c" font-weight="bold" text-anchor="end">2</text>
+<text x="1608" y="474" font-size="13" fill="#9a978f">M92 · Jul 5 · Mexico City</text>
+<rect x="1608" y="483" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="1608" y1="521.0" x2="1844" y2="521.0" stroke="#26272e" stroke-width="1"/>
+<image x="1620" y="495" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAXCAMAAABODP0nAAAAh1BMVEUAaEfOESb///+qzMHvrrXR0rWKYUHe4dHy7+fW069pPyP8/PnBxKJwra/ur7a2upL19ezm28vRtKOng3HIrHHnzserlmmSblSgelzQ6OJRkpB4VDxkRjXDs4r889m4296Bp6mfZj9/Tie5r6i7083Dtq7b2MLcwpGUlI+Ogmu5iVulyszYwIRdbSBmAAAAfElEQVQoz+XTtxbCMAxAUUMid+P0XihpkPz/92U1A0dkzpvvIh2JEDfv6nS7uJHf0D8TVGH0oOkfUCQfKiVHYTe1RSOfMQYD1c60LmiuEKhTveVNPb4sAsVgljV7xyEgkENpqsrcgWHDMCiTrBeAr4drFtngbNdzHH5/4Q77sAk1toKo3AAAAABJRU5ErkJggg==" preserveAspectRatio="xMidYMid meet"/>
+<text x="1655" y="511" font-size="16.5" fill="#9a978f" font-weight="normal">Mexico</text>
+<text x="1830" y="511" font-size="16.5" fill="#9a978f" font-weight="normal" text-anchor="end">2</text>
+<image x="1620" y="528" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAYBAMAAAB6qqLzAAAAD1BMVEXjh5bIEC7////pn6vYV2yeF96iAAAAJklEQVQY02NQggJlQUEjGJthqAjCAIugoAOcI4gFUCqI1aKhHHQA6cQ0u5qTX54AAAAASUVORK5CYII=" preserveAspectRatio="xMidYMid meet"/>
+<text x="1655" y="544" font-size="16.5" fill="#d0a44c" font-weight="bold">England</text>
+<text x="1830" y="544" font-size="16.5" fill="#d0a44c" font-weight="bold" text-anchor="end">3</text>
+<text x="1608" y="704" font-size="13" fill="#9a978f">M95 · Jul 7 · Atlanta</text>
+<rect x="1608" y="713" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="1608" y1="751.0" x2="1844" y2="751.0" stroke="#26272e" stroke-width="1"/>
+<image x="1620" y="725" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbBAMAAAD8PtBdAAAAKlBMVEUAAADOESb////+/frTs0zz6s/8+fDx5cH38uTZvGXt3rLgyYDp2aXexXiDW01ZAAAAR0lEQVQoz2MQxAIYhoqgEgyoNsGZcEFli2YjDEHriNbNGIImc2Y6Ywr6XMEiuDUaQ1A5M2qpG4bK1PLyMAxBtarlSXDBoQwA6zcsph+bWPEAAAAASUVORK5CYII=" preserveAspectRatio="xMidYMid meet"/>
+<text x="1655" y="741" font-size="16.5" fill="#9a978f" font-weight="normal">Egypt</text>
+<text x="1830" y="741" font-size="16.5" fill="#9a978f" font-weight="normal" text-anchor="end">2</text>
+<image x="1620" y="758" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAZCAMAAAB0BpxXAAAAOVBMVEX////dsWLs1rTw3sb9/Pzlw43qpQ10rN/R4/Tz5tHcr27iuW7q0Kb68+j39fHfmxX79ez78uLani6jcieqAAAAWElEQVQ4y+3SwQ2AMAhAUaCAUmpb3X9YB9AIB4/955cQCLAlgwU/4Z4MHrERGUMYF6lVSgynoKq3M4Tdh+rlPYQH4VBsM55tglUMEtsYlbet03dc//gLvAEAIhV4te0c2QAAAABJRU5ErkJggg==" preserveAspectRatio="xMidYMid meet"/>
+<text x="1655" y="774" font-size="16.5" fill="#d0a44c" font-weight="bold">Argentina</text>
+<text x="1830" y="774" font-size="16.5" fill="#d0a44c" font-weight="bold" text-anchor="end">3</text>
+<text x="1608" y="934" font-size="13" fill="#9a978f">M96 · Jul 7, 4 PM · Toronto</text>
+<rect x="1608" y="943" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="1608" y1="981.0" x2="1844" y2="981.0" stroke="#26272e" stroke-width="1"/>
+<image x="1620" y="955" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAElBMVEX/AAD/////wMD/gID/YGD/8PBDRn5nAAAANklEQVQoz2NgGLzA2djYBENQUVBQaJALsigBQaCgoCiIdoAKMgsiAQN6C2J10lAJT9yJYfAAAHGvEL146aHXAAAAAElFTkSuQmCC" preserveAspectRatio="xMidYMid meet"/>
+<text x="1655" y="971" font-size="16.5" fill="#e8e6e1" font-weight="normal">Switzerland</text>
+<image x="1620" y="988" width="27" height="19" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbBAMAAAD8PtBdAAAAD1BMVEUAMIfIEC7/zQCWGER/fkQonp92AAAAHklEQVQoz2NQwgIYRrKgCxbAMLDAGAtgEMQC6CYIAA/lM811RVp8AAAAAElFTkSuQmCC" preserveAspectRatio="xMidYMid meet"/>
+<text x="1655" y="1004" font-size="16.5" fill="#e8e6e1" font-weight="normal">Colombia</text>
+<text x="816" y="943" font-size="13" fill="#9a978f">M103 · Jul 18, 4 PM · Miami</text>
+<rect x="816" y="952" width="236" height="76" rx="9" fill="#16171c" stroke="#26272e" stroke-width="1.1"/>
+<line x1="816" y1="990.0" x2="1052" y2="990.0" stroke="#26272e" stroke-width="1"/>
+<text x="934.0" y="922" font-size="13.5" fill="#d0a44c" text-anchor="middle" letter-spacing="2">BRONZE MATCH</text>
+<text x="863" y="980" font-size="16.5" fill="#9a978f" font-weight="normal" font-style="italic">Loser M101</text>
+<text x="863" y="1013" font-size="16.5" fill="#9a978f" font-weight="normal" font-style="italic">Loser M102</text>
 </svg>

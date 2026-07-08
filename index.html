@@ -93,6 +93,8 @@
     width: 100%; height: 240px; border: 1px solid var(--line);
     border-radius: 10px; background: var(--bg-raised); display: block;
   }
+  .map-embed { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg-raised); }
+  .map-embed iframe { width: 100%; height: 620px; border: 0; display: block; }
   .all-songs { margin-top: 28px; font-size: .9rem; }
   .all-songs a { color: var(--gold); text-decoration: none; }
   .all-songs a:hover { text-decoration: underline; }
@@ -306,6 +308,7 @@
         <li><a href="#research">Research</a></li>
         <li><a href="#curiosities">Curiosities</a></li>
         <li><a href="#worldcup">World Cup</a></li>
+        <li><a href="#gattman">Gattman's World</a></li>
       </ul>
     </nav>
   </div>
@@ -318,10 +321,8 @@
       <div class="kicker">Scott Coulter — songs, structures &amp; studies</div>
       <h1>Mister<br><em>Consistency</em></h1>
       <p class="lede">
-        One roof for a year of side quests: songs made on Suno, a stone wall of
-        equations redrawn line by line, doughnuts that explain why we can't talk
-        to each other anymore, and a couple of papers that got out of hand.
-        Named after the song. Ironically.
+        Consistently all over the place — trying to compensate by putting most
+        of it in one place. Hope you enjoy!
       </p>
       <div class="player">
         <iframe src="https://suno.com/embed/521e11b2-aad0-4d36-a07a-433a2fdcdb83" title="mr. consistency — the title track" loading="lazy" allow="autoplay"></iframe>
@@ -770,6 +771,31 @@
         One Round-of-16 match remains (Switzerland–Colombia); quarterfinals,
         semifinals, the bronze match, and the July 19 final at New York/New
         Jersey Stadium still to come. Winners shown in gold.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="gattman">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">07</span><h2>Gattman's World</h2></div>
+      <p class="sec-sub">
+        My friend Jon Gattman reviewed nearly every restaurant he ever ate at —
+        hundreds of them, one tab per city in a Google Sheet. Great notes, no
+        map. So I geocoded every address, checked which places were still open,
+        made one pin for the spots he loved and another for the ones to skip,
+        and published it so our friends could pull it up wherever they were
+        traveling. Then everyone opened it at once, the address lookup re-fired
+        on every single load, and Google mailed me an $8,000 API bill. Lesson
+        noted. The map lives on.
+      </p>
+      <figure>
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/d/embed?mid=1WKvS4MqRVJJxqM1L6kyGdFa4lviTJ_8&z=2"
+                  title="Gattman's World — restaurant reviews mapped" loading="lazy"></iframe>
+        </div>
+        <figcaption>One pin for a yes, one for a skip, and a third for the
+        places that have since closed. Roughly 1,900 restaurants across six
+        continents — open it in Google Maps and eat accordingly.</figcaption>
       </figure>
     </div>
   </section>
