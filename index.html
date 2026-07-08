@@ -88,11 +88,32 @@
   .sec-sub a:hover { text-decoration: underline; }
 
   /* ---------- music ---------- */
-  .songs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .songs iframe, .hero iframe {
-    width: 100%; height: 240px; border: 1px solid var(--line);
-    border-radius: 10px; background: var(--bg-raised); display: block;
-  }
+  .songs { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 20px; }
+  .song { cursor: pointer; }
+  .song-cover { position: relative; aspect-ratio: 1 / 1; border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--line); background: var(--bg-raised); }
+  .song-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s ease; }
+  .song:hover .song-cover img { transform: scale(1.05); }
+  .song-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.28); border: 0; padding: 0; cursor: pointer; opacity: 0; transition: opacity .25s ease; }
+  .song:hover .song-play, .song.playing .song-play, .song.paused .song-play { opacity: 1; }
+  .song-play svg { width: 44px; height: 44px; fill: #fff; filter: drop-shadow(0 2px 6px rgba(0,0,0,.6)); }
+  .song-prog { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(255,255,255,.18); opacity: 0; }
+  .song.playing .song-prog, .song.paused .song-prog { opacity: 1; }
+  .song-fill { height: 100%; width: 0; background: var(--gold); }
+  .song-title { display: block; margin-top: 9px; font-size: .88rem; color: var(--text-dim); line-height: 1.3; }
+  .song.playing .song-title, .song.paused .song-title { color: var(--gold); }
+
+  .hero-player { display: flex; align-items: center; gap: 15px; max-width: 460px;
+    background: var(--bg-raised); border: 1px solid var(--line); border-radius: 12px; padding: 13px 15px; }
+  .hero-player img { width: 62px; height: 62px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+  .hp-main { flex: 1; min-width: 0; }
+  .hp-title { font-family: var(--serif); font-size: 1.05rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hp-bar { height: 5px; background: rgba(255,255,255,.13); border-radius: 3px; margin-top: 9px; cursor: pointer; }
+  .hp-fill { height: 100%; width: 0; background: var(--gold); border-radius: 3px; }
+  .hp-btn { flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%; border: 0; cursor: pointer;
+    background: var(--gold); display: flex; align-items: center; justify-content: center; }
+  .hp-btn svg { width: 20px; height: 20px; fill: #14151a; }
   .map-embed { position: relative; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg-raised); }
   .map-embed iframe { width: 100%; height: 620px; border: 0; display: block; }
   .map-loading { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
@@ -334,9 +355,7 @@
       <p class="lede">
         Consistently all over the place...
       </p>
-      <div class="player">
-        <iframe src="https://suno.com/embed/521e11b2-aad0-4d36-a07a-433a2fdcdb83" title="mr. consistency — the title track" loading="lazy" allow="autoplay"></iframe>
-      </div>
+      <div class="hero-player" id="hero-player" data-song="521e11b2"></div>
     </div>
   </div>
 
@@ -348,17 +367,8 @@
         Country ballads, gangsta rap about your internet history, and one rawstyle
         track about time travel — consistency was never the point of the music.
       </p>
-      <div class="songs">
-        <iframe src="https://suno.com/embed/7086fa66-b120-4b30-9360-a52ee96d9b35" title="what your internet v2" loading="lazy" allow="autoplay"></iframe>
-        <iframe src="https://suno.com/embed/18dd8081-38cc-4699-b5e4-48fb8a127f83" title="If you could, 10 years ago" loading="lazy" allow="autoplay"></iframe>
-        <iframe src="https://suno.com/embed/a8d3dc73-c964-4c14-8224-e8eb05f0569e" title="Time Machine" loading="lazy" allow="autoplay"></iframe>
-        <iframe src="https://suno.com/embed/76cbf91c-606d-4a4b-8caa-d8d62d116b30" title="The Ballad of Beverly" loading="lazy" allow="autoplay"></iframe>
-        <iframe src="https://suno.com/embed/1d8a0df6-4392-4251-af74-f3472a836b67" title="Ms. Veda Suprema" loading="lazy" allow="autoplay"></iframe>
-        <iframe src="https://suno.com/embed/5be9e0d1-c867-46e5-97a5-b69eb888a96c" title="Tough as nails with a hippie smile" loading="lazy" allow="autoplay"></iframe>
-        <iframe src="https://suno.com/embed/6f9c7405-0b8b-4355-85dd-1602e579a1f3" title="The Ballad of Bevy PS 4:04 duet" loading="lazy" allow="autoplay"></iframe>
-        <iframe src="https://suno.com/embed/2a28a391-1266-4012-8bbc-81d3f736c3f6" title="a better bev there'll never be" loading="lazy" allow="autoplay"></iframe>
-      </div>
-      <p class="all-songs">Full catalogue → <a href="https://suno.com/@coultron" target="_blank" rel="noopener">suno.com/@coultron</a></p>
+      <div class="songs" id="song-grid"></div>
+      <p class="all-songs">Also on Suno → <a href="https://suno.com/@coultron" target="_blank" rel="noopener">suno.com/@coultron</a></p>
     </div>
   </section>
 
@@ -882,18 +892,86 @@
   render();
 })();
 </script>
+<script src="songs.js"></script>
 <script>
+/* Self-hosted music player — one shared <audio>, one track at a time */
 (function () {
-  const players = [...document.querySelectorAll('iframe[src*="suno.com/embed"]')];
-  if (players.length < 2) return;
-  let active = null;
-  setInterval(() => {
-    const el = document.activeElement;
-    if (players.includes(el)) {
-      if (active && active !== el) { active.src = active.src; }
-      active = el;
+  const SONGS = window.SONGS || [];
+  if (!SONGS.length) return;
+  const byId = Object.fromEntries(SONGS.map(s => [s.id, s]));
+  const audio = new Audio();
+  audio.preload = "none";
+  let curId = null;
+  const PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+  const PAUSE = '<svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
+
+  // ---- grid ----
+  const grid = document.getElementById("song-grid");
+  const cards = {};
+  if (grid) {
+    SONGS.forEach(s => {
+      const card = document.createElement("div");
+      card.className = "song"; card.dataset.id = s.id;
+      card.innerHTML =
+        '<div class="song-cover"><img loading="lazy" src="' + s.cover + '" alt="Cover art for ' + esc(s.title) + '">' +
+        '<button class="song-play" aria-label="Play ' + esc(s.title) + '">' + PLAY + '</button>' +
+        '<div class="song-prog"><div class="song-fill"></div></div></div>' +
+        '<span class="song-title">' + esc(s.title) + '</span>';
+      card.addEventListener("click", () => toggle(s.id));
+      grid.appendChild(card);
+      cards[s.id] = { el: card, fill: card.querySelector(".song-fill"), btn: card.querySelector(".song-play") };
+    });
+  }
+
+  // ---- hero featured player ----
+  const hero = document.getElementById("hero-player");
+  let heroUI = null;
+  if (hero) {
+    const s = byId[hero.dataset.song] || SONGS[0];
+    hero.dataset.song = s.id;
+    hero.innerHTML =
+      '<img src="' + s.cover + '" alt="Cover art for ' + esc(s.title) + '">' +
+      '<div class="hp-main"><div class="hp-title">' + esc(s.title) + '</div>' +
+      '<div class="hp-bar"><div class="hp-fill"></div></div></div>' +
+      '<button class="hp-btn" aria-label="Play ' + esc(s.title) + '">' + PLAY + '</button>';
+    heroUI = { id: s.id, fill: hero.querySelector(".hp-fill"), btn: hero.querySelector(".hp-btn"), bar: hero.querySelector(".hp-bar") };
+    heroUI.btn.addEventListener("click", () => toggle(s.id));
+    heroUI.bar.addEventListener("click", e => seek(e, heroUI.bar));
+  }
+
+  function esc(t) { const d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+  function toggle(id) {
+    if (curId === id) { audio.paused ? audio.play() : audio.pause(); return; }
+    curId = id; audio.src = byId[id].audio; audio.play();
+  }
+  function seek(e, bar) {
+    if (!curId) return;
+    const r = bar.getBoundingClientRect();
+    if (audio.duration) audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+  }
+  function paint() {
+    const playing = !audio.paused;
+    for (const id in cards) {
+      const c = cards[id];
+      c.el.classList.toggle("playing", id === curId && playing);
+      c.el.classList.toggle("paused", id === curId && !playing);
+      c.btn.innerHTML = (id === curId && playing) ? PAUSE : PLAY;
     }
-  }, 400);
+    if (heroUI) heroUI.btn.innerHTML = (heroUI.id === curId && playing) ? PAUSE : PLAY;
+  }
+  function progress() {
+    const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+    if (curId && cards[curId]) cards[curId].fill.style.width = pct + "%";
+    if (heroUI && heroUI.id === curId) heroUI.fill.style.width = pct + "%";
+  }
+  audio.addEventListener("play", paint);
+  audio.addEventListener("pause", paint);
+  audio.addEventListener("timeupdate", progress);
+  audio.addEventListener("ended", () => {
+    if (curId && cards[curId]) cards[curId].fill.style.width = "0%";
+    if (heroUI && heroUI.id === curId) heroUI.fill.style.width = "0%";
+    curId = null; paint();
+  });
 })();
 </script>
 <script src="pi-digits.js"></script>
