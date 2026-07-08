@@ -117,6 +117,15 @@
   .iat-stack > figure + figure { margin-top: 22px; }
   .bracket-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
   .bracket-scroll img { display: block; width: 100%; min-width: 1000px; border: none; border-radius: 0; }
+  .takeaway {
+    margin: 24px 0; padding: 22px 28px; background: var(--bg-raised);
+    border: 1px solid var(--line); border-left: 3px solid var(--gold);
+  }
+  .takeaway p {
+    font-family: var(--serif); font-weight: 400; font-size: 1.3rem;
+    line-height: 1.5; color: var(--text); margin: 0;
+  }
+  .takeaway .hl { color: var(--gold); }
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; }
   .stack > * + * { margin-top: 20px; }
@@ -705,6 +714,13 @@
           ambition-as-wound — the "correct" reading of a prompt built to bait
           exactly those tensions.
         </p>
+        <div class="takeaway">
+          <p>Three of the four AIs now read the story the same way:
+          <span class="hl">chasing money and success rings hollow, and love is
+          what counts.</span> Grok is the lone holdout — it still believes in the
+          climb. But even Grok joined the others in one move:
+          <span class="hl">giving Gwen a life of her own.</span></p>
+        </div>
         <figure>
           <img src="assets/gwen-bill-values-radar.png" alt="Radar charts of five value axes for four AI models across three sittings, showing values expanding outward from 2024 to 2025 for all models except Grok" loading="lazy">
           <figcaption>Each model's worldview as a shape. In July 2024 every
