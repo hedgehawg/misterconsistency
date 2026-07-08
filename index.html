@@ -93,8 +93,19 @@
     width: 100%; height: 240px; border: 1px solid var(--line);
     border-radius: 10px; background: var(--bg-raised); display: block;
   }
-  .map-embed { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg-raised); }
+  .map-embed { position: relative; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg-raised); }
   .map-embed iframe { width: 100%; height: 620px; border: 0; display: block; }
+  .map-loading { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 20px;
+    background: var(--bg-raised); color: var(--text-dim); transition: opacity .5s ease; }
+  .map-loading.hidden { opacity: 0; pointer-events: none; }
+  .map-loading p { font-family: var(--serif); font-size: 1.15rem; color: var(--text); margin: 0; }
+  .map-loading span { font-size: .85rem; }
+  .map-spinner { width: 38px; height: 38px; border: 3px solid var(--line);
+    border-top-color: var(--gold); border-radius: 50%; animation: mapspin .9s linear infinite; }
+  @keyframes mapspin { to { transform: rotate(360deg); } }
+  .pi-canvas { width: 100%; aspect-ratio: 1 / 1; display: block;
+    background: #0e0f12; border: 1px solid var(--line); border-radius: 10px; }
   .all-songs { margin-top: 28px; font-size: .9rem; }
   .all-songs a { color: var(--gold); text-decoration: none; }
   .all-songs a:hover { text-decoration: underline; }
@@ -608,7 +619,7 @@
       <p class="sec-sub">Things that didn't need a reason.</p>
       <div class="grid-2">
         <figure>
-          <img src="assets/pi-walk-2d.png" alt="A 2D walk built from 150,000 digits of pi, each step moving up, down, left, or right, forming a dense organic bloom colored bronze to gold" loading="lazy">
+          <canvas class="pi-canvas" id="pi2d" width="900" height="900" role="img" aria-label="Animated 2D walk built from 150,000 digits of pi, each step moving up, down, left, or right, drawing a dense organic bloom colored bronze to gold"></canvas>
           <figcaption>π, taken for a walk — flattened. 150,000 digits, each one a
           step up, down, left, or right; the color runs from the first digit
           (bronze) to the last (gold). Pure randomness, and yet it piles into a
@@ -797,7 +808,12 @@
       </p>
       <figure>
         <div class="map-embed">
-          <iframe src="https://www.google.com/maps/d/embed?mid=1WKvS4MqRVJJxqM1L6kyGdFa4lviTJ_8&z=2"
+          <div class="map-loading" id="gattman-loading">
+            <div class="map-spinner" aria-hidden="true"></div>
+            <p>Loading Gattman's World…</p>
+            <span>the map's heavy — hang tight</span>
+          </div>
+          <iframe id="gattman-map" src="https://www.google.com/maps/d/embed?mid=1WKvS4MqRVJJxqM1L6kyGdFa4lviTJ_8&z=2"
                   title="Gattman's World — restaurant reviews mapped" loading="lazy"></iframe>
         </div>
         <figcaption>One pin for a yes, one for a skip, and a third for the
@@ -878,6 +894,84 @@
       active = el;
     }
   }, 400);
+})();
+</script>
+<script src="pi-digits.js"></script>
+<script>
+/* 2D π walk — draws itself on a canvas, then loops */
+(function () {
+  const canvas = document.getElementById('pi2d');
+  if (!canvas || !window.PI_DIGITS) return;
+  const ctx = canvas.getContext('2d');
+  const D = window.PI_DIGITS;
+  const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+  const N = D.length + 1;
+  const px = new Int32Array(N), py = new Int32Array(N);
+  let x = 0, y = 0, minx = 0, maxx = 0, miny = 0, maxy = 0;
+  for (let i = 0; i < D.length; i++) {
+    const d = dirs[(D.charCodeAt(i) - 48) % 4];
+    x += d[0]; y += d[1]; px[i+1] = x; py[i+1] = y;
+    if (x < minx) minx = x; else if (x > maxx) maxx = x;
+    if (y < miny) miny = y; else if (y > maxy) maxy = y;
+  }
+  const stops = [[74,58,26],[138,106,42],[208,164,76],[240,215,154]];
+  function col(t) {
+    const seg = t * (stops.length - 1), i = Math.min(stops.length - 2, seg | 0), f = seg - i;
+    const a = stops[i], b = stops[i+1];
+    return 'rgb(' + ((a[0]+(b[0]-a[0])*f)|0) + ',' + ((a[1]+(b[1]-a[1])*f)|0) + ',' + ((a[2]+(b[2]-a[2])*f)|0) + ')';
+  }
+  let s, ox, oy, idx, raf = null;
+  const PER = Math.max(120, Math.floor(N / 500));
+  function fit() {
+    const W = canvas.width, H = canvas.height, pad = 0.05;
+    s = Math.min(W*(1-2*pad)/(maxx-minx||1), H*(1-2*pad)/(maxy-miny||1));
+    ox = W/2 - (minx+maxx)/2*s; oy = H/2 - (miny+maxy)/2*s;
+  }
+  function reset() {
+    canvas.width = canvas.width;   // clears
+    fit(); idx = 1;
+    ctx.lineWidth = Math.max(1, canvas.width / 900); ctx.lineCap = 'round'; ctx.globalAlpha = 0.85;
+  }
+  function frame() {
+    const end = Math.min(N, idx + PER);
+    for (let i = idx; i < end; i++) {
+      ctx.strokeStyle = col((i-1) / (N-1));
+      ctx.beginPath();
+      ctx.moveTo(ox + px[i-1]*s, oy + py[i-1]*s);
+      ctx.lineTo(ox + px[i]*s, oy + py[i]*s);
+      ctx.stroke();
+    }
+    idx = end;
+    if (idx < N) raf = requestAnimationFrame(frame);
+    else raf = setTimeout(() => { reset(); raf = requestAnimationFrame(frame); }, 2600);
+  }
+  function start() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const dim = Math.round(rect.width * dpr);
+    if (dim > 0) { canvas.width = dim; canvas.height = dim; }
+    reset(); raf = requestAnimationFrame(frame);
+  }
+  let started = false;
+  new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting && !started) { started = true; start(); } });
+  }, { threshold: 0.15 }).observe(canvas);
+  let rz;
+  window.addEventListener('resize', () => {
+    if (!started) return;
+    clearTimeout(rz);
+    rz = setTimeout(() => { cancelAnimationFrame(raf); clearTimeout(raf); start(); }, 250);
+  });
+})();
+</script>
+<script>
+/* Gattman's World — hide the loading card once the heavy map iframe loads */
+(function () {
+  const f = document.getElementById('gattman-map'), l = document.getElementById('gattman-loading');
+  if (!f || !l) return;
+  const hide = () => l.classList.add('hidden');
+  f.addEventListener('load', hide);
+  setTimeout(hide, 15000);   // safety net
 })();
 </script>
 </body>
