@@ -115,6 +115,8 @@
   .iat-svg text { font-family: var(--sans); }
   .iat-svg .eq { font-family: var(--serif); }
   .iat-stack > figure + figure { margin-top: 22px; }
+  .bracket-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+  .bracket-scroll img { display: block; width: 100%; min-width: 1000px; border: none; border-radius: 0; }
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; }
   .stack > * + * { margin-top: 20px; }
@@ -738,17 +740,18 @@
     <div class="wrap">
       <div class="sec-head"><span class="sec-num">06</span><h2>World Cup</h2></div>
       <p class="sec-sub">
-        A side project of a different kind — a Cowbird Capital viewing guide for
-        the 2026 Men's World Cup, hosted across the U.S., Canada, and Mexico.
-        This is my latest knockout bracket; the plan is to have it update itself
-        as each result comes in.
+        A side project of a different kind — my bracket for the 2026 Men's World
+        Cup, hosted across the U.S., Canada, and Mexico. Rebuilt from the data,
+        so the plan is to have it update itself as each result comes in.
       </p>
       <figure>
-        <img src="assets/world-cup-bracket.png" alt="2026 Men's World Cup knockout bracket — Cowbird Capital Road to the Final viewing guide, as of July 7, 2026" loading="lazy">
+        <div class="bracket-scroll">
+          <img src="assets/world-cup-bracket.svg" alt="2026 Men's World Cup knockout bracket, as of July 7, 2026" loading="lazy">
+        </div>
         <figcaption>Road to the Final — knockout bracket, as of July 7, 2026.
         One Round-of-16 match remains (Switzerland–Colombia); quarterfinals,
         semifinals, the bronze match, and the July 19 final at New York/New
-        Jersey Stadium still to come.</figcaption>
+        Jersey Stadium still to come. Winners shown in gold.</figcaption>
       </figure>
     </div>
   </section>
