@@ -226,10 +226,15 @@
   .metrics td.num, .metrics th.num { text-align: right; }
   .metrics tr.hi td { color: var(--text); }
   .metrics tbody + tbody td { border-top: 1px solid var(--line); }
+  .metrics th:first-child {
+    position: sticky; left: 0; z-index: 3;
+    background: var(--bg); box-shadow: 1px 0 0 var(--line);
+  }
   .metrics td.sitting {
-    position: relative; vertical-align: middle; text-align: left;
+    position: sticky; left: 0; z-index: 2;
+    background: var(--bg); box-shadow: 1px 0 0 var(--line);
+    vertical-align: middle; text-align: left;
     padding-left: 4px; padding-right: 26px; white-space: nowrap;
-    border-right: 1px solid var(--line);
   }
   .metrics td.sitting span {
     color: var(--gold); font-weight: 600; letter-spacing: .02em;
