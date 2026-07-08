@@ -46,7 +46,7 @@ DATES = ["July 2024", "May 2025", "July 2026"]
 MODELS = ["ChatGPT", "Claude", "Gemini", "Grok"]
 
 # ---- aggregate ----
-judges = [json.load(open(f, encoding="utf-8")) for f in sorted(glob.glob(S + r"\judges\judge*.json"))]
+judges = [json.load(open(f, encoding="utf-8")) for f in sorted(glob.glob(S + r"\judges_cross\*.json"))]
 print("judges:", len(judges))
 mean, std = {}, {}
 for cid in MAP:
