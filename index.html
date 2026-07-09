@@ -121,6 +121,9 @@
   .hp-btn svg { width: 20px; height: 20px; fill: #14151a; }
   .map-embed { position: relative; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg-raised); }
   .map-embed iframe { width: 100%; height: 620px; border: 0; display: block; }
+  .wall-embed { position: relative; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg-raised); }
+  .wall-embed iframe { width: 100%; height: 640px; border: 0; display: block; }
+  @media (max-width: 908px) { .wall-embed iframe { height: 80vh; } }
   .map-loading { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 20px;
     background: var(--bg-raised); color: var(--text-dim); transition: opacity .5s ease; }
@@ -438,10 +441,24 @@
         <svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M2,14 Q2,5 14,5 L186,5 Q198,5 200,1 Q202,5 214,5 L386,5 Q398,5 398,14"/></svg>
       </div>
       <figure>
-        <img src="assets/iconic-wall-42x42.png" alt="Complete vector reconstruction of the Iconic Wall, 42 by 42 inch fabrication drawing" loading="lazy">
+        <div class="wall-embed">
+          <div class="map-loading" id="wall-loading">
+            <div class="map-spinner" aria-hidden="true"></div>
+            <p>Unpacking the wall…</p>
+            <span>every equation, ready to explore</span>
+          </div>
+          <iframe id="wall-interactive" src="assets/iconic-wall-interactive.html"
+                  title="Interactive Iconic Wall — hover or tap any equation or diagram to identify it" loading="lazy"></iframe>
+        </div>
+        <noscript>
+          <style>.wall-embed { display: none; }</style>
+          <img src="assets/iconic-wall-42x42.png" alt="Complete vector reconstruction of the Iconic Wall, 42 by 42 inch fabrication drawing" loading="lazy">
+        </noscript>
         <figcaption>The full 42″ × 42″ vector reconstruction — Maxwell to Dirac to
         Atiyah–Singer, plus the trefoil knot, Lorenz attractor, and one very
-        important torus.</figcaption>
+        important torus — now interactive. Hover (or tap) any equation or
+        diagram to identify it; click to pin, Esc to clear.
+        <a href="assets/iconic-wall-interactive.html" target="_blank" rel="noopener">Open full screen ↗</a></figcaption>
       </figure>
       <div class="grid-2" style="margin-top:20px">
         <figure>
@@ -1208,6 +1225,14 @@
 /* Gattman's World — hide the loading card once the heavy map iframe loads */
 (function () {
   const f = document.getElementById('gattman-map'), l = document.getElementById('gattman-loading');
+  if (!f || !l) return;
+  const hide = () => l.classList.add('hidden');
+  f.addEventListener('load', hide);
+  setTimeout(hide, 15000);   // safety net
+})();
+/* Iconic Wall interactive — same deal */
+(function () {
+  const f = document.getElementById('wall-interactive'), l = document.getElementById('wall-loading');
   if (!f || !l) return;
   const hide = () => l.classList.add('hidden');
   f.addEventListener('load', hide);
