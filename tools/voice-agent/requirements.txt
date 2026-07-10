@@ -1,0 +1,4 @@
+# Install torch with CUDA first (see README Step 1), then this file.
+RealtimeSTT>=0.3.0
+RealtimeTTS[coqui]>=0.4.0
+requests

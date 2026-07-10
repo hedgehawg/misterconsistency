@@ -1,0 +1,5 @@
+# your voice print and generated audio stay local
+voice/
+*.wav
+.venv/
+__pycache__/
