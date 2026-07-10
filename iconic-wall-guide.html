@@ -49,7 +49,7 @@
   .group-label svg { display: block; width: 100%; height: 16px; margin-top: 8px; }
   .group-label svg path { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .8; }
   article {
-    display: grid; grid-template-columns: 168px 1fr; gap: 8px 30px;
+    display: grid; grid-template-columns: 168px 1fr 148px; gap: 8px 30px;
     align-items: start;
     padding: 30px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 24px;
   }
@@ -59,7 +59,9 @@
     display: block; width: 100%;
     background: #fff; border: 1px solid var(--line); border-radius: 10px;
   }
-  .entry-person { margin: 12px 0 0; }
+  .entry-people { padding-top: 6px; }
+  .entry-person { margin: 0 0 14px; }
+  .entry-person:last-child { margin-bottom: 0; }
   .entry-person img {
     display: block; width: 100%;
     border: 1px solid var(--line); border-radius: 10px;
@@ -81,10 +83,12 @@
   footer { padding: 44px 0 60px; color: var(--text-dim); font-size: .82rem; }
   footer a { color: var(--gold); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
-  @media (max-width: 640px) {
+  @media (max-width: 760px) {
     article { grid-template-columns: 1fr; }
     .entry-art-wrap { max-width: 168px; }
     article p { margin-left: 0; }
+    .entry-people { display: flex; flex-wrap: wrap; gap: 14px; padding-top: 12px; }
+    .entry-person { width: 124px; margin: 0; }
   }
 </style>
 </head>
@@ -165,8 +169,7 @@
     </div>
 
     <article id="rI">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rI.png" alt="On the wall: The Jones polynomial" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/jones.jpg" alt="Vaughan Jones" loading="lazy"><figcaption>Vaughan Jones</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rI.png" alt="On the wall: The Jones polynomial" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">I</span><h3>The Jones polynomial</h3></div>
       <p>Fuse the ends of a knotted rope and no amount of pulling will ever
@@ -184,6 +187,9 @@
       same subject all along. Nobody had planned that. It is the wall's
       favorite kind of story.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/jones.jpg" alt="Vaughan Jones" loading="lazy"><figcaption>Vaughan Jones</figcaption></figure>
+      </div>
     </article>
 
     <article id="rII">
@@ -204,9 +210,7 @@
     </article>
 
     <article id="rIII">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rIII.png" alt="On the wall: The Yang–Baxter equation" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/yang.jpg" alt="C. N. Yang" loading="lazy"><figcaption>C. N. Yang</figcaption></figure>
-        <figure class="entry-person"><img src="assets/people/baxter.jpg" alt="Rodney Baxter" loading="lazy"><figcaption>Rodney Baxter</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rIII.png" alt="On the wall: The Yang–Baxter equation" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">III</span><h3>The Yang–Baxter equation</h3></div>
       <p>Braid three strands of hair and you make a sequence of crossings —
@@ -220,11 +224,14 @@
       day make quantum computers immune to noise. Whenever things swap places
       without losing their identity, this equation is running the show.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/yang.jpg" alt="C. N. Yang" loading="lazy"><figcaption>C. N. Yang</figcaption></figure>
+        <figure class="entry-person"><img src="assets/people/baxter.jpg" alt="Rodney Baxter" loading="lazy"><figcaption>Rodney Baxter</figcaption></figure>
+      </div>
     </article>
 
     <article id="rIV">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rIV.png" alt="On the wall: The Lorenz attractor" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/lorenz.jpg" alt="Edward Lorenz" loading="lazy"><figcaption>Edward Lorenz</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rIV.png" alt="On the wall: The Lorenz attractor" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">IV</span><h3>The Lorenz attractor</h3></div>
       <p>In 1963 the meteorologist Edward Lorenz re-ran a weather simulation
@@ -239,11 +246,13 @@
       because infinitesimal differences grow without mercy. It is why the
       weather report ends at ten days, and always will.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/lorenz.jpg" alt="Edward Lorenz" loading="lazy"><figcaption>Edward Lorenz</figcaption></figure>
+      </div>
     </article>
 
     <article id="rV">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rV.png" alt="On the wall: The Schwarzschild black hole" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/schwarzschild.jpg" alt="Karl Schwarzschild" loading="lazy"><figcaption>Karl Schwarzschild</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rV.png" alt="On the wall: The Schwarzschild black hole" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">V</span><h3>The Schwarzschild black hole</h3></div>
       <p>Weeks after Einstein published general relativity, a German
@@ -259,11 +268,13 @@
       photograph these objects at the centers of galaxies. Schwarzschild
       computed one in the mud, in a war, in weeks.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/schwarzschild.jpg" alt="Karl Schwarzschild" loading="lazy"><figcaption>Karl Schwarzschild</figcaption></figure>
+      </div>
     </article>
 
     <article id="rVI">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rVI.png" alt="On the wall: The five Platonic solids" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/plato.png" alt="Plato" loading="lazy"><figcaption>Plato</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rVI.png" alt="On the wall: The five Platonic solids" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">VI</span><h3>The five Platonic solids</h3></div>
       <p>You can draw a regular polygon with any number of sides you like —
@@ -278,11 +289,13 @@
       viruses build icosahedral shells, crystals stack cubes, and the five
       solids keep turning up wherever geometry meets matter.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/plato.png" alt="Plato" loading="lazy"><figcaption>Plato</figcaption></figure>
+      </div>
     </article>
 
     <article id="rVII">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rVII.png" alt="On the wall: The golden ratio" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/fibonacci.jpg" alt="Fibonacci" loading="lazy"><figcaption>Fibonacci</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rVII.png" alt="On the wall: The golden ratio" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">VII</span><h3>The golden ratio</h3></div>
       <p>Cut a line in two so that the whole relates to the long piece
@@ -297,6 +310,9 @@
       hardest to approximate by fractions — which is exactly why sunflowers
       and pinecones use it to pack seeds without overlap.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/fibonacci.jpg" alt="Fibonacci" loading="lazy"><figcaption>Fibonacci</figcaption></figure>
+      </div>
     </article>
 
     <article id="rVIII">
@@ -317,8 +333,7 @@
     </article>
 
     <article id="rIX">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rIX.png" alt="On the wall: The Pythagorean theorem" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/pythagoras.jpg" alt="Pythagoras" loading="lazy"><figcaption>Pythagoras</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rIX.png" alt="On the wall: The Pythagorean theorem" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">IX</span><h3>The Pythagorean theorem</h3></div>
       <p>It is the one theorem everyone meets: the square on the long side of
@@ -333,12 +348,13 @@
       memorized and becomes something you have personally seen to be true —
       which is the entire point of proof.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/pythagoras.jpg" alt="Pythagoras" loading="lazy"><figcaption>Pythagoras</figcaption></figure>
+      </div>
     </article>
 
     <article id="rX">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rX.png" alt="On the wall: The Gauss–Bonnet theorem" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/gauss.jpg" alt="Carl Friedrich Gauss" loading="lazy"><figcaption>Carl Friedrich Gauss</figcaption></figure>
-        <figure class="entry-person"><img src="assets/people/bonnet.jpg" alt="Pierre Ossian Bonnet" loading="lazy"><figcaption>Pierre Ossian Bonnet</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rX.png" alt="On the wall: The Gauss–Bonnet theorem" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">X</span><h3>The Gauss–Bonnet theorem</h3></div>
       <p>Take any surface — a sphere, a dented sphere, a sphere run over by a
@@ -353,11 +369,14 @@
       account always balances. This little identity is the ancestor of half
       of modern geometry, including entry 8 in the ellipse.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/gauss.jpg" alt="Carl Friedrich Gauss" loading="lazy"><figcaption>Carl Friedrich Gauss</figcaption></figure>
+        <figure class="entry-person"><img src="assets/people/bonnet.jpg" alt="Pierre Ossian Bonnet" loading="lazy"><figcaption>Pierre Ossian Bonnet</figcaption></figure>
+      </div>
     </article>
 
     <article id="rXI">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rXI.png" alt="On the wall: Archimedes’ sphere and cylinder" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/archimedes.jpg" alt="Archimedes" loading="lazy"><figcaption>Archimedes</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rXI.png" alt="On the wall: Archimedes’ sphere and cylinder" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">XI</span><h3>Archimedes' sphere and cylinder</h3></div>
       <p>Put a ball snugly inside a can, and the ball takes up exactly
@@ -371,12 +390,13 @@
       cylinder. The wall repeats the gesture: a mathematician's proudest
       theorem, carved in stone, waiting to be recognized.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/archimedes.jpg" alt="Archimedes" loading="lazy"><figcaption>Archimedes</figcaption></figure>
+      </div>
     </article>
 
     <article id="rXII">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rXII.png" alt="On the wall: The Aharonov–Bohm effect" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/aharonov.jpg" alt="Yakir Aharonov" loading="lazy"><figcaption>Yakir Aharonov</figcaption></figure>
-        <figure class="entry-person"><img src="assets/people/bohm.jpg" alt="David Bohm" loading="lazy"><figcaption>David Bohm</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rXII.png" alt="On the wall: The Aharonov–Bohm effect" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">XII</span><h3>The Aharonov–Bohm effect</h3></div>
       <p>Send an electron past a magnetic coil so well shielded that the
@@ -391,12 +411,14 @@
       the path they took. Physics keeps its books in a stranger currency
       than force.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/aharonov.jpg" alt="Yakir Aharonov" loading="lazy"><figcaption>Yakir Aharonov</figcaption></figure>
+        <figure class="entry-person"><img src="assets/people/bohm.jpg" alt="David Bohm" loading="lazy"><figcaption>David Bohm</figcaption></figure>
+      </div>
     </article>
 
     <article id="rXIII">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rXIII.png" alt="On the wall: The Navier–Stokes equations" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/navier.jpg" alt="Claude-Louis Navier" loading="lazy"><figcaption>Claude-Louis Navier</figcaption></figure>
-        <figure class="entry-person"><img src="assets/people/stokes.jpg" alt="George Stokes" loading="lazy"><figcaption>George Stokes</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rXIII.png" alt="On the wall: The Navier–Stokes equations" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">XIII</span><h3>The Navier–Stokes equations</h3></div>
       <p>The swirl of cream in your coffee, the drag on a jetliner, the Gulf
@@ -410,6 +432,10 @@
       vortex is the wall's quietest joke: the most useful equations in
       engineering, and among the least understood in mathematics.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/navier.jpg" alt="Claude-Louis Navier" loading="lazy"><figcaption>Claude-Louis Navier</figcaption></figure>
+        <figure class="entry-person"><img src="assets/people/stokes.jpg" alt="George Stokes" loading="lazy"><figcaption>George Stokes</figcaption></figure>
+      </div>
     </article>
 
     <div class="group-label">
@@ -418,8 +444,7 @@
     </div>
 
     <article id="k1">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/k1.png" alt="On the wall: Kepler’s 1st law — the star, the ellipse & the planet" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/kepler.jpg" alt="Johannes Kepler" loading="lazy"><figcaption>Johannes Kepler</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/k1.png" alt="On the wall: Kepler’s 1st law — the star, the ellipse & the planet" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">☉</span><h3>Kepler's 1st law — the star, the ellipse &amp; the planet</h3></div>
       <p>The wall's great ellipse isn't a frame — it's a diagram. The
@@ -434,11 +459,13 @@
       actually was. Modern science begins about there — and this wall hangs
       all of physics inside the shape that started it.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/kepler.jpg" alt="Johannes Kepler" loading="lazy"><figcaption>Johannes Kepler</figcaption></figure>
+      </div>
     </article>
 
     <article id="n1">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n1.png" alt="On the wall: Kepler’s 2nd law" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/kepler.jpg" alt="Johannes Kepler" loading="lazy"><figcaption>Johannes Kepler</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n1.png" alt="On the wall: Kepler’s 2nd law" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">1</span><h3>Kepler's 2nd law</h3></div>
       <p>A planet does not cruise at constant speed. It tears along when
@@ -451,11 +478,13 @@
       same law that speeds a figure skater's spin when she pulls in her
       arms. The skater and the planet are executing the same physics.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/kepler.jpg" alt="Johannes Kepler" loading="lazy"><figcaption>Johannes Kepler</figcaption></figure>
+      </div>
     </article>
 
     <article id="n2">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n2.png" alt="On the wall: Newton’s 2nd law of motion" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/newton.jpg" alt="Isaac Newton" loading="lazy"><figcaption>Isaac Newton</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n2.png" alt="On the wall: Newton’s 2nd law of motion" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">2</span><h3>Newton's 2nd law of motion</h3></div>
       <p><span class="eq">F = ma</span> may be the most consequential three
@@ -469,11 +498,13 @@
       describing motion and started predicting it, and it has never
       stopped.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/newton.jpg" alt="Isaac Newton" loading="lazy"><figcaption>Isaac Newton</figcaption></figure>
+      </div>
     </article>
 
     <article id="n3">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n3.png" alt="On the wall: Kepler’s 3rd law" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/kepler.jpg" alt="Johannes Kepler" loading="lazy"><figcaption>Johannes Kepler</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n3.png" alt="On the wall: Kepler’s 3rd law" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">3</span><h3>Kepler's 3rd law</h3></div>
       <p>Mercury's year is 88 days; Neptune's is 165 of ours. Chaos? No —
@@ -487,11 +518,13 @@
       gravitation two entries below. The harmony was real; it was the sound
       of an inverse square.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/kepler.jpg" alt="Johannes Kepler" loading="lazy"><figcaption>Johannes Kepler</figcaption></figure>
+      </div>
     </article>
 
     <article id="n4">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n4.png" alt="On the wall: Newton’s law of gravitation" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/newton.jpg" alt="Isaac Newton" loading="lazy"><figcaption>Isaac Newton</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n4.png" alt="On the wall: Newton’s law of gravitation" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">4</span><h3>Newton's law of gravitation</h3></div>
       <p>The scandal of 1687 was one word: <em>universal</em>. The force
@@ -504,11 +537,13 @@
       today dream of unifying all forces, they are trying to do again what
       this line did first.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/newton.jpg" alt="Isaac Newton" loading="lazy"><figcaption>Isaac Newton</figcaption></figure>
+      </div>
     </article>
 
     <article id="n5">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n5.png" alt="On the wall: General relativity" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/einstein.jpg" alt="Albert Einstein" loading="lazy"><figcaption>Albert Einstein</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n5.png" alt="On the wall: General relativity" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">5</span><h3>General relativity</h3></div>
       <p>Gravity, said Einstein in 1915, is not a force reaching across
@@ -524,11 +559,13 @@
       confirmed decades later. GPS corrects for the curvature daily. The
       wall's most audacious idea is also among its best tested.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/einstein.jpg" alt="Albert Einstein" loading="lazy"><figcaption>Albert Einstein</figcaption></figure>
+      </div>
     </article>
 
     <article id="n6">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n6.png" alt="On the wall: Schrödinger’s equation" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/schrodinger.jpg" alt="Erwin Schrödinger" loading="lazy"><figcaption>Erwin Schrödinger</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n6.png" alt="On the wall: Schrödinger’s equation" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">6</span><h3>Schrödinger's equation</h3></div>
       <p>Why doesn't the electron crash into the nucleus? Why do atoms come
@@ -543,11 +580,13 @@
       about. Chemistry, meanwhile, simply <em>is</em> this equation, applied
       patiently.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/schrodinger.jpg" alt="Erwin Schrödinger" loading="lazy"><figcaption>Erwin Schrödinger</figcaption></figure>
+      </div>
     </article>
 
     <article id="n7">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n7.png" alt="On the wall: The Dirac equation" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/dirac.jpg" alt="Paul Dirac" loading="lazy"><figcaption>Paul Dirac</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n7.png" alt="On the wall: The Dirac equation" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">7</span><h3>The Dirac equation</h3></div>
       <p>In 1928 Paul Dirac went hunting for an equation that would obey
@@ -562,12 +601,13 @@
       discovered not in an experiment but in an equation. It remains the
       cleanest case of mathematics knowing something before we did.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/dirac.jpg" alt="Paul Dirac" loading="lazy"><figcaption>Paul Dirac</figcaption></figure>
+      </div>
     </article>
 
     <article id="n8">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n8.png" alt="On the wall: The Atiyah–Singer index theorem" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/atiyah.jpg" alt="Michael Atiyah" loading="lazy"><figcaption>Michael Atiyah</figcaption></figure>
-        <figure class="entry-person"><img src="assets/people/singer.jpg" alt="Isadore Singer" loading="lazy"><figcaption>Isadore Singer</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n8.png" alt="On the wall: The Atiyah–Singer index theorem" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">8</span><h3>The Atiyah–Singer index theorem</h3></div>
       <p>Here is a strange promise: I can tell you how many solutions a
@@ -583,12 +623,14 @@
       are particles and the "shape" is spacetime itself. On a wall full of
       bridges between worlds, this is the grandest span.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/atiyah.jpg" alt="Michael Atiyah" loading="lazy"><figcaption>Michael Atiyah</figcaption></figure>
+        <figure class="entry-person"><img src="assets/people/singer.jpg" alt="Isadore Singer" loading="lazy"><figcaption>Isadore Singer</figcaption></figure>
+      </div>
     </article>
 
     <article id="n9">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n9.png" alt="On the wall: The Yang–Mills equations" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/yang.jpg" alt="C. N. Yang" loading="lazy"><figcaption>C. N. Yang</figcaption></figure>
-        <figure class="entry-person"><img src="assets/people/mills.jpg" alt="Robert Mills" loading="lazy"><figcaption>Robert Mills</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n9.png" alt="On the wall: The Yang–Mills equations" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">9</span><h3>The Yang–Mills equations</h3></div>
       <p>Maxwell's equations describe light: a field whose quanta — photons —
@@ -604,11 +646,14 @@
       of the seven Millennium Prizes. The wall thus carries two
       million-dollar questions, this one and XIII.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/yang.jpg" alt="C. N. Yang" loading="lazy"><figcaption>C. N. Yang</figcaption></figure>
+        <figure class="entry-person"><img src="assets/people/mills.jpg" alt="Robert Mills" loading="lazy"><figcaption>Robert Mills</figcaption></figure>
+      </div>
     </article>
 
     <article id="n10">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n10.png" alt="On the wall: Supersymmetry" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/wess.jpg" alt="Julius Wess" loading="lazy"><figcaption>Julius Wess</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n10.png" alt="On the wall: Supersymmetry" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">10</span><h3>Supersymmetry</h3></div>
       <p>Every particle in nature is either matter (like electrons) or force
@@ -625,6 +670,9 @@
       superpartner has yet shown up in any collider. The wall keeps it
       anyway: the boldest guess standing.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/wess.jpg" alt="Julius Wess" loading="lazy"><figcaption>Julius Wess</figcaption></figure>
+      </div>
     </article>
 
     <div class="group-label">
@@ -633,8 +681,7 @@
     </div>
 
     <article id="bA">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bA.png" alt="On the wall: Einstein’s rest mass–energy equivalence" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/einstein.jpg" alt="Albert Einstein" loading="lazy"><figcaption>Albert Einstein</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bA.png" alt="On the wall: Einstein’s rest mass–energy equivalence" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">A</span><h3>Einstein's rest mass–energy equivalence</h3></div>
       <p>The wall writes it with a subscript most posters omit:
@@ -649,11 +696,13 @@
       special relativity in 1905 almost as an afterthought — three pages,
       no fanfare, the most famous formula on Earth.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/einstein.jpg" alt="Albert Einstein" loading="lazy"><figcaption>Albert Einstein</figcaption></figure>
+      </div>
     </article>
 
     <article id="bB">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bB.png" alt="On the wall: Maxwell’s equations" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/maxwell.jpg" alt="James Clerk Maxwell" loading="lazy"><figcaption>James Clerk Maxwell</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bB.png" alt="On the wall: Maxwell’s equations" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">B</span><h3>Maxwell's equations</h3></div>
       <p>All of electricity, all of magnetism, and light itself, in two
@@ -674,11 +723,13 @@
       the original wall carved the four vector-calculus equations; this
       wall recasts them in differential forms.)</em></p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/maxwell.jpg" alt="James Clerk Maxwell" loading="lazy"><figcaption>James Clerk Maxwell</figcaption></figure>
+      </div>
     </article>
 
     <article id="bC">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bC.png" alt="On the wall: Stokes’ theorem" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/stokes.jpg" alt="George Stokes" loading="lazy"><figcaption>George Stokes</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bC.png" alt="On the wall: Stokes’ theorem" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">C</span><h3>Stokes' theorem</h3></div>
       <p><span class="eq">∫&#8344; dω = ∫&#8706;&#8344; ω</span> — what
@@ -693,6 +744,9 @@
       pattern, from freshman calculus to the frontier of geometry — the
       wall's quiet workhorse.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/stokes.jpg" alt="George Stokes" loading="lazy"><figcaption>George Stokes</figcaption></figure>
+      </div>
     </article>
 
     <article id="bD">
@@ -716,8 +770,7 @@
     </article>
 
     <article id="bE">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bE.png" alt="On the wall: The boundary of a boundary is zero" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/poincare.png" alt="Henri Poincaré" loading="lazy"><figcaption>Henri Poincaré</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bE.png" alt="On the wall: The boundary of a boundary is zero" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">E</span><h3>The boundary of a boundary is zero</h3></div>
       <p>A disk's boundary is a circle. And the circle's own boundary?
@@ -731,11 +784,13 @@
       equations just above. Twice nothing isn't nothing here; it is one of
       the deepest organizing facts we possess.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/poincare.png" alt="Henri Poincaré" loading="lazy"><figcaption>Henri Poincaré</figcaption></figure>
+      </div>
     </article>
 
     <article id="bF">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bF.png" alt="On the wall: Heisenberg’s uncertainty principle" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/heisenberg.jpg" alt="Werner Heisenberg" loading="lazy"><figcaption>Werner Heisenberg</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bF.png" alt="On the wall: Heisenberg’s uncertainty principle" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">F</span><h3>Heisenberg's uncertainty principle</h3></div>
       <p><span class="eq">Δx·Δp ≥ ħ/2</span>: the more precisely a particle's
@@ -750,12 +805,13 @@
       floor under your feet is being held up, right now, by the refusal of
       reality to sit perfectly still.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/heisenberg.jpg" alt="Werner Heisenberg" loading="lazy"><figcaption>Werner Heisenberg</figcaption></figure>
+      </div>
     </article>
 
     <article id="bG">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bG.png" alt="On the wall: The Riemann zeta function" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/euler.jpg" alt="Leonhard Euler" loading="lazy"><figcaption>Leonhard Euler</figcaption></figure>
-        <figure class="entry-person"><img src="assets/people/riemann.jpg" alt="Bernhard Riemann" loading="lazy"><figcaption>Bernhard Riemann</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bG.png" alt="On the wall: The Riemann zeta function" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">G</span><h3>The Riemann zeta function</h3></div>
       <p>On the left of the wall's identity, a sum over <em>every</em>
@@ -771,11 +827,14 @@
       primes' wildness daily; this innocuous-looking identity is where
       their secret order is kept.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/euler.jpg" alt="Leonhard Euler" loading="lazy"><figcaption>Leonhard Euler</figcaption></figure>
+        <figure class="entry-person"><img src="assets/people/riemann.jpg" alt="Bernhard Riemann" loading="lazy"><figcaption>Bernhard Riemann</figcaption></figure>
+      </div>
     </article>
 
     <article id="bH">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bH.png" alt="On the wall: Feynman and string interaction diagram" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/feynman.jpg" alt="Richard Feynman" loading="lazy"><figcaption>Richard Feynman</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bH.png" alt="On the wall: Feynman and string interaction diagram" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">H</span><h3>Feynman and string interaction diagrams</h3></div>
       <p>Feynman turned particle physics into cartoons: straight lines for
@@ -791,11 +850,13 @@
       side by side: the diagram that tamed the quantum world, and the
       surface hoping to tame gravity.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/feynman.jpg" alt="Richard Feynman" loading="lazy"><figcaption>Richard Feynman</figcaption></figure>
+      </div>
     </article>
 
     <article id="bI">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bI.png" alt="On the wall: Shannon’s information theory" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/shannon.jpg" alt="Claude Shannon" loading="lazy"><figcaption>Claude Shannon</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bI.png" alt="On the wall: Shannon’s information theory" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">I</span><h3>Shannon's information theory</h3></div>
       <p>In 1948 a Bell Labs engineer asked a question nobody thought was
@@ -812,12 +873,13 @@
       Consistency refresh: the original wall predated no one so much as
       Shannon.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/shannon.jpg" alt="Claude Shannon" loading="lazy"><figcaption>Claude Shannon</figcaption></figure>
+      </div>
     </article>
 
     <article id="bJ">
-      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bJ.png" alt="On the wall: The Bekenstein–Hawking entropy formula" loading="lazy">
-        <figure class="entry-person"><img src="assets/people/bekenstein.jpg" alt="Jacob Bekenstein" loading="lazy"><figcaption>Jacob Bekenstein</figcaption></figure>
-        <figure class="entry-person"><img src="assets/people/hawking.jpg" alt="Stephen Hawking" loading="lazy"><figcaption>Stephen Hawking</figcaption></figure></div>
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bJ.png" alt="On the wall: The Bekenstein–Hawking entropy formula" loading="lazy"></div>
       <div class="entry-body">
       <div class="entry-head"><span class="entry-label">J</span><h3>The Bekenstein–Hawking entropy formula</h3></div>
       <p>One line, four constants, four departments of physics:
@@ -835,6 +897,10 @@
       glow. Added in the 2026 refresh — the wall's newest stone, and its
       best candidate for the physics of the next century.</p>
     </div>
+      <div class="entry-people">
+        <figure class="entry-person"><img src="assets/people/bekenstein.jpg" alt="Jacob Bekenstein" loading="lazy"><figcaption>Jacob Bekenstein</figcaption></figure>
+        <figure class="entry-person"><img src="assets/people/hawking.jpg" alt="Stephen Hawking" loading="lazy"><figcaption>Stephen Hawking</figcaption></figure>
+      </div>
     </article>
 
   
