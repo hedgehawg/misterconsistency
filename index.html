@@ -681,12 +681,18 @@
       </div>
       <div class="grid-2" style="margin-top:24px">
         <figure>
+          <div class="group-label gl-small">
+            <span class="gl-text">THE HUMAN CONDITION <span style="text-transform:none">— after Escher</span></span>
+            <svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M2,14 Q2,5 14,5 L186,5 Q198,5 200,1 Q202,5 214,5 L386,5 Q398,5 398,14"/></svg>
+          </div>
           <video src="assets/human-condition.mp4" autoplay loop muted playsinline preload="metadata" aria-label="An Escher-style engraving of monks on impossible staircases, endlessly climbing toward those perceived to have more"></video>
-          <figcaption>The Human Condition — after Escher.</figcaption>
         </figure>
         <figure>
+          <div class="group-label gl-small">
+            <span class="gl-text">THE SAME CONDITION, <span style="text-transform:none">with yachts</span></span>
+            <svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M2,14 Q2,5 14,5 L186,5 Q198,5 200,1 Q202,5 214,5 L386,5 Q398,5 398,14"/></svg>
+          </div>
           <video src="assets/human-condition-yachts.mp4" autoplay loop muted playsinline preload="metadata" aria-label="The same Escher-style staircase recursion, populated entirely by yachts"></video>
-          <figcaption>The same condition, with yachts.</figcaption>
         </figure>
       </div>
     </div>
@@ -1123,7 +1129,7 @@
   const grid = document.getElementById("gb-art-grid");
   if (!DATA || !tabs || !grid) return;
   const models = ["ChatGPT", "Claude", "Gemini", "Grok"].filter(m => DATA[m]);
-  let cur = models[0];
+  let cur = models.includes("Gemini") ? "Gemini" : models[0];
   function render() {
     tabs.replaceChildren(...models.map(m => {
       const b = document.createElement("button");

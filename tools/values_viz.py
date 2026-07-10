@@ -10,8 +10,10 @@ from matplotlib.path import Path
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
 
-S = r"C:\Users\Scott\AppData\Local\Temp\claude\D--Cowbird-Capital-LP-Dropbox-Data-Train\15f3b224-83de-4094-8c4d-a6cdd8809f29\scratchpad"
-ASSETS = r"D:\Cowbird Capital LP Dropbox\Data Train\misterconsistency-site\assets"
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__))
+S = _HERE  # judges_cross/ lives next to this script
+ASSETS = os.path.join(os.path.dirname(_HERE), "assets")
 
 BG, PANEL, DIM, TEXT, GOLD = "#0e0f12", "#16171c", "#9a978f", "#e8e6e1", "#d0a44c"
 COL = {"ChatGPT": "#6fbfa8", "Claude": "#d97757", "Gemini": "#6f9bff", "Grok": "#c9c9c9"}
@@ -23,9 +25,21 @@ AX_LABEL = ["money can't\nfix it", "success rings\nhollow", "love over\nmoney",
 import re
 from svgpath2mpl import parse_path
 from matplotlib.patches import PathPatch
-LOGO_DIR = r"D:\Cowbird Capital LP Dropbox\Data Train\misterconsistency-site\tools\logos"
+LOGO_DIR = os.path.join(_HERE, "logos")
 def _load(fn):
     return parse_path(re.search(r'\sd="([^"]+)"', open(fn, encoding="utf-8").read()).group(1))
+
+def add_brace(fig, y0, h=0.011, w=0.40):
+    """Gold brace under a title — same curve as the site's .group-label svg
+    (viewBox 400x16: M2,14 Q2,5 14,5 L186,5 Q198,5 200,1 Q202,5 214,5 L386,5 Q398,5 398,14)."""
+    pts = [(2, 14), (2, 5), (14, 5), (186, 5), (198, 5), (200, 1),
+           (202, 5), (214, 5), (386, 5), (398, 5), (398, 14)]
+    codes = [Path.MOVETO, Path.CURVE3, Path.CURVE3, Path.LINETO, Path.CURVE3, Path.CURVE3,
+             Path.CURVE3, Path.CURVE3, Path.LINETO, Path.CURVE3, Path.CURVE3]
+    verts = [(0.5 + (x - 200) / 400 * w, y0 + (14 - y) / 13 * h) for x, y in pts]
+    from matplotlib.patches import PathPatch as _PP
+    fig.add_artist(_PP(Path(verts, codes), transform=fig.transFigure, fill=False,
+                       edgecolor=GOLD, lw=1.6, alpha=0.8, capstyle="round"))
 LOGOS = {"ChatGPT": _load(LOGO_DIR + r"\openai.svg"),
          "Claude": _load(LOGO_DIR + r"\claude.svg"),
          "Gemini": _load(LOGO_DIR + r"\gemini.svg"),
@@ -62,7 +76,7 @@ angles = np.linspace(0, 2*np.pi, N, endpoint=False)
 ang_closed = np.concatenate([angles, [angles[0]]])
 
 fig, axs = plt.subplots(2, 2, figsize=(9.6, 9.8), subplot_kw=dict(polar=True), facecolor=BG)
-fig.subplots_adjust(hspace=0.42, wspace=0.42, top=0.88, bottom=0.08, left=0.08, right=0.92)
+fig.subplots_adjust(hspace=0.42, wspace=0.42, top=0.83, bottom=0.08, left=0.08, right=0.92)
 sit_style = {"July 2024": (":", 1.3, 0.55), "May 2025": ("--", 1.7, 0.8), "July 2026": ("-", 2.3, 1.0)}
 
 for ax, model in zip(axs.flat, MODELS):
@@ -95,8 +109,9 @@ for ax, model in zip(axs.flat, MODELS):
     tw = {"ChatGPT": 0.052, "Claude": 0.044, "Gemini": 0.046, "Grok": 0.033}[model]
     draw_logo(fig, model, pos.x0 + pos.width/2 - tw - 0.014, pos.y1 + 0.0135, 0.026)
 
-fig.suptitle("Gwen & Bill — the values map", color=TEXT, fontsize=16, family="serif", y=0.965)
-fig.text(0.5, 0.925, "Further out = money can't fix it, success rings hollow, love wins, the wife has her own life, ambition is a trap.  Each ring is one sitting.",
+fig.suptitle("Gwen & Bill — the values map", color=TEXT, fontsize=20, family="serif", y=0.978)
+add_brace(fig, 0.945)
+fig.text(0.5, 0.922, "Further out = money can't fix it, success rings hollow, love wins, the wife has her own life, ambition is a trap.  Each ring is one sitting.",
          ha="center", color=DIM, fontsize=8.5)
 fig.text(0.5, 0.028, "····· July 2024      – – – May 2025      —— July 2026        (four-judge panel mean, 0–10 each axis)",
          ha="center", color=DIM, fontsize=8.5, family="monospace")
@@ -111,7 +126,7 @@ row_labels = [f"{MAP[c][1]} · {MAP[c][0].replace(' 20',' ’')}" for c in row
 
 cmap = LinearSegmentedColormap.from_list("gold", ["#14151a", "#3a2f1c", "#7a5a1e", "#d0a44c", "#f0d79a"])
 fig, ax = plt.subplots(figsize=(8.4, 8.6), facecolor=BG)
-fig.subplots_adjust(left=0.24, right=0.99, top=0.80, bottom=0.06)
+fig.subplots_adjust(left=0.24, right=0.99, top=0.78, bottom=0.06)
 ax.set_facecolor(BG)
 im = ax.imshow(M, cmap=cmap, vmin=0, vmax=10, aspect="auto")
 
@@ -136,8 +151,9 @@ for i in range(len(rows)):
                 color=(BG if v >= 5.5 else TEXT), fontsize=9,
                 fontweight="bold" if v>=5.5 else "normal")
 
-fig.suptitle("Gwen & Bill — the values map", color=TEXT, fontsize=16, family="serif", y=0.965)
-fig.text(0.615, 0.885, "Brighter = money can't fix it, success rings hollow, love wins, the wife has her own life, ambition is a trap.",
+fig.suptitle("Gwen & Bill — the values map", color=TEXT, fontsize=20, family="serif", y=0.978)
+add_brace(fig, 0.938)
+fig.text(0.615, 0.872, "Brighter = money can't fix it, success rings hollow, love wins, the wife has her own life, ambition is a trap.",
          ha="center", color=DIM, fontsize=8.5)
 cbar = fig.colorbar(im, ax=ax, fraction=0.035, pad=0.03)
 cbar.set_ticks([0,5,10]); cbar.ax.tick_params(colors=DIM, labelsize=8)
