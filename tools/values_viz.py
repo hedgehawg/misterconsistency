@@ -76,7 +76,7 @@ angles = np.linspace(0, 2*np.pi, N, endpoint=False)
 ang_closed = np.concatenate([angles, [angles[0]]])
 
 fig, axs = plt.subplots(2, 2, figsize=(9.6, 9.8), subplot_kw=dict(polar=True), facecolor=BG)
-fig.subplots_adjust(hspace=0.42, wspace=0.42, top=0.83, bottom=0.08, left=0.08, right=0.92)
+fig.subplots_adjust(hspace=0.42, wspace=0.42, top=0.885, bottom=0.08, left=0.08, right=0.92)
 sit_style = {"July 2024": (":", 1.3, 0.55), "May 2025": ("--", 1.7, 0.8), "July 2026": ("-", 2.3, 1.0)}
 
 for ax, model in zip(axs.flat, MODELS):
@@ -109,9 +109,8 @@ for ax, model in zip(axs.flat, MODELS):
     tw = {"ChatGPT": 0.052, "Claude": 0.044, "Gemini": 0.046, "Grok": 0.033}[model]
     draw_logo(fig, model, pos.x0 + pos.width/2 - tw - 0.014, pos.y1 + 0.0135, 0.026)
 
-fig.suptitle("Gwen & Bill — the values map", color=TEXT, fontsize=20, family="serif", y=0.978)
-add_brace(fig, 0.945)
-fig.text(0.5, 0.922, "Further out = money can't fix it, success rings hollow, love wins, the wife has her own life, ambition is a trap.  Each ring is one sitting.",
+# title lives on the page as an HTML group-label, not baked into the image
+fig.text(0.5, 0.968, "Further out = money can't fix it, success rings hollow, love wins, the wife has her own life, ambition is a trap.  Each ring is one sitting.",
          ha="center", color=DIM, fontsize=8.5)
 fig.text(0.5, 0.028, "····· July 2024      – – – May 2025      —— July 2026        (four-judge panel mean, 0–10 each axis)",
          ha="center", color=DIM, fontsize=8.5, family="monospace")
@@ -126,7 +125,7 @@ row_labels = [f"{MAP[c][1]} · {MAP[c][0].replace(' 20',' ’')}" for c in row
 
 cmap = LinearSegmentedColormap.from_list("gold", ["#14151a", "#3a2f1c", "#7a5a1e", "#d0a44c", "#f0d79a"])
 fig, ax = plt.subplots(figsize=(8.4, 8.6), facecolor=BG)
-fig.subplots_adjust(left=0.24, right=0.99, top=0.78, bottom=0.06)
+fig.subplots_adjust(left=0.24, right=0.99, top=0.84, bottom=0.06)
 ax.set_facecolor(BG)
 im = ax.imshow(M, cmap=cmap, vmin=0, vmax=10, aspect="auto")
 
@@ -151,9 +150,8 @@ for i in range(len(rows)):
                 color=(BG if v >= 5.5 else TEXT), fontsize=9,
                 fontweight="bold" if v>=5.5 else "normal")
 
-fig.suptitle("Gwen & Bill — the values map", color=TEXT, fontsize=20, family="serif", y=0.978)
-add_brace(fig, 0.938)
-fig.text(0.615, 0.872, "Brighter = money can't fix it, success rings hollow, love wins, the wife has her own life, ambition is a trap.",
+# title lives on the page as an HTML group-label, not baked into the image
+fig.text(0.615, 0.945, "Brighter = money can't fix it, success rings hollow, love wins, the wife has her own life, ambition is a trap.",
          ha="center", color=DIM, fontsize=8.5)
 cbar = fig.colorbar(im, ax=ax, fraction=0.035, pad=0.03)
 cbar.set_ticks([0,5,10]); cbar.ax.tick_params(colors=DIM, labelsize=8)
