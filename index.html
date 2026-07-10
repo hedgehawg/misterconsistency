@@ -209,6 +209,7 @@
     stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .8;
   }
   .gl-spaced { margin-top: 48px; }
+  .gl-small .gl-text { font-size: .8rem; letter-spacing: .14em; }
 
   /* ---------- Gwen & Bill reader ---------- */
   .reader {
@@ -677,6 +678,10 @@
       <p class="sec-sub">Things that didn't need a reason.</p>
       <div class="grid-2">
         <figure>
+          <div class="group-label gl-small">
+            <span class="gl-text">VISUALIZING BINARY π <span style="text-transform:none">in 2 dimensions</span></span>
+            <svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M2,14 Q2,5 14,5 L186,5 Q198,5 200,1 Q202,5 214,5 L386,5 Q398,5 398,14"/></svg>
+          </div>
           <canvas class="pi-canvas" id="pi2d" width="900" height="900" role="img" aria-label="Animated 2D walk built from 150,000 digits of pi, each step moving up, down, left, or right, drawing a dense organic bloom colored bronze to gold"></canvas>
           <figcaption>π, taken for a walk — flattened. 150,000 digits, each one a
           step up, down, left, or right; the color runs from the first digit
@@ -684,6 +689,10 @@
           shape.</figcaption>
         </figure>
         <figure>
+          <div class="group-label gl-small">
+            <span class="gl-text">VISUALIZING BINARY π <span style="text-transform:none">in 3 dimensions</span></span>
+            <svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M2,14 Q2,5 14,5 L186,5 Q198,5 200,1 Q202,5 214,5 L386,5 Q398,5 398,14"/></svg>
+          </div>
           <video src="assets/pi-walk-3d.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Animated 3D walk generated from the binary digits of pi, rotating as the path grows"></video>
           <figcaption>The same idea in three dimensions — the path steps along
           ±x, ±y, and ±z as it grows and slowly turns.</figcaption>
