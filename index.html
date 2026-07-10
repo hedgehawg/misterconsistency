@@ -198,6 +198,8 @@
 
   /* ---------- bracket download disclosure ---------- */
   .dl-bracket { margin-top: 18px; }
+  .sec-head .dl-bracket { margin: 0 0 0 auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .sec-head .dl-choices { margin-top: 0; }
   .dl-bracket summary {
     list-style: none; cursor: pointer; display: inline-block;
     color: var(--bg); background: var(--gold); font-size: .82rem; font-weight: 600;
@@ -864,7 +866,15 @@
 
   <section id="worldcup">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">07</span><h2>World Cup</h2></div>
+      <div class="sec-head"><span class="sec-num">07</span><h2>World Cup</h2>
+        <details class="dl-bracket">
+          <summary>Download bracket ▾</summary>
+          <div class="dl-choices">
+            <a href="assets/world-cup-bracket.pdf" download="World Cup bracket.pdf">Download PDF</a>
+            <a href="assets/world-cup-bracket.png" download="World Cup bracket.png">Download PNG</a>
+          </div>
+        </details>
+      </div>
       <p class="sec-sub">
         A side project of a different kind — my bracket for the 2026 Men's World
         Cup, hosted across the U.S., Canada, and Mexico. Rebuilt from the data,
@@ -880,13 +890,6 @@
         semis, the bronze match, and the July 19 final at New York/New Jersey
         Stadium. Winners shown in gold.</figcaption>
       </figure>
-      <details class="dl-bracket">
-        <summary>Download bracket ▾</summary>
-        <div class="dl-choices">
-          <a href="assets/world-cup-bracket.pdf" download="World Cup bracket.pdf">Download PDF</a>
-          <a href="assets/world-cup-bracket.png" download="World Cup bracket.png">Download PNG</a>
-        </div>
-      </details>
     </div>
   </section>
 
