@@ -59,6 +59,24 @@
     white-space: nowrap;
   }
   nav ul a:hover { color: var(--gold); }
+  .mnav { display: none; position: relative; }
+  .mnav summary {
+    list-style: none; cursor: pointer; color: var(--gold);
+    font-size: 1.45rem; line-height: 1; padding: 4px 2px;
+  }
+  .mnav summary::-webkit-details-marker { display: none; }
+  .mnav-panel { display: none; }
+  .mnav[open] .mnav-panel {
+    display: block; position: absolute; right: 0; top: calc(100% + 10px);
+    background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px;
+    padding: 8px 0; min-width: 220px;
+    box-shadow: 0 12px 34px rgba(0,0,0,.5); z-index: 60;
+  }
+  .mnav-panel a {
+    display: block; padding: 11px 20px; color: var(--text); text-decoration: none;
+    font-size: .82rem; font-weight: 500; letter-spacing: .05em; text-transform: uppercase;
+  }
+  .mnav-panel a:hover { color: var(--gold); background: rgba(208,164,76,.06); }
 
   /* ---------- hero ---------- */
   .hero { padding: 96px 0 72px; border-bottom: 1px solid var(--line); }
@@ -379,6 +397,7 @@
 
   @media (max-width: 760px) {
     nav ul { display: none; }
+    .mnav { display: block; }
     .songs, .grid-2, .grid-3, .cards { grid-template-columns: 1fr; }
     section { padding: 60px 0; }
     .hero { padding: 72px 0 56px; }
@@ -401,6 +420,19 @@
         <li><a href="#worldcup">World Cup</a></li>
         <li><a href="#gattman">Gattman's World</a></li>
       </ul>
+      <details class="mnav" id="mnav">
+        <summary aria-label="Open section menu">☰</summary>
+        <div class="mnav-panel">
+          <a href="#music">Music</a>
+          <a href="#wall">Iconic Wall</a>
+          <a href="#decoherence">Decoherence</a>
+          <a href="#research">Research</a>
+          <a href="#curiosities">Curiosities</a>
+          <a href="#gwen-bill">Gwen &amp; Bill</a>
+          <a href="#worldcup">World Cup</a>
+          <a href="#gattman">Gattman's World</a>
+        </div>
+      </details>
     </nav>
   </div>
 </header>
@@ -1319,6 +1351,13 @@
   const hide = () => l.classList.add('hidden');
   f.addEventListener('load', hide);
   setTimeout(hide, 15000);   // safety net
+})();
+/* Mobile nav — close the dropdown after picking a section, or when tapping outside */
+(function () {
+  const m = document.getElementById('mnav');
+  if (!m) return;
+  m.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { m.open = false; }));
+  document.addEventListener('click', e => { if (m.open && !m.contains(e.target)) m.open = false; });
 })();
 /* Iconic Wall interactive — same deal */
 (function () {
