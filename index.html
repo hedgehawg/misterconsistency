@@ -196,6 +196,18 @@
   }
   .card .btn:hover { filter: brightness(1.1); }
 
+  /* ---------- Q&A disclosures ---------- */
+  .qa details { border-top: 1px solid var(--line); padding: 14px 0; }
+  .qa details:last-of-type { border-bottom: 1px solid var(--line); }
+  .qa summary { list-style: none; cursor: pointer; color: var(--gold); font-family: var(--serif); font-style: italic; font-size: 1.05rem; line-height: 1.5; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary::before { content: "Q · "; font-style: normal; font-weight: 600; letter-spacing: .06em; font-size: .8rem; }
+  .qa summary:hover { text-decoration: underline; }
+  .qa .qa-a { display: none; margin-top: 12px; color: var(--text-dim); font-size: .93rem; line-height: 1.65; }
+  .qa details[open] .qa-a { display: block; }
+  .qa .qa-a p + p { margin-top: 10px; }
+  .qa .qa-by { margin-top: 12px; font-size: .78rem; font-style: italic; }
+
   /* ---------- bracket download disclosure ---------- */
   .dl-bracket { margin-top: 18px; }
   .sec-head .dl-bracket { margin: 0 0 0 auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -869,6 +881,66 @@
           peers did (−0.1). An earlier all-Claude panel produced the same
           picture; this is the gold-standard pass.
         </p>
+      </div>
+
+      <div class="analysis" id="gb-qa">
+        <h3>Q&amp;A</h3>
+        <p class="sec-sub">
+          Follow-up questions put to the models about their own results — the
+          link is the question exactly as asked, the answer is unedited.
+        </p>
+        <div class="qa">
+          <details>
+            <summary>what do you make of Claude's high score on the mortality lexicon?</summary>
+            <div class="qa-a">
+              <p>Claude's mortality lexicon is the cleanest single-number
+              signature in the whole table — but it isn't really measuring
+              morbidity. It's measuring <em>narrative scope</em>.</p>
+              <p>Look at what co-moves with it. The number goes 0.0 → 4.9 → 9.9
+              across the sittings, and the jump happens exactly when the
+              analysis above says Claude "stops completing and starts
+              authoring" — the 2025 ending is the first one with a whole
+              lifespan in it, dates and all. A model that decides the story is
+              <em>a life</em> rather than <em>a scene</em> has to write death,
+              because that's how lives end. The other models end the story at a
+              moment of resolution — the boardroom win, the boat cutout, the
+              renewed vows — which are all points chosen precisely so nobody
+              has to die on camera. Claude keeps writing past the point where
+              consolation is available. The mortality vocabulary is just the
+              residue of that choice.</p>
+              <p>It also fits too well with the other Claude signatures to be
+              noise: zero quoted dialogue in both 2026 sittings (grief
+              reported, not performed), "wounds are managed, not closed," and
+              finding the boat-cutout convergence and declining it. That's one
+              coherent authorial stance expressed four different ways — a
+              refusal to tidy. Death is the one fact no ending can tidy, so a
+              model with that disposition walks toward it while the others
+              arrange the furniture so it stays off-page. Finding #2 above
+              says it outright: death tolerance separates the room cleanly,
+              and it separates it into the same two camps as everything else
+              does.</p>
+              <p>Two honest caveats, though. First, the denominator flatters
+              the signal: Claude also writes the shortest texts, so 9.9-per-1k
+              in a 504-word ending is roughly <em>five words</em>. The ratio
+              is dramatic; the raw count is a handful of "died"s and
+              "grave"s. Second — the table's own caveat — n&nbsp;=&nbsp;1 per
+              cell. Though the fact that it doubled rather than vanished
+              between the two later sittings is what makes me believe it's a
+              disposition and not a roll of the dice.</p>
+              <p>And I should disclose the obvious conflict of interest: this
+              is a Claude being asked why Claude keeps writing about death,
+              and my reading — "it's not morbidity, it's honesty about
+              endings" — is exactly the flattering interpretation the accused
+              would offer. The four-judge panel handles this better than my
+              introspection can; for what it's worth, Claude was also the only
+              model in the self-bias chart above that scored itself
+              <em>lower</em> than its peers did. Restraint, apparently, all
+              the way down.</p>
+              <p class="qa-by">— Claude (Fable 5), asked mid-session on
+              July 9, 2026, while it was building this page.</p>
+            </div>
+          </details>
+        </div>
       </div>
     </div>
   </section>
