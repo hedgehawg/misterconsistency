@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Iconic Wall, explained — Mister Consistency</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f12;
+    --bg-raised: #16171c;
+    --line: #26272e;
+    --text: #e8e6e1;
+    --text-dim: #9a978f;
+    --gold: #d0a44c;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.6; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+  header { padding: 26px 0; border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .brand { font-family: var(--serif); font-size: 1.15rem; color: var(--text); text-decoration: none; }
+  .brand span { color: var(--gold); }
+  .backlink { font-size: .85rem; color: var(--gold); text-decoration: none; }
+  .backlink:hover { text-decoration: underline; }
+  .hero { padding: 64px 0 40px; }
+  h1 { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin-bottom: 18px; }
+  h1 em { font-style: italic; color: var(--gold); }
+  .lede { color: var(--text-dim); max-width: 640px; }
+  .lede a { color: var(--gold); text-decoration: none; }
+  .lede a:hover { text-decoration: underline; }
+  .draft-note { margin-top: 18px; font-size: .8rem; color: var(--text-dim); font-style: italic; border-left: 2px solid var(--gold); padding-left: 12px; }
+  .toc { padding: 28px 0 8px; border-top: 1px solid var(--line); margin-top: 40px; }
+  .toc h2 { font-family: var(--serif); font-weight: 400; font-size: 1.1rem; margin-bottom: 12px; }
+  .toc-grid { display: flex; flex-wrap: wrap; gap: 6px 4px; margin-bottom: 18px; }
+  .toc-grid a {
+    color: var(--text-dim); text-decoration: none; font-size: .78rem;
+    border: 1px solid var(--line); border-radius: 6px; padding: 4px 9px;
+  }
+  .toc-grid a b { color: var(--gold); font-weight: 600; margin-right: 5px; }
+  .toc-grid a:hover { border-color: var(--gold); color: var(--text); }
+  .group-label { margin: 64px 0 30px; text-align: center; }
+  .group-label .gl-text { font-family: var(--sans); font-weight: 600; font-size: 1rem; letter-spacing: .2em; color: var(--gold); }
+  .group-label svg { display: block; width: 100%; height: 16px; margin-top: 8px; }
+  .group-label svg path { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .8; }
+  article { padding: 30px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 24px; }
+  article:last-of-type { border-bottom: 0; }
+  .entry-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 10px; }
+  .entry-label { font-weight: 600; color: var(--gold); font-size: .95rem; letter-spacing: .05em; min-width: 34px; text-align: right; flex-shrink: 0; }
+  article h3 { font-family: var(--serif); font-weight: 400; font-size: 1.45rem; line-height: 1.25; }
+  article p { color: var(--text-dim); font-size: .95rem; margin: 0 0 10px 48px; max-width: 640px; }
+  article p:last-child { margin-bottom: 0; }
+  article .eq { font-family: var(--serif); font-style: italic; color: var(--text); white-space: nowrap; }
+  footer { padding: 44px 0 60px; color: var(--text-dim); font-size: .82rem; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  @media (max-width: 560px) {
+    article p { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/">mister<span>consistency</span></a>
+    <a class="backlink" href="/#wall">← back to the Iconic Wall</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="hero">
+      <h1>The Iconic Wall, <em>explained</em></h1>
+      <p class="lede">
+        Every equation and diagram on the wall, item by item — what it says,
+        who found it, and why it earned its place in stone. Companion to the
+        <a href="/#wall">interactive wall</a>; the numbering follows the
+        legend (I–XIII around the edge, 1–10 inside the ellipse, A–J on the
+        background). For the original wall's own scholarly key, see the
+        <a href="https://scgp.stonybrook.edu/wp-content/uploads/2018/11/Iconic_Wall_catalogue.pdf" target="_blank" rel="noopener">Simons Center catalogue ↗</a>.
+      </p>
+      <p class="draft-note">Working draft — entries are being reviewed and
+      rewritten one by one.</p>
+    </div>
+
+    <nav class="toc" aria-label="All entries">
+      <h2>Key to equations and diagrams · I–XIII</h2>
+      <div class="toc-grid">
+        <a href="#rI"><b>I</b>Jones polynomial</a>
+        <a href="#rII"><b>II</b>Associativity in QFT</a>
+        <a href="#rIII"><b>III</b>Yang–Baxter</a>
+        <a href="#rIV"><b>IV</b>Lorenz attractor</a>
+        <a href="#rV"><b>V</b>Schwarzschild</a>
+        <a href="#rVI"><b>VI</b>Platonic solids</a>
+        <a href="#rVII"><b>VII</b>Golden ratio</a>
+        <a href="#rVIII"><b>VIII</b>YBC 7289</a>
+        <a href="#rIX"><b>IX</b>Pythagoras</a>
+        <a href="#rX"><b>X</b>Gauss–Bonnet</a>
+        <a href="#rXI"><b>XI</b>Archimedes</a>
+        <a href="#rXII"><b>XII</b>Aharonov–Bohm</a>
+        <a href="#rXIII"><b>XIII</b>Navier–Stokes</a>
+      </div>
+      <h2>Within the ellipse · 1–10</h2>
+      <div class="toc-grid">
+        <a href="#k1"><b>☉</b>Kepler's 1st law</a>
+        <a href="#n1"><b>1</b>Kepler's 2nd law</a>
+        <a href="#n2"><b>2</b>Newton's 2nd law</a>
+        <a href="#n3"><b>3</b>Kepler's 3rd law</a>
+        <a href="#n4"><b>4</b>Gravitation</a>
+        <a href="#n5"><b>5</b>General relativity</a>
+        <a href="#n6"><b>6</b>Schrödinger</a>
+        <a href="#n7"><b>7</b>Dirac</a>
+        <a href="#n8"><b>8</b>Atiyah–Singer</a>
+        <a href="#n9"><b>9</b>Yang–Mills</a>
+        <a href="#n10"><b>10</b>Supersymmetry</a>
+      </div>
+      <h2>On the background · A–J</h2>
+      <div class="toc-grid">
+        <a href="#bA"><b>A</b>E₀ = mc²</a>
+        <a href="#bB"><b>B</b>Maxwell</a>
+        <a href="#bC"><b>C</b>Stokes' theorem</a>
+        <a href="#bD"><b>D</b>Supergravity</a>
+        <a href="#bE"><b>E</b>∂² = 0</a>
+        <a href="#bF"><b>F</b>Uncertainty</a>
+        <a href="#bG"><b>G</b>Riemann zeta</a>
+        <a href="#bH"><b>H</b>Feynman & strings</a>
+        <a href="#bI"><b>I</b>Shannon</a>
+        <a href="#bJ"><b>J</b>Bekenstein–Hawking</a>
+      </div>
+    </nav>
+
+    <div class="group-label">
+      <span class="gl-text">KEY TO EQUATIONS AND DIAGRAMS <span style="text-transform:none">· I–XIII</span></span>
+      <svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M2,14 Q2,5 14,5 L186,5 Q198,5 200,1 Q202,5 214,5 L386,5 Q398,5 398,14"/></svg>
+    </div>
+
+    <article id="rI">
+      <div class="entry-head"><span class="entry-label">I</span><h3>The Jones polynomial</h3></div>
+      <p>Fuse the ends of a knotted rope and no amount of pulling will ever
+      untie it. But how do you <em>prove</em> that two tangles are genuinely
+      different knots, and not the same one in disguise? For a century that
+      question embarrassed mathematics — until 1984, when Vaughan Jones,
+      working on something else entirely, stumbled onto a way of assigning
+      every knot an algebraic fingerprint. Different fingerprint, different
+      knot. Guaranteed.</p>
+      <p>The medallion shows the trefoil — the simplest true knot, the one in
+      your shoelaces before you make the bow — wrapped in the formulas that
+      compute its fingerprint. A few years later Edward Witten showed the
+      polynomial falls naturally out of quantum field theory, revealing that
+      the mathematics of knots and the mathematics of particles had been the
+      same subject all along. Nobody had planned that. It is the wall's
+      favorite kind of story.</p>
+    </article>
+
+    <article id="rII">
+      <div class="entry-head"><span class="entry-label">II</span><h3>Associativity in quantum field theory</h3></div>
+      <p>You learned the rule in grade school without being told its name:
+      (2 + 3) + 4 gives the same answer as 2 + (3 + 4). Grouping doesn't
+      matter. Associativity feels too obvious to be interesting — until you
+      ask whether the <em>universe</em> obeys it.</p>
+      <p>In quantum field theory, particles fuse and split, and the branching
+      diagrams in this medallion are the physicist's version of the grade-school
+      rule: fuse three particles this way or that way, and the result must
+      agree. What looks like bookkeeping is actually a harsh constraint —
+      whole would-be theories of physics die because they can't satisfy it.
+      The universe, it turns out, checks its arithmetic.</p>
+    </article>
+
+    <article id="rIII">
+      <div class="entry-head"><span class="entry-label">III</span><h3>The Yang–Baxter equation</h3></div>
+      <p>Braid three strands of hair and you make a sequence of crossings —
+      left over middle, middle over right. The Yang–Baxter equation is the
+      algebra of those crossings: it says certain rearrangements of who-crosses-whom
+      change nothing at all, and it writes that fact down precisely.</p>
+      <p>That sounds like a rule for hairdressers. It turned out to be a
+      master key. The same equation governs particles that scatter off each
+      other in one dimension, magnets that can be solved exactly instead of
+      approximately, and the braiding of exotic quantum states that may one
+      day make quantum computers immune to noise. Whenever things swap places
+      without losing their identity, this equation is running the show.</p>
+    </article>
+
+    <article id="rIV">
+      <div class="entry-head"><span class="entry-label">IV</span><h3>The Lorenz attractor</h3></div>
+      <p>In 1963 the meteorologist Edward Lorenz re-ran a weather simulation
+      from a saved printout, rounding 0.506127 to 0.506. The two forecasts
+      agreed for a while — then diverged into completely different weather.
+      Nothing was wrong with his computer. Something was wrong with the
+      dream of prediction itself.</p>
+      <p>The butterfly-shaped curve in the medallion traces his three little
+      equations forever: the path never repeats, never crosses itself, and
+      never leaves the butterfly. That is deterministic chaos — a system with
+      no randomness anywhere that is nonetheless unpredictable in practice,
+      because infinitesimal differences grow without mercy. It is why the
+      weather report ends at ten days, and always will.</p>
+    </article>
+
+    <article id="rV">
+      <div class="entry-head"><span class="entry-label">V</span><h3>The Schwarzschild black hole</h3></div>
+      <p>Weeks after Einstein published general relativity, a German
+      astronomer serving on the Russian front solved its equations exactly —
+      by hand, between artillery calculations. Karl Schwarzschild mailed the
+      solution to Einstein, who was astonished anyone had managed it. Within
+      a year Schwarzschild was dead of disease contracted at the front; his
+      solution turned out to describe the strangest object in physics.</p>
+      <p>The funnel in the medallion is the shape of space around his
+      solution, and the formula <span class="eq">r&#8347; = 2Gm/c²</span>
+      marks the funnel's throat: the radius at which escape would require
+      moving faster than light. Cross it and every path leads inward. We now
+      photograph these objects at the centers of galaxies. Schwarzschild
+      computed one in the mud, in a war, in weeks.</p>
+    </article>
+
+    <article id="rVI">
+      <div class="entry-head"><span class="entry-label">VI</span><h3>The five Platonic solids</h3></div>
+      <p>You can draw a regular polygon with any number of sides you like —
+      three, seven, a thousand. So it seems obvious that perfectly regular
+      <em>solids</em> should come in endless variety too. They don't. There
+      are exactly five, and there will never be a sixth: tetrahedron, cube,
+      octahedron, dodecahedron, icosahedron.</p>
+      <p>The proof is simple enough to sketch on a napkin — at every corner
+      the meeting faces must leave a gap to fold into 3D, and only five
+      combinations manage it. Euclid chose this as the finale of the
+      <em>Elements</em> two thousand years ago. Nature got the memo:
+      viruses build icosahedral shells, crystals stack cubes, and the five
+      solids keep turning up wherever geometry meets matter.</p>
+    </article>
+
+    <article id="rVII">
+      <div class="entry-head"><span class="entry-label">VII</span><h3>The golden ratio</h3></div>
+      <p>Cut a line in two so that the whole relates to the long piece
+      exactly as the long piece relates to the short one. That single
+      demand — proportion echoing itself — has only one answer:
+      φ = 1.6180339…, the golden ratio.</p>
+      <p>The medallion shows its two most famous portraits: the golden
+      rectangle that contains a smaller copy of itself forever, and the
+      formula revealing φ as the limit of the Fibonacci numbers — 1, 1, 2,
+      3, 5, 8, 13, each divided by the last, marching inexorably toward it.
+      φ is also, in a precise sense, the most irrational of all numbers, the
+      hardest to approximate by fractions — which is exactly why sunflowers
+      and pinecones use it to pack seeds without overlap.</p>
+    </article>
+
+    <article id="rVIII">
+      <div class="entry-head"><span class="entry-label">VIII</span><h3>The Babylonian tablet YBC 7289</h3></div>
+      <p>Nearly four thousand years ago — a millennium before Pythagoras — a
+      student in Mesopotamia pressed a school exercise into wet clay: a
+      square, its diagonal, and along the diagonal a number. Translated from
+      base sixty, the number is 1.41421296…</p>
+      <p>The true value of √2 is 1.41421356… The clay is correct to six
+      decimal places. The tablet, cataloged as YBC 7289 in Yale's collection,
+      is the oldest surviving high-precision computation on Earth — proof
+      that the hunger to calculate beautifully is older than the alphabet.
+      The wall reproduces it as line art: homework that outlived every empire
+      its author ever heard of.</p>
+    </article>
+
+    <article id="rIX">
+      <div class="entry-head"><span class="entry-label">IX</span><h3>The Pythagorean theorem</h3></div>
+      <p>It is the one theorem everyone meets: the square on the long side of
+      a right triangle equals the two smaller squares combined,
+      <span class="eq">c² = a² + b²</span>. It is also the most re-proved
+      statement in mathematics — hundreds of distinct proofs, including one
+      by a U.S. president.</p>
+      <p>The medallion shows a proof that needs no words at all: the same
+      four triangles rearranged inside the same square two different ways,
+      leaving as leftover space first the one big square, then the two small
+      ones. Look at it long enough and the theorem stops being a formula you
+      memorized and becomes something you have personally seen to be true —
+      which is the entire point of proof.</p>
+    </article>
+
+    <article id="rX">
+      <div class="entry-head"><span class="entry-label">X</span><h3>The Gauss–Bonnet theorem</h3></div>
+      <p>Take any surface — a sphere, a dented sphere, a sphere run over by a
+      truck — and add up its curvature over every point. The answer is
+      always 4π. Dent it, stretch it, crumple it: every extra bulge of
+      positive curvature is exactly canceled by the valleys around it. The
+      total is rigged in advance.</p>
+      <p>Rigged by what? By the only thing denting can't change: the number
+      of holes. The formula <span class="eq">2πχ = ∫ K dA</span> says total
+      curvature is fixed by topology — and for a donut, whose χ is zero, all
+      curvature must cancel to nothing. Local geometry is free; the global
+      account always balances. This little identity is the ancestor of half
+      of modern geometry, including entry 8 in the ellipse.</p>
+    </article>
+
+    <article id="rXI">
+      <div class="entry-head"><span class="entry-label">XI</span><h3>Archimedes' sphere and cylinder</h3></div>
+      <p>Put a ball snugly inside a can, and the ball takes up exactly
+      two-thirds of the can's volume — and, more astonishing still, its
+      surface is exactly two-thirds of the can's total surface. The same
+      fraction, twice, for no obvious reason. Archimedes proved it around
+      225 BC and considered it the finest thing he had ever done.</p>
+      <p>We know he did, because he asked for the figure to be carved on his
+      tombstone. A hundred and forty years later Cicero, posted to Sicily,
+      found the neglected grave by searching for the sphere and the
+      cylinder. The wall repeats the gesture: a mathematician's proudest
+      theorem, carved in stone, waiting to be recognized.</p>
+    </article>
+
+    <article id="rXII">
+      <div class="entry-head"><span class="entry-label">XII</span><h3>The Aharonov–Bohm effect</h3></div>
+      <p>Send an electron past a magnetic coil so well shielded that the
+      magnetic field where the electron travels is exactly zero. Classical
+      physics says the electron cannot possibly care that the coil is there.
+      It cares. Its quantum wave arrives measurably shifted — by an amount
+      set by magnetic flux it never touched.</p>
+      <p>The 1959 effect proves that the electromagnetic <em>potential</em> —
+      long dismissed as a bookkeeping convenience behind the "real" field —
+      is itself physically real. What quantum particles respond to is not
+      the local push and pull but a kind of accumulated geometric memory of
+      the path they took. Physics keeps its books in a stranger currency
+      than force.</p>
+    </article>
+
+    <article id="rXIII">
+      <div class="entry-head"><span class="entry-label">XIII</span><h3>The Navier–Stokes equations</h3></div>
+      <p>The swirl of cream in your coffee, the drag on a jetliner, the Gulf
+      Stream, the smoke curling off a match — every fluid on Earth obeys one
+      set of equations written down in the 1820s. Engineers solve them
+      numerically a billion times a day.</p>
+      <p>And yet: nobody has ever proved that their solutions must always
+      exist and behave — that the mathematics can't silently blow up to
+      infinity in finite time. That question is one of the seven Millennium
+      Prize Problems, with a million dollars waiting. The medallion's tidy
+      vortex is the wall's quietest joke: the most useful equations in
+      engineering, and among the least understood in mathematics.</p>
+    </article>
+
+    <div class="group-label">
+      <span class="gl-text">WITHIN THE ELLIPSE <span style="text-transform:none">· 1–10</span></span>
+      <svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M2,14 Q2,5 14,5 L186,5 Q198,5 200,1 Q202,5 214,5 L386,5 Q398,5 398,14"/></svg>
+    </div>
+
+    <article id="k1">
+      <div class="entry-head"><span class="entry-label">☉</span><h3>Kepler's 1st law — the star, the ellipse &amp; the planet</h3></div>
+      <p>The wall's great ellipse isn't a frame — it's a diagram. The
+      sunburst near the top is a star sitting at one focus; the small circle
+      on the rim is a planet in orbit. That is Kepler's first law: planets
+      travel ellipses, with the sun off-center at a focus.</p>
+      <p>It sounds mild. In 1609 it was heresy against two thousand years of
+      instinct — from Aristotle to Copernicus, everyone had insisted the
+      heavens must move in perfect circles, patching failure after failure
+      with circles riding on circles. Kepler, trusting Tycho Brahe's data
+      over the aesthetics of perfection, let the orbit be the shape it
+      actually was. Modern science begins about there — and this wall hangs
+      all of physics inside the shape that started it.</p>
+    </article>
+
+    <article id="n1">
+      <div class="entry-head"><span class="entry-label">1</span><h3>Kepler's 2nd law</h3></div>
+      <p>A planet does not cruise at constant speed. It tears along when
+      close to the sun and dawdles when far away — and it does so with exact
+      bookkeeping: the line from sun to planet sweeps out equal areas in
+      equal times, every orbit, forever. The wall writes the law in its
+      compact form, <span class="eq">dθ/dt ∝ 1/r²</span>.</p>
+      <p>Kepler found the rule by grinding through Tycho's Mars data; only
+      later would it be recognized as conservation of angular momentum — the
+      same law that speeds a figure skater's spin when she pulls in her
+      arms. The skater and the planet are executing the same physics.</p>
+    </article>
+
+    <article id="n2">
+      <div class="entry-head"><span class="entry-label">2</span><h3>Newton's 2nd law of motion</h3></div>
+      <p><span class="eq">F = ma</span> may be the most consequential three
+      symbols ever written. Push on something, and it accelerates in
+      proportion to the push and in inverse proportion to its heft. That's
+      all it says.</p>
+      <p>What it <em>did</em> was make the future computable. Given the
+      forces on a thing and its state right now, the law dictates where it
+      will be next — and from that single idea flows every trajectory ever
+      calculated: cannonballs, planets, bridges, spacecraft. Physics stopped
+      describing motion and started predicting it, and it has never
+      stopped.</p>
+    </article>
+
+    <article id="n3">
+      <div class="entry-head"><span class="entry-label">3</span><h3>Kepler's 3rd law</h3></div>
+      <p>Mercury's year is 88 days; Neptune's is 165 of ours. Chaos? No —
+      hidden order: square any planet's year and cube its distance from the
+      sun, and the two answers stand in the same fixed ratio for every
+      planet in the sky. <span class="eq">T² ∝ a³</span>.</p>
+      <p>Kepler called it the Harmonic Law and heard the music of the
+      spheres in it. Newton heard something else: working backward from
+      this exact proportion, he showed the sun's pull must weaken precisely
+      as the square of distance — the crucial clue for the law of
+      gravitation two entries below. The harmony was real; it was the sound
+      of an inverse square.</p>
+    </article>
+
+    <article id="n4">
+      <div class="entry-head"><span class="entry-label">4</span><h3>Newton's law of gravitation</h3></div>
+      <p>The scandal of 1687 was one word: <em>universal</em>. The force
+      that drops an apple, Newton claimed, is the very force that holds the
+      Moon — every mass pulling every other mass, across empty space, by
+      one rule: <span class="eq">F = Gm₁m₂/r²</span>.</p>
+      <p>Heaven and Earth had always been separate departments with separate
+      physics. Newton merged them with a single equation — the first great
+      unification, and the template for every one since. When physicists
+      today dream of unifying all forces, they are trying to do again what
+      this line did first.</p>
+    </article>
+
+    <article id="n5">
+      <div class="entry-head"><span class="entry-label">5</span><h3>General relativity</h3></div>
+      <p>Gravity, said Einstein in 1915, is not a force reaching across
+      space. It is the shape <em>of</em> space. Mass tells spacetime how to
+      curve; curved spacetime tells mass how to move — and the field
+      equations, <span class="eq">R&#8342;&#8345; − ½Rg&#8342;&#8345; = 8πT&#8342;&#8345;</span>,
+      are that sentence in mathematics: matter on the right, geometry on
+      the left.</p>
+      <p>The planet in Kepler's ellipse isn't being pulled off a straight
+      path; it is traveling the straightest line available in a valley the
+      sun has pressed into spacetime. The same equations predicted black
+      holes, gravitational waves, and the expanding universe — each
+      confirmed decades later. GPS corrects for the curvature daily. The
+      wall's most audacious idea is also among its best tested.</p>
+    </article>
+
+    <article id="n6">
+      <div class="entry-head"><span class="entry-label">6</span><h3>Schrödinger's equation</h3></div>
+      <p>Why doesn't the electron crash into the nucleus? Why do atoms come
+      in discrete flavors with discrete colors? Because matter, at bottom,
+      is a wave — and Schrödinger's equation, written over Christmas 1925,
+      is the law of how those waves ripple and settle.</p>
+      <p>An electron bound in an atom is a standing wave, like a guitar
+      string that can only ring at certain pitches — those pitches are the
+      energy levels, and their spacing is why neon glows red and sodium
+      lamps glow orange. The ψ in the equation carries probabilities rather
+      than certainties, a philosophical earthquake physics still argues
+      about. Chemistry, meanwhile, simply <em>is</em> this equation, applied
+      patiently.</p>
+    </article>
+
+    <article id="n7">
+      <div class="entry-head"><span class="entry-label">7</span><h3>The Dirac equation</h3></div>
+      <p>In 1928 Paul Dirac went hunting for an equation that would obey
+      quantum mechanics and special relativity at once — and the equation he
+      found, <span class="eq">(iγ^μ∂&#8342; − m)ψ = 0</span>, knew more
+      physics than he did.</p>
+      <p>Unasked, it produced the electron's spin, which had been a puzzling
+      experimental fact. Worse, it stubbornly insisted on a second set of
+      solutions with opposite charge. Rather than discard them, Dirac
+      predicted a new kind of matter — and four years later the positron
+      turned up in a cloud chamber, exactly as billed. Antimatter was
+      discovered not in an experiment but in an equation. It remains the
+      cleanest case of mathematics knowing something before we did.</p>
+    </article>
+
+    <article id="n8">
+      <div class="entry-head"><span class="entry-label">8</span><h3>The Atiyah–Singer index theorem</h3></div>
+      <p>Here is a strange promise: I can tell you how many solutions a
+      differential equation has — without solving it — just by knowing the
+      <em>shape</em> of the space it lives on. That promise is the
+      Atiyah–Singer index theorem, proved in 1963, and many mathematicians
+      would name it the theorem of the twentieth century.</p>
+      <p>Its two sides come from different worlds: the left counts solutions
+      (analysis, the fine-grained study of change), the right measures
+      topology (the coarse study of holes and twists). The theorem says the
+      two bookkeepings always agree — geometry constrains what equations can
+      do. It has since become load-bearing in physics, where the "solutions"
+      are particles and the "shape" is spacetime itself. On a wall full of
+      bridges between worlds, this is the grandest span.</p>
+    </article>
+
+    <article id="n9">
+      <div class="entry-head"><span class="entry-label">9</span><h3>The Yang–Mills equations</h3></div>
+      <p>Maxwell's equations describe light: a field whose quanta — photons —
+      don't feel each other. In 1954 Yang and Mills asked what happens if
+      the field's own quanta carry the very charge they transmit. The
+      answer, <span class="eq">F&#8336; = dA + A∧A</span> with
+      <span class="eq">d&#8336;*F&#8336; = 0</span>, is Maxwell plus one
+      self-interaction term — and that one term changes everything.</p>
+      <p>Self-interacting fields turn out to be the grammar of the strong
+      and weak nuclear forces; the entire Standard Model of particle physics
+      is written in Yang–Mills language. And the mathematics is so deep that
+      proving these equations behave — the "mass gap" problem — is another
+      of the seven Millennium Prizes. The wall thus carries two
+      million-dollar questions, this one and XIII.</p>
+    </article>
+
+    <article id="n10">
+      <div class="entry-head"><span class="entry-label">10</span><h3>Supersymmetry</h3></div>
+      <p>Every particle in nature is either matter (like electrons) or force
+      (like photons) — two castes that never trade places. Supersymmetry is
+      the conjecture that the universe, at bottom, doesn't respect the caste
+      system: every matter particle has a force-like twin and vice versa,
+      and the anticommutator on the wall,
+      <span class="eq">{Q&#8336;, Q̄} = 2(σ^μ)P&#8342;</span>, is the exchange
+      rule.</p>
+      <p>Its strangest clause: perform the matter–force swap twice and you
+      don't return home — you arrive displaced in spacetime. A symmetry of
+      particles secretly contains motion itself, which is why supersymmetry
+      is the gateway to supergravity (entry D) and string theory. No
+      superpartner has yet shown up in any collider. The wall keeps it
+      anyway: the boldest guess standing.</p>
+    </article>
+
+    <div class="group-label">
+      <span class="gl-text">ON THE BACKGROUND <span style="text-transform:none">· A–J</span></span>
+      <svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M2,14 Q2,5 14,5 L186,5 Q198,5 200,1 Q202,5 214,5 L386,5 Q398,5 398,14"/></svg>
+    </div>
+
+    <article id="bA">
+      <div class="entry-head"><span class="entry-label">A</span><h3>Einstein's rest mass–energy equivalence</h3></div>
+      <p>The wall writes it with a subscript most posters omit:
+      <span class="eq">E₀ = mc²</span> — the <em>rest</em> energy. The
+      point isn't that mass can be converted into energy. It's stronger:
+      mass simply <em>is</em> energy, sitting still. Every object is a
+      frozen reservoir.</p>
+      <p>The exchange rate, c², is astronomical: the mass of a raisin,
+      fully liberated, is roughly a large city's day of electricity. Stars
+      run on this arithmetic, converting millions of tons of mass to light
+      every second; nuclear reactors sip from it. The equation fell out of
+      special relativity in 1905 almost as an afterthought — three pages,
+      no fanfare, the most famous formula on Earth.</p>
+    </article>
+
+    <article id="bB">
+      <div class="entry-head"><span class="entry-label">B</span><h3>Maxwell's equations</h3></div>
+      <p>All of electricity, all of magnetism, and light itself, in two
+      short lines: <span class="eq">dF = 0</span> and
+      <span class="eq">d⋆F = ⋆J</span>. When Maxwell first captured these
+      laws in the 1860s they filled twenty equations; vector calculus later
+      compressed them to the famous four; the modern language of
+      differential forms — the same d and ⋆ that appear elsewhere on this
+      wall — folds them into two. Physics got deeper by getting shorter.</p>
+      <p>Their greatest moment came from asking what the equations do in
+      empty space: they support self-sustaining waves — electricity and
+      magnetism regenerating each other — traveling at a speed the
+      equations themselves compute. The speed came out as the measured
+      speed of light. Light <em>is</em> electromagnetism; radio, X-rays,
+      and the signal reaching your phone right now are the same wave at
+      different tempos. This is the original unification the ellipse's
+      dreamers keep trying to repeat. <em>(Updated in the 2026 refresh:
+      the original wall carved the four vector-calculus equations; this
+      wall recasts them in differential forms.)</em></p>
+    </article>
+
+    <article id="bC">
+      <div class="entry-head"><span class="entry-label">C</span><h3>Stokes' theorem</h3></div>
+      <p><span class="eq">∫&#8344; dω = ∫&#8706;&#8344; ω</span> — what
+      happens throughout a region is fully recorded on its edge. Add up a
+      quantity's variation over an entire surface, and the answer equals a
+      simpler tally around the boundary alone. The interior can be as
+      complicated as it likes; the edge remembers everything.</p>
+      <p>Every "flux" and "circulation" law of physics — several of them
+      elsewhere on this wall — is a costume worn by this one identity. It
+      is also the fundamental theorem of calculus all grown up: there, the
+      "region" is an interval and the "boundary" is its two endpoints. One
+      pattern, from freshman calculus to the frontier of geometry — the
+      wall's quiet workhorse.</p>
+    </article>
+
+    <article id="bD">
+      <div class="entry-head"><span class="entry-label">D</span><h3>Minimal supergravity Lagrangian</h3></div>
+      <p>Take supersymmetry (entry 10) and insist the matter–force swap can
+      be done <em>differently at every point in space</em>. That single
+      demand forces something remarkable into existence: gravity. The
+      symmetry cannot hold locally unless spacetime itself joins the game —
+      Einstein's theory emerges rather than being assumed.</p>
+      <p>The Lagrangian on the wall is the minimal version: Einstein's
+      curvature term plus its supersymmetric partner, the gravitino field.
+      The small chain of circles beside it is a Dynkin diagram, the
+      compressed notation mathematicians use for the symmetry underneath.
+      Supergravity was physics' first credible sketch of quantum gravity,
+      and it survives inside string theory today — a reminder that
+      sometimes you don't add gravity to a theory; you ask for enough
+      symmetry, and gravity walks in on its own.</p>
+    </article>
+
+    <article id="bE">
+      <div class="entry-head"><span class="entry-label">E</span><h3>The boundary of a boundary is zero</h3></div>
+      <p>A disk's boundary is a circle. And the circle's own boundary?
+      Nothing — a loop has no endpoints. The pattern is universal: take the
+      edge of anything, and the edge of that edge is empty.
+      <span class="eq">∂² = 0</span>, the tersest equation on the wall.</p>
+      <p>John Wheeler liked to say that much of physics unfolds from this
+      near-tautology. He wasn't exaggerating: the identity underwrites the
+      conservation laws of electromagnetism, the machinery topologists use
+      to count holes, and — written as d² = 0 — the first of Maxwell's two
+      equations just above. Twice nothing isn't nothing here; it is one of
+      the deepest organizing facts we possess.</p>
+    </article>
+
+    <article id="bF">
+      <div class="entry-head"><span class="entry-label">F</span><h3>Heisenberg's uncertainty principle</h3></div>
+      <p><span class="eq">Δx·Δp ≥ ħ/2</span>: the more precisely a particle's
+      position is pinned down, the less precisely its momentum can even be
+      defined — not because our instruments are clumsy, but because sharp
+      values of both do not simultaneously exist. The fuzziness is in the
+      world, not the ruler.</p>
+      <p>It follows directly from matter being a wave (entry 6): a wave
+      squeezed into a tiny region must be built from many wavelengths, and
+      wavelength is momentum. The principle is why atoms don't collapse —
+      confining an electron too tightly makes its momentum explode — so the
+      floor under your feet is being held up, right now, by the refusal of
+      reality to sit perfectly still.</p>
+    </article>
+
+    <article id="bG">
+      <div class="entry-head"><span class="entry-label">G</span><h3>The Riemann zeta function</h3></div>
+      <p>On the left of the wall's identity, a sum over <em>every</em>
+      counting number: 1 + 1/2ˢ + 1/3ˢ + … On the right, a product over
+      only the <em>primes</em>. Euler proved they are exactly equal —
+      always. The smooth, orderly world of all numbers and the jagged,
+      unpredictable world of primes are two descriptions of one thing.</p>
+      <p>Riemann pushed the function into the complex plane and found that
+      the primes' apparent randomness is orchestrated by where this
+      function equals zero. His 1859 conjecture about those zeros — the
+      Riemann hypothesis — is now the most wanted proof in mathematics,
+      with its own Millennium Prize. Internet cryptography leans on the
+      primes' wildness daily; this innocuous-looking identity is where
+      their secret order is kept.</p>
+    </article>
+
+    <article id="bH">
+      <div class="entry-head"><span class="entry-label">H</span><h3>Feynman and string interaction diagrams</h3></div>
+      <p>Feynman turned particle physics into cartoons: straight lines for
+      particles, wiggly ones for photons — like the wiggly rays crossing
+      this very wall — meeting at sharp points where particles collide.
+      Behind each doodle sits a precise calculation; the doodles are why
+      anyone can do it.</p>
+      <p>But those sharp meeting points breed mathematical infinities. String
+      theory's remedy is drawn beside the Feynman graph: if particles are
+      tiny loops rather than dots, a collision is two tubes merging into
+      one — a smooth surface shaped like a pair of pants, with no sharp
+      point anywhere for infinity to hide in. Two generations of physics,
+      side by side: the diagram that tamed the quantum world, and the
+      surface hoping to tame gravity.</p>
+    </article>
+
+    <article id="bI">
+      <div class="entry-head"><span class="entry-label">I</span><h3>Shannon's information theory</h3></div>
+      <p>In 1948 a Bell Labs engineer asked a question nobody thought was
+      mathematics: how much <em>surprise</em> does a message carry? Claude
+      Shannon's answer, <span class="eq">H(p) = −Σ p&#7522; log₂ p&#7522;</span>,
+      measures information in a brand-new unit he named the bit — and drew
+      a hard ceiling on how far any message can be compressed and how fast
+      any channel can carry it, forever, regardless of technology.</p>
+      <p>Everything digital lives under that ceiling: the file that zips,
+      the call that stays clear through static, the stream that survives
+      your worst wifi. The raw binary carved around the formula is the
+      alphabet Shannon's theorem governs — two symbols, endlessly arranged,
+      now carrying nearly all human communication. Added in the Mr.
+      Consistency refresh: the original wall predated no one so much as
+      Shannon.</p>
+    </article>
+
+    <article id="bJ">
+      <div class="entry-head"><span class="entry-label">J</span><h3>The Bekenstein–Hawking entropy formula</h3></div>
+      <p>One line, four constants, four departments of physics:
+      <span class="eq">S = kAc³/4Għ</span> carries Newton's G (gravity),
+      Planck's ħ (quantum), Einstein's c (relativity), and Boltzmann's k
+      (thermodynamics). No other equation makes all four shake hands.</p>
+      <p>It says a black hole has entropy — hidden information — and that
+      the amount is proportional to the <em>area</em> of its horizon, not
+      the volume inside. That is deeply strange: it hints that everything a
+      black hole swallows is somehow recorded on its surface, like a
+      three-dimensional room fully described by its walls. Physicists call
+      the idea holography, and many suspect it applies to the universe at
+      large. Bekenstein proposed the entropy in 1972; Hawking, trying to
+      prove him wrong, instead fixed the constant and found black holes
+      glow. Added in the 2026 refresh — the wall's newest stone, and its
+      best candidate for the physics of the next century.</p>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="/#wall">← back to the Iconic Wall</a> · Original wall:
+    <a href="https://scgp.stonybrook.edu/wp-content/uploads/2018/11/Iconic_Wall_catalogue.pdf" target="_blank" rel="noopener">Simons Center catalogue ↗</a>
+    · © 2026 Scott Coulter · misterconsistency.com</p>
+  </div>
+</footer>
+
+</body>
+</html>
