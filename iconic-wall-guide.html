@@ -21,7 +21,7 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.6; }
-  .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
   header { padding: 26px 0; border-bottom: 1px solid var(--line); }
   header .wrap { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
   .brand { font-family: var(--serif); font-size: 1.15rem; color: var(--text); text-decoration: none; }
@@ -48,8 +48,17 @@
   .group-label .gl-text { font-family: var(--sans); font-weight: 600; font-size: 1rem; letter-spacing: .2em; color: var(--gold); }
   .group-label svg { display: block; width: 100%; height: 16px; margin-top: 8px; }
   .group-label svg path { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .8; }
-  article { padding: 30px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 24px; }
+  article {
+    display: grid; grid-template-columns: 168px 1fr; gap: 8px 30px;
+    align-items: start;
+    padding: 30px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 24px;
+  }
   article:last-of-type { border-bottom: 0; }
+  .entry-art-wrap { padding-top: 6px; }
+  .entry-art {
+    display: block; width: 100%;
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+  }
   .entry-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 10px; }
   .entry-label { font-weight: 600; color: var(--gold); font-size: .95rem; letter-spacing: .05em; min-width: 34px; text-align: right; flex-shrink: 0; }
   article h3 { font-family: var(--serif); font-weight: 400; font-size: 1.45rem; line-height: 1.25; }
@@ -59,7 +68,9 @@
   footer { padding: 44px 0 60px; color: var(--text-dim); font-size: .82rem; }
   footer a { color: var(--gold); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
+    article { grid-template-columns: 1fr; }
+    .entry-art-wrap { max-width: 168px; }
     article p { margin-left: 0; }
   }
 </style>
@@ -141,6 +152,8 @@
     </div>
 
     <article id="rI">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rI.png" alt="On the wall: The Jones polynomial" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">I</span><h3>The Jones polynomial</h3></div>
       <p>Fuse the ends of a knotted rope and no amount of pulling will ever
       untie it. But how do you <em>prove</em> that two tangles are genuinely
@@ -156,9 +169,12 @@
       the mathematics of knots and the mathematics of particles had been the
       same subject all along. Nobody had planned that. It is the wall's
       favorite kind of story.</p>
+    </div>
     </article>
 
     <article id="rII">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rII.png" alt="On the wall: Associativity in quantum field theory" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">II</span><h3>Associativity in quantum field theory</h3></div>
       <p>You learned the rule in grade school without being told its name:
       (2 + 3) + 4 gives the same answer as 2 + (3 + 4). Grouping doesn't
@@ -170,9 +186,12 @@
       agree. What looks like bookkeeping is actually a harsh constraint —
       whole would-be theories of physics die because they can't satisfy it.
       The universe, it turns out, checks its arithmetic.</p>
+    </div>
     </article>
 
     <article id="rIII">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rIII.png" alt="On the wall: The Yang–Baxter equation" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">III</span><h3>The Yang–Baxter equation</h3></div>
       <p>Braid three strands of hair and you make a sequence of crossings —
       left over middle, middle over right. The Yang–Baxter equation is the
@@ -184,9 +203,12 @@
       approximately, and the braiding of exotic quantum states that may one
       day make quantum computers immune to noise. Whenever things swap places
       without losing their identity, this equation is running the show.</p>
+    </div>
     </article>
 
     <article id="rIV">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rIV.png" alt="On the wall: The Lorenz attractor" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">IV</span><h3>The Lorenz attractor</h3></div>
       <p>In 1963 the meteorologist Edward Lorenz re-ran a weather simulation
       from a saved printout, rounding 0.506127 to 0.506. The two forecasts
@@ -199,9 +221,12 @@
       no randomness anywhere that is nonetheless unpredictable in practice,
       because infinitesimal differences grow without mercy. It is why the
       weather report ends at ten days, and always will.</p>
+    </div>
     </article>
 
     <article id="rV">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rV.png" alt="On the wall: The Schwarzschild black hole" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">V</span><h3>The Schwarzschild black hole</h3></div>
       <p>Weeks after Einstein published general relativity, a German
       astronomer serving on the Russian front solved its equations exactly —
@@ -215,9 +240,12 @@
       moving faster than light. Cross it and every path leads inward. We now
       photograph these objects at the centers of galaxies. Schwarzschild
       computed one in the mud, in a war, in weeks.</p>
+    </div>
     </article>
 
     <article id="rVI">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rVI.png" alt="On the wall: The five Platonic solids" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">VI</span><h3>The five Platonic solids</h3></div>
       <p>You can draw a regular polygon with any number of sides you like —
       three, seven, a thousand. So it seems obvious that perfectly regular
@@ -230,9 +258,12 @@
       <em>Elements</em> two thousand years ago. Nature got the memo:
       viruses build icosahedral shells, crystals stack cubes, and the five
       solids keep turning up wherever geometry meets matter.</p>
+    </div>
     </article>
 
     <article id="rVII">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rVII.png" alt="On the wall: The golden ratio" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">VII</span><h3>The golden ratio</h3></div>
       <p>Cut a line in two so that the whole relates to the long piece
       exactly as the long piece relates to the short one. That single
@@ -245,9 +276,12 @@
       φ is also, in a precise sense, the most irrational of all numbers, the
       hardest to approximate by fractions — which is exactly why sunflowers
       and pinecones use it to pack seeds without overlap.</p>
+    </div>
     </article>
 
     <article id="rVIII">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rVIII.png" alt="On the wall: The Babylonian tablet YBC 7289" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">VIII</span><h3>The Babylonian tablet YBC 7289</h3></div>
       <p>Nearly four thousand years ago — a millennium before Pythagoras — a
       student in Mesopotamia pressed a school exercise into wet clay: a
@@ -259,9 +293,12 @@
       that the hunger to calculate beautifully is older than the alphabet.
       The wall reproduces it as line art: homework that outlived every empire
       its author ever heard of.</p>
+    </div>
     </article>
 
     <article id="rIX">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rIX.png" alt="On the wall: The Pythagorean theorem" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">IX</span><h3>The Pythagorean theorem</h3></div>
       <p>It is the one theorem everyone meets: the square on the long side of
       a right triangle equals the two smaller squares combined,
@@ -274,9 +311,12 @@
       ones. Look at it long enough and the theorem stops being a formula you
       memorized and becomes something you have personally seen to be true —
       which is the entire point of proof.</p>
+    </div>
     </article>
 
     <article id="rX">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rX.png" alt="On the wall: The Gauss–Bonnet theorem" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">X</span><h3>The Gauss–Bonnet theorem</h3></div>
       <p>Take any surface — a sphere, a dented sphere, a sphere run over by a
       truck — and add up its curvature over every point. The answer is
@@ -289,9 +329,12 @@
       curvature must cancel to nothing. Local geometry is free; the global
       account always balances. This little identity is the ancestor of half
       of modern geometry, including entry 8 in the ellipse.</p>
+    </div>
     </article>
 
     <article id="rXI">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rXI.png" alt="On the wall: Archimedes’ sphere and cylinder" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">XI</span><h3>Archimedes' sphere and cylinder</h3></div>
       <p>Put a ball snugly inside a can, and the ball takes up exactly
       two-thirds of the can's volume — and, more astonishing still, its
@@ -303,9 +346,12 @@
       found the neglected grave by searching for the sphere and the
       cylinder. The wall repeats the gesture: a mathematician's proudest
       theorem, carved in stone, waiting to be recognized.</p>
+    </div>
     </article>
 
     <article id="rXII">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rXII.png" alt="On the wall: The Aharonov–Bohm effect" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">XII</span><h3>The Aharonov–Bohm effect</h3></div>
       <p>Send an electron past a magnetic coil so well shielded that the
       magnetic field where the electron travels is exactly zero. Classical
@@ -318,9 +364,12 @@
       the local push and pull but a kind of accumulated geometric memory of
       the path they took. Physics keeps its books in a stranger currency
       than force.</p>
+    </div>
     </article>
 
     <article id="rXIII">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/rXIII.png" alt="On the wall: The Navier–Stokes equations" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">XIII</span><h3>The Navier–Stokes equations</h3></div>
       <p>The swirl of cream in your coffee, the drag on a jetliner, the Gulf
       Stream, the smoke curling off a match — every fluid on Earth obeys one
@@ -332,6 +381,7 @@
       Prize Problems, with a million dollars waiting. The medallion's tidy
       vortex is the wall's quietest joke: the most useful equations in
       engineering, and among the least understood in mathematics.</p>
+    </div>
     </article>
 
     <div class="group-label">
@@ -340,6 +390,8 @@
     </div>
 
     <article id="k1">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/k1.png" alt="On the wall: Kepler’s 1st law — the star, the ellipse & the planet" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">☉</span><h3>Kepler's 1st law — the star, the ellipse &amp; the planet</h3></div>
       <p>The wall's great ellipse isn't a frame — it's a diagram. The
       sunburst near the top is a star sitting at one focus; the small circle
@@ -352,9 +404,12 @@
       over the aesthetics of perfection, let the orbit be the shape it
       actually was. Modern science begins about there — and this wall hangs
       all of physics inside the shape that started it.</p>
+    </div>
     </article>
 
     <article id="n1">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n1.png" alt="On the wall: Kepler’s 2nd law" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">1</span><h3>Kepler's 2nd law</h3></div>
       <p>A planet does not cruise at constant speed. It tears along when
       close to the sun and dawdles when far away — and it does so with exact
@@ -365,9 +420,12 @@
       later would it be recognized as conservation of angular momentum — the
       same law that speeds a figure skater's spin when she pulls in her
       arms. The skater and the planet are executing the same physics.</p>
+    </div>
     </article>
 
     <article id="n2">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n2.png" alt="On the wall: Newton’s 2nd law of motion" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">2</span><h3>Newton's 2nd law of motion</h3></div>
       <p><span class="eq">F = ma</span> may be the most consequential three
       symbols ever written. Push on something, and it accelerates in
@@ -379,9 +437,12 @@
       calculated: cannonballs, planets, bridges, spacecraft. Physics stopped
       describing motion and started predicting it, and it has never
       stopped.</p>
+    </div>
     </article>
 
     <article id="n3">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n3.png" alt="On the wall: Kepler’s 3rd law" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">3</span><h3>Kepler's 3rd law</h3></div>
       <p>Mercury's year is 88 days; Neptune's is 165 of ours. Chaos? No —
       hidden order: square any planet's year and cube its distance from the
@@ -393,9 +454,12 @@
       as the square of distance — the crucial clue for the law of
       gravitation two entries below. The harmony was real; it was the sound
       of an inverse square.</p>
+    </div>
     </article>
 
     <article id="n4">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n4.png" alt="On the wall: Newton’s law of gravitation" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">4</span><h3>Newton's law of gravitation</h3></div>
       <p>The scandal of 1687 was one word: <em>universal</em>. The force
       that drops an apple, Newton claimed, is the very force that holds the
@@ -406,9 +470,12 @@
       unification, and the template for every one since. When physicists
       today dream of unifying all forces, they are trying to do again what
       this line did first.</p>
+    </div>
     </article>
 
     <article id="n5">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n5.png" alt="On the wall: General relativity" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">5</span><h3>General relativity</h3></div>
       <p>Gravity, said Einstein in 1915, is not a force reaching across
       space. It is the shape <em>of</em> space. Mass tells spacetime how to
@@ -422,9 +489,12 @@
       holes, gravitational waves, and the expanding universe — each
       confirmed decades later. GPS corrects for the curvature daily. The
       wall's most audacious idea is also among its best tested.</p>
+    </div>
     </article>
 
     <article id="n6">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n6.png" alt="On the wall: Schrödinger’s equation" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">6</span><h3>Schrödinger's equation</h3></div>
       <p>Why doesn't the electron crash into the nucleus? Why do atoms come
       in discrete flavors with discrete colors? Because matter, at bottom,
@@ -437,9 +507,12 @@
       than certainties, a philosophical earthquake physics still argues
       about. Chemistry, meanwhile, simply <em>is</em> this equation, applied
       patiently.</p>
+    </div>
     </article>
 
     <article id="n7">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n7.png" alt="On the wall: The Dirac equation" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">7</span><h3>The Dirac equation</h3></div>
       <p>In 1928 Paul Dirac went hunting for an equation that would obey
       quantum mechanics and special relativity at once — and the equation he
@@ -452,9 +525,12 @@
       turned up in a cloud chamber, exactly as billed. Antimatter was
       discovered not in an experiment but in an equation. It remains the
       cleanest case of mathematics knowing something before we did.</p>
+    </div>
     </article>
 
     <article id="n8">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n8.png" alt="On the wall: The Atiyah–Singer index theorem" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">8</span><h3>The Atiyah–Singer index theorem</h3></div>
       <p>Here is a strange promise: I can tell you how many solutions a
       differential equation has — without solving it — just by knowing the
@@ -468,9 +544,12 @@
       do. It has since become load-bearing in physics, where the "solutions"
       are particles and the "shape" is spacetime itself. On a wall full of
       bridges between worlds, this is the grandest span.</p>
+    </div>
     </article>
 
     <article id="n9">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n9.png" alt="On the wall: The Yang–Mills equations" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">9</span><h3>The Yang–Mills equations</h3></div>
       <p>Maxwell's equations describe light: a field whose quanta — photons —
       don't feel each other. In 1954 Yang and Mills asked what happens if
@@ -484,9 +563,12 @@
       proving these equations behave — the "mass gap" problem — is another
       of the seven Millennium Prizes. The wall thus carries two
       million-dollar questions, this one and XIII.</p>
+    </div>
     </article>
 
     <article id="n10">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/n10.png" alt="On the wall: Supersymmetry" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">10</span><h3>Supersymmetry</h3></div>
       <p>Every particle in nature is either matter (like electrons) or force
       (like photons) — two castes that never trade places. Supersymmetry is
@@ -501,6 +583,7 @@
       is the gateway to supergravity (entry D) and string theory. No
       superpartner has yet shown up in any collider. The wall keeps it
       anyway: the boldest guess standing.</p>
+    </div>
     </article>
 
     <div class="group-label">
@@ -509,6 +592,8 @@
     </div>
 
     <article id="bA">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bA.png" alt="On the wall: Einstein’s rest mass–energy equivalence" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">A</span><h3>Einstein's rest mass–energy equivalence</h3></div>
       <p>The wall writes it with a subscript most posters omit:
       <span class="eq">E₀ = mc²</span> — the <em>rest</em> energy. The
@@ -521,9 +606,12 @@
       every second; nuclear reactors sip from it. The equation fell out of
       special relativity in 1905 almost as an afterthought — three pages,
       no fanfare, the most famous formula on Earth.</p>
+    </div>
     </article>
 
     <article id="bB">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bB.png" alt="On the wall: Maxwell’s equations" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">B</span><h3>Maxwell's equations</h3></div>
       <p>All of electricity, all of magnetism, and light itself, in two
       short lines: <span class="eq">dF = 0</span> and
@@ -542,9 +630,12 @@
       dreamers keep trying to repeat. <em>(Updated in the 2026 refresh:
       the original wall carved the four vector-calculus equations; this
       wall recasts them in differential forms.)</em></p>
+    </div>
     </article>
 
     <article id="bC">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bC.png" alt="On the wall: Stokes’ theorem" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">C</span><h3>Stokes' theorem</h3></div>
       <p><span class="eq">∫&#8344; dω = ∫&#8706;&#8344; ω</span> — what
       happens throughout a region is fully recorded on its edge. Add up a
@@ -557,9 +648,12 @@
       "region" is an interval and the "boundary" is its two endpoints. One
       pattern, from freshman calculus to the frontier of geometry — the
       wall's quiet workhorse.</p>
+    </div>
     </article>
 
     <article id="bD">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bD.png" alt="On the wall: Minimal supergravity Lagrangian" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">D</span><h3>Minimal supergravity Lagrangian</h3></div>
       <p>Take supersymmetry (entry 10) and insist the matter–force swap can
       be done <em>differently at every point in space</em>. That single
@@ -574,9 +668,12 @@
       and it survives inside string theory today — a reminder that
       sometimes you don't add gravity to a theory; you ask for enough
       symmetry, and gravity walks in on its own.</p>
+    </div>
     </article>
 
     <article id="bE">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bE.png" alt="On the wall: The boundary of a boundary is zero" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">E</span><h3>The boundary of a boundary is zero</h3></div>
       <p>A disk's boundary is a circle. And the circle's own boundary?
       Nothing — a loop has no endpoints. The pattern is universal: take the
@@ -588,9 +685,12 @@
       to count holes, and — written as d² = 0 — the first of Maxwell's two
       equations just above. Twice nothing isn't nothing here; it is one of
       the deepest organizing facts we possess.</p>
+    </div>
     </article>
 
     <article id="bF">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bF.png" alt="On the wall: Heisenberg’s uncertainty principle" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">F</span><h3>Heisenberg's uncertainty principle</h3></div>
       <p><span class="eq">Δx·Δp ≥ ħ/2</span>: the more precisely a particle's
       position is pinned down, the less precisely its momentum can even be
@@ -603,9 +703,12 @@
       confining an electron too tightly makes its momentum explode — so the
       floor under your feet is being held up, right now, by the refusal of
       reality to sit perfectly still.</p>
+    </div>
     </article>
 
     <article id="bG">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bG.png" alt="On the wall: The Riemann zeta function" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">G</span><h3>The Riemann zeta function</h3></div>
       <p>On the left of the wall's identity, a sum over <em>every</em>
       counting number: 1 + 1/2ˢ + 1/3ˢ + … On the right, a product over
@@ -619,9 +722,12 @@
       with its own Millennium Prize. Internet cryptography leans on the
       primes' wildness daily; this innocuous-looking identity is where
       their secret order is kept.</p>
+    </div>
     </article>
 
     <article id="bH">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bH.png" alt="On the wall: Feynman and string interaction diagram" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">H</span><h3>Feynman and string interaction diagrams</h3></div>
       <p>Feynman turned particle physics into cartoons: straight lines for
       particles, wiggly ones for photons — like the wiggly rays crossing
@@ -635,9 +741,12 @@
       point anywhere for infinity to hide in. Two generations of physics,
       side by side: the diagram that tamed the quantum world, and the
       surface hoping to tame gravity.</p>
+    </div>
     </article>
 
     <article id="bI">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bI.png" alt="On the wall: Shannon’s information theory" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">I</span><h3>Shannon's information theory</h3></div>
       <p>In 1948 a Bell Labs engineer asked a question nobody thought was
       mathematics: how much <em>surprise</em> does a message carry? Claude
@@ -652,9 +761,12 @@
       now carrying nearly all human communication. Added in the Mr.
       Consistency refresh: the original wall predated no one so much as
       Shannon.</p>
+    </div>
     </article>
 
     <article id="bJ">
+      <div class="entry-art-wrap"><img class="entry-art" src="assets/wall-items/bJ.png" alt="On the wall: The Bekenstein–Hawking entropy formula" loading="lazy"></div>
+      <div class="entry-body">
       <div class="entry-head"><span class="entry-label">J</span><h3>The Bekenstein–Hawking entropy formula</h3></div>
       <p>One line, four constants, four departments of physics:
       <span class="eq">S = kAc³/4Għ</span> carries Newton's G (gravity),
@@ -670,6 +782,7 @@
       prove him wrong, instead fixed the constant and found black holes
       glow. Added in the 2026 refresh — the wall's newest stone, and its
       best candidate for the physics of the next century.</p>
+    </div>
     </article>
 
   </div>
