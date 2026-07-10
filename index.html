@@ -196,6 +196,24 @@
   }
   .card .btn:hover { filter: brightness(1.1); }
 
+  /* ---------- bracket download disclosure ---------- */
+  .dl-bracket { margin-top: 18px; }
+  .dl-bracket summary {
+    list-style: none; cursor: pointer; display: inline-block;
+    color: var(--bg); background: var(--gold); font-size: .82rem; font-weight: 600;
+    letter-spacing: .04em; padding: 10px 18px; border-radius: 6px;
+  }
+  .dl-bracket summary::-webkit-details-marker { display: none; }
+  .dl-bracket summary:hover { filter: brightness(1.1); }
+  .dl-choices { display: none; gap: 10px; margin-top: 10px; }
+  .dl-bracket[open] .dl-choices { display: inline-flex; }
+  .dl-choices a {
+    color: var(--bg); background: var(--gold); text-decoration: none;
+    font-size: .82rem; font-weight: 600; letter-spacing: .04em;
+    padding: 10px 18px; border-radius: 6px;
+  }
+  .dl-choices a:hover { filter: brightness(1.1); }
+
   /* ---------- group labels (brace style) ---------- */
   .group-label { margin: 8px 0 22px; text-align: center; }
   .group-label + * { margin-top: 0; }
@@ -856,6 +874,13 @@
         semis, the bronze match, and the July 19 final at New York/New Jersey
         Stadium. Winners shown in gold.</figcaption>
       </figure>
+      <details class="dl-bracket">
+        <summary>Download bracket ▾</summary>
+        <div class="dl-choices">
+          <a href="assets/world-cup-bracket.pdf" download="World Cup bracket.pdf">Download PDF</a>
+          <a href="assets/world-cup-bracket.png" download="World Cup bracket.png">Download PNG</a>
+        </div>
+      </details>
     </div>
   </section>
 
