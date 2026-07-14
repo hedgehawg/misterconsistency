@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alaska Trip — Mister Consistency</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="A private page.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f12;
+    --bg-raised: #16171c;
+    --line: #26272e;
+    --text: #e8e6e1;
+    --text-dim: #9a978f;
+    --gold: #d0a44c;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(14,15,18,.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; min-height: 60px; padding: 8px 0;
+  }
+  .brand {
+    font-family: var(--serif); font-weight: 600; font-size: 1.05rem;
+    color: var(--text); text-decoration: none; letter-spacing: .02em;
+    white-space: nowrap;
+  }
+  .brand span { color: var(--gold); }
+  nav .back {
+    color: var(--text-dim); text-decoration: none; font-size: .78rem;
+    font-weight: 500; letter-spacing: .05em; text-transform: uppercase;
+  }
+  nav .back:hover { color: var(--gold); }
+
+  /* ---------- gate ---------- */
+  .gate {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    background: radial-gradient(1200px 600px at 50% -10%, #191512 0%, var(--bg) 60%);
+  }
+  .gate-card {
+    width: 100%; max-width: 420px; text-align: center;
+    background: var(--bg-raised); border: 1px solid var(--line);
+    border-radius: 16px; padding: 44px 38px 38px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.5);
+  }
+  .gate-emoji { font-size: 1.9rem; letter-spacing: .12em; line-height: 1; }
+  .gate-card h1 {
+    font-family: var(--serif); font-weight: 300; font-size: 2rem;
+    margin: 18px 0 8px; letter-spacing: -.01em;
+  }
+  .gate-card h1 em { font-style: italic; color: var(--gold); }
+  .gate-card p { color: var(--text-dim); font-size: .92rem; margin-bottom: 26px; }
+  .gate-form { display: flex; flex-direction: column; gap: 12px; }
+  .gate-form input {
+    width: 100%; font-family: var(--sans); font-size: 1rem; color: var(--text);
+    background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 16px; text-align: center; letter-spacing: .04em;
+  }
+  .gate-form input:focus { outline: none; border-color: var(--gold); }
+  .gate-form button {
+    font-family: var(--sans); font-size: .9rem; font-weight: 600; letter-spacing: .04em;
+    color: var(--bg); background: var(--gold); border: 0; border-radius: 10px;
+    padding: 13px 16px; cursor: pointer;
+  }
+  .gate-form button:hover { filter: brightness(1.08); }
+  .gate-err {
+    min-height: 20px; margin-top: 6px; font-size: .84rem; color: #d98a6a;
+    opacity: 0; transition: opacity .2s ease;
+  }
+  .gate-err.show { opacity: 1; }
+  .gate-foot { margin-top: 22px; font-size: .76rem; color: var(--text-dim); }
+
+  /* ---------- trip content ---------- */
+  #trip { display: none; }
+  .hero { padding: 84px 0 8px; }
+  .hero .kicker {
+    font-size: .8rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 18px; font-weight: 500;
+  }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+    line-height: 1.05; letter-spacing: -.01em;
+  }
+  .hero h1 .emoji { font-weight: 400; }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+
+  section { padding: 44px 0 72px; }
+  .lede { color: var(--text-dim); font-size: 1.06rem; max-width: 680px; margin: 22px 0 40px; }
+  .summary {
+    background: var(--bg-raised); border: 1px solid var(--line);
+    border-left: 3px solid var(--gold); border-radius: 12px;
+    padding: 30px 34px; max-width: 760px; margin-bottom: 44px;
+  }
+  .summary .meta {
+    font-family: var(--serif); font-style: italic; color: var(--gold);
+    font-size: 1.15rem; margin-bottom: 16px;
+  }
+  .summary p { color: var(--text); margin-bottom: 14px; }
+  .summary p:last-child { margin-bottom: 0; }
+  .summary strong { color: var(--gold); font-weight: 600; }
+  .summary ol { margin: 6px 0 14px; padding-left: 22px; color: var(--text-dim); }
+  .summary ol li { margin-bottom: 8px; }
+  .summary ol li strong { color: var(--text); }
+
+  .brief-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 14px; }
+  .brief-head h2 {
+    font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  }
+  .brief-note { color: var(--text-dim); font-size: .9rem; margin-bottom: 22px; }
+  .brief-note a { color: var(--gold); text-decoration: none; }
+  .brief-note a:hover { text-decoration: underline; }
+  .brief-embed {
+    position: relative; border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; background: #faf9f5;
+  }
+  .brief-embed iframe { width: 100%; height: min(78vh, 900px); border: 0; display: block; }
+  .brief-loading {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px; text-align: center;
+    background: var(--bg-raised); color: var(--text-dim); transition: opacity .5s ease;
+  }
+  .brief-loading.hidden { opacity: 0; pointer-events: none; }
+  .brief-loading p { font-family: var(--serif); font-size: 1.15rem; color: var(--text); margin: 0; }
+  .brief-spinner {
+    width: 38px; height: 38px; border: 3px solid var(--line);
+    border-top-color: var(--gold); border-radius: 50%; animation: spin .9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  footer { padding: 40px 0 64px; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  footer p { color: var(--text-dim); font-size: .85rem; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .summary { padding: 24px 22px; }
+    .brief-embed iframe { height: 82vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ password gate ============ -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-emoji">🐻🐟🛖🚤🛩️</div>
+    <h1>Alaska <em>Trip</em></h1>
+    <p>This page is private. Enter the password to continue.</p>
+    <form class="gate-form" id="gate-form" autocomplete="off">
+      <input type="password" id="gate-input" placeholder="Password" aria-label="Password" autofocus>
+      <button type="submit">Unlock</button>
+      <div class="gate-err" id="gate-err">That's not it — try again.</div>
+    </form>
+    <p class="gate-foot">Coulter family, August 2026</p>
+  </div>
+</div>
+
+<!-- ============ trip content (revealed after unlock) ============ -->
+<div id="trip">
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="brand" href="index.html">mister<span>consistency</span></a>
+        <a class="back" href="index.html">← Back to site</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="wrap">
+      <div class="kicker">The Coulters · Kenai Peninsula</div>
+      <h1><span class="emoji">🐻🐟🛖🚤🛩️</span><br>Alaska <em>Trip</em><br><span class="emoji">🐻🐟🛖🚤🛩️</span></h1>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <p class="lede">Headed to Alaska in August with the Coulters. Eight days, one
+      peninsula, five of us — here's the shape of it, and the full briefing below.</p>
+
+      <div class="summary">
+        <div class="meta">August 7 – 14, 2026 · Party of five · The Kenai Peninsula</div>
+        <p>The plan in one breath: <strong>one lodge, three booked adventures, two
+        open days.</strong> A riverfront lodge on the Kenai with a private dock —
+        sleeps twelve, fish before breakfast.</p>
+        <p><strong>Getting there:</strong> Alaska 1536, nonstop JFK → Anchorage,
+        wheels down 1:30 PM. Then the rig (seats seven, unlimited miles) three hours
+        south to home base. Homer is two hours past that; Katmai sits off to the
+        southwest.</p>
+        <p>The three booked days:</p>
+        <ol>
+          <li><strong>The Boat</strong> — a multi-species charter out of Homer aboard
+          the <em>West Wind</em>. Call time 6:30; set two alarms.</li>
+          <li><strong>The Bears</strong> — the marquee day: a floatplane over Katmai
+          country to watch brown bears fish the river below. Viewing guaranteed, 8 to 4.</li>
+          <li><strong>Kenai Fjords Glacier Cruise</strong> — out of Seward.</li>
+        </ol>
+        <p><strong>Two open days, on purpose</strong> — no plan at all. Everyone gets
+        a vote; bids accepted at dinner. Extraction August 14, 20:04. Sleep on the plane.</p>
+      </div>
+
+      <div class="brief-head"><h2>The full expedition briefing</h2></div>
+      <p class="brief-note">Nine screens — the map, the rig, home base, the boat, the
+      bears, the open days, and what to pack. Best viewed on a wider screen.</p>
+      <div class="brief-embed">
+        <div class="brief-loading" id="brief-loading">
+          <div class="brief-spinner" aria-hidden="true"></div>
+          <p>Unpacking the briefing…</p>
+        </div>
+        <iframe id="brief-frame" title="The Coulter Alaska Expedition — full briefing" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p>© 2026 Scott Coulter · misterconsistency.com</p>
+      <p><a href="index.html">← misterconsistency.com</a></p>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  // SHA-256 of the password, so the word itself isn't sitting in the source.
+  const HASH = "98f9a7f76b88aea417deb4aa6ace485090c15ddd9b0dc7a698be03d062590d37";
+  // Expedition file, split so it isn't a plain string in the served HTML.
+  const DOC = ["assets/", "alaska-", "expedition", ".html"].join("");
+  const KEY = "coulter-alaska-2026";
+
+  const gate = document.getElementById("gate");
+  const trip = document.getElementById("trip");
+  const form = document.getElementById("gate-form");
+  const input = document.getElementById("gate-input");
+  const err = document.getElementById("gate-err");
+
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  function unlock() {
+    gate.style.display = "none";
+    trip.style.display = "block";
+    document.title = "Alaska Trip — Mister Consistency";
+    const frame = document.getElementById("brief-frame");
+    const loading = document.getElementById("brief-loading");
+    if (frame && !frame.src) {
+      frame.addEventListener("load", () => loading.classList.add("hidden"));
+      setTimeout(() => loading.classList.add("hidden"), 20000);
+      frame.src = DOC;
+    }
+  }
+
+  // stay unlocked while navigating within this browser session
+  try { if (sessionStorage.getItem(KEY) === "1") unlock(); } catch (e) {}
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const val = input.value.trim();
+    if (val && (await sha256(val)) === HASH) {
+      try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+      err.classList.remove("show");
+      unlock();
+    } else {
+      err.classList.add("show");
+      input.value = "";
+      input.focus();
+    }
+  });
+})();
+</script>
+</body>
+</html>
