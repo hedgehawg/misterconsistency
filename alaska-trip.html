@@ -150,6 +150,8 @@
   }
   .dl-pdf:hover { filter: brightness(1.08); }
   .dl-pdf svg { width: 15px; height: 15px; fill: currentColor; }
+  button.dl-pdf { border: 0; cursor: pointer; font-family: inherit; }
+  .dl-pdf + .dl-pdf { margin-left: 10px; }
   .brief-embed {
     position: relative; border: 1px solid var(--line); border-radius: 12px;
     overflow: hidden; background: #faf9f5; aspect-ratio: 16 / 10;
@@ -258,7 +260,10 @@
           <a class="dl-pdf" href="assets/coulter-alaska-expedition.pdf" download="Coulter Alaska Expedition.pdf">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4 6.3 11.7l1.4-1.4L11 13.6V3h1zM5 19h14v2H5z"/></svg>
             Download PDF
-          </a>
+          </a><button class="dl-pdf" id="brief-fs" type="button" aria-label="View the briefing full screen">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 14H5v5h5v-2H7v-3zM5 10h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+            Full screen
+          </button>
           <div class="brief-embed">
             <div class="brief-loading" id="brief-loading">
               <div class="brief-spinner" aria-hidden="true"></div>
@@ -313,6 +318,14 @@
 
   // stay unlocked while navigating within this browser session
   try { if (sessionStorage.getItem(KEY) === "1") unlock(); } catch (e) {}
+
+  const fsBtn = document.getElementById("brief-fs");
+  if (fsBtn) fsBtn.addEventListener("click", () => {
+    const embed = document.querySelector(".brief-embed");
+    if (!embed) return;
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    (embed.requestFullscreen || embed.webkitRequestFullscreen || function(){}).call(embed);
+  });
 
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
