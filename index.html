@@ -1253,6 +1253,8 @@
   audio.addEventListener("ended", () => {
     if (curId && cards[curId]) cards[curId].fill.style.width = "0%";
     if (heroUI && heroUI.id === curId) heroUI.fill.style.width = "0%";
+    const i = SONGS.findIndex(s => s.id === curId);
+    if (i > -1 && i + 1 < SONGS.length) { toggle(SONGS[i + 1].id); return; }
     curId = null; paint();
   });
 })();
