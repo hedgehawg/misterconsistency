@@ -139,6 +139,11 @@
   .brief-note { color: var(--text-dim); font-size: .9rem; margin-bottom: 16px; }
   .brief-note a { color: var(--gold); text-decoration: none; }
   .brief-note a:hover { text-decoration: underline; }
+  .group-label { margin: 8px 0 20px; text-align: center; }
+  .group-label + * { margin-top: 0; }
+  .group-label .gl-text { font-family: var(--sans); font-weight: 600; font-size: 1rem; letter-spacing: .2em; color: var(--gold); }
+  .group-label svg { display: block; width: 100%; height: 16px; margin-top: 8px; }
+  .group-label svg path { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .8; }
   .dl-pdf {
     display: inline-flex; align-items: center; gap: 8px;
     color: var(--bg); background: var(--gold); text-decoration: none;
@@ -227,6 +232,10 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 14H5v5h5v-2H7v-3zM5 10h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
             Full screen
           </button>
+          <div class="group-label">
+            <span class="gl-text">PRESENTATION OVERVIEW</span>
+            <svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M2,14 Q2,5 14,5 L186,5 Q198,5 200,1 Q202,5 214,5 L386,5 Q398,5 398,14"/></svg>
+          </div>
           <div class="brief-embed">
             <div class="brief-loading" id="brief-loading">
               <div class="brief-spinner" aria-hidden="true"></div>
@@ -315,9 +324,16 @@
   const fsBtn = document.getElementById("brief-fs");
   if (fsBtn) fsBtn.addEventListener("click", () => {
     const embed = document.querySelector(".brief-embed");
+    const frame = document.getElementById("brief-frame");
     if (!embed) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); return; }
-    (embed.requestFullscreen || embed.webkitRequestFullscreen || function(){}).call(embed);
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document);
+      return;
+    }
+    const req = embed.requestFullscreen || embed.webkitRequestFullscreen;
+    if (req) { try { req.call(embed); return; } catch (e) {} }
+    // Fullscreen API unavailable (e.g. iOS Safari) — open the deck in its own tab
+    window.open((frame && frame.src) ? frame.src : DOC, "_blank", "noopener");
   });
 
   form.addEventListener("submit", async function (e) {

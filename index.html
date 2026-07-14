@@ -96,7 +96,7 @@
   .hero .player { max-width: 620px; }
 
   /* ---------- sections ---------- */
-  section { padding: 80px 0; border-bottom: 1px solid var(--line); }
+  section { padding: 80px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 84px; }
   .sec-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 14px; }
   .sec-num {
     font-family: var(--serif); font-style: italic; color: var(--gold);
@@ -1362,12 +1362,23 @@
   f.addEventListener('load', hide);
   setTimeout(hide, 15000);   // safety net
 })();
-/* Mobile nav — close the dropdown after picking a section, or when tapping outside */
+/* Mobile nav — close the dropdown after picking a section, or when tapping outside.
+   Also scroll accurately: land the section below the sticky header, and re-scroll
+   once late-loading media (videos, map iframe) has settled so we don't miss. */
 (function () {
   const m = document.getElementById('mnav');
-  if (!m) return;
-  m.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { m.open = false; }));
-  document.addEventListener('click', e => { if (m.open && !m.contains(e.target)) m.open = false; });
+  if (m) document.addEventListener('click', e => { if (m.open && !m.contains(e.target)) m.open = false; });
+  // Let the native anchor jump handle the scroll (now accurate via scroll-margin-top),
+  // then snap-correct once late-loading media has settled so we don't land short.
+  document.querySelectorAll('nav a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => {
+      if (m) m.open = false;
+      const id = a.getAttribute('href').slice(1);
+      const el = id && document.getElementById(id);
+      if (!el) return;
+      setTimeout(() => el.scrollIntoView({ block: 'start', behavior: 'instant' }), 550);
+    });
+  });
 })();
 /* Iconic Wall interactive — same deal */
 (function () {
