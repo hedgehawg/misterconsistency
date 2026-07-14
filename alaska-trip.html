@@ -31,7 +31,7 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
   header {
     position: sticky; top: 0; z-index: 50;
@@ -96,25 +96,31 @@
 
   /* ---------- trip content ---------- */
   #trip { display: none; }
-  .hero { padding: 84px 0 8px; }
+  .hero { padding: 40px 0 4px; }
   .hero .kicker {
     font-size: .8rem; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 18px; font-weight: 500;
+    color: var(--gold); margin-bottom: 14px; font-weight: 500;
   }
   .hero h1 {
     font-family: var(--serif); font-weight: 300;
-    font-size: clamp(2.4rem, 6.5vw, 4.4rem);
-    line-height: 1.05; letter-spacing: -.01em;
+    font-size: clamp(2.1rem, 5vw, 3.5rem);
+    line-height: 1.08; letter-spacing: -.01em;
   }
   .hero h1 .emoji { font-weight: 400; }
   .hero h1 em { font-style: italic; color: var(--gold); }
 
-  section { padding: 44px 0 72px; }
-  .lede { color: var(--text-dim); font-size: 1.06rem; max-width: 680px; margin: 22px 0 40px; }
+  section { padding: 26px 0 72px; }
+  .trip-grid {
+    display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+    gap: 42px; align-items: start;
+  }
+  .trip-text { min-width: 0; }
+  .trip-brief { min-width: 0; position: sticky; top: 78px; }
+  .lede { color: var(--text-dim); font-size: 1.04rem; margin: 0 0 26px; }
   .summary {
     background: var(--bg-raised); border: 1px solid var(--line);
     border-left: 3px solid var(--gold); border-radius: 12px;
-    padding: 30px 34px; max-width: 760px; margin-bottom: 44px;
+    padding: 28px 30px;
   }
   .summary .meta {
     font-family: var(--serif); font-style: italic; color: var(--gold);
@@ -136,9 +142,9 @@
   .brief-note a:hover { text-decoration: underline; }
   .brief-embed {
     position: relative; border: 1px solid var(--line); border-radius: 12px;
-    overflow: hidden; background: #faf9f5;
+    overflow: hidden; background: #faf9f5; aspect-ratio: 16 / 10;
   }
-  .brief-embed iframe { width: 100%; height: min(78vh, 900px); border: 0; display: block; }
+  .brief-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
   .brief-loading {
     position: absolute; inset: 0; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 14px; text-align: center;
@@ -158,9 +164,12 @@
   footer a { color: var(--gold); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
+  @media (max-width: 900px) {
+    .trip-grid { grid-template-columns: 1fr; gap: 30px; }
+    .trip-brief { position: static; }
+  }
   @media (max-width: 640px) {
     .summary { padding: 24px 22px; }
-    .brief-embed iframe { height: 82vh; }
   }
 </style>
 </head>
@@ -169,7 +178,7 @@
 <!-- ============ password gate ============ -->
 <div class="gate" id="gate">
   <div class="gate-card">
-    <div class="gate-emoji">🐻🐟🛖🚤🛩️</div>
+    <div class="gate-emoji">🛩️🚤🐻🐟</div>
     <h1>Alaska <em>Trip</em></h1>
     <p>This page is private. Enter the password to continue.</p>
     <form class="gate-form" id="gate-form" autocomplete="off">
@@ -195,45 +204,51 @@
   <div class="hero">
     <div class="wrap">
       <div class="kicker">The Coulters · Kenai Peninsula</div>
-      <h1><span class="emoji">🐻🐟🛖🚤🛩️</span><br>Alaska <em>Trip</em><br><span class="emoji">🐻🐟🛖🚤🛩️</span></h1>
+      <h1><span class="emoji">🛩️🚤</span> Alaska <em>Trip</em> <span class="emoji">🐻🐟</span></h1>
     </div>
   </div>
 
   <section>
     <div class="wrap">
-      <p class="lede">Headed to Alaska in August with the Coulters. Eight days, one
-      peninsula, five of us — here's the shape of it, and the full briefing below.</p>
+      <div class="trip-grid">
+        <div class="trip-text">
+          <p class="lede">Headed to Alaska in August with the Coulters. Eight days, one
+          peninsula, five of us — here's the shape of it, with the full briefing alongside.</p>
 
-      <div class="summary">
-        <div class="meta">August 7 – 14, 2026 · Party of five · The Kenai Peninsula</div>
-        <p>The plan in one breath: <strong>one lodge, three booked adventures, two
-        open days.</strong> A riverfront lodge on the Kenai with a private dock —
-        sleeps twelve, fish before breakfast.</p>
-        <p><strong>Getting there:</strong> Alaska 1536, nonstop JFK → Anchorage,
-        wheels down 1:30 PM. Then the rig (seats seven, unlimited miles) three hours
-        south to home base. Homer is two hours past that; Katmai sits off to the
-        southwest.</p>
-        <p>The three booked days:</p>
-        <ol>
-          <li><strong>The Boat</strong> — a multi-species charter out of Homer aboard
-          the <em>West Wind</em>. Call time 6:30; set two alarms.</li>
-          <li><strong>The Bears</strong> — the marquee day: a floatplane over Katmai
-          country to watch brown bears fish the river below. Viewing guaranteed, 8 to 4.</li>
-          <li><strong>Kenai Fjords Glacier Cruise</strong> — out of Seward.</li>
-        </ol>
-        <p><strong>Two open days, on purpose</strong> — no plan at all. Everyone gets
-        a vote; bids accepted at dinner. Extraction August 14, 20:04. Sleep on the plane.</p>
-      </div>
-
-      <div class="brief-head"><h2>The full expedition briefing</h2></div>
-      <p class="brief-note">Nine screens — the map, the rig, home base, the boat, the
-      bears, the open days, and what to pack. Best viewed on a wider screen.</p>
-      <div class="brief-embed">
-        <div class="brief-loading" id="brief-loading">
-          <div class="brief-spinner" aria-hidden="true"></div>
-          <p>Unpacking the briefing…</p>
+          <div class="summary">
+            <div class="meta">August 7 – 14, 2026 · Party of five · The Kenai Peninsula</div>
+            <p>The plan in one breath: <strong>one lodge, three booked adventures, two
+            open days.</strong> A riverfront lodge on the Kenai with a private dock —
+            sleeps twelve, fish before breakfast.</p>
+            <p><strong>Getting there:</strong> Alaska 1536, nonstop JFK → Anchorage,
+            wheels down 1:30 PM. Then the rig (seats seven, unlimited miles) three hours
+            south to home base. Homer is two hours past that; Katmai sits off to the
+            southwest.</p>
+            <p>The three booked days:</p>
+            <ol>
+              <li><strong>The Boat</strong> — a multi-species charter out of Homer aboard
+              the <em>West Wind</em>. Call time 6:30; set two alarms.</li>
+              <li><strong>The Bears</strong> — the marquee day: a floatplane over Katmai
+              country to watch brown bears fish the river below. Viewing guaranteed, 8 to 4.</li>
+              <li><strong>Kenai Fjords Glacier Cruise</strong> — out of Seward.</li>
+            </ol>
+            <p><strong>Two open days, on purpose</strong> — no plan at all. Everyone gets
+            a vote; bids accepted at dinner. Extraction August 14, 20:04. Sleep on the plane.</p>
+          </div>
         </div>
-        <iframe id="brief-frame" title="The Coulter Alaska Expedition — full briefing" loading="lazy"></iframe>
+
+        <div class="trip-brief">
+          <div class="brief-head"><h2>The full expedition briefing</h2></div>
+          <p class="brief-note">Nine screens — the map, the rig, home base, the boat,
+          the bears, the open days, and what to pack. Click into it to advance.</p>
+          <div class="brief-embed">
+            <div class="brief-loading" id="brief-loading">
+              <div class="brief-spinner" aria-hidden="true"></div>
+              <p>Unpacking the briefing…</p>
+            </div>
+            <iframe id="brief-frame" title="The Coulter Alaska Expedition — full briefing" loading="lazy"></iframe>
+          </div>
+        </div>
       </div>
     </div>
   </section>
