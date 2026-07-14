@@ -139,9 +139,17 @@
   .brief-head h2 {
     font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 3.5vw, 2.1rem);
   }
-  .brief-note { color: var(--text-dim); font-size: .9rem; margin-bottom: 22px; }
+  .brief-note { color: var(--text-dim); font-size: .9rem; margin-bottom: 16px; }
   .brief-note a { color: var(--gold); text-decoration: none; }
   .brief-note a:hover { text-decoration: underline; }
+  .dl-pdf {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--bg); background: var(--gold); text-decoration: none;
+    font-size: .82rem; font-weight: 600; letter-spacing: .04em;
+    padding: 10px 18px; border-radius: 8px; margin-bottom: 22px;
+  }
+  .dl-pdf:hover { filter: brightness(1.08); }
+  .dl-pdf svg { width: 15px; height: 15px; fill: currentColor; }
   .brief-embed {
     position: relative; border: 1px solid var(--line); border-radius: 12px;
     overflow: hidden; background: #faf9f5; aspect-ratio: 16 / 10;
@@ -247,6 +255,10 @@
           <div class="brief-head"><h2>The full expedition briefing</h2></div>
           <p class="brief-note">Nine screens — the map, the rig, home base, the boat,
           the bears, the open days, and what to pack. Click into it to advance.</p>
+          <a class="dl-pdf" href="assets/coulter-alaska-expedition.pdf" download="Coulter Alaska Expedition.pdf">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4 6.3 11.7l1.4-1.4L11 13.6V3h1zM5 19h14v2H5z"/></svg>
+            Download PDF
+          </a>
           <div class="brief-embed">
             <div class="brief-loading" id="brief-loading">
               <div class="brief-spinner" aria-hidden="true"></div>
