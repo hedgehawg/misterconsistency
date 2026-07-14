@@ -110,12 +110,9 @@
   .hero h1 em { font-style: italic; color: var(--gold); }
 
   section { padding: 26px 0 72px; }
-  .trip-grid {
-    display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
-    gap: 42px; align-items: start;
-  }
-  .trip-text { min-width: 0; }
-  .trip-brief { min-width: 0; position: sticky; top: 78px; }
+  .trip-grid { display: flex; flex-direction: column; gap: 56px; }
+  .trip-text { min-width: 0; max-width: 680px; }
+  .trip-brief { min-width: 0; }
   .lede { color: var(--text-dim); font-size: 1.04rem; margin: 0 0 26px; }
   .summary {
     background: var(--bg-raised); border: 1px solid var(--line);
@@ -176,10 +173,6 @@
   footer a { color: var(--gold); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
-  @media (max-width: 900px) {
-    .trip-grid { grid-template-columns: 1fr; gap: 30px; }
-    .trip-brief { position: static; }
-  }
   @media (max-width: 640px) {
     .summary { padding: 24px 22px; }
   }
@@ -223,6 +216,26 @@
   <section>
     <div class="wrap">
       <div class="trip-grid">
+        <div class="trip-brief">
+          <div class="brief-head"><h2>The full expedition briefing</h2></div>
+          <p class="brief-note">Nine screens — the map, the rig, home base, the boat,
+          the bears, the open days, and what to pack. Click into it to advance.</p>
+          <a class="dl-pdf" href="assets/coulter-alaska-expedition.pdf" download="Coulter Alaska Expedition.pdf">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4 6.3 11.7l1.4-1.4L11 13.6V3h1zM5 19h14v2H5z"/></svg>
+            Download PDF
+          </a><button class="dl-pdf" id="brief-fs" type="button" aria-label="View the briefing full screen">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 14H5v5h5v-2H7v-3zM5 10h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+            Full screen
+          </button>
+          <div class="brief-embed">
+            <div class="brief-loading" id="brief-loading">
+              <div class="brief-spinner" aria-hidden="true"></div>
+              <p>Unpacking the briefing…</p>
+            </div>
+            <iframe id="brief-frame" title="The Coulter Alaska Expedition — full briefing" loading="lazy"></iframe>
+          </div>
+        </div>
+
         <div class="trip-text">
           <p class="lede">Headed to Alaska in August with the Coulters. Eight days,
           one peninsula — here's the itinerary:</p>
@@ -250,26 +263,6 @@
             <p><strong>Two open days <span class="tbc">(dates TBC)</span>, on purpose</strong> —
             no plan at all. Everyone gets a vote; bids accepted at dinner.</p>
             <p>Exfil August 14, 20:04 AKDT. Sleep on the plane.</p>
-          </div>
-        </div>
-
-        <div class="trip-brief">
-          <div class="brief-head"><h2>The full expedition briefing</h2></div>
-          <p class="brief-note">Nine screens — the map, the rig, home base, the boat,
-          the bears, the open days, and what to pack. Click into it to advance.</p>
-          <a class="dl-pdf" href="assets/coulter-alaska-expedition.pdf" download="Coulter Alaska Expedition.pdf">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4 6.3 11.7l1.4-1.4L11 13.6V3h1zM5 19h14v2H5z"/></svg>
-            Download PDF
-          </a><button class="dl-pdf" id="brief-fs" type="button" aria-label="View the briefing full screen">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 14H5v5h5v-2H7v-3zM5 10h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-            Full screen
-          </button>
-          <div class="brief-embed">
-            <div class="brief-loading" id="brief-loading">
-              <div class="brief-spinner" aria-hidden="true"></div>
-              <p>Unpacking the briefing…</p>
-            </div>
-            <iframe id="brief-frame" title="The Coulter Alaska Expedition — full briefing" loading="lazy"></iframe>
           </div>
         </div>
       </div>
