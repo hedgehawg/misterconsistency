@@ -1369,15 +1369,29 @@
   const m = document.getElementById('mnav');
   if (m) document.addEventListener('click', e => { if (m.open && !m.contains(e.target)) m.open = false; });
   // Let the native anchor jump handle the scroll (now accurate via scroll-margin-top),
-  // then snap-correct once late-loading media has settled so we don't land short.
+  // then keep snap-correcting while late-loading media above the target reflows the
+  // page. A single correction isn't enough: images/videos keep landing for seconds
+  // after the jump, each one shifting the anchor. Stop the moment the user scrolls.
+  function pinTo(el) {
+    let done = false;
+    const cancel = () => { done = true; };
+    ['wheel', 'touchstart', 'keydown'].forEach(t =>
+      window.addEventListener(t, cancel, { passive: true, once: true }));
+    [550, 1200, 2200, 3500].forEach(ms =>
+      setTimeout(() => { if (!done) el.scrollIntoView({ block: 'start', behavior: 'instant' }); }, ms));
+  }
   document.querySelectorAll('nav a[href^="#"]').forEach(a => {
     a.addEventListener('click', () => {
       if (m) m.open = false;
       const id = a.getAttribute('href').slice(1);
       const el = id && document.getElementById(id);
-      if (!el) return;
-      setTimeout(() => el.scrollIntoView({ block: 'start', behavior: 'instant' }), 550);
+      if (el) pinTo(el);
     });
+  });
+  // Arriving with a #hash in the URL misses the same way — re-align once loaded.
+  window.addEventListener('load', () => {
+    const el = location.hash && document.getElementById(location.hash.slice(1));
+    if (el) pinTo(el);
   });
 })();
 /* Iconic Wall interactive — same deal */

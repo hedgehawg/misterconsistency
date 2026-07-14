@@ -225,7 +225,7 @@
           <div class="brief-head"><h2>The full expedition briefing</h2></div>
           <p class="brief-note">Nine screens — the map, the rig, home base, the boat,
           the bears, the open days, and what to pack. Click into it to advance.</p>
-          <a class="dl-pdf" href="assets/coulter-alaska-expedition.pdf?v=3" download="Coulter Alaska Expedition.pdf">
+          <a class="dl-pdf" href="assets/coulter-alaska-expedition.pdf?v=4" download="Coulter Alaska Expedition.pdf">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4 6.3 11.7l1.4-1.4L11 13.6V3h1zM5 19h14v2H5z"/></svg>
             Download PDF
           </a><button class="dl-pdf" id="brief-fs" type="button" aria-label="View the briefing full screen">
@@ -332,8 +332,9 @@
     }
     const req = embed.requestFullscreen || embed.webkitRequestFullscreen;
     if (req) { try { req.call(embed); return; } catch (e) {} }
-    // Fullscreen API unavailable (e.g. iOS Safari) — open the deck in its own tab
-    window.open((frame && frame.src) ? frame.src : DOC, "_blank", "noopener");
+    // Fullscreen API unavailable (e.g. iOS Safari) — open the wrapper page, which
+    // veils the deck while it loads (the raw export flashes unstyled text).
+    window.open("alaska-full.html", "_blank", "noopener");
   });
 
   form.addEventListener("submit", async function (e) {
