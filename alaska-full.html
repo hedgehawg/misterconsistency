@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Alaska Expedition — full screen</title>
+<title>Alaska Expedition â€” full screen</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,13 +32,13 @@
 <body>
 <div class="veil" id="veil">
   <div class="spinner" aria-hidden="true"></div>
-  <p>Unpacking the briefing…</p>
+  <p>Unpacking the briefingâ€¦</p>
 </div>
-<iframe id="deck" title="The Coulter Alaska Expedition — full briefing"></iframe>
+<iframe id="deck" title="The Coulter Alaska Expedition â€” full briefing"></iframe>
 <script>
 (function () {
   // Same split as alaska-trip.html so the path isn't a plain string in the source.
-  const DOC = ["assets/", "alaska-", "expedition", ".html?v=4166"].join("");
+  const DOC = ["assets/", "alaska-", "expedition", ".html?v=71626"].join("");
   const deck = document.getElementById("deck");
   const veil = document.getElementById("veil");
   const show = () => { veil.classList.add("hidden"); deck.classList.add("ready"); };
