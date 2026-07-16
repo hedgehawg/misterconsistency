@@ -305,6 +305,22 @@
     return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
   }
 
+  // The deck's thumbnail rail materializes a live clone of every slide
+  // (full-resolution rasters); on phones that blows past Safari's memory
+  // budget and crashes the tab when the rail scrolls. The deck runtime
+  // supports a no-rail attribute — set it for touch devices as soon as
+  // deck-stage boots (tap-to-advance still covers navigation).
+  function suppressRailOnTouch(frame) {
+    if (!matchMedia("(pointer: coarse)").matches) return;
+    const t = setInterval(() => {
+      try {
+        const d = frame.contentDocument && frame.contentDocument.querySelector("deck-stage");
+        if (d) { d.setAttribute("no-rail", ""); clearInterval(t); }
+      } catch (e) { clearInterval(t); }
+    }, 250);
+    setTimeout(() => clearInterval(t), 30000);
+  }
+
   function unlock() {
     gate.style.display = "none";
     trip.style.display = "block";
@@ -315,6 +331,7 @@
       frame.addEventListener("load", () => loading.classList.add("hidden"));
       setTimeout(() => loading.classList.add("hidden"), 20000);
       frame.src = DOC;
+      suppressRailOnTouch(frame);
     }
   }
 
