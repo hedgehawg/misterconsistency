@@ -153,6 +153,11 @@
   .map-spinner { width: 38px; height: 38px; border: 3px solid var(--line);
     border-top-color: var(--gold); border-radius: 50%; animation: mapspin .9s linear infinite; }
   @keyframes mapspin { to { transform: rotate(360deg); } }
+  .gm-legend { display: flex; justify-content: center; gap: 34px; margin-top: 14px; flex-wrap: wrap; }
+  .gm-legend span { display: inline-flex; align-items: center; gap: 9px;
+    color: var(--text-dim); font-size: .9rem; }
+  .gm-legend img { width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--line); }
   .pi-canvas { width: 100%; aspect-ratio: 1 / 1; display: block;
     background: #0e0f12; border: 1px solid var(--line); border-radius: 10px; }
   .all-songs { margin-top: 28px; font-size: .9rem; }
@@ -992,7 +997,7 @@
         <details class="dl-bracket">
           <summary>Download bracket ▾</summary>
           <div class="dl-choices">
-            <a href="assets/world-cup-bracket.pdf?v=716" download="World Cup bracket.pdf">Download PDF</a>
+            <a href="assets/world-cup-bracket.pdf?v=7162" download="World Cup bracket.pdf">Download PDF</a>
             <a href="assets/world-cup-bracket.png?v=716" download="World Cup bracket.png">Download PNG</a>
           </div>
         </details>
@@ -1042,6 +1047,11 @@
           </div>
           <iframe id="gattman-map" src="https://www.google.com/maps/d/embed?mid=1WKvS4MqRVJJxqM1L6kyGdFa4lviTJ_8&z=2"
                   title="Gattman's World — restaurant reviews mapped" loading="lazy"></iframe>
+        </div>
+        <div class="gm-legend">
+          <span><img src="assets/gattman-yes.png" alt="Gattman in sunglasses">Yes</span>
+          <span><img src="assets/gattman-skip.png" alt="Gattman, skeptical">Skip</span>
+          <span><img src="assets/gattman-closed.png" alt="Gattman in sugar-skull face paint">Now closed</span>
         </div>
         <figcaption>One pin for a yes, one for a skip, and a third for the
         places that have since closed. Roughly 1,900 restaurants across six
