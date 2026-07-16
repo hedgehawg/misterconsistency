@@ -181,6 +181,8 @@
   .iat-stack > figure + figure { margin-top: 22px; }
   .bracket-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
   .bracket-scroll img { display: block; width: 100%; min-width: 1560px; border: none; border-radius: 0; }
+  .bracket-embed { position: relative; min-width: 1560px; aspect-ratio: 1584 / 1224; }
+  .bracket-embed iframe { width: 100%; height: 100%; border: 0; display: block; background: #E9EDF2; }
   .takeaway {
     margin: 24px 0; padding: 22px 28px; background: var(--bg-raised);
     border: 1px solid var(--line); border-left: 3px solid var(--gold);
@@ -984,8 +986,8 @@
         <details class="dl-bracket">
           <summary>Download bracket ▾</summary>
           <div class="dl-choices">
-            <a href="assets/world-cup-bracket.pdf" download="World Cup bracket.pdf">Download PDF</a>
-            <a href="assets/world-cup-bracket.png" download="World Cup bracket.png">Download PNG</a>
+            <a href="assets/world-cup-bracket.pdf?v=716" download="World Cup bracket.pdf">Download PDF</a>
+            <a href="assets/world-cup-bracket.png?v=716" download="World Cup bracket.png">Download PNG</a>
           </div>
         </details>
       </div>
@@ -996,14 +998,23 @@
       </p>
       <figure>
         <div class="bracket-scroll">
-          <img src="assets/world-cup-bracket.svg?v=712" alt="2026 Men's World Cup knockout bracket, as of July 12, 2026" loading="lazy">
+          <div class="bracket-embed">
+            <div class="map-loading" id="bracket-loading">
+              <div class="map-spinner" aria-hidden="true"></div>
+              <p>Unpacking the bracket…</p>
+            </div>
+            <iframe id="bracket-frame" src="assets/world-cup-bracket.html?v=716" title="2026 Men's World Cup knockout bracket — Road to the Final" loading="lazy"></iframe>
+          </div>
         </div>
-        <figcaption>Road to the Final — knockout bracket, as of July 12, 2026.
-        The quarterfinals are complete: England beat Norway and Argentina beat
-        Switzerland — both after extra time — to set up an England–Argentina
-        semifinal, while France meets Spain in the other. The semis are July
-        14–15, then the bronze match, and the July 19 final at New York/New
-        Jersey Stadium. Winners shown in gold.</figcaption>
+        <noscript>
+          <style>.bracket-embed { display: none; }</style>
+          <img src="assets/world-cup-bracket.png?v=716" alt="2026 Men's World Cup knockout bracket, as of July 16, 2026" loading="lazy" style="display:block;width:100%;min-width:1560px">
+        </noscript>
+        <figcaption>Road to the Final — knockout bracket, as of July 16, 2026.
+        The semifinals are done: Spain shut out France in Dallas and Argentina
+        edged England in Atlanta. France and England meet in the July 18 bronze
+        match in Miami, and it's Spain–Argentina in the July 19 final at New
+        York/New Jersey Stadium.</figcaption>
       </figure>
     </div>
   </section>
@@ -1400,6 +1411,14 @@
   if (!f || !l) return;
   const hide = () => l.classList.add('hidden');
   f.addEventListener('load', hide);
+  setTimeout(hide, 15000);   // safety net
+})();
+/* World Cup bracket embed — same deal */
+(function () {
+  const f = document.getElementById('bracket-frame'), l = document.getElementById('bracket-loading');
+  if (!f || !l) return;
+  const hide = () => l.classList.add('hidden');
+  f.addEventListener('load', () => setTimeout(hide, 400));
   setTimeout(hide, 15000);   // safety net
 })();
 </script>
