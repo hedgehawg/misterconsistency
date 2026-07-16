@@ -194,6 +194,10 @@
     width: 1584px; height: 1224px; border: 0; display: block;
     background: #E9EDF2; transform-origin: 0 0;
   }
+  .bracket-fs { position: absolute; inset: 0; z-index: 1; border: 0;
+    background: transparent; cursor: zoom-in; padding: 0; }
+  .bracket-embed:fullscreen { background: #E9EDF2; }
+  .bracket-embed:fullscreen .bracket-fs { cursor: zoom-out; }
   .takeaway {
     margin: 24px 0; padding: 22px 28px; background: var(--bg-raised);
     border: 1px solid var(--line); border-left: 3px solid var(--gold);
@@ -1015,6 +1019,7 @@
               <p>Unpacking the bracket…</p>
             </div>
             <iframe id="bracket-frame" src="assets/world-cup-bracket.html?v=7164" title="2026 Men's World Cup knockout bracket — Road to the Final" loading="lazy"></iframe>
+            <button class="bracket-fs" id="bracket-fs" type="button" aria-label="View the bracket full screen" title="Click to view the bracket full screen"></button>
           </div>
         </div>
         <noscript>
@@ -1022,6 +1027,7 @@
           <img src="assets/world-cup-bracket.png?v=7164" alt="2026 Men's World Cup knockout bracket, as of July 16, 2026" loading="lazy" style="display:block;width:100%">
         </noscript>
         <figcaption>Road to the Final — knockout bracket, as of July 16, 2026.
+        Click the bracket to view it full screen.
         The semifinals are done: Spain shut out France in Dallas and Argentina
         edged England in Atlanta. France and England meet in the July 18 bronze
         match in Miami, and it's Spain–Argentina in the July 19 final at New
@@ -1430,19 +1436,34 @@
   setTimeout(hide, 15000);   // safety net
 })();
 /* World Cup bracket embed — same deal, plus fit-to-width scaling so the
-   whole 1584px-wide bracket is visible without horizontal scrolling. */
+   whole 1584px-wide bracket is visible without horizontal scrolling, and
+   click-to-fullscreen (the overlay button owns the click; an iframe would
+   swallow it). */
 (function () {
   const f = document.getElementById('bracket-frame'), l = document.getElementById('bracket-loading');
+  const fsBtn = document.getElementById('bracket-fs');
   if (!f || !l) return;
   const embed = f.parentElement;
   const W = 1584, H = 1224;
   function fit() {
-    const s = embed.clientWidth / W;
+    const fs = document.fullscreenElement === embed;
+    const cw = fs ? window.innerWidth : embed.clientWidth;
+    const ch = fs ? window.innerHeight : 0;
+    const s = fs ? Math.min(cw / W, ch / H) : cw / W;
     f.style.transform = 'scale(' + s + ')';
-    embed.style.height = Math.round(H * s) + 'px';
+    f.style.marginLeft = fs ? Math.max(0, (cw - W * s) / 2) + 'px' : '';
+    f.style.marginTop = fs ? Math.max(0, (ch - H * s) / 2) + 'px' : '';
+    if (!fs) embed.style.height = Math.round(H * s) + 'px';
   }
   fit();
   window.addEventListener('resize', fit);
+  document.addEventListener('fullscreenchange', fit);
+  if (fsBtn) fsBtn.addEventListener('click', () => {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (embed.requestFullscreen) { embed.requestFullscreen(); return; }
+    // Fullscreen API unavailable (e.g. iOS Safari) — open the bracket itself
+    window.open(f.src, '_blank', 'noopener');
+  });
   const hide = () => { l.classList.add('hidden'); fit(); };
   f.addEventListener('load', () => setTimeout(hide, 400));
   setTimeout(hide, 15000);   // safety net
