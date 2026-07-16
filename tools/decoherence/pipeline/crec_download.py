@@ -53,12 +53,12 @@ def fetch(date, retries=4):
 
 
 if __name__ == '__main__':
-    args = [a for a in sys.argv[1:] if not a.startswith('--')]
-    limit = None
-    for a in sys.argv[1:]:
-        if a.startswith('--limit'):
-            limit = int(a.split('=')[1] if '=' in a else sys.argv[sys.argv.index(a) + 1])
-    years = [int(a) for a in args]
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument('years', type=int, nargs='+')
+    ap.add_argument('--limit', type=int, default=None)
+    ns = ap.parse_args()
+    years, limit = ns.years, ns.limit
     os.makedirs(DATA_DIR, exist_ok=True)
     for year in years:
         dates = issue_dates(year)
