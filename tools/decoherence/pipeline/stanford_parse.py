@@ -17,7 +17,7 @@ HEIN_DAILY = r'D:\decoherence-data\stanford\hein-daily.zip'
 
 def congress_years(congress):
     start = 1789 + 2 * (congress - 1)
-    return (start - 1 + 2, start + 1)  # e.g. 104 -> (1995, 1996)
+    return (start, start + 1)  # e.g. 104 -> (1995, 1996)
 
 
 def _open_member(z, name):

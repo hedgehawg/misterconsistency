@@ -35,22 +35,32 @@ def tokenize(text):
 
 
 # ---------------------------------------------------------------- X: lexical
-def lexical_partisanship(speeches, min_speaker_words=500, seed=42):
-    """Balanced CV accuracy of party prediction from speaker vocabulary."""
+def lexical_partisanship(speeches, min_speaker_words=1000, word_cap=2000, seed=42):
+    """Balanced CV accuracy of party prediction from speaker vocabulary.
+
+    Each speaker document is capped at `word_cap` randomly-sampled words so
+    epochs with more floor time per member are not mechanically easier to
+    classify (the finite-sample bias Gentzkow et al. correct for).
+    """
     from sklearn.feature_extraction.text import TfidfVectorizer
     from sklearn.linear_model import LogisticRegression
     from sklearn.model_selection import StratifiedKFold, cross_val_score
 
+    rng = np.random.default_rng(seed)
     docs = defaultdict(list)
     for s in speeches:
         if s['party'] in ('D', 'R'):
             docs[(s['party'], s['speaker'])].append(s['text'])
     texts, labels = [], []
     for (party, _spk), chunks in docs.items():
-        joined = ' '.join(chunks)
-        if len(joined.split()) >= min_speaker_words:
-            texts.append(joined)
-            labels.append(party)
+        words = ' '.join(chunks).split()
+        if len(words) < min_speaker_words:
+            continue
+        if len(words) > word_cap:
+            start = rng.integers(0, len(words) - word_cap + 1)
+            words = words[start:start + word_cap]
+        texts.append(' '.join(words))
+        labels.append(party)
     if len(texts) < 40 or len(set(labels)) < 2:
         raise ValueError(f'too few speakers for X ({len(texts)})')
 
@@ -106,37 +116,60 @@ def affective_tone(speeches, arousal_table):
 
 # ---------------------------------------------------------------- Z: semantic
 def semantic_distance(speeches, vector_size=100, min_count=10, epochs=5,
-                      top_shared=2000, seed=42):
-    """1 - mean cosine similarity of shared vocab after Procrustes alignment."""
+                      top_shared=2000, word_budget=3_000_000, n_seeds=3):
+    """1 - mean cosine similarity of shared vocab after Procrustes alignment.
+
+    Each party's corpus is subsampled to `word_budget` words so embedding
+    quality (and hence measured distance) is comparable across epochs, and
+    the result is averaged over `n_seeds` word2vec runs for stability
+    (Rodriguez & Spirling's embedding-instability caution).
+    """
     from gensim.models import Word2Vec
     from scipy.linalg import orthogonal_procrustes
 
-    sents = {'D': [], 'R': []}
+    tokenized = {'D': [], 'R': []}
     for s in speeches:
-        if s['party'] in sents:
-            sents[s['party']].append(tokenize(s['text']))
-    models = {}
-    for party, ss in sents.items():
-        if sum(len(x) for x in ss) < 50000:
+        if s['party'] in tokenized:
+            tokenized[s['party']].append(tokenize(s['text']))
+    for party, ss in tokenized.items():
+        if sum(len(x) for x in ss) < 500_000:
             raise ValueError(f'too little text for Z ({party})')
-        models[party] = Word2Vec(ss, vector_size=vector_size, window=5,
-                                 min_count=min_count, workers=8, epochs=epochs,
-                                 seed=seed)
-    kv_d, kv_r = models['D'].wv, models['R'].wv
-    freq = Counter()
-    for w in kv_d.index_to_key:
-        if w in kv_r.key_to_index and w not in PROCEDURAL:
-            freq[w] = kv_d.get_vecattr(w, 'count') + kv_r.get_vecattr(w, 'count')
-    shared = [w for w, _ in freq.most_common(top_shared)]
-    if len(shared) < 200:
-        raise ValueError(f'shared vocab too small for Z ({len(shared)})')
 
-    A = np.stack([kv_d[w] for w in shared])
-    B = np.stack([kv_r[w] for w in shared])
-    A /= np.linalg.norm(A, axis=1, keepdims=True)
-    B /= np.linalg.norm(B, axis=1, keepdims=True)
-    R, _ = orthogonal_procrustes(B, A)
-    B_al = B @ R
-    cos = np.sum(A * B_al, axis=1)
-    return {'z_raw_distance': float(1.0 - cos.mean()),
-            'n_shared_vocab': len(shared)}
+    def subsample(ss, seed):
+        rng = np.random.default_rng(seed)
+        order = rng.permutation(len(ss))
+        out, total = [], 0
+        for i in order:
+            out.append(ss[i])
+            total += len(ss[i])
+            if total >= word_budget:
+                break
+        return out
+
+    dists, shared_ns = [], []
+    for seed in range(42, 42 + n_seeds):
+        models = {}
+        for party, ss in tokenized.items():
+            models[party] = Word2Vec(subsample(ss, seed), vector_size=vector_size,
+                                     window=5, min_count=min_count, workers=8,
+                                     epochs=epochs, seed=seed)
+        kv_d, kv_r = models['D'].wv, models['R'].wv
+        freq = Counter()
+        for w in kv_d.index_to_key:
+            if w in kv_r.key_to_index and w not in PROCEDURAL:
+                freq[w] = kv_d.get_vecattr(w, 'count') + kv_r.get_vecattr(w, 'count')
+        shared = [w for w, _ in freq.most_common(top_shared)]
+        if len(shared) < 200:
+            raise ValueError(f'shared vocab too small for Z ({len(shared)})')
+        A = np.stack([kv_d[w] for w in shared])
+        B = np.stack([kv_r[w] for w in shared])
+        A /= np.linalg.norm(A, axis=1, keepdims=True)
+        B /= np.linalg.norm(B, axis=1, keepdims=True)
+        R, _ = orthogonal_procrustes(B, A)
+        cos = np.sum(A * (B @ R), axis=1)
+        dists.append(1.0 - cos.mean())
+        shared_ns.append(len(shared))
+
+    return {'z_raw_distance': float(np.mean(dists)),
+            'z_seed_std': float(np.std(dists)),
+            'n_shared_vocab': int(np.mean(shared_ns))}
