@@ -179,10 +179,16 @@
   .iat-svg text { font-family: var(--sans); }
   .iat-svg .eq { font-family: var(--serif); }
   .iat-stack > figure + figure { margin-top: 22px; }
-  .bracket-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+  .bracket-scroll { overflow: hidden; border: 1px solid var(--line); border-radius: 10px; }
   .bracket-scroll img { display: block; width: 100%; min-width: 1560px; border: none; border-radius: 0; }
-  .bracket-embed { position: relative; min-width: 1560px; aspect-ratio: 1584 / 1224; }
-  .bracket-embed iframe { width: 100%; height: 100%; border: 0; display: block; background: #E9EDF2; }
+  /* The bracket app lays out at its 1584x1224 design size; the iframe renders at
+     that size and is scaled down to fit the column so the whole bracket is
+     visible on load (JS sets the scale and the container height). */
+  .bracket-embed { position: relative; overflow: hidden; }
+  .bracket-embed iframe {
+    width: 1584px; height: 1224px; border: 0; display: block;
+    background: #E9EDF2; transform-origin: 0 0;
+  }
   .takeaway {
     margin: 24px 0; padding: 22px 28px; background: var(--bg-raised);
     border: 1px solid var(--line); border-left: 3px solid var(--gold);
@@ -1008,7 +1014,7 @@
         </div>
         <noscript>
           <style>.bracket-embed { display: none; }</style>
-          <img src="assets/world-cup-bracket.png?v=716" alt="2026 Men's World Cup knockout bracket, as of July 16, 2026" loading="lazy" style="display:block;width:100%;min-width:1560px">
+          <img src="assets/world-cup-bracket.png?v=716" alt="2026 Men's World Cup knockout bracket, as of July 16, 2026" loading="lazy" style="display:block;width:100%">
         </noscript>
         <figcaption>Road to the Final — knockout bracket, as of July 16, 2026.
         The semifinals are done: Spain shut out France in Dallas and Argentina
@@ -1413,11 +1419,21 @@
   f.addEventListener('load', hide);
   setTimeout(hide, 15000);   // safety net
 })();
-/* World Cup bracket embed — same deal */
+/* World Cup bracket embed — same deal, plus fit-to-width scaling so the
+   whole 1584px-wide bracket is visible without horizontal scrolling. */
 (function () {
   const f = document.getElementById('bracket-frame'), l = document.getElementById('bracket-loading');
   if (!f || !l) return;
-  const hide = () => l.classList.add('hidden');
+  const embed = f.parentElement;
+  const W = 1584, H = 1224;
+  function fit() {
+    const s = embed.clientWidth / W;
+    f.style.transform = 'scale(' + s + ')';
+    embed.style.height = Math.round(H * s) + 'px';
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  const hide = () => { l.classList.add('hidden'); fit(); };
   f.addEventListener('load', () => setTimeout(hide, 400));
   setTimeout(hide, 15000);   // safety net
 })();
