@@ -24,7 +24,7 @@ def load_speeches(source, args):
         import stanford_parse
         congress = int(args[0])
         speeches = list(stanford_parse.parse_congress(congress))
-        label = f'congress-{congress}'
+        label = f'stanford-{congress}'
         years = stanford_parse.congress_years(congress)
     elif source == 'crec':
         import crec_parse

@@ -20,10 +20,11 @@ PKG = 'https://www.govinfo.gov/content/pkg/{pkg}.zip'
 UA = {'User-Agent': 'decoherence-pipeline/1.0 (research; contact: site owner)'}
 
 
-def issue_dates(year):
+def issue_packages(year):
+    """Full package IDs from the year sitemap (some carry -vNNN/-iN suffixes)."""
     req = urllib.request.Request(SITEMAP.format(year=year), headers=UA)
     xml = urllib.request.urlopen(req, timeout=60).read().decode()
-    return sorted(set(re.findall(r'CREC-(\d{4}-\d{2}-\d{2})', xml)))
+    return sorted(set(re.findall(r'app/details/(CREC-\d{4}-\d{2}-\d{2}[^<\s/"]*)', xml)))
 
 
 def slim_zip(raw_bytes, dest_path):
@@ -35,10 +36,10 @@ def slim_zip(raw_bytes, dest_path):
                 out.writestr(n, src.read(n))
 
 
-def fetch(date, retries=4):
-    pkg = f'CREC-{date}'
+def fetch(pkg, retries=4):
     dest = os.path.join(DATA_DIR, pkg + '.zip')
-    if os.path.exists(dest):
+    plain = re.match(r'(CREC-\d{4}-\d{2}-\d{2})', pkg).group(1)
+    if os.path.exists(dest) or os.path.exists(os.path.join(DATA_DIR, plain + '.zip')):
         return 'cached'
     for attempt in range(retries):
         try:
@@ -61,12 +62,12 @@ if __name__ == '__main__':
     years, limit = ns.years, ns.limit
     os.makedirs(DATA_DIR, exist_ok=True)
     for year in years:
-        dates = issue_dates(year)
+        pkgs = issue_packages(year)
         if limit:
-            dates = dates[:limit]
-        print(f'{year}: {len(dates)} issues')
-        for i, d in enumerate(dates):
-            status = fetch(d)
-            print(f'  [{i+1}/{len(dates)}] {d}: {status}', flush=True)
+            pkgs = pkgs[:limit]
+        print(f'{year}: {len(pkgs)} issues')
+        for i, p in enumerate(pkgs):
+            status = fetch(p)
+            print(f'  [{i+1}/{len(pkgs)}] {p}: {status}', flush=True)
             if status != 'cached':
                 time.sleep(2)   # be polite to govinfo
