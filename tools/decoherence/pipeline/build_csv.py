@@ -44,9 +44,6 @@ def main():
     ep = load_epochs()
     print(ep[['label', 'year_mid', 'x_raw', 'y_raw', 'z_raw']].to_string(index=False))
 
-    def norm(s):
-        return (s - s.min()) / (s.max() - s.min())
-
     years_full = np.arange(1994, 2026)
     out = {'Year': years_full}
     for col, name in [('x_raw', 'Lexical_Drift_X'),
@@ -56,7 +53,12 @@ def main():
         raw_yearly = interp_raw(np.clip(years_full, ep['year_mid'].min(),
                                         ep['year_mid'].max()))
         out[name + '_raw'] = raw_yearly
-        rn = (raw_yearly - raw_yearly.min()) / (raw_yearly.max() - raw_yearly.min())
+        # Divergence relative to the 1994 baseline, scaled to the series max:
+        # 1994 = 0 (the shared torus) by construction; the max year = 1.
+        # Values that dip below the 1994 baseline (the late-90s / post-9/11
+        # rapprochement) clip to 0 in the animation but stay in the raw column.
+        base = raw_yearly[0]
+        rn = (raw_yearly - base) / (raw_yearly.max() - base)
         out[name] = np.clip(rn, 0, 1)
 
     df = pd.DataFrame(out)

@@ -106,10 +106,11 @@ def update(frame):
     drift_y = 5.5 * y_val
     drift_z = 4.5 * z_val
 
-    # Systemic vibration driven by the measured rate of separation
+    # Systemic vibration driven by the measured rate of separation,
+    # capped so the torus geometry stays legible through fast swings
     if current_year > YEAR0 + 0.5 and t_linear < 1.0:
         velocity = x_val - float(interp_x(current_year - 0.5))
-        vibration = abs(velocity) * 12.0
+        vibration = min(abs(velocity) * 4.0, 0.45)
     else:
         vibration = 0
 
