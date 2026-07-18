@@ -181,8 +181,11 @@ def browser_checks(base):
       const songs = document.querySelectorAll('#song-grid .song').length > 10;
       const wall = !!document.getElementById('wall-interactive');
       const bracket = !!document.getElementById('bracket-frame');
+      const legendHs = document.querySelectorAll('#wall-legend .hs').length === 34;
+      const origShapes = document.querySelectorAll('#orig-wall svg .ow').length === 33;
+      const origKeyHs = document.querySelectorAll('#orig-key .hs').length === 32;
       const overflow = document.documentElement.scrollWidth <= window.innerWidth + 2;
-      return songs && wall && bracket && overflow;
+      return songs && wall && bracket && legendHs && origShapes && origKeyHs && overflow;
     })()"""
     guide_expect = """(function(){
       const arts = document.querySelectorAll('article').length === 34;
