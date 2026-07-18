@@ -144,6 +144,25 @@
   .wall-embed { position: relative; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg-raised); }
   .wall-embed iframe { width: 100%; height: 640px; border: 0; display: block; }
   @media (max-width: 908px) { .wall-embed iframe { height: 80vh; } }
+  /* Fullscreen button parked in the embed's corner, over the interactive's cream backdrop */
+  .wall-fs { position: absolute; left: 10px; bottom: 10px; z-index: 1; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;
+    background: rgba(250,248,243,.92); border: 1px solid #ddd8cc; border-radius: 8px;
+    color: #8a857a; box-shadow: 0 1px 4px rgba(28,27,24,.12);
+    transition: color .15s ease, border-color .15s ease; }
+  .wall-fs:hover { color: #1c1b18; border-color: #c2bcae; }
+  .wall-fs svg { width: 17px; height: 17px; fill: none; stroke: currentColor;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .wall-embed:fullscreen { border: 0; border-radius: 0; }
+  .wall-embed:fullscreen iframe { height: 100vh; }
+  /* Static legend — invisible hotspots over each key entry drive the wall above */
+  .legend-map { position: relative; }
+  .legend-map img { display: block; }
+  .legend-map .hs { position: absolute; border-radius: 6px; }
+  @media (hover: hover) {
+    .legend-map .hs { cursor: pointer; }
+    .legend-map .hs:hover { background: rgba(59,91,219,.09); }
+  }
   .map-loading { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 20px;
     background: var(--bg-raised); color: var(--text-dim); transition: opacity .5s ease; }
@@ -494,7 +513,7 @@
     <div class="wrap">
       <div class="sec-head"><span class="sec-num">02</span><h2>The Iconic Wall</h2></div>
       <p class="sec-sub">
-        James Simons commissioned the Iconic Wall at Stony Brook, employing
+        <a href="https://en.wikipedia.org/wiki/Jim_Simons" target="_blank" rel="noopener">James Simons</a> commissioned the Iconic Wall at Stony Brook, employing
         humanity's most durable technology for preserving information across
         time: stone.
         <br><br>
@@ -518,8 +537,11 @@
             <p>Unpacking the wall…</p>
             <span>every equation, ready to explore</span>
           </div>
-          <iframe id="wall-interactive" src="assets/iconic-wall-interactive.html?v=8.3"
+          <iframe id="wall-interactive" src="assets/iconic-wall-interactive.html?v=8.4"
                   title="Interactive Iconic Wall — hover or tap any equation or diagram to identify it" loading="lazy"></iframe>
+          <button class="wall-fs" id="wall-fs" type="button" aria-label="Toggle full screen" title="Full screen">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg>
+          </button>
         </div>
         <noscript>
           <style>.wall-embed { display: none; }</style>
@@ -529,14 +551,17 @@
         Atiyah–Singer, plus the trefoil knot, Lorenz attractor, and one very
         important torus — now interactive. Hover (or tap) any equation or
         diagram to identify it; click to pin, Esc to clear.
-        <a href="assets/iconic-wall-interactive.html?v=8.3" target="_blank" rel="noopener">Open full screen ↗</a> ·
+        <a href="assets/iconic-wall-interactive.html?v=8.4" target="_blank" rel="noopener">Open full screen ↗</a> ·
         <a href="iconic-wall-guide.html">Read the guide — every item on the wall, explained →</a></figcaption>
       </figure>
       <div class="grid-2" style="margin-top:20px">
         <figure>
-          <img src="assets/iconic-wall-legend.png?v=2" alt="Legend for the Iconic Wall reconstruction: a locator map and key to every equation and diagram" loading="lazy">
+          <div class="legend-map" id="wall-legend">
+            <img src="assets/iconic-wall-legend.png?v=2" alt="Legend for the Iconic Wall reconstruction: a locator map and key to every equation and diagram" loading="lazy">
+          </div>
           <figcaption>The reconstruction's legend — every equation and diagram
-          keyed to its place on the wall, fabricated as a companion panel.</figcaption>
+          keyed to its place on the wall, fabricated as a companion panel.
+          Hover an entry to light it up on the wall above.</figcaption>
         </figure>
         <figure>
           <video src="assets/iconic-wall-3d.mp4" autoplay loop muted playsinline preload="metadata" aria-label="3D animated flythrough of the Iconic Wall"></video>
@@ -1434,13 +1459,51 @@
     if (el) pinTo(el);
   });
 })();
-/* Iconic Wall interactive — same deal */
+/* Iconic Wall interactive — same deal, plus the corner fullscreen button and
+   legend hotspots: hovering an entry on the static legend below postMessages
+   the interactive above, which lights up that item's boundary on the wall. */
 (function () {
   const f = document.getElementById('wall-interactive'), l = document.getElementById('wall-loading');
   if (!f || !l) return;
   const hide = () => l.classList.add('hidden');
   f.addEventListener('load', hide);
   setTimeout(hide, 15000);   // safety net
+
+  const embed = f.parentElement, fsBtn = document.getElementById('wall-fs');
+  const openStandalone = () => window.open(f.src, '_blank', 'noopener');
+  if (fsBtn) fsBtn.addEventListener('click', () => {
+    if (document.fullscreenElement === embed) { document.exitFullscreen(); return; }
+    // Unavailable or denied (e.g. iOS Safari) — open the wall itself
+    if (embed.requestFullscreen) embed.requestFullscreen().catch(openStandalone);
+    else openStandalone();
+  });
+
+  const legend = document.getElementById('wall-legend');
+  if (!legend) return;
+  // [id, left%, top%, width%, height%] — one hotspot per key entry, measured
+  // from the 2200x2200 legend png; ids match the interactive's ENTRIES.
+  const HS = [
+    ['rI',2.73,7.55,23.5,2.91],['rII',2.73,11.0,35.18,2.95],['rIII',2.73,14.5,26.91,2.91],['rIV',2.73,18.0,22.45,2.5],
+    ['rV',2.73,21.45,29.41,2.5],['rVI',2.73,24.91,24.36,2.55],['rVII',2.73,28.41,19.27,2.91],['rVIII',2.73,31.86,31.41,2.91],
+    ['rIX',2.73,35.36,26.59,2.91],['rX',2.73,38.82,28.09,2.5],['rXI',2.73,42.27,31.95,2.91],['rXII',2.73,45.73,27.91,2.55],
+    ['rXIII',2.73,49.23,28.82,2.91],['k1',2.73,58.27,44.09,3.09],['n1',2.73,62.59,19.45,2.86],['n2',2.73,66.05,28.23,2.5],
+    ['n3',2.73,69.5,19.09,2.91],['n4',2.73,72.95,27.59,2.95],['n5',2.73,76.45,20.09,2.91],['n6',2.73,79.95,24.32,2.91],
+    ['n7',2.73,83.41,21.5,2.91],['n8',2.73,86.86,32.55,2.95],['n9',2.73,90.36,26.55,2.91],['n10',2.73,93.91,18.91,2.82],
+    ['bA',51.36,59.36,35.27,2.95],['bB',51.36,62.86,20.36,2.86],['bC',51.36,66.32,17.05,2.55],['bD',51.36,69.82,30.36,2.91],
+    ['bE',51.36,73.27,31.95,2.91],['bF',51.36,76.73,31.14,2.91],['bG',51.36,80.18,25.68,2.55],['bH',51.36,83.68,40.32,2.91],
+    ['bI',51.36,87.14,27.77,2.91],['bJ',51.36,90.64,37.91,2.91]
+  ];
+  const post = (id) => {
+    try { f.contentWindow.postMessage({ type: 'wall-hover', id: id }, '*'); } catch (e) {}
+  };
+  HS.forEach(([id, left, top, w, h]) => {
+    const d = document.createElement('div');
+    d.className = 'hs';
+    d.style.cssText = 'left:' + left + '%;top:' + top + '%;width:' + w + '%;height:' + h + '%';
+    d.addEventListener('mouseenter', () => post(id));
+    d.addEventListener('mouseleave', () => post(null));
+    legend.appendChild(d);
+  });
 })();
 /* World Cup bracket embed — same deal, plus fit-to-width scaling so the
    whole 1584px-wide bracket is visible without horizontal scrolling, and
