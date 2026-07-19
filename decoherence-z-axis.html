@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Z-Axis, Intuitively — Mister Consistency</title>
+<meta name="description" content="An intuitive explanation of the semantic-distance axis in the Topology of Societal Decoherence: disconnected manifolds, Procrustes alignment, and cosine similarity.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f12;
+    --bg-raised: #16171c;
+    --line: #26272e;
+    --text: #e8e6e1;
+    --text-dim: #9a978f;
+    --gold: #d0a44c;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(14,15,18,.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; min-height: 60px; padding: 8px 0;
+  }
+  .brand {
+    font-family: var(--serif); font-weight: 600; font-size: 1.05rem;
+    color: var(--text); text-decoration: none; letter-spacing: .02em;
+    white-space: nowrap;
+  }
+  .brand span { color: var(--gold); }
+  nav .back {
+    color: var(--text-dim); text-decoration: none; font-size: .78rem;
+    font-weight: 500; letter-spacing: .05em; text-transform: uppercase;
+  }
+  nav .back:hover { color: var(--gold); }
+
+  main { padding: 56px 0 90px; }
+  .kicker {
+    color: var(--gold); font-size: .78rem; font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase; margin-bottom: 14px;
+  }
+  h1 {
+    font-family: var(--serif); font-weight: 400; font-size: 2.3rem;
+    line-height: 1.15; margin-bottom: 22px;
+  }
+  h2 {
+    font-family: var(--serif); font-weight: 600; font-size: 1.35rem;
+    margin: 40px 0 12px;
+  }
+  p { color: var(--text-dim); margin-bottom: 16px; }
+  p strong { color: var(--text); font-weight: 600; }
+  .math { font-style: italic; white-space: nowrap; }
+  figure { margin: 34px 0; }
+  figure img {
+    width: 100%; display: block; border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  figcaption { color: var(--text-dim); font-size: .84rem; margin-top: 10px; }
+  ul { margin: 0 0 16px 22px; color: var(--text-dim); }
+  li { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="brand" href="index.html">mister<span>consistency</span></a>
+        <a class="back" href="index.html#decoherence">&larr; Back to Decoherence</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="kicker">Topology of Societal Decoherence &middot; Methods</div>
+      <h1>The Z-Axis, Intuitively</h1>
+
+      <p>
+        To intuitively grasp the Z-axis in this plot, it helps to think
+        geometrically about how meaning fundamentally drifts within a semantic
+        space.
+      </p>
+
+      <figure>
+        <img src="assets/decoherence-measured-series.png" alt="Three line charts, 1994 to 2025: lexical partisanship, affective tone, and semantic distance measured from the Congressional Record">
+        <figcaption>The three measured axes, 1994&ndash;2025. The Z-axis
+        (semantic distance) is the bottom panel.</figcaption>
+      </figure>
+
+      <p>
+        The Z-axis tracks <strong>Semantic Distance</strong>, specifically
+        formulated as <span class="math">1&nbsp;&minus;&nbsp;cos(&theta;)</span>
+        after a Procrustes alignment. Here is the intuitive breakdown of what
+        that actually measures within natural language processing pipelines:
+      </p>
+
+      <h2>1. The Disconnected Manifolds</h2>
+      <p>
+        When you train word embeddings on different groups (e.g., Democrats vs.
+        Republicans) or across different time periods, the models place words
+        into high-dimensional coordinate systems where proximity equals
+        semantic similarity. However, the exact coordinates are arbitrary. The
+        &ldquo;Democrat&rdquo; vector space and the &ldquo;Republican&rdquo;
+        vector space are entirely disconnected manifolds; you cannot simply lay
+        one on top of the other to compare how they use a specific word.
+      </p>
+
+      <h2>2. Procrustes Alignment (The Rotation)</h2>
+      <p>
+        To compare them, you have to mathematically force the two spaces to
+        align. Imagine taking two identical constellations of stars, but one is
+        rotated and translated. A Procrustes alignment rigidly rotates, scales,
+        and shifts one semantic space to best overlap with the other. It
+        usually anchors this alignment using &ldquo;stable&rdquo; structural
+        words whose meanings rarely change (like &ldquo;the&rdquo;,
+        &ldquo;and&rdquo;, or &ldquo;water&rdquo;).
+      </p>
+
+      <h2>3. Cosine Similarity (The Angle)</h2>
+      <p>
+        Once the baseline architectures of the two languages are aligned, you
+        can measure specific concepts. If you draw a vector from the origin to
+        how Group&nbsp;A uses the word &ldquo;freedom,&rdquo; and another
+        vector to how Group&nbsp;B uses &ldquo;freedom,&rdquo; cosine
+        similarity measures the angle between those two vectors.
+      </p>
+      <ul>
+        <li>If they use the word in the exact same contextual way, the vectors
+        point in the same direction (a similarity of 1).</li>
+        <li>If the contexts are completely orthogonal or unrelated, the
+        similarity drops toward 0.</li>
+      </ul>
+
+      <h2>The Z-Axis: Linguistic Decoherence</h2>
+      <p>
+        Because the Z-axis plots
+        <span class="math">1&nbsp;&minus;&nbsp;cosine&nbsp;similarity</span>,
+        it is an exact measure of divergence.
+      </p>
+      <p>
+        When the Z-axis spikes (as seen clearly around the 2010 Tea Party era
+        and the post-2020 117th Congress), it reveals that the two sides
+        aren&rsquo;t just using different vocabularies (which is what the
+        X-axis measures). Instead, it shows that even after aligning their
+        baseline languages, they are using the exact same words to mean
+        entirely different things. The topological distance between their
+        shared concepts is widening, indicating that the speakers are
+        effectively talking past each other.
+      </p>
+    </div>
+  </main>
+</body>
+</html>
