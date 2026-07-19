@@ -24,8 +24,67 @@ CHROME = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 PAGES = ["/", "/iconic-wall-guide.html", "/alaska-trip.html", "/alaska-full.html",
          "/decoherence-z-axis.html"]
 UA = {"User-Agent": "Mozilla/5.0 (site-qa)"}
-MOJIBAKE = ["â€", "Ã©", "�", "Ã©", "â€"]
 MERGE_MARKERS = ["<<<<<<< ", ">>>>>>> "]
+
+# Mojibake = UTF-8 bytes decoded as cp1252/latin-1 and re-saved as UTF-8. Detect it
+# by reversing the corruption rather than matching a list of known-mangled strings:
+# a fixed list only finds the glyphs someone thought to enumerate, so a page whose
+# only damage was psi or an emoji would pass clean. Any run of high characters that
+# round-trips back to shorter, valid UTF-8 was mojibake.
+#
+# cp1252 leaves 0x81/0x8D/0x8F/0x90/0x9D undefined and the corrupting tool falls
+# through to latin-1 for those, so one run can mix both encodings -- the choice has
+# to be made per character, not per run.
+def _enc(s):
+    out = bytearray()
+    for ch in s:
+        try:
+            out += ch.encode("cp1252")
+        except UnicodeEncodeError:
+            out += ch.encode("latin-1")   # raises above U+00FF, which is correct
+    return bytes(out)
+
+def find_mojibake(text):
+    """Return [(mangled, should_be), ...] for every mojibake run in text."""
+    hits, i, n = [], 0, len(text)
+    while i < n:
+        # escapes, not literals: this file must stay diagnostic even if it is
+        # itself run through a bad re-encode one day
+        if "\u00c2" <= text[i] <= "\u00f4":   # a UTF-8 lead byte, reinterpreted
+            j = i
+            while j < n and ord(text[j]) > 0x7F:
+                try:
+                    _enc(text[j])
+                except UnicodeEncodeError:
+                    break
+                j += 1
+            for end in range(j - i, 0, -1):      # longest plausible run first
+                try:
+                    dec = _enc(text[i:i + end]).decode("utf-8")
+                except (UnicodeEncodeError, UnicodeDecodeError):
+                    continue
+                if len(dec) < end:               # mojibake always expands
+                    hits.append((text[i:i + end], dec))
+                    i += end
+                    break
+            else:
+                i += 1
+            continue
+        i += 1
+    return hits
+
+def mojibake_detail(hits):
+    """ASCII-safe summary, e.g. '113x U+2014, 22x U+2013'. Never emits the broken
+    bytes themselves -- this runs in consoles whose encoding may be the problem."""
+    agg = {}
+    for _, fixed in hits:
+        key = " ".join("U+%04X" % ord(c) for c in fixed)
+        agg[key] = agg.get(key, 0) + 1
+    top = sorted(agg.items(), key=lambda kv: -kv[1])
+    out = ", ".join("%dx %s" % (n, k) for k, n in top[:5])
+    if len(top) > 5:
+        out += " (+%d more kinds)" % (len(top) - 5)
+    return out
 
 results = []
 def check(ok, label, detail=""):
@@ -48,8 +107,10 @@ def http_checks(base):
             check(False, f"GET {path}", str(e)); continue
         text = body.decode("utf-8", "replace")
         check(status == 200, f"GET {path} -> 200", str(status))
-        moji = [m for m in MOJIBAKE if m in text]
-        check(not moji, f"{path}: no mojibake", ",".join(moji))
+        moji = find_mojibake(text)
+        check(not moji, f"{path}: no mojibake", mojibake_detail(moji))
+        check("\ufffd" not in text, f"{path}: no replacement chars",
+              "%d U+FFFD" % text.count("\ufffd"))
         marks = [m for m in MERGE_MARKERS if m in text]
         check(not marks, f"{path}: no merge markers", ",".join(marks))
 
