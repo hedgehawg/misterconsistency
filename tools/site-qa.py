@@ -21,7 +21,8 @@ Requires: pip install websocket-client; Chrome at the standard path.
 import argparse, json, os, re, subprocess, sys, tempfile, time, urllib.request, urllib.parse
 
 CHROME = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
-PAGES = ["/", "/iconic-wall-guide.html", "/alaska-trip.html", "/alaska-full.html"]
+PAGES = ["/", "/iconic-wall-guide.html", "/alaska-trip.html", "/alaska-full.html",
+         "/decoherence-z-axis.html"]
 UA = {"User-Agent": "Mozilla/5.0 (site-qa)"}
 MOJIBAKE = ["â€", "Ã©", "�", "Ã©", "â€"]
 MERGE_MARKERS = ["<<<<<<< ", ">>>>>>> "]
@@ -200,9 +201,13 @@ def browser_checks(base):
     full_expect = """(function(){
       return !!document.getElementById('deck') && !!document.getElementById('veil');
     })()"""
+    zaxis_expect = """(function(){
+      return !!document.querySelector('main') && !!document.querySelector('h1');
+    })()"""
     plans = [
         ("/", idx_expect), ("/iconic-wall-guide.html", guide_expect),
         ("/alaska-trip.html", trip_expect), ("/alaska-full.html", full_expect),
+        ("/decoherence-z-axis.html", zaxis_expect),
     ]
     for path, expect in plans:
         cdp_page_check(base, path, 1280, 900, False, expect, f"desktop {path}")
