@@ -71,8 +71,14 @@ def lexical_partisanship(speeches, min_speaker_words=1000, word_cap=2000, seed=4
     y = np.array(labels)
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=seed)
     clf = LogisticRegression(max_iter=2000, C=1.0, class_weight='balanced')
-    acc = cross_val_score(clf, X, y, cv=cv, scoring='balanced_accuracy').mean()
+    from sklearn.model_selection import cross_val_predict
+    pred = cross_val_predict(clf, X, y, cv=cv)
+    recall_d = float((pred[y == 'D'] == 'D').mean())   # how identifiable D vocab is
+    recall_r = float((pred[y == 'R'] == 'R').mean())   # how identifiable R vocab is
+    acc = (recall_d + recall_r) / 2.0                  # balanced accuracy
     return {'x_raw_accuracy': float(acc),
+            'x_raw_recall_D': recall_d,
+            'x_raw_recall_R': recall_r,
             'x': float(np.clip((acc - 0.5) / 0.5, 0, 1)),
             'n_speakers': len(texts)}
 
