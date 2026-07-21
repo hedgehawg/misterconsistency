@@ -109,6 +109,7 @@
   h2 a { color: inherit; text-decoration: none; }
   h2 a:hover { color: var(--gold); }
   .sec-sub { color: var(--text-dim); max-width: 840px; margin-bottom: 44px; }
+  .arch-head h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.35rem, 3vw, 1.8rem); letter-spacing: -.01em; }
   .sec-sub a { color: var(--gold); text-decoration: none; }
   .sec-sub a:hover { text-decoration: underline; }
 
@@ -477,9 +478,9 @@
         <li><a href="#research">Research</a></li>
         <li><a href="#curiosities">Curiosities</a></li>
         <li><a href="#gwen-bill">Gwen &amp; Bill</a></li>
-        <li><a href="#worldcup">World Cup</a></li>
         <li><a href="#gattman">Gattman's World</a></li>
         <li><a href="alaska-trip.html">🛩️🚤 Alaska trip 🐻🐟</a></li>
+        <li><a href="#archive">Archive</a></li>
       </ul>
       <details class="mnav" id="mnav">
         <summary aria-label="Open section menu">☰</summary>
@@ -490,9 +491,9 @@
           <a href="#research">Research</a>
           <a href="#curiosities">Curiosities</a>
           <a href="#gwen-bill">Gwen &amp; Bill</a>
-          <a href="#worldcup">World Cup</a>
           <a href="#gattman">Gattman's World</a>
           <a href="alaska-trip.html">🛩️🚤 Alaska trip 🐻🐟</a>
+          <a href="#archive">Archive</a>
         </div>
       </details>
     </nav>
@@ -1099,9 +1100,51 @@
     </div>
   </section>
 
-  <section id="worldcup">
+  <section id="gattman">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">07</span><h2>World Cup</h2>
+      <div class="sec-head"><span class="sec-num">07</span><h2>Gattman's World</h2></div>
+      <p class="sec-sub">
+        My friend Jon Gattman reviewed nearly every restaurant he ever visited —
+        hundreds of them, one tab per city in a Google Sheet. Great notes, no
+        addresses, no map. So here it is...
+      </p>
+      <figure>
+        <div class="map-embed">
+          <div class="map-loading" id="gattman-loading">
+            <div class="map-spinner" aria-hidden="true"></div>
+            <p>Loading Gattman's World…</p>
+            <span>the map's heavy — hang tight</span>
+          </div>
+          <iframe id="gattman-map" src="https://www.google.com/maps/d/embed?mid=1WKvS4MqRVJJxqM1L6kyGdFa4lviTJ_8&z=2"
+                  title="Gattman's World — restaurant reviews mapped" loading="lazy"></iframe>
+          <div class="gm-legend" aria-label="Map legend">
+            <span><img src="assets/gattman-yes.png" alt="Gattman in sunglasses">Yes</span>
+            <span><img src="assets/gattman-skip.png" alt="Gattman, skeptical">Skip</span>
+            <span><img src="assets/gattman-closed.png" alt="Gattman in sugar-skull face paint">Now closed</span>
+          </div>
+        </div>
+        <figcaption>One pin for a yes, one for a skip, and a third for the
+        places that have since closed. Roughly 1,900 restaurants across six
+        continents — open it in Google Maps and eat accordingly.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="alaska">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">08</span><h2><a href="alaska-trip.html">🛩️🚤 Alaska trip 🐻🐟</a></h2></div>
+      <p class="sec-sub">
+        Password protected Alaska trip website <a href="alaska-trip.html">click here</a>
+      </p>
+    </div>
+  </section>
+
+  <section id="archive">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">09</span><h2>Archive</h2></div>
+      <p class="sec-sub">Retired side projects, kept for the record.</p>
+      <div id="worldcup">
+      <div class="sec-head arch-head"><h3>World Cup</h3>
         <details class="dl-bracket">
           <summary>Download bracket ▾</summary>
           <div class="dl-choices">
@@ -1137,45 +1180,7 @@
         match in Miami, and it's Spain–Argentina in the July 19 final at New
         York/New Jersey Stadium.</figcaption>
       </figure>
-    </div>
-  </section>
-
-  <section id="gattman">
-    <div class="wrap">
-      <div class="sec-head"><span class="sec-num">08</span><h2>Gattman's World</h2></div>
-      <p class="sec-sub">
-        My friend Jon Gattman reviewed nearly every restaurant he ever visited —
-        hundreds of them, one tab per city in a Google Sheet. Great notes, no
-        addresses, no map. So here it is...
-      </p>
-      <figure>
-        <div class="map-embed">
-          <div class="map-loading" id="gattman-loading">
-            <div class="map-spinner" aria-hidden="true"></div>
-            <p>Loading Gattman's World…</p>
-            <span>the map's heavy — hang tight</span>
-          </div>
-          <iframe id="gattman-map" src="https://www.google.com/maps/d/embed?mid=1WKvS4MqRVJJxqM1L6kyGdFa4lviTJ_8&z=2"
-                  title="Gattman's World — restaurant reviews mapped" loading="lazy"></iframe>
-          <div class="gm-legend" aria-label="Map legend">
-            <span><img src="assets/gattman-yes.png" alt="Gattman in sunglasses">Yes</span>
-            <span><img src="assets/gattman-skip.png" alt="Gattman, skeptical">Skip</span>
-            <span><img src="assets/gattman-closed.png" alt="Gattman in sugar-skull face paint">Now closed</span>
-          </div>
-        </div>
-        <figcaption>One pin for a yes, one for a skip, and a third for the
-        places that have since closed. Roughly 1,900 restaurants across six
-        continents — open it in Google Maps and eat accordingly.</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section id="alaska">
-    <div class="wrap">
-      <div class="sec-head"><span class="sec-num">09</span><h2><a href="alaska-trip.html">🛩️🚤 Alaska trip 🐻🐟</a></h2></div>
-      <p class="sec-sub">
-        Password protected Alaska trip website <a href="alaska-trip.html">click here</a>
-      </p>
+      </div>
     </div>
   </section>
 
