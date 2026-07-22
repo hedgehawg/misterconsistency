@@ -216,6 +216,13 @@
   }
   figcaption a { color: var(--gold); text-decoration: none; }
   figcaption a:hover { text-decoration: underline; }
+  /* Empirical torus: the timeline dial is rendered into the frames; this
+     invisible strip over it turns pointer drags into frame-exact seeks. */
+  .deco-scrub { position: relative; }
+  .deco-dial { position: absolute; left: 0; right: 0; top: 80%; bottom: 0;
+    cursor: grab; touch-action: none; }
+  .deco-dial:active { cursor: grabbing; }
+  .deco-dial:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
   .iat-figs { margin-top: 40px; }
   .iat-figs .lead { color: var(--text-dim); max-width: 720px; margin-bottom: 22px; }
   .iat-svg {
@@ -616,10 +623,16 @@
       </p>
       <div class="stack">
         <figure>
-          <video src="assets/decoherence-linguistic.mp4?v=2" autoplay loop muted playsinline preload="metadata" style="width:100%;display:block" aria-label="Animation of the linguistic torus: shared feasible space collapsing from 100 to 8 percent, measured from the Congressional Record"></video>
+          <div class="deco-scrub">
+            <video id="deco-torus" src="assets/decoherence-linguistic.mp4?v=3" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the linguistic torus: shared feasible space collapsing from 100 to 8 percent, measured from the Congressional Record"></video>
+            <div class="deco-dial" id="deco-dial" role="slider" tabindex="0"
+                 aria-label="Timeline, 1994 to 2025 — drag to scrub"
+                 aria-valuemin="1994" aria-valuemax="2025" aria-valuenow="1994"></div>
+          </div>
           <figcaption>The shared linguistic feasible space, 1994–2025 — measured,
           not modeled: 640 million words of the Congressional Record, collapsing
-          from 100% to 8%.</figcaption>
+          from 100% to 8%. Drag the timeline dial to scrub back and forth;
+          release to resume.</figcaption>
         </figure>
         <figure>
           <video src="assets/decoherence-helix.mp4?v=2" autoplay loop muted playsinline preload="metadata" style="width:100%;display:block" aria-label="Animation of the fraying helix: a two-strand braid of congressional language winding tightly in 1994 and unraveling into two frayed strands by 2025"></video>
@@ -1614,6 +1627,47 @@
     hs.addEventListener('mouseleave', () => setActive(null));
     keyBox.appendChild(hs);
     reg[id] = { els: els, hs: hs, bb: bb, label: label, name: name };
+  });
+})();
+/* Empirical decoherence torus — the dial baked into the frames becomes a real
+   scrubber. The mp4 is encoded all-intra so every frame is an instant seek.
+   Thumb geometry (measured from the frames): x 139..988 in a 1100px frame,
+   linear across the 81 frames. */
+(function () {
+  const v = document.getElementById('deco-torus'), d = document.getElementById('deco-dial');
+  if (!v || !d) return;
+  const FRAMES = 81, FPS = 20, X0 = 139 / 1100, X1 = 988 / 1100;
+  let wasPlaying = false, frame = 0;
+  function seekTo(clientX) {
+    const r = v.getBoundingClientRect();
+    const xn = (clientX - r.left) / r.width;
+    const frac = Math.min(1, Math.max(0, (xn - X0) / (X1 - X0)));
+    frame = Math.round(frac * (FRAMES - 1));
+    v.currentTime = (frame + 0.5) / FPS;
+    d.setAttribute('aria-valuenow', String(Math.round(1994 + frac * 31)));
+  }
+  d.addEventListener('pointerdown', (e) => {
+    wasPlaying = !v.paused;
+    v.pause();
+    d.setPointerCapture(e.pointerId);
+    seekTo(e.clientX);
+    e.preventDefault();
+  });
+  d.addEventListener('pointermove', (e) => {
+    if (d.hasPointerCapture && d.hasPointerCapture(e.pointerId)) seekTo(e.clientX);
+  });
+  d.addEventListener('pointerup', (e) => {
+    if (d.hasPointerCapture && d.hasPointerCapture(e.pointerId)) d.releasePointerCapture(e.pointerId);
+    if (wasPlaying) v.play();
+  });
+  d.addEventListener('keydown', (e) => {
+    const step = e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowRight' ? 1 : 0;
+    if (!step) return;
+    v.pause();
+    frame = Math.min(FRAMES - 1, Math.max(0, frame + step));
+    v.currentTime = (frame + 0.5) / FPS;
+    d.setAttribute('aria-valuenow', String(Math.round(1994 + (frame / (FRAMES - 1)) * 31)));
+    e.preventDefault();
   });
 })();
 </script>
