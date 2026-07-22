@@ -216,6 +216,18 @@
   }
   figcaption a { color: var(--gold); text-decoration: none; }
   figcaption a:hover { text-decoration: underline; }
+  /* Click-to-fullscreen video (Iconic Wall 3D) with an in-fullscreen exit X */
+  .fsv { position: relative; cursor: zoom-in; }
+  .fsv:fullscreen { display: flex; align-items: center; justify-content: center;
+    background: #000; cursor: default; }
+  .fsv:fullscreen video { width: auto; max-width: 100%; max-height: 100%;
+    border: 0; border-radius: 0; }
+  .fsv-x { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px;
+    display: none; align-items: center; justify-content: center; z-index: 2;
+    border: 1px solid #3a3b42; border-radius: 50%; cursor: pointer;
+    background: rgba(14,15,18,.72); color: var(--text); font-size: 22px; line-height: 1; }
+  .fsv:fullscreen .fsv-x { display: flex; }
+  .fsv-x:hover { border-color: var(--gold); color: var(--gold); }
   /* Empirical torus: the timeline dial is rendered into the frames; this
      invisible strip over it turns pointer drags into frame-exact seeks. */
   .deco-scrub { position: relative; }
@@ -552,8 +564,12 @@
           Hover an entry to light it up on the wall above.</figcaption>
         </figure>
         <figure>
-          <video src="assets/iconic-wall-3d.mp4" autoplay loop muted playsinline preload="metadata" aria-label="3D animated flythrough of the Iconic Wall"></video>
-          <figcaption>And for fun: the wall in 3D.</figcaption>
+          <div class="fsv" id="wall3d">
+            <video src="assets/iconic-wall-3d.mp4" autoplay loop muted playsinline preload="metadata" aria-label="3D animated flythrough of the Iconic Wall — click to view full screen"></video>
+            <button class="fsv-x" type="button" aria-label="Exit full screen">&#215;</button>
+          </div>
+          <figcaption>And for fun: the wall in 3D. Click it to go full
+          screen.</figcaption>
         </figure>
       </div>
       <div class="group-label gl-spaced">
@@ -1633,6 +1649,23 @@
     hs.addEventListener('mouseleave', () => setActive(null));
     keyBox.appendChild(hs);
     reg[id] = { els: els, hs: hs, bb: bb, label: label, name: name };
+  });
+})();
+/* Iconic Wall 3D — click the video to go browser-fullscreen; the X (or Esc)
+   exits. iOS Safari has no element fullscreen, so fall back to the native
+   video player there. */
+(function () {
+  const box = document.getElementById('wall3d');
+  if (!box) return;
+  const v = box.querySelector('video'), x = box.querySelector('.fsv-x');
+  v.addEventListener('click', () => {
+    if (document.fullscreenElement === box) return;
+    if (box.requestFullscreen) box.requestFullscreen();
+    else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+  });
+  x.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (document.fullscreenElement) document.exitFullscreen();
   });
 })();
 /* Empirical decoherence animations — the dial baked into the frames becomes
