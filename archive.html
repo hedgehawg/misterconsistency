@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archive — Mister Consistency</title>
+<meta name="description" content="Retired side projects, kept for the record.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f12;
+    --bg-raised: #16171c;
+    --line: #26272e;
+    --text: #e8e6e1;
+    --text-dim: #9a978f;
+    --gold: #d0a44c;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(14,15,18,.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; min-height: 60px; padding: 8px 0;
+  }
+  .brand {
+    font-family: var(--serif); font-weight: 600; font-size: 1.05rem;
+    color: var(--text); text-decoration: none; letter-spacing: .02em;
+    white-space: nowrap;
+  }
+  .brand span { color: var(--gold); }
+  nav .back {
+    color: var(--text-dim); text-decoration: none; font-size: .78rem;
+    font-weight: 500; letter-spacing: .05em; text-transform: uppercase;
+  }
+  nav .back:hover { color: var(--gold); }
+
+  .hero { padding: 40px 0 4px; }
+  .hero .kicker {
+    font-size: .8rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px; font-weight: 500;
+  }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(2.1rem, 5vw, 3.5rem);
+    line-height: 1.08; letter-spacing: -.01em;
+  }
+
+  section { padding: 26px 0 72px; }
+  .sec-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 14px; }
+  .sec-head h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.35rem, 3vw, 1.8rem); letter-spacing: -.01em;
+  }
+  .sec-sub { color: var(--text-dim); max-width: 840px; margin-bottom: 44px; }
+  .sec-sub a { color: var(--gold); text-decoration: none; }
+  .sec-sub a:hover { text-decoration: underline; }
+
+  figure { margin: 0; }
+  figure img {
+    width: 100%; display: block; border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+  figcaption {
+    font-size: .82rem; color: var(--text-dim); padding-top: 10px; line-height: 1.5;
+  }
+  figcaption a { color: var(--gold); text-decoration: none; }
+  figcaption a:hover { text-decoration: underline; }
+
+  .map-loading { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 20px;
+    background: var(--bg-raised); color: var(--text-dim); transition: opacity .5s ease; }
+  .map-loading.hidden { opacity: 0; pointer-events: none; }
+  .map-loading p { font-family: var(--serif); font-size: 1.15rem; color: var(--text); margin: 0; }
+  .map-spinner { width: 38px; height: 38px; border: 3px solid var(--line);
+    border-top-color: var(--gold); border-radius: 50%; animation: mapspin .9s linear infinite; }
+  @keyframes mapspin { to { transform: rotate(360deg); } }
+
+  .bracket-scroll { overflow: hidden; border: 1px solid var(--line); border-radius: 10px; }
+  .bracket-scroll img { display: block; width: 100%; min-width: 1560px; border: none; border-radius: 0; }
+  /* The bracket app lays out at its 1584x1224 design size; the iframe renders at
+     that size and is scaled down to fit the column so the whole bracket is
+     visible on load (JS sets the scale and the container height). */
+  .bracket-embed { position: relative; overflow: hidden; }
+  .bracket-embed iframe {
+    width: 1584px; height: 1224px; border: 0; display: block;
+    background: #E9EDF2; transform-origin: 0 0;
+  }
+  .bracket-fs { position: absolute; inset: 0; z-index: 1; border: 0;
+    background: transparent; cursor: zoom-in; padding: 0; }
+  .bracket-embed:fullscreen { background: #E9EDF2; }
+  .bracket-embed:fullscreen .bracket-fs { cursor: zoom-out; }
+
+  .dl-bracket { margin-top: 18px; }
+  .sec-head .dl-bracket { margin: 0 0 0 auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .sec-head .dl-choices { margin-top: 0; }
+  .dl-bracket summary {
+    list-style: none; cursor: pointer; display: inline-block;
+    color: var(--bg); background: var(--gold); font-size: .82rem; font-weight: 600;
+    letter-spacing: .04em; padding: 10px 18px; border-radius: 6px;
+  }
+  .dl-bracket summary::-webkit-details-marker { display: none; }
+  .dl-bracket summary:hover { filter: brightness(1.1); }
+  .dl-choices { display: none; gap: 10px; margin-top: 10px; }
+  .dl-bracket[open] .dl-choices { display: inline-flex; }
+  .dl-choices a {
+    color: var(--bg); background: var(--gold); text-decoration: none;
+    font-size: .82rem; font-weight: 600; letter-spacing: .04em;
+    padding: 10px 18px; border-radius: 6px;
+  }
+  .dl-choices a:hover { filter: brightness(1.1); }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 0 44px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  footer p { color: var(--text-dim); font-size: .82rem; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="index.html">mister<span>consistency</span></a>
+      <a class="back" href="index.html">← Back to site</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <div class="hero">
+    <div class="wrap">
+      <div class="kicker">Retired side projects, kept for the record</div>
+      <h1>Archive</h1>
+    </div>
+  </div>
+
+  <section id="worldcup">
+    <div class="wrap">
+      <div class="sec-head"><h2>World Cup</h2>
+        <details class="dl-bracket">
+          <summary>Download bracket ▾</summary>
+          <div class="dl-choices">
+            <a href="assets/world-cup-bracket.pdf?v=7162" download="World Cup bracket.pdf">Download PDF</a>
+            <a href="assets/world-cup-bracket.png?v=7164" download="World Cup bracket.png">Download PNG</a>
+          </div>
+        </details>
+      </div>
+      <p class="sec-sub">
+        A side project of a different kind — my bracket for the 2026 Men's World
+        Cup, hosted across the U.S., Canada, and Mexico. Rebuilt from the data,
+        so the plan is to have it update itself as each result comes in.
+      </p>
+      <figure>
+        <div class="bracket-scroll">
+          <div class="bracket-embed">
+            <div class="map-loading" id="bracket-loading">
+              <div class="map-spinner" aria-hidden="true"></div>
+              <p>Unpacking the bracket…</p>
+            </div>
+            <iframe id="bracket-frame" src="assets/world-cup-bracket.html?v=7164" title="2026 Men's World Cup knockout bracket — Road to the Final" loading="lazy"></iframe>
+            <button class="bracket-fs" id="bracket-fs" type="button" aria-label="View the bracket full screen" title="Click to view the bracket full screen"></button>
+          </div>
+        </div>
+        <noscript>
+          <style>.bracket-embed { display: none; }</style>
+          <img src="assets/world-cup-bracket.png?v=7164" alt="2026 Men's World Cup knockout bracket, as of July 16, 2026" loading="lazy" style="display:block;width:100%">
+        </noscript>
+        <figcaption>Road to the Final — knockout bracket, as of July 16, 2026.
+        Click the bracket to view it full screen.
+        The semifinals are done: Spain shut out France in Dallas and Argentina
+        edged England in Atlanta. France and England meet in the July 18 bronze
+        match in Miami, and it's Spain–Argentina in the July 19 final at New
+        York/New Jersey Stadium.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Scott Coulter · misterconsistency.com</p>
+    <p><a href="index.html">← misterconsistency.com</a></p>
+  </div>
+</footer>
+
+<script>
+/* World Cup bracket embed — fit-to-width scaling so the whole 1584px-wide
+   bracket is visible without horizontal scrolling, and click-to-fullscreen
+   (the overlay button owns the click; an iframe would swallow it). */
+(function () {
+  const f = document.getElementById('bracket-frame'), l = document.getElementById('bracket-loading');
+  const fsBtn = document.getElementById('bracket-fs');
+  if (!f || !l) return;
+  const embed = f.parentElement;
+  const W = 1584, H = 1224;
+  function fit() {
+    const fs = document.fullscreenElement === embed;
+    const cw = fs ? window.innerWidth : embed.clientWidth;
+    const ch = fs ? window.innerHeight : 0;
+    const s = fs ? Math.min(cw / W, ch / H) : cw / W;
+    f.style.transform = 'scale(' + s + ')';
+    f.style.marginLeft = fs ? Math.max(0, (cw - W * s) / 2) + 'px' : '';
+    f.style.marginTop = fs ? Math.max(0, (ch - H * s) / 2) + 'px' : '';
+    if (!fs) embed.style.height = Math.round(H * s) + 'px';
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  document.addEventListener('fullscreenchange', fit);
+  if (fsBtn) fsBtn.addEventListener('click', () => {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (embed.requestFullscreen) { embed.requestFullscreen(); return; }
+    // Fullscreen API unavailable (e.g. iOS Safari) — open the bracket itself
+    window.open(f.src, '_blank', 'noopener');
+  });
+  const hide = () => { l.classList.add('hidden'); fit(); };
+  f.addEventListener('load', () => setTimeout(hide, 400));
+  setTimeout(hide, 15000);   // safety net
+})();
+</script>
+</body>
+</html>

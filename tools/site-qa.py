@@ -154,8 +154,14 @@ def structural_checks(base):
     ids = re.findall(r'id="([\w-]+)"', idx)
     dupes = sorted({i for i in ids if ids.count(i) > 1})
     check(not dupes, "index: element ids unique", ",".join(dupes))
-    for el in ["wall-interactive", "bracket-frame", "gattman-map", "song-grid", "hero-player"]:
+    for el in ["wall-interactive", "gattman-map", "song-grid", "hero-player"]:
         check(f'id="{el}"' in idx, f"index: #{el} present")
+    check('href="archive.html"' in idx, "index: nav links to archive page")
+
+    _, body = fetch(base + "/archive.html")
+    arch = body.decode("utf-8", "replace")
+    for el in ["bracket-frame", "bracket-fs", "bracket-loading"]:
+        check(f'id="{el}"' in arch, f"archive: #{el} present")
 
     _, body = fetch(base + "/iconic-wall-guide.html")
     guide = body.decode("utf-8", "replace")
@@ -242,12 +248,11 @@ def browser_checks(base):
     idx_expect = """(function(){
       const songs = document.querySelectorAll('#song-grid .song').length > 10;
       const wall = !!document.getElementById('wall-interactive');
-      const bracket = !!document.getElementById('bracket-frame');
       const legendHs = document.querySelectorAll('#wall-legend .hs').length === 34;
       const origShapes = document.querySelectorAll('#orig-wall svg .ow').length === 33;
       const origKeyHs = document.querySelectorAll('#orig-key .hs').length === 32;
       const overflow = document.documentElement.scrollWidth <= window.innerWidth + 2;
-      return songs && wall && bracket && legendHs && origShapes && origKeyHs && overflow;
+      return songs && wall && legendHs && origShapes && origKeyHs && overflow;
     })()"""
     guide_expect = """(function(){
       const arts = document.querySelectorAll('article').length === 34;
@@ -265,10 +270,15 @@ def browser_checks(base):
     zaxis_expect = """(function(){
       return !!document.querySelector('main') && !!document.querySelector('h1');
     })()"""
+    archive_expect = """(function(){
+      const bracket = !!document.getElementById('bracket-frame');
+      const overflow = document.documentElement.scrollWidth <= window.innerWidth + 2;
+      return bracket && overflow;
+    })()"""
     plans = [
         ("/", idx_expect), ("/iconic-wall-guide.html", guide_expect),
         ("/alaska-trip.html", trip_expect), ("/alaska-full.html", full_expect),
-        ("/decoherence-z-axis.html", zaxis_expect),
+        ("/decoherence-z-axis.html", zaxis_expect), ("/archive.html", archive_expect),
     ]
     for path, expect in plans:
         cdp_page_check(base, path, 1280, 900, False, expect, f"desktop {path}")
