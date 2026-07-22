@@ -624,8 +624,8 @@
       <div class="stack">
         <figure>
           <div class="deco-scrub">
-            <video id="deco-torus" src="assets/decoherence-linguistic.mp4?v=3" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the linguistic torus: shared feasible space collapsing from 100 to 8 percent, measured from the Congressional Record"></video>
-            <div class="deco-dial" id="deco-dial" role="slider" tabindex="0"
+            <video src="assets/decoherence-linguistic.mp4?v=3" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the linguistic torus: shared feasible space collapsing from 100 to 8 percent, measured from the Congressional Record"></video>
+            <div class="deco-dial" role="slider" tabindex="0"
                  aria-label="Timeline, 1994 to 2025 — drag to scrub"
                  aria-valuemin="1994" aria-valuemax="2025" aria-valuenow="1994"></div>
           </div>
@@ -635,14 +635,20 @@
           release to resume.</figcaption>
         </figure>
         <figure>
-          <video src="assets/decoherence-helix.mp4?v=2" autoplay loop muted playsinline preload="metadata" style="width:100%;display:block" aria-label="Animation of the fraying helix: a two-strand braid of congressional language winding tightly in 1994 and unraveling into two frayed strands by 2025"></video>
+          <div class="deco-scrub">
+            <video src="assets/decoherence-helix.mp4?v=3" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the fraying helix: a two-strand braid of congressional language winding tightly in 1994 and unraveling into two frayed strands by 2025"></video>
+            <div class="deco-dial" role="slider" tabindex="0"
+                 aria-label="Timeline, 1994 to 2025 — drag to scrub"
+                 aria-valuemin="1994" aria-valuemax="2025" aria-valuenow="1994"></div>
+          </div>
           <figcaption>The natural progression — the same measured data on an
           honest topology. A torus implies discourse loops back on itself; the
           Record doesn&rsquo;t. Here the braid&rsquo;s winding rate <em>is</em>
           the measured shared space: it winds while a common language exists,
           re-tightens briefly after 9/11, and unravels as the space collapses
           — fibers snapping and drifting through the Tea Party ramp to the
-          frayed divergence of the Jan-6-era Congress.</figcaption>
+          frayed divergence of the Jan-6-era Congress. This dial scrubs
+          too.</figcaption>
         </figure>
         <p class="sec-sub">
           The tori genuinely re-cohere slightly in the late 90s, shudder through
@@ -1629,22 +1635,25 @@
     reg[id] = { els: els, hs: hs, bb: bb, label: label, name: name };
   });
 })();
-/* Empirical decoherence torus — the dial baked into the frames becomes a real
-   scrubber. The mp4 is encoded all-intra so every frame is an instant seek.
-   Thumb geometry (measured from the frames): x 139..988 in a 1100px frame,
-   linear across the 81 frames. */
-(function () {
-  const v = document.getElementById('deco-torus'), d = document.getElementById('deco-dial');
+/* Empirical decoherence animations — the dial baked into the frames becomes
+   a real scrubber (torus and helix; both mp4s are encoded all-intra so every
+   frame is an instant seek). Thumb geometry, measured from the frames of
+   both renders: x 139..988 in a 1100px frame, linear across the 81 frames. */
+document.querySelectorAll('.deco-scrub').forEach((box) => {
+  const v = box.querySelector('video'), d = box.querySelector('.deco-dial');
   if (!v || !d) return;
   const FRAMES = 81, FPS = 20, X0 = 139 / 1100, X1 = 988 / 1100;
   let wasPlaying = false, frame = 0;
+  function setFrame(fr) {
+    frame = Math.min(FRAMES - 1, Math.max(0, fr));
+    v.currentTime = (frame + 0.5) / FPS;
+    d.setAttribute('aria-valuenow', String(Math.round(1994 + (frame / (FRAMES - 1)) * 31)));
+  }
   function seekTo(clientX) {
     const r = v.getBoundingClientRect();
     const xn = (clientX - r.left) / r.width;
     const frac = Math.min(1, Math.max(0, (xn - X0) / (X1 - X0)));
-    frame = Math.round(frac * (FRAMES - 1));
-    v.currentTime = (frame + 0.5) / FPS;
-    d.setAttribute('aria-valuenow', String(Math.round(1994 + frac * 31)));
+    setFrame(Math.round(frac * (FRAMES - 1)));
   }
   d.addEventListener('pointerdown', (e) => {
     wasPlaying = !v.paused;
@@ -1664,12 +1673,10 @@
     const step = e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowRight' ? 1 : 0;
     if (!step) return;
     v.pause();
-    frame = Math.min(FRAMES - 1, Math.max(0, frame + step));
-    v.currentTime = (frame + 0.5) / FPS;
-    d.setAttribute('aria-valuenow', String(Math.round(1994 + (frame / (FRAMES - 1)) * 31)));
+    setFrame(frame + step);
     e.preventDefault();
   });
-})();
+});
 </script>
 </body>
 </html>
