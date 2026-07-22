@@ -18,7 +18,7 @@ Layers:
 Exit code 0 = all green; 1 = failures (each printed with FAIL).
 Requires: pip install websocket-client; Chrome at the standard path.
 """
-import argparse, json, os, re, subprocess, sys, tempfile, time, urllib.request, urllib.parse
+import argparse, json, os, re, shutil, subprocess, sys, tempfile, time, urllib.request, urllib.parse
 
 CHROME = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 PAGES = ["/", "/iconic-wall-guide.html", "/alaska-trip.html", "/alaska-full.html",
@@ -243,6 +243,8 @@ def cdp_page_check(base, path, width, height, mobile, expect_js, label):
         check(val is True, f"{label}: runtime expectations", json.dumps(val)[:200] if val is not True else "")
     finally:
         proc.kill()
+        proc.wait(timeout=10)
+        shutil.rmtree(prof, ignore_errors=True)
 
 def browser_checks(base):
     idx_expect = """(function(){
