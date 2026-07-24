@@ -50,6 +50,26 @@
   .leaflet-bar { border: 1px solid var(--line); box-shadow: 0 1px 4px rgba(0,0,0,.5); }
   .leaflet-control-attribution { background: rgba(14,15,18,.75); color: var(--text-dim); font-size: 10px; }
   .leaflet-control-attribution a { color: var(--text-dim); }
+
+  /* theme toggle (top right) */
+  .gm-toggle { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.5); }
+  .gm-toggle button { font: 500 12px/1 var(--sans); padding: 7px 12px; cursor: pointer;
+    background: var(--bg-raised); color: var(--text-dim); border: 0; }
+  .gm-toggle button + button { border-left: 1px solid var(--line); }
+  .gm-toggle button.on { color: var(--gold); }
+  .gm-toggle button:hover:not(.on) { color: var(--text); }
+
+  /* classic mode: original light map colors, conventional UI */
+  body.classic { --bg: #e8e6e3; --bg-raised: #ffffff; --line: #d5d2cb;
+    --text: #202124; --text-dim: #5f6368; --gold: #1a73e8; }
+  body.classic .gm-cluster { background: rgba(255,255,255,.94); color: #1a73e8; border-color: #1a73e8; }
+  body.classic .gm-status.yes { color: #188038; }
+  body.classic .gm-status.closed { color: #c5221f; }
+  body.classic .leaflet-bar a:hover { background: #f3f1ee; color: var(--text); }
+  body.classic .leaflet-popup-content-wrapper, body.classic .leaflet-popup-tip { box-shadow: 0 4px 16px rgba(60,56,45,.28); }
+  body.classic .leaflet-control-attribution { background: rgba(255,255,255,.75); }
+  body.classic .gm-toggle button.on { color: #1a73e8; }
 </style>
 </head>
 <body>
@@ -60,10 +80,45 @@
 <script>
 (function () {
   const map = L.map('map', { center: [24, 8], zoom: 2, minZoom: 2, worldCopyJump: true });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  const tileOpts = {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd', maxZoom: 19
-  }).addTo(map);
+  };
+  const TILES = {
+    noir:    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', tileOpts),
+    classic: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', tileOpts)
+  };
+
+  let theme;
+  function setTheme(t) {
+    if (t === theme) return;
+    if (theme) map.removeLayer(TILES[theme]);
+    theme = t;
+    TILES[t].addTo(map);
+    document.body.classList.toggle('classic', t === 'classic');
+    document.querySelectorAll('.gm-toggle button').forEach(b =>
+      b.classList.toggle('on', b.dataset.theme === t));
+    try { localStorage.setItem('gattman-theme', t); } catch (e) {}
+  }
+
+  const Toggle = L.Control.extend({
+    options: { position: 'topright' },
+    onAdd: function () {
+      const div = L.DomUtil.create('div', 'gm-toggle leaflet-control');
+      div.innerHTML = '<button type="button" data-theme="noir">Noir</button>' +
+                      '<button type="button" data-theme="classic">Classic</button>';
+      L.DomEvent.disableClickPropagation(div);
+      div.addEventListener('click', e => {
+        if (e.target.dataset.theme) setTheme(e.target.dataset.theme);
+      });
+      return div;
+    }
+  });
+  map.addControl(new Toggle());
+
+  let saved = null;
+  try { saved = localStorage.getItem('gattman-theme'); } catch (e) {}
+  setTheme(saved === 'classic' ? 'classic' : 'noir');
 
   // faces: source pngs are 112px tall (2x) so they render crisp at ~42px
   const ICONS = {
