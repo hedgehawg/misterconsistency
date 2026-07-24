@@ -63,7 +63,6 @@
   /* classic mode: original light map colors, conventional UI */
   body.classic { --bg: #e8e6e3; --bg-raised: #ffffff; --line: #d5d2cb;
     --text: #202124; --text-dim: #5f6368; --gold: #1a73e8; }
-  body.classic .gm-cluster { background: rgba(255,255,255,.94); color: #1a73e8; border-color: #1a73e8; }
   body.classic .gm-status.yes { color: #188038; }
   body.classic .gm-status.closed { color: #c5221f; }
   body.classic .leaflet-bar a:hover { background: #f3f1ee; color: var(--text); }
@@ -80,13 +79,15 @@
 <script>
 (function () {
   const map = L.map('map', { center: [24, 8], zoom: 2, minZoom: 2, worldCopyJump: true });
-  const tileOpts = {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd', maxZoom: 19
-  };
   const TILES = {
-    noir:    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', tileOpts),
-    classic: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', tileOpts)
+    noir: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd', maxZoom: 19
+    }),
+    classic: L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      attribution: 'Map data &copy; Google',
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'], maxZoom: 19
+    })
   };
 
   let theme;
@@ -95,6 +96,9 @@
     if (theme) map.removeLayer(TILES[theme]);
     theme = t;
     TILES[t].addTo(map);
+    // noir clusters the pins; classic shows every face individually, like the original My Maps
+    if (t === 'classic') { map.removeLayer(cluster); flat.addTo(map); }
+    else { map.removeLayer(flat); cluster.addTo(map); }
     document.body.classList.toggle('classic', t === 'classic');
     document.querySelectorAll('.gm-toggle button').forEach(b =>
       b.classList.toggle('on', b.dataset.theme === t));
@@ -115,10 +119,6 @@
     }
   });
   map.addControl(new Toggle());
-
-  let saved = null;
-  try { saved = localStorage.getItem('gattman-theme'); } catch (e) {}
-  setTheme(saved === 'classic' ? 'classic' : 'noir');
 
   // faces: source pngs are 112px tall (2x) so they render crisp at ~42px
   const ICONS = {
@@ -153,11 +153,18 @@
     }
   });
 
-  (window.GATTMAN || []).forEach(r => {
-    cluster.addLayer(L.marker(r.c, { icon: ICONS[r.s], title: r.n })
-      .bindPopup(popupHtml(r), { maxWidth: 300, autoPanPadding: L.point(60, 24) }));
-  });
-  map.addLayer(cluster);
+  // separate marker instances per container so markercluster's bookkeeping
+  // never fights the flat layer when the theme flips back and forth
+  const makeMarker = (r, opts) =>
+    L.marker(r.c, Object.assign({ icon: ICONS[r.s], title: r.n }, opts))
+      .bindPopup(popupHtml(r), { maxWidth: 300, autoPanPadding: L.point(60, 24) });
+  const data = window.GATTMAN || [];
+  cluster.addLayers(data.map(r => makeMarker(r)));
+  const flat = L.layerGroup(data.map(r => makeMarker(r, { riseOnHover: true })));
+
+  let saved = null;
+  try { saved = localStorage.getItem('gattman-theme'); } catch (e) {}
+  setTheme(saved === 'classic' ? 'classic' : 'noir');
   window.gmMap = map;
 })();
 </script>
