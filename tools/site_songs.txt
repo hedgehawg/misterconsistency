@@ -17,10 +17,6 @@
 c42c1d43  nighttime loop
 18dd8081  If you could, 10 years ago
 2a28a391  a better bev there'll never be
-6f9c7405  The Ballad of Bevy PS 4:04 duet
-5be9e0d1  Tough as nails with a hippie smile
-1d8a0df6  Ms. Veda Suprema
-76cbf91c  The Ballad of Beverly
 a8d3dc73  Time Machine
 a63c918e  Bisigno-no: Save Social Security
 521e11b2  mr. consistency
@@ -31,6 +27,10 @@ a63c918e  Bisigno-no: Save Social Security
 84d2ad99  not impressed
 a55bf133  give them a reason
 4d30b5ec  Inch deep, mile wide
+6f9c7405  The Ballad of Bevy PS 4:04 duet
+5be9e0d1  Tough as nails with a hippie smile
+1d8a0df6  Ms. Veda Suprema
+76cbf91c  The Ballad of Beverly
 
 # === ALL PUBLISHED SONGS (reference — copy an id above to feature it) ===
 #   901b07f5  Hey Ho to Alaska {Ködiak Remix}
