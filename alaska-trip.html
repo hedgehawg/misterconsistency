@@ -181,6 +181,20 @@
   @media (max-width: 640px) {
     .summary { padding: 24px 22px; }
   }
+
+  /* trip anthem — matches the landing page hero player */
+  .hero-player { display: flex; align-items: center; gap: 15px; max-width: 460px; margin-top: 24px;
+    background: var(--bg-raised); border: 1px solid var(--line); border-radius: 12px; padding: 13px 15px; }
+  .hero-player video { width: 62px; height: 62px; border-radius: 8px; object-fit: cover;
+    object-position: top; flex-shrink: 0; }
+  .hp-main { flex: 1; min-width: 0; }
+  .hp-title { font-family: var(--serif); font-size: 1.05rem; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hp-bar { height: 5px; background: rgba(255,255,255,.13); border-radius: 3px; margin-top: 9px; cursor: pointer; }
+  .hp-fill { height: 100%; width: 0; background: var(--gold); border-radius: 3px; }
+  .hp-btn { flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%; border: 0; cursor: pointer;
+    background: var(--gold); display: flex; align-items: center; justify-content: center; }
+  .hp-btn svg { width: 20px; height: 20px; fill: #14151a; }
 </style>
 </head>
 <body>
@@ -215,6 +229,15 @@
     <div class="wrap">
       <div class="kicker">The Coulters · Kenai Peninsula</div>
       <h1><span class="emoji">🛩️🚤</span> Alaska <em>Trip</em> <span class="emoji">🐻🐟</span></h1>
+      <div class="hero-player" id="trip-player">
+        <video src="assets/music/covers/901b07f5-long.mp4?v=1" autoplay loop muted playsinline
+               preload="metadata" aria-label="Animated cover: a DJ bear spinning records above a salmon run"></video>
+        <div class="hp-main"><div class="hp-title">Hey Ho to Alaska {Ködiak Remix}</div>
+        <div class="hp-bar"><div class="hp-fill"></div></div></div>
+        <button class="hp-btn" aria-label="Play Hey Ho to Alaska">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -367,6 +390,30 @@
       input.focus();
     }
   });
+})();
+</script>
+<script>
+/* trip anthem player — Hey Ho to Alaska */
+(function () {
+  const el = document.getElementById("trip-player");
+  if (!el) return;
+  const PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+  const PAUSE = '<svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
+  const audio = new Audio("assets/music/audio/901b07f5.mp3");
+  audio.preload = "none";
+  const btn = el.querySelector(".hp-btn"), bar = el.querySelector(".hp-bar"), fill = el.querySelector(".hp-fill");
+  btn.addEventListener("click", () => { audio.paused ? audio.play() : audio.pause(); });
+  audio.addEventListener("play", () => { btn.innerHTML = PAUSE; });
+  audio.addEventListener("pause", () => { btn.innerHTML = PLAY; });
+  audio.addEventListener("timeupdate", () => {
+    fill.style.width = (audio.duration ? (audio.currentTime / audio.duration) * 100 : 0) + "%";
+  });
+  bar.addEventListener("click", e => {
+    if (!audio.duration) return;
+    const r = bar.getBoundingClientRect();
+    audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+  });
+  audio.addEventListener("ended", () => { fill.style.width = "0%"; });
 })();
 </script>
 </body>
