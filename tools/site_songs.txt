@@ -13,6 +13,8 @@
 # by the publish step) so you always have the ids handy.
 # ------------------------------------------------------------------------------------------
 
+901b07f5  Hey Ho to Alaska {Ködiak Remix}
+c42c1d43  nighttime loop
 18dd8081  If you could, 10 years ago
 2a28a391  a better bev there'll never be
 6f9c7405  The Ballad of Bevy PS 4:04 duet
@@ -31,6 +33,8 @@ a55bf133  give them a reason
 4d30b5ec  Inch deep, mile wide
 
 # === ALL PUBLISHED SONGS (reference — copy an id above to feature it) ===
+#   901b07f5  Hey Ho to Alaska {Ködiak Remix}
+#   c42c1d43  nighttime loop
 #   18dd8081  If you could, 10 years ago
 #   2a28a391  a better bev there'll never be
 #   6f9c7405  The Ballad of Bevy PS 4:04 duet
