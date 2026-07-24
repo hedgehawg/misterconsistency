@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gattman's World — restaurant reviews mapped</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<style>
+  :root {
+    --bg: #0e0f12;
+    --bg-raised: #16171c;
+    --line: #26272e;
+    --text: #e8e6e1;
+    --text-dim: #9a978f;
+    --gold: #d0a44c;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body, #map { height: 100%; background: var(--bg); font-family: var(--sans); }
+  .leaflet-container { background: var(--bg); font-family: var(--sans); }
+
+  .face-marker { filter: drop-shadow(0 1px 3px rgba(0,0,0,.65)); }
+
+  .gm-cluster { display: flex; align-items: center; justify-content: center;
+    background: rgba(22,23,28,.92); color: var(--gold);
+    border: 1.5px solid var(--gold); border-radius: 50%;
+    font: 600 12px/1 var(--sans); box-shadow: 0 1px 4px rgba(0,0,0,.5); }
+
+  .leaflet-popup-content-wrapper { background: var(--bg-raised); color: var(--text);
+    border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.55); }
+  .leaflet-popup-tip { background: var(--bg-raised); border: 1px solid var(--line); }
+  .leaflet-popup-content { margin: 14px 16px; line-height: 1.5; font-size: 13px; }
+  .leaflet-popup-close-button { color: var(--text-dim) !important; }
+  .gm-name { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; margin-right: 8px; }
+  .gm-status { font-size: .72rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+  .gm-status.yes { color: var(--gold); }
+  .gm-status.skip { color: var(--text-dim); }
+  .gm-status.closed { color: #c96f65; }
+  .gm-meta { color: var(--text-dim); font-size: .8rem; margin-top: 2px; }
+  .gm-thoughts { margin-top: 8px; }
+  .gm-addr { color: var(--text-dim); font-size: .75rem; margin-top: 8px; }
+
+  .leaflet-bar a { background: var(--bg-raised); color: var(--text); border-bottom: 1px solid var(--line); }
+  .leaflet-bar a:hover { background: #1d1e24; color: var(--gold); }
+  .leaflet-bar { border: 1px solid var(--line); box-shadow: 0 1px 4px rgba(0,0,0,.5); }
+  .leaflet-control-attribution { background: rgba(14,15,18,.75); color: var(--text-dim); font-size: 10px; }
+  .leaflet-control-attribution a { color: var(--text-dim); }
+</style>
+</head>
+<body>
+<div id="map" role="application" aria-label="Map of Jon Gattman's restaurant reviews"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="gattman-data.js?v=1"></script>
+<script>
+(function () {
+  const map = L.map('map', { center: [24, 8], zoom: 2, minZoom: 2, worldCopyJump: true });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd', maxZoom: 19
+  }).addTo(map);
+
+  // faces: source pngs are 112px tall (2x) so they render crisp at ~42px
+  const ICONS = {
+    yes:    L.icon({ iconUrl: 'gattman-icons/yes.png',    iconSize: [35, 42], iconAnchor: [17, 21], popupAnchor: [0, -20], className: 'face-marker' }),
+    skip:   L.icon({ iconUrl: 'gattman-icons/skip.png',   iconSize: [33, 42], iconAnchor: [16, 21], popupAnchor: [0, -20], className: 'face-marker' }),
+    closed: L.icon({ iconUrl: 'gattman-icons/closed.png', iconSize: [39, 42], iconAnchor: [19, 21], popupAnchor: [0, -20], className: 'face-marker' })
+  };
+  const STATUS_LABEL = { yes: 'Yes', skip: 'Skip', closed: 'Now closed' };
+
+  const esc = s => String(s).replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function popupHtml(r) {
+    let h = '<span class="gm-name">' + esc(r.n) + '</span>' +
+            '<span class="gm-status ' + r.s + '">' + STATUS_LABEL[r.s] + '</span>';
+    const meta = [r.g, r.t].filter(Boolean).map(esc).join(' · ');
+    if (meta) h += '<div class="gm-meta">' + meta + '</div>';
+    if (r.th) h += '<div class="gm-thoughts">' + esc(r.th) + '</div>';
+    if (r.v) h += '<div class="gm-meta">Most recently visited: ' + esc(r.v) + '</div>';
+    if (r.a) h += '<div class="gm-addr">' + esc(r.a) + '</div>';
+    return h;
+  }
+
+  const cluster = L.markerClusterGroup({
+    maxClusterRadius: 44,
+    showCoverageOnHover: false,
+    iconCreateFunction: c => {
+      const n = c.getChildCount();
+      const d = n < 10 ? 30 : n < 100 ? 36 : 44;
+      return L.divIcon({ html: '<div class="gm-cluster" style="width:' + d + 'px;height:' + d + 'px">' + n + '</div>',
+                         className: '', iconSize: [d, d] });
+    }
+  });
+
+  (window.GATTMAN || []).forEach(r => {
+    cluster.addLayer(L.marker(r.c, { icon: ICONS[r.s], title: r.n })
+      .bindPopup(popupHtml(r), { maxWidth: 300, autoPanPadding: L.point(60, 24) }));
+  });
+  map.addLayer(cluster);
+  window.gmMap = map;
+})();
+</script>
+</body>
+</html>
