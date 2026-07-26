@@ -13,6 +13,8 @@
 # by the publish step) so you always have the ids handy.
 # ------------------------------------------------------------------------------------------
 
+1e726772  Hey Ho to Alaska {mixKödiak} kate tag (Remastered)
+b4452b17  Boys Don't Cry
 901b07f5  Hey Ho to Alaska {Ködiak Remix}
 c42c1d43  nighttime loop
 18dd8081  If you could, 10 years ago
@@ -33,6 +35,8 @@ a55bf133  give them a reason
 76cbf91c  The Ballad of Beverly
 
 # === ALL PUBLISHED SONGS (reference — copy an id above to feature it) ===
+#   1e726772  Hey Ho to Alaska {mixKödiak} kate tag (Remastered)
+#   b4452b17  Boys Don't Cry
 #   901b07f5  Hey Ho to Alaska {Ködiak Remix}
 #   c42c1d43  nighttime loop
 #   18dd8081  If you could, 10 years ago

@@ -118,8 +118,10 @@
   .song-cover { position: relative; aspect-ratio: 1 / 1; border-radius: 10px; overflow: hidden;
     border: 1px solid var(--line); background: var(--bg-raised); }
   .song-cover img, .song-cover video { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s ease; }
-  /* Hey Ho to Alaska's cover video is portrait — anchor the square crop to the top so the DJ bear stays in frame */
-  .song[data-id="901b07f5"] .song-cover :is(img, video) { object-position: top; }
+  /* Portrait cover videos — anchor the square crop to the top so the subject stays in frame */
+  .song[data-id="901b07f5"] .song-cover :is(img, video),
+  .song[data-id="1e726772"] .song-cover :is(img, video),
+  .song[data-id="b4452b17"] .song-cover :is(img, video) { object-position: top; }
   .song:hover .song-cover img, .song:hover .song-cover video { transform: scale(1.05); }
   .song-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
     background: rgba(0,0,0,.28); border: 0; padding: 0; cursor: pointer; opacity: 0; transition: opacity .25s ease; }
