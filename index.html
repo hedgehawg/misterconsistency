@@ -1769,6 +1769,21 @@ document.querySelectorAll('.deco-scrub').forEach((box) => {
     setFrame(frame + step);
     e.preventDefault();
   });
+  /* Mobile: autoplay can be refused (iOS Low Power Mode etc.), leaving a
+     still frame with no way to start it. Retry when the animation scrolls
+     into view, and let a tap on the frame itself toggle play/pause. */
+  let userPaused = false;
+  v.addEventListener('click', () => {
+    userPaused = !v.paused;
+    if (v.paused) v.play().catch(() => {});
+    else v.pause();
+  });
+  new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) { if (!userPaused && v.paused) v.play().catch(() => {}); }
+      else v.pause();
+    });
+  }, { threshold: 0.2 }).observe(v);
 });
 </script>
 </body>
