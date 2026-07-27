@@ -85,6 +85,20 @@
   .gm-search-list .gm-sr-sub { color: var(--text-dim); font: 400 11px/1.3 var(--sans); margin-top: 1px; }
   .gm-search-list .gm-sr-none { color: var(--text-dim); font: 400 12px/1.3 var(--sans); cursor: default; }
   .gm-search-list .gm-sr-none:hover { background: none; }
+  .gm-search-list .gm-sr-head { padding: 7px 12px 3px; font: 600 10px/1 var(--sans);
+    letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim);
+    cursor: default; border-bottom: 0; }
+  .gm-search-list .gm-sr-head:hover { background: none; }
+  .gm-sr-count { color: var(--text-dim); font: 500 11px/1.3 var(--sans); white-space: nowrap; }
+  .gm-chip { display: none; margin-top: 6px; align-items: center; gap: 8px;
+    background: var(--bg-raised); border: 1px solid var(--line); border-radius: 8px;
+    padding: 6px 10px; font: 500 12px/1.3 var(--sans); color: var(--text);
+    box-shadow: 0 1px 4px rgba(0,0,0,.5); }
+  .gm-search.filtered .gm-chip { display: flex; }
+  .gm-chip b { color: var(--gold); font-weight: 600; }
+  .gm-chip-x { margin-left: auto; background: none; border: 0; cursor: pointer;
+    color: var(--text-dim); font: 400 14px/1 var(--sans); padding: 0 0 0 6px; }
+  .gm-chip-x:hover { color: var(--text); }
   @media (max-width: 480px) { .gm-search { width: 186px; } }
   @media (pointer: coarse) { .gm-search input { font-size: 16px; } }
 
@@ -193,12 +207,41 @@
   cluster.addLayers(cMarkers);
   const flat = L.layerGroup(fMarkers);
 
-  // search (top left): name first, then city/cuisine; enter/arrows/click to jump
+  // structured search (top left): recognizes places and cuisines as well as
+  // names. Picking a group filters the map to it (chip to clear); picking a
+  // restaurant jumps to it. Multi-word queries narrow across all fields.
   const fold = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const ALIAS = { nyc: ' new york city manhattan', slc: ' salt lake city utah' };
+  const alias = s => { let f = fold(s); Object.keys(ALIAS).forEach(k => { if (f.includes(k)) f += ALIAS[k]; }); return f; };
   const index = data.map((r, i) => ({ r, cM: cMarkers[i], fM: fMarkers[i],
-    name: fold(r.n), rest: fold([r.g, r.t].filter(Boolean).join(' ')) }));
+    name: fold(r.n),
+    hay: alias([r.n, r.g, r.t, STATUS_LABEL[r.s]].filter(Boolean).join(' ')) }));
+
+  const groupBy = key => {
+    const m = new Map();
+    index.forEach(it => {
+      const v = it.r[key];
+      if (!v) return;
+      const f = fold(v);
+      if (!m.has(f)) m.set(f, { label: v, hay: alias(v), items: [] });
+      m.get(f).items.push(it);
+    });
+    return [...m.values()];
+  };
+  const PLACES = groupBy('g'), CUISINES = groupBy('t');
+
+  let filtered = null;   // Set of index items shown on the map, or null for all
+  function rebuild() {
+    const items = filtered ? index.filter(it => filtered.has(it)) : index;
+    cluster.clearLayers(); cluster.addLayers(items.map(it => it.cM));
+    flat.clearLayers(); items.forEach(it => flat.addLayer(it.fM));
+  }
+  function fitTo(items) {
+    map.fitBounds(L.latLngBounds(items.map(it => it.r.c)), { padding: [40, 40], maxZoom: 15 });
+  }
 
   function goTo(item) {
+    if (filtered && !filtered.has(item)) { filtered = null; rebuild(); }
     map.setView(item.r.c, Math.max(map.getZoom(), 16), { animate: false });
     if (map.hasLayer(cluster)) cluster.zoomToShowLayer(item.cM, () => item.cM.openPopup());
     else item.fM.openPopup();
@@ -209,72 +252,141 @@
     onAdd: function () {
       const div = L.DomUtil.create('div', 'gm-search leaflet-control');
       div.innerHTML = '<input type="search" placeholder="Search ' + data.length + ' spots…" ' +
-                      'autocomplete="off" spellcheck="false" aria-label="Search restaurants">' +
+                      'autocomplete="off" spellcheck="false" aria-label="Search restaurants, places, cuisines">' +
                       '<button type="button" class="gm-search-clear" aria-label="Clear search">×</button>' +
-                      '<ul class="gm-search-list" role="listbox"></ul>';
+                      '<ul class="gm-search-list" role="listbox"></ul>' +
+                      '<div class="gm-chip"><span class="gm-chip-label"></span>' +
+                      '<button type="button" class="gm-chip-x" aria-label="Clear filter">×</button></div>';
       L.DomEvent.disableClickPropagation(div);
       L.DomEvent.disableScrollPropagation(div);
 
       const input = div.querySelector('input');
       const clear = div.querySelector('.gm-search-clear');
       const list = div.querySelector('ul');
-      let results = [], active = -1;
+      const chipLabel = div.querySelector('.gm-chip-label');
+      let rows = [], active = -1;   // rows: {kind:'head'|'all'|'grp'|'rest', ...}
+
+      function applyFilter(items, label) {
+        filtered = new Set(items);
+        rebuild();
+        fitTo(items);
+        chipLabel.innerHTML = '<b>' + items.length + '</b>&nbsp;' + esc(label);
+        div.classList.add('filtered');
+        div.classList.remove('open');
+      }
+      function clearFilter() {
+        filtered = null;
+        rebuild();
+        div.classList.remove('filtered');
+      }
 
       function render() {
         list.innerHTML = '';
-        if (!results.length) {
+        if (!rows.length) {
           if (input.value.trim().length >= 2)
             list.innerHTML = '<li class="gm-sr-none">No spots match</li>';
           div.classList.toggle('open', !!list.innerHTML);
           return;
         }
-        results.forEach((item, i) => {
+        rows.forEach((row, i) => {
           const li = document.createElement('li');
-          li.setAttribute('role', 'option');
-          if (i === active) li.classList.add('active');
-          li.innerHTML = '<div class="gm-sr-top"><span class="gm-sr-name">' + esc(item.r.n) + '</span>' +
-                         '<span class="gm-status ' + item.r.s + '">' + STATUS_LABEL[item.r.s] + '</span></div>' +
-                         '<div class="gm-sr-sub">' + esc([item.r.g, item.r.t].filter(Boolean).join(' · ')) + '</div>';
-          li.addEventListener('click', () => pick(item));
+          if (row.kind === 'head') {
+            li.className = 'gm-sr-head';
+            li.textContent = row.label;
+          } else {
+            li.setAttribute('role', 'option');
+            if (i === active) li.classList.add('active');
+            if (row.kind === 'rest') {
+              li.innerHTML = '<div class="gm-sr-top"><span class="gm-sr-name">' + esc(row.item.r.n) + '</span>' +
+                             '<span class="gm-status ' + row.item.r.s + '">' + STATUS_LABEL[row.item.r.s] + '</span></div>' +
+                             '<div class="gm-sr-sub">' + esc([row.item.r.g, row.item.r.t].filter(Boolean).join(' · ')) + '</div>';
+            } else {
+              const count = row.kind === 'grp'
+                ? '<span class="gm-sr-count">' + row.items.length + (row.items.length === 1 ? ' spot' : ' spots') + '</span>'
+                : '';
+              li.innerHTML = '<div class="gm-sr-top"><span class="gm-sr-name">' + esc(row.label) + '</span>' + count + '</div>';
+            }
+            li.addEventListener('click', () => pick(row));
+          }
           list.appendChild(li);
         });
         div.classList.add('open');
       }
 
       function search() {
-        const q = fold(input.value.trim());
+        const q = input.value.trim();
+        const toks = fold(q).split(/\s+/).filter(Boolean);
         div.classList.toggle('has-text', !!input.value);
         active = -1;
-        if (q.length < 2) { results = []; render(); return; }
+        rows = [];
+        if (fold(q).length < 2) { render(); return; }
+        const matched = index.filter(it => toks.every(t => it.hay.includes(t)));
+        const places = PLACES.filter(p => toks.every(t => p.hay.includes(t)))
+          .sort((a, b) => b.items.length - a.items.length).slice(0, 3);
+        const cuisines = CUISINES.filter(c => toks.every(t => c.hay.includes(t)))
+          .sort((a, b) => b.items.length - a.items.length).slice(0, 3);
+        const fq = toks.join(' ');
         const starts = [], contains = [], other = [];
-        for (const item of index) {
-          if (item.name.startsWith(q)) starts.push(item);
-          else if (item.name.includes(q)) contains.push(item);
-          else if (item.rest.includes(q)) other.push(item);
+        matched.forEach(it => {
+          if (it.name.startsWith(fq)) starts.push(it);
+          else if (it.name.includes(fq)) contains.push(it);
+          else other.push(it);
+        });
+        const rests = starts.concat(contains, other).slice(0, 8);
+        if (matched.length > 1)
+          rows.push({ kind: 'all', items: matched, label: 'Show all ' + matched.length + ' on the map' });
+        if (places.length) {
+          rows.push({ kind: 'head', label: 'Places' });
+          places.forEach(p => rows.push({ kind: 'grp', items: p.items, label: p.label }));
         }
-        results = starts.concat(contains, other).slice(0, 12);
+        if (cuisines.length) {
+          rows.push({ kind: 'head', label: 'Cuisines' });
+          cuisines.forEach(c => rows.push({ kind: 'grp', items: c.items, label: c.label }));
+        }
+        if (rests.length) {
+          rows.push({ kind: 'head', label: 'Restaurants' });
+          rests.forEach(it => rows.push({ kind: 'rest', item: it }));
+        }
         render();
       }
 
-      function pick(item) {
-        input.value = item.r.n;
-        div.classList.remove('open');
-        goTo(item);
+      function pick(row) {
+        if (row.kind === 'rest') {
+          input.value = row.item.r.n;
+          div.classList.remove('open');
+          goTo(row.item);
+        } else {
+          applyFilter(row.items, row.kind === 'all' ? input.value.trim() : row.label);
+        }
       }
 
       function reset() {
         input.value = '';
-        results = []; active = -1;
+        rows = []; active = -1;
         div.classList.remove('open', 'has-text');
         list.innerHTML = '';
       }
 
+      const step = dir => {
+        if (!rows.length) return;
+        let i = active;
+        do { i = (i + dir + rows.length) % rows.length; } while (rows[i].kind === 'head');
+        active = i;
+        render();
+      };
       input.addEventListener('input', search);
       clear.addEventListener('click', () => { reset(); input.focus(); });
+      div.querySelector('.gm-chip-x').addEventListener('click', clearFilter);
       input.addEventListener('keydown', e => {
-        if (e.key === 'ArrowDown') { e.preventDefault(); if (results.length) { active = (active + 1) % results.length; render(); } }
-        else if (e.key === 'ArrowUp') { e.preventDefault(); if (results.length) { active = (active - 1 + results.length) % results.length; render(); } }
-        else if (e.key === 'Enter') { e.preventDefault(); if (results.length) pick(results[Math.max(active, 0)]); }
+        if (e.key === 'ArrowDown') { e.preventDefault(); step(1); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); step(-1); }
+        else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (!rows.length) return;
+          if (active >= 0) { pick(rows[active]); return; }
+          const first = rows.find(r => r.kind !== 'head');
+          if (first) pick(first);
+        }
         else if (e.key === 'Escape') { reset(); input.blur(); }
       });
       document.addEventListener('click', e => { if (!div.contains(e.target)) div.classList.remove('open'); });
