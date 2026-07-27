@@ -215,6 +215,16 @@
   const tokMatch = (hay, t) => t.length <= 2
     ? new RegExp('\\b' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(hay)
     : hay.includes(t);
+  // query-time synonyms + light plural stripping: barbecue finds BBQ, tacos finds taco
+  const SYN = [['bbq', 'barbecue', 'barbeque'], ['burger', 'hamburger'], ['donut', 'doughnut'],
+               ['whiskey', 'whisky']];
+  const variants = t => {
+    const v = new Set([t]);
+    if (t.length > 3 && t.endsWith('s')) v.add(t.slice(0, -1));
+    SYN.forEach(g => { if ([...v].some(x => g.indexOf(x) >= 0)) g.forEach(w => v.add(w)); });
+    return [...v];
+  };
+  const tokHit = (hay, t) => variants(t).some(x => tokMatch(hay, x));
 
   const US_STATES = { AK: 'Alaska', AL: 'Alabama', AR: 'Arkansas', CA: 'California', CO: 'Colorado',
     FL: 'Florida', GA: 'Georgia', HI: 'Hawaii', IL: 'Illinois', KY: 'Kentucky', LA: 'Louisiana',
@@ -311,13 +321,22 @@
       addNode(placeNodes, 'cc|' + fold(geo.country),
         geo.country, [geo.country, xtra(geo.country)], it);
     fold(r.t || '').split(/[^a-z]+/).forEach(w => {
-      if (w.length >= 3 && !CSTOP[w])
-        addNode(cuisineNodes, 'cui|' + w, w === 'bbq' ? 'BBQ' : w.charAt(0).toUpperCase() + w.slice(1), [w], it);
+      if (w.length < 3 || CSTOP[w]) return;
+      // singular/plural collapse into one node (taco + tacos); label = most common form
+      const stem = w.length > 3 && w.endsWith('s') ? w.slice(0, -1) : w;
+      addNode(cuisineNodes, 'cui|' + stem, '', [stem, stem + 's'], it);
+      const node = cuisineNodes.get('cui|' + stem);
+      node.forms = node.forms || {};
+      node.forms[w] = (node.forms[w] || 0) + 1;
     });
     return it;
   });
   // dedupe cuisine items (a record like "pizza, pizzas" shouldn't count twice)
-  cuisineNodes.forEach(n => { n.items = [...new Set(n.items)]; });
+  cuisineNodes.forEach(n => {
+    n.items = [...new Set(n.items)];
+    const w = Object.keys(n.forms).sort((a, b) => n.forms[b] - n.forms[a])[0];
+    n.label = w === 'bbq' ? 'BBQ' : w.charAt(0).toUpperCase() + w.slice(1);
+  });
   const PLACES = [...placeNodes.values()], CUISINES = [...cuisineNodes.values()];
 
   let filtered = null;   // Set of index items shown on the map, or null for all
@@ -410,10 +429,10 @@
         active = -1;
         rows = [];
         if (fold(q).length < 2) { render(); return; }
-        const matched = index.filter(it => toks.every(t => tokMatch(it.hay, t)));
-        const places = PLACES.filter(p => toks.every(t => tokMatch(p.hay, t)))
+        const matched = index.filter(it => toks.every(t => tokHit(it.hay, t)));
+        const places = PLACES.filter(p => toks.every(t => tokHit(p.hay, t)))
           .sort((a, b) => b.items.length - a.items.length).slice(0, 6);
-        const cuisines = CUISINES.filter(c => c.items.length >= 2 && toks.every(t => tokMatch(c.hay, t)))
+        const cuisines = CUISINES.filter(c => c.items.length >= 2 && toks.every(t => tokHit(c.hay, t)))
           .sort((a, b) => b.items.length - a.items.length).slice(0, 3);
         const fq = toks.join(' ');
         const starts = [], contains = [], other = [];
