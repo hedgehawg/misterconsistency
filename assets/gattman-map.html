@@ -211,24 +211,114 @@
   // names. Picking a group filters the map to it (chip to clear); picking a
   // restaurant jumps to it. Multi-word queries narrow across all fields.
   const fold = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  const ALIAS = { nyc: ' new york city manhattan', slc: ' salt lake city utah' };
-  const alias = s => { let f = fold(s); Object.keys(ALIAS).forEach(k => { if (f.includes(k)) f += ALIAS[k]; }); return f; };
-  const index = data.map((r, i) => ({ r, cM: cMarkers[i], fM: fMarkers[i],
-    name: fold(r.n),
-    hay: alias([r.n, r.g, r.t, STATUS_LABEL[r.s]].filter(Boolean).join(' ')) }));
+  // short tokens (tx, al, ny) match whole words only; longer ones match anywhere
+  const tokMatch = (hay, t) => t.length <= 2
+    ? new RegExp('\\b' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(hay)
+    : hay.includes(t);
 
-  const groupBy = key => {
-    const m = new Map();
-    index.forEach(it => {
-      const v = it.r[key];
-      if (!v) return;
-      const f = fold(v);
-      if (!m.has(f)) m.set(f, { label: v, hay: alias(v), items: [] });
-      m.get(f).items.push(it);
-    });
-    return [...m.values()];
+  const US_STATES = { AK: 'Alaska', AL: 'Alabama', AR: 'Arkansas', CA: 'California', CO: 'Colorado',
+    FL: 'Florida', GA: 'Georgia', HI: 'Hawaii', IL: 'Illinois', KY: 'Kentucky', LA: 'Louisiana',
+    MA: 'Massachusetts', MT: 'Montana', NC: 'North Carolina', NM: 'New Mexico', NV: 'Nevada',
+    NY: 'New York', OH: 'Ohio', OR: 'Oregon', PA: 'Pennsylvania', SC: 'South Carolina',
+    TN: 'Tennessee', TX: 'Texas', UT: 'Utah', WY: 'Wyoming' };
+  // sheet tab -> [city (null = the tab is a region), region (US abbr or name), country
+  // (omitted = United States when region is a US abbr)]
+  const GEO = {
+    'Alaska': [null, 'AK'], 'Albuquerque': ['Albuquerque', 'NM'], 'Anguilla': [null, null, 'Anguilla'],
+    'Aspen': ['Aspen', 'CO'], 'Athens,Gr': ['Athens', null, 'Greece'], 'Austin': ['Austin', 'TX'],
+    'Bangkok': ['Bangkok', null, 'Thailand'], 'Barcelona': ['Barcelona', null, 'Spain'],
+    'Bentonville': ['Bentonville', 'AR'], 'Berlin': ['Berlin', null, 'Germany'],
+    'Bermuda': [null, null, 'Bermuda'], 'Birmingham': ['Birmingham', 'AL'], 'Boston': ['Boston', 'MA'],
+    'Breckinridge': ['Breckenridge', 'CO'], 'Brisbane': ['Brisbane', null, 'Australia'],
+    'Bucharest': ['Bucharest', null, 'Romania'], 'Budapest': ['Budapest', null, 'Hungary'],
+    'Buenos Aires': ['Buenos Aires', null, 'Argentina'], 'Cabo San Lucas': ['Cabo San Lucas', null, 'Mexico'],
+    'Cancun': ['Cancun', null, 'Mexico'], 'Chapel Hill': ['Chapel Hill', 'NC'],
+    'Charleston': ['Charleston', 'SC'], 'Chicago': ['Chicago', 'IL'], 'Cincinnati': ['Cincinnati', 'OH'],
+    'Copenhagen': ['Copenhagen', null, 'Denmark'], 'Dallas': ['Dallas', 'TX'], 'Denver': ['Denver', 'CO'],
+    'Dubrovnik, Cr': ['Dubrovnik', null, 'Croatia'], 'French Polynesia': [null, null, 'French Polynesia'],
+    'Hamptons': ['Hamptons', 'NY'], 'Hong Kong': ['Hong Kong', null, 'Hong Kong'],
+    'Houston': ['Houston', 'TX'], 'Ibiza': ['Ibiza', null, 'Spain'], 'Ireland': [null, null, 'Ireland'],
+    'Italy': [null, null, 'Italy'], 'Jackson Hole': ['Jackson Hole', 'WY'], 'Kyoto': ['Kyoto', null, 'Japan'],
+    'La Ventana, MX': ['La Ventana', null, 'Mexico'], 'Las Vegas': ['Las Vegas', 'NV'],
+    'London': ['London', 'England', 'United Kingdom'], 'Los Angeles': ['Los Angeles', 'CA'],
+    'Louisville': ['Louisville', 'KY'], 'Mallorca': ['Mallorca', null, 'Spain'], 'Maui': ['Maui', 'HI'],
+    'Memphis': ['Memphis', 'TN'], 'Mendoza': ['Mendoza', null, 'Argentina'],
+    'Merida, Mx': ['Merida', null, 'Mexico'], 'Mexico City': ['Mexico City', null, 'Mexico'],
+    'Miami': ['Miami', 'FL'], 'Montana': [null, 'MT'], 'Montreal': ['Montreal', 'Quebec', 'Canada'],
+    'Morocco': [null, null, 'Morocco'], 'Munich': ['Munich', null, 'Germany'],
+    'Mykonos, GR': ['Mykonos', null, 'Greece'], 'NYC': ['New York City', 'NY'],
+    'Nagano Area': [null, 'Nagano', 'Japan'], 'Nashville': ['Nashville', 'TN'],
+    'New Orleans': ['New Orleans', 'LA'], 'Norway': [null, null, 'Norway'], 'Oregon': [null, 'OR'],
+    'Palm Beach': ['Palm Beach', 'FL'], 'Paris': ['Paris', null, 'France'], 'Park City': ['Park City', 'UT'],
+    'Philadelphia': ['Philadelphia', 'PA'], 'Quebec City': ['Quebec City', 'Quebec', 'Canada'],
+    'Rome': ['Rome', null, 'Italy'], 'SLC': ['Salt Lake City', 'UT'], 'San Diego': ['San Diego', 'CA'],
+    'San Francisco': ['San Francisco', 'CA'], 'San Sebastian & Area': ['San Sebastian', null, 'Spain'],
+    'Santa Barbara': ['Santa Barbara', 'CA'], 'Sante Fe': ['Santa Fe', 'NM'],
+    'Santorini, Gr': ['Santorini', null, 'Greece'], 'Savannah': ['Savannah', 'GA'],
+    'Scotland': [null, 'Scotland', 'United Kingdom'], 'Split, Cr': ['Split', null, 'Croatia'],
+    'St Augustine': ['St. Augustine', 'FL'], 'St. Barths': [null, null, 'St. Barths'],
+    'Sydney': ['Sydney', null, 'Australia'], 'Tokyo': ['Tokyo', null, 'Japan'],
+    'Tulum': ['Tulum', null, 'Mexico'], 'Tuscaloosa': ['Tuscaloosa', 'AL'], 'Vail': ['Vail', 'CO'],
+    'Vietnam': [null, null, 'Vietnam'] };
+  // sub-city fixups: [display name, unused, country override]
+  const SUBCITY = { 'Guethary, Fr': ['Guethary', null, 'France'], 'San Seb': ['San Sebastian'],
+    'Sapa': ['Sa Pa'] };
+  const EXTRA_HAY = { 'New York City': 'nyc manhattan brooklyn', 'New York': 'ny nyc',
+    'Salt Lake City': 'slc', 'United States': 'usa america us', 'United Kingdom': 'uk britain',
+    'St. Barths': 'saint barthelemy st barts caribbean', 'Santa Fe': 'sante fe',
+    'Breckenridge': 'breckinridge', 'New Orleans': 'nola', 'Mexico City': 'cdmx',
+    'Hamptons': 'southampton montauk' };
+  const COUNTRY_SHORT = { 'United Kingdom': 'UK', 'United States': 'US' };
+  const xtra = s => (s && EXTRA_HAY[s]) || '';
+
+  function geoFor(r) {
+    const parts = (r.g || '').split(' \u00b7 ');
+    const tab = GEO[parts[0]] || [parts[0], null, null];
+    let city = parts[1] || tab[0];
+    const region = tab[1];
+    let country = tab[2] || (region && US_STATES[region] ? 'United States' : null);
+    const fix = city && SUBCITY[city];
+    if (fix) { city = fix[0]; if (fix[2]) country = fix[2]; }
+    const regionFull = region ? (US_STATES[region] || region) : null;
+    const regionAbbr = region && US_STATES[region] ? region : null;
+    return { city, regionFull, regionAbbr, country };
+  }
+
+  const placeNodes = new Map(), cuisineNodes = new Map();
+  const addNode = (m, key, label, hayTerms, it) => {
+    if (!m.has(key)) m.set(key, { label, hay: fold(hayTerms.filter(Boolean).join(' ')), items: [] });
+    m.get(key).items.push(it);
   };
-  const PLACES = groupBy('g'), CUISINES = groupBy('t');
+  const CSTOP = { and: 1, the: 1, with: 1, food: 1, menu: 1, new: 1, style: 1, place: 1 };
+
+  const index = data.map((r, i) => {
+    const geo = geoFor(r);
+    const geoTerms = [geo.city, xtra(geo.city), geo.regionFull, xtra(geo.regionFull),
+                      geo.regionAbbr, geo.country, xtra(geo.country)];
+    const it = { r, cM: cMarkers[i], fM: fMarkers[i], name: fold(r.n),
+      hay: fold([r.n, r.g, r.t, STATUS_LABEL[r.s]].concat(geoTerms).filter(Boolean).join(' ')) };
+    if (geo.city) {
+      const suffix = geo.country === 'United States'
+        ? (geo.regionAbbr ? ', ' + geo.regionAbbr : '')
+        : (geo.country && geo.city !== geo.country ? ', ' + (COUNTRY_SHORT[geo.country] || geo.country) : '');
+      addNode(placeNodes, 'city|' + fold(geo.city + '|' + (geo.country || '')),
+        geo.city + suffix, [geo.city, xtra(geo.city), geo.regionFull, geo.regionAbbr, geo.country, xtra(geo.country)], it);
+    }
+    if (geo.regionFull && geo.regionFull !== geo.city)
+      addNode(placeNodes, 'reg|' + fold(geo.regionFull),
+        geo.regionFull, [geo.regionFull, xtra(geo.regionFull), geo.regionAbbr, geo.country, xtra(geo.country)], it);
+    if (geo.country && geo.country !== geo.city)
+      addNode(placeNodes, 'cc|' + fold(geo.country),
+        geo.country, [geo.country, xtra(geo.country)], it);
+    fold(r.t || '').split(/[^a-z]+/).forEach(w => {
+      if (w.length >= 3 && !CSTOP[w])
+        addNode(cuisineNodes, 'cui|' + w, w === 'bbq' ? 'BBQ' : w.charAt(0).toUpperCase() + w.slice(1), [w], it);
+    });
+    return it;
+  });
+  // dedupe cuisine items (a record like "pizza, pizzas" shouldn't count twice)
+  cuisineNodes.forEach(n => { n.items = [...new Set(n.items)]; });
+  const PLACES = [...placeNodes.values()], CUISINES = [...cuisineNodes.values()];
 
   let filtered = null;   // Set of index items shown on the map, or null for all
   function rebuild() {
@@ -320,10 +410,10 @@
         active = -1;
         rows = [];
         if (fold(q).length < 2) { render(); return; }
-        const matched = index.filter(it => toks.every(t => it.hay.includes(t)));
-        const places = PLACES.filter(p => toks.every(t => p.hay.includes(t)))
-          .sort((a, b) => b.items.length - a.items.length).slice(0, 3);
-        const cuisines = CUISINES.filter(c => toks.every(t => c.hay.includes(t)))
+        const matched = index.filter(it => toks.every(t => tokMatch(it.hay, t)));
+        const places = PLACES.filter(p => toks.every(t => tokMatch(p.hay, t)))
+          .sort((a, b) => b.items.length - a.items.length).slice(0, 6);
+        const cuisines = CUISINES.filter(c => c.items.length >= 2 && toks.every(t => tokMatch(c.hay, t)))
           .sort((a, b) => b.items.length - a.items.length).slice(0, 3);
         const fq = toks.join(' ');
         const starts = [], contains = [], other = [];
