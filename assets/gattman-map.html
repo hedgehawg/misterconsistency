@@ -44,6 +44,9 @@
   .gm-meta { color: var(--text-dim); font-size: .8rem; margin-top: 2px; }
   .gm-thoughts { margin-top: 8px; }
   .gm-addr { color: var(--text-dim); font-size: .75rem; margin-top: 8px; }
+  .leaflet-popup-content a.gm-gmaps { display: inline-block; margin-top: 8px;
+    font-size: .75rem; color: var(--gold); text-decoration: none; }
+  .leaflet-popup-content a.gm-gmaps:hover { text-decoration: underline; }
 
   .leaflet-bar a { background: var(--bg-raised); color: var(--text); border-bottom: 1px solid var(--line); }
   .leaflet-bar a:hover { background: #1d1e24; color: var(--gold); }
@@ -182,6 +185,9 @@
     if (r.th) h += '<div class="gm-thoughts">' + esc(r.th) + '</div>';
     if (r.v) h += '<div class="gm-meta">Most recently visited: ' + esc(r.v) + '</div>';
     if (r.a) h += '<div class="gm-addr">' + esc(r.a) + '</div>';
+    const q = r.n + ', ' + (r.a || (r.g ? r.g.split(' · ').pop() : r.c.join(',')));
+    h += '<div><a class="gm-gmaps" href="https://www.google.com/maps/search/?api=1&query=' +
+         encodeURIComponent(q) + '" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>';
     return h;
   }
 
