@@ -44,6 +44,7 @@
   .gm-meta { color: var(--text-dim); font-size: .8rem; margin-top: 2px; }
   .gm-thoughts { margin-top: 8px; }
   .gm-addr { color: var(--text-dim); font-size: .75rem; margin-top: 8px; }
+  .gm-approx { color: var(--text-dim); font-size: .75rem; font-style: italic; margin-top: 8px; }
   .leaflet-popup-content a.gm-gmaps { display: inline-block; margin-top: 8px;
     font-size: .75rem; color: var(--gold); text-decoration: none; }
   .leaflet-popup-content a.gm-gmaps:hover { text-decoration: underline; }
@@ -121,7 +122,7 @@
 <div id="map" role="application" aria-label="Map of Jon Gattman's restaurant reviews"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-<script src="gattman-data.js?v=3"></script>
+<script src="gattman-data.js?v=4"></script>
 <script>
 (function () {
   const map = L.map('map', { center: [24, 8], zoom: 2, minZoom: 2, worldCopyJump: true });
@@ -185,6 +186,7 @@
     if (r.th) h += '<div class="gm-thoughts">' + esc(r.th) + '</div>';
     if (r.v) h += '<div class="gm-meta">Most recently visited: ' + esc(r.v) + '</div>';
     if (r.a) h += '<div class="gm-addr">' + esc(r.a) + '</div>';
+    if (r.ap) h += '<div class="gm-approx">Approximate location</div>';
     const q = r.n + ', ' + (r.a || (r.g ? r.g.split(' · ').pop() : r.c.join(',')));
     h += '<div><a class="gm-gmaps" href="https://www.google.com/maps/search/?api=1&query=' +
          encodeURIComponent(q) + '" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>';
