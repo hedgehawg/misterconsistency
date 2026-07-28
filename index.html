@@ -248,6 +248,13 @@
     cursor: grab; touch-action: none; }
   .deco-dial:active { cursor: grabbing; }
   .deco-dial:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+  /* Disappearing pause/play control on the decoherence animations */
+  .deco-pp { position: absolute; top: 10px; right: 10px; z-index: 5;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid #30363d; background: rgba(13, 17, 23, .72);
+    color: var(--gold); font-size: 16px; line-height: 1; cursor: pointer;
+    opacity: 0; transition: opacity .25s ease; }
+  .deco-pp.show, .deco-pp:focus-visible { opacity: 1; }
   /* Easter egg: the installation turntable apparition — visible only while
      actively scrolling through the gap between the torus and the helix */
   #egg-turntable { position: fixed; left: 50%; top: 50%;
@@ -662,7 +669,7 @@
       <div class="stack">
         <figure>
           <div class="deco-scrub">
-            <video src="assets/decoherence-linguistic.mp4?v=6" data-fps="10" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the linguistic torus: shared feasible space collapsing from 100 to 5 percent, measured from the Congressional Record, with historical events chronicled into a ledger as they pass"></video>
+            <video src="assets/decoherence-linguistic.mp4?v=7" data-fps="10" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the linguistic torus: shared feasible space collapsing from 100 to 5 percent, measured from the Congressional Record, with historical events chronicled into a ledger as they pass"></video>
             <div class="deco-dial" role="slider" tabindex="0"
                  aria-label="Timeline, 1981 to 2025 — drag to scrub"
                  aria-valuemin="1981" aria-valuemax="2025" aria-valuenow="1981"></div>
@@ -705,7 +712,7 @@
         </p>
         <figure>
           <div class="deco-scrub">
-            <video src="assets/decoherence-helix.mp4?v=7" data-fps="10" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the fraying helix: a two-strand braid of congressional language winding tightly through the 1980s and unraveling into two frayed strands by 2025"></video>
+            <video src="assets/decoherence-helix.mp4?v=8" data-fps="10" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the fraying helix: a two-strand braid of congressional language winding tightly through the 1980s and unraveling into two frayed strands by 2025"></video>
             <div class="deco-dial" role="slider" tabindex="0"
                  aria-label="Timeline, 1981 to 2025 — drag to scrub"
                  aria-valuemin="1981" aria-valuemax="2025" aria-valuenow="1981"></div>
@@ -761,9 +768,10 @@
           <a href="decoherence-z-axis.html">read the full breakdown &rarr;</a>
         </p>
         <figure>
-          <img src="assets/decoherence-exhibition.png" alt="Six-stage engraving-style exhibition print, 1994 to 2023, shared linguistic feasible space declining from 92 to 20 percent" loading="lazy">
-          <figcaption>Exhibition print: six stages, 1994–2023. Shared linguistic
-          feasible space declines from 92% to 20%.</figcaption>
+          <img src="assets/decoherence-stages.png?v=1" alt="Six wireframe torus-pair panels, 1981 to 2025, laid side by side: one fused donut in 1981 progressively separating into two distinct donuts by 2025, shared linguistic feasible space declining from 100 to 5 percent" loading="lazy">
+          <figcaption>The six measured stages, laid plainly: 1981&ndash;2025,
+          100% to 5% shared &mdash; the same forms that ascend the spiral in
+          the installation study.</figcaption>
         </figure>
       </div>
     </div>
@@ -1802,6 +1810,30 @@ document.querySelectorAll('.deco-scrub').forEach((box) => {
     if (v.paused) v.play().catch(() => {});
     else v.pause();
   });
+  /* Disappearing pause/play button: appears on hover or tap, fades when
+     idle while playing, stays visible while paused */
+  const pp = document.createElement('button');
+  pp.className = 'deco-pp';
+  pp.setAttribute('aria-label', 'Pause or play the animation');
+  pp.textContent = '❚❚';
+  box.appendChild(pp);
+  let ppT = null;
+  function ppSync() { pp.textContent = v.paused ? '►' : '❚❚'; }
+  function ppShow() {
+    pp.classList.add('show');
+    clearTimeout(ppT);
+    ppT = setTimeout(() => { if (!v.paused) pp.classList.remove('show'); }, 1800);
+  }
+  pp.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userPaused = !v.paused;
+    if (v.paused) v.play().catch(() => {}); else v.pause();
+    ppSync(); ppShow();
+  });
+  box.addEventListener('pointermove', ppShow);
+  box.addEventListener('pointerleave', () => { if (!v.paused) pp.classList.remove('show'); });
+  v.addEventListener('play', ppSync);
+  v.addEventListener('pause', ppSync);
   new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (en.isIntersecting) { if (!userPaused && v.paused) v.play().catch(() => {}); }
@@ -1818,11 +1850,11 @@ document.querySelectorAll('.deco-scrub').forEach((box) => {
   const boxes = document.querySelectorAll('.deco-scrub');
   if (!egg || boxes.length < 2) return;
   let hideT = null;
+  const sec = boxes[0].closest('section');
   function inZone() {
     const mid = window.innerHeight / 2;
     const a = boxes[0].getBoundingClientRect();
-    const b = boxes[1].getBoundingClientRect();
-    return a.bottom < mid && b.top > mid;
+    return a.bottom < mid && sec.getBoundingClientRect().bottom > mid;
   }
   function dismiss() {
     egg.classList.remove('egg-on');
