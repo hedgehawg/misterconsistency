@@ -647,7 +647,8 @@
         linguistic feasible space, our respective linguistic universes, are
         represented as topological manifolds (tori: donuts) — <a href="https://www.govinfo.gov/app/collection/CREC"
         target="_blank" rel="noopener" style="color:inherit"><strong><u>using data from a
-        consistent platform: the floor of Congress (1994 through 2025)</u></strong></a>. Here you
+        consistent platform: the floor of Congress (1994 through 2025; the helix
+        below now reaches back to 1981)</u></strong></a>. Here you
         can see that the right and left have separated like a failed emulsion.
         The mathematical description is a fiber bundle on a torus, decohering.
       </p>
@@ -689,39 +690,50 @@
           at all. Speech isn&rsquo;t inherently circular &mdash; it never owes
           us a return to where it started. A helix is the more natural form: it
           lets the data breathe and evolve instead of repeating itself &mdash;
-          arguably a truer picture of a time series. Here it is:
+          arguably a truer picture of a time series. It also reaches deeper into
+          the past: the Stanford parse of the earlier Record extends the era
+          back to 1981. Here it is:
         </p>
         <figure>
           <div class="deco-scrub">
-            <video src="assets/decoherence-helix.mp4?v=4" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the fraying helix: a two-strand braid of congressional language winding tightly in 1994 and unraveling into two frayed strands by 2025"></video>
+            <video src="assets/decoherence-helix.mp4?v=5" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the fraying helix: a two-strand braid of congressional language winding tightly through the 1980s and unraveling into two frayed strands by 2025"></video>
             <div class="deco-dial" role="slider" tabindex="0"
-                 aria-label="Timeline, 1994 to 2025 — drag to scrub"
-                 aria-valuemin="1994" aria-valuemax="2025" aria-valuenow="1994"></div>
+                 aria-label="Timeline, 1981 to 2025 — drag to scrub"
+                 aria-valuemin="1981" aria-valuemax="2025" aria-valuenow="1981"></div>
           </div>
-          <figcaption>The natural progression — the same measured data on an
-          honest topology. A torus implies discourse loops back on itself; the
+          <figcaption>The natural progression — the measured data on an
+          honest topology, extended to 1981&ndash;2025 (Stanford&rsquo;s
+          hein-daily parse of the Record for 1981&ndash;93, govinfo CREC from
+          1994). A torus implies discourse loops back on itself; the
           Record doesn&rsquo;t. Here the braid&rsquo;s winding rate <em>is</em>
-          the measured shared space: it winds while a common language exists,
-          re-tightens briefly after 9/11, and unravels as the space collapses
+          the measured shared space: it winds tightly through the Reagan years
+          while a common language holds, re-tightens briefly after 9/11, and
+          unravels as the space collapses
           — fibers snapping and drifting through the Tea Party ramp to the
           frayed divergence of the Jan-6-era Congress. This dial scrubs
           too.</figcaption>
         </figure>
         <p class="sec-sub">
-          Notice the snap right at the start &mdash; 1994, the Gingrich
-          Congress, when the Contract-with-America message machine handed each
-          party its own vocabulary almost overnight and the braid jolts loose.
-          It pulls briefly back together at 9/11 &mdash; the last genuine
-          coherence in the record &mdash; then unwinds for twenty straight
-          years, fraying through the Tea Party ramp until the strands of the
-          Jan-6-era Congress barely touch. None of this is scripted: the
+          Notice how long the braid simply holds &mdash; through Reagan, the
+          Gulf War, Somalia, a classifier can barely tell the parties&rsquo;
+          vocabularies apart. The fraying is already underway, though: by 1994
+          the shared space has quietly drifted to about 72%. Then the snap
+          &mdash; the Gingrich Congress, when the Contract-with-America message
+          machine handed each party its own vocabulary almost overnight and the
+          braid jolts loose. It pulls briefly back together at 9/11 &mdash; the
+          last genuine coherence in the record &mdash; then unwinds for twenty
+          straight years, fraying through the Tea Party ramp until the strands
+          of the Jan-6-era Congress barely touch. None of this is scripted: the
           winding is the measured data, recovering the history on its own.
         </p>
         <figure>
           <img src="assets/decoherence-measured-series.png?v=3" alt="Three line charts, 1994 to 2025: lexical partisanship, affective tone, and semantic distance measured from the Congressional Record, annotated with the Gingrich Congress, 9/11, the Tea Party era, and the 117th Congress" loading="lazy">
           <figcaption>The three measured axes — lexical partisanship, affective
           tone, semantic distance — from 1.06 million floor speeches, single
-          source (govinfo CREC), one Congress per point.</figcaption>
+          source (govinfo CREC), one Congress per point. The party-split detail
+          covers the CREC era (1994&ndash;2025); the helix&rsquo;s
+          1981&ndash;93 wing comes from the Stanford parse of the earlier
+          Record.</figcaption>
         </figure>
         <p class="sec-sub">
           <strong>Linguistic decoherence:</strong> because the Z-axis plots
@@ -1736,11 +1748,13 @@ document.querySelectorAll('.deco-scrub').forEach((box) => {
   const v = box.querySelector('video'), d = box.querySelector('.deco-dial');
   if (!v || !d) return;
   const FRAMES = 81, FPS = 20, X0 = 139 / 1100, X1 = 988 / 1100;
+  const Y0 = +(d.getAttribute('aria-valuemin') || 1994),
+        Y1 = +(d.getAttribute('aria-valuemax') || 2025);
   let wasPlaying = false, frame = 0;
   function setFrame(fr) {
     frame = Math.min(FRAMES - 1, Math.max(0, fr));
     v.currentTime = (frame + 0.5) / FPS;
-    d.setAttribute('aria-valuenow', String(Math.round(1994 + (frame / (FRAMES - 1)) * 31)));
+    d.setAttribute('aria-valuenow', String(Math.round(Y0 + (frame / (FRAMES - 1)) * (Y1 - Y0))));
   }
   function seekTo(clientX) {
     const r = v.getBoundingClientRect();
