@@ -655,7 +655,7 @@
       <div class="stack">
         <figure>
           <div class="deco-scrub">
-            <video src="assets/decoherence-linguistic.mp4?v=4" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the linguistic torus: shared feasible space collapsing from 100 to 5 percent, measured from the Congressional Record, with historical events chronicled into a ledger as they pass"></video>
+            <video src="assets/decoherence-linguistic.mp4?v=5" data-fps="10" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" aria-label="Animation of the linguistic torus: shared feasible space collapsing from 100 to 5 percent, measured from the Congressional Record, with historical events chronicled into a ledger as they pass"></video>
             <div class="deco-dial" role="slider" tabindex="0"
                  aria-label="Timeline, 1981 to 2025 — drag to scrub"
                  aria-valuemin="1981" aria-valuemax="2025" aria-valuenow="1981"></div>
@@ -1749,7 +1749,7 @@
 document.querySelectorAll('.deco-scrub').forEach((box) => {
   const v = box.querySelector('video'), d = box.querySelector('.deco-dial');
   if (!v || !d) return;
-  const FRAMES = 81, FPS = 20, X0 = 139 / 1100, X1 = 988 / 1100;
+  const FRAMES = 81, FPS = +(v.dataset.fps || 20), X0 = 139 / 1100, X1 = 988 / 1100;
   const Y0 = +(d.getAttribute('aria-valuemin') || 1994),
         Y1 = +(d.getAttribute('aria-valuemax') || 2025);
   let wasPlaying = false, frame = 0;
