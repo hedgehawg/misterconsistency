@@ -253,8 +253,6 @@
   #egg-turntable { position: fixed; left: 50%; top: 50%;
     transform: translate(-50%, -50%) scale(.96); width: min(52vh, 84vw);
     opacity: 0; pointer-events: none; z-index: 60;
-    border: 1px solid #30363d; border-radius: 10px;
-    box-shadow: 0 18px 60px rgba(0, 0, 0, .55);
     transition: opacity .35s ease, transform .35s ease; }
   #egg-turntable.egg-on { opacity: 1; transform: translate(-50%, -50%) scale(1); }
   .iat-figs { margin-top: 40px; }
@@ -724,7 +722,7 @@
           frayed divergence of the Jan-6-era Congress. This dial scrubs
           too.</figcaption>
         </figure>
-        <video id="egg-turntable" src="assets/decoherence-turntable.mp4?v=1" muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
+        <video id="egg-turntable" muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1"><source src="assets/decoherence-turntable-alpha.webm?v=1" type="video/webm"><source src="assets/decoherence-turntable.mp4?v=2" type="video/mp4"></video>
         <p class="sec-sub">
           Notice how long the braid simply holds &mdash; through Reagan, the
           Gulf War, Somalia, a classifier can barely tell the parties&rsquo;
