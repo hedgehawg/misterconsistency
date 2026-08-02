@@ -212,6 +212,19 @@
   .gm-legend img { width: 30px; height: 30px; border-radius: 50%;
     border: 1px solid var(--line); }
   @media (max-width: 640px) { .gm-legend { left: 12px; bottom: 12px; } }
+  /* Fullscreen button - same control as the wall's, in the map's dark palette.
+     Sits below the map's own Noir/Classic toggle so the controls stack;
+     the legend owns the bottom of the frame on both layouts. */
+  .gm-fs { position: absolute; top: 56px; right: 10px; z-index: 2; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;
+    background: rgba(14,15,18,.82); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    border: 1px solid var(--line); border-radius: 8px; color: var(--text-dim);
+    transition: color .15s ease, border-color .15s ease; }
+  .gm-fs:hover { color: var(--text); border-color: var(--gold); }
+  .gm-fs svg { width: 17px; height: 17px; fill: none; stroke: currentColor;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .map-embed:fullscreen { border: 0; border-radius: 0; }
+  .map-embed:fullscreen iframe { height: 100vh; }
   .pi-canvas { width: 100%; aspect-ratio: 1 / 1; display: block;
     background: #0e0f12; border: 1px solid var(--line); border-radius: 10px; }
   .all-songs { margin-top: 28px; font-size: .9rem; }
@@ -1185,6 +1198,9 @@
             <span><img src="assets/gattman-skip.png" alt="Gattman, skeptical">Skip</span>
             <span><img src="assets/gattman-closed.png" alt="Gattman in sugar-skull face paint">Now closed</span>
           </div>
+          <button class="gm-fs" id="gattman-fs" type="button" aria-label="Toggle full screen" title="Full screen">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg>
+          </button>
         </div>
         <figcaption>One pin for a yes, one for a skip, and a third for the
         places that have since closed. Roughly 2,200 restaurants across six
@@ -1548,6 +1564,15 @@
   const hide = () => l.classList.add('hidden');
   f.addEventListener('load', hide);
   setTimeout(hide, 15000);   // safety net
+
+  const embed = f.parentElement, fsBtn = document.getElementById('gattman-fs');
+  const openStandalone = () => window.open(f.src, '_blank', 'noopener');
+  if (fsBtn) fsBtn.addEventListener('click', () => {
+    if (document.fullscreenElement === embed) { document.exitFullscreen(); return; }
+    // Unavailable or denied (e.g. iOS Safari) - open the map itself
+    if (embed.requestFullscreen) embed.requestFullscreen().catch(openStandalone);
+    else openStandalone();
+  });
 })();
 /* Mobile nav — close the dropdown after picking a section, or when tapping outside.
    Also scroll accurately: land the section below the sticky header, and re-scroll
