@@ -1,4 +1,4 @@
-% Iconic Wall Change Log — LaTeX typeset edition (Revision 4)
+% Iconic Wall Change Log — LaTeX typeset edition (Revision 5)
 % Original Simons Center wall reference -> Mister Consistency fabrication artwork
 \documentclass[10pt]{article}
 
@@ -46,12 +46,13 @@
   {\LARGE\bfseries Iconic Wall Change Log}\\[3pt]
   {\large\itshape Original Simons Center wall reference $\rightarrow$ final
     Mister Consistency fabrication artwork}\\[2pt]
-  {\footnotesize Revision 4 \,\textperiodcentered\, August 16, 2026 ---
-    the legend plaque catches up to the July 31 artwork: Bekenstein--Hawking
-    (J) now drawn as a black hole with accretion disc\\[1pt]
-  \footnotesize Rev.~3 (July 28, 2026) typeset edition \,\textperiodcentered\,
-    Rev.~2 (July 9, 2026) recast Maxwell in differential forms and added the
-    Bekenstein--Hawking entropy}
+  {\footnotesize Revision 5 \,\textperiodcentered\, August 17, 2026 ---
+    the five formulations we chose to restate, with our reasoning
+    (\S3); full-page plates of the final and original walls\\[1pt]
+  \footnotesize Rev.~4 (August 16, 2026) legend plaque caught up to the July 31
+    artwork \,\textperiodcentered\, Rev.~3 (July 28, 2026) typeset edition
+    \,\textperiodcentered\, Rev.~2 (July 9, 2026) Maxwell recast in
+    differential forms; Bekenstein--Hawking added}
 \end{center}
 \vspace{-4pt}
 
@@ -98,6 +99,12 @@
     formulas were cleaned or clarified --- most notably Dirac,
     Yang--Mills, supersymmetry, Archimedes, boundary-of-boundary
     notation, and the mass--energy label.
+  \item Revision 5 documents the five formulations we chose to
+    restate, each with its reasoning (\S3). Headline: the Jones
+    rewrite, previously logged as a redraw, is a deliberate change of
+    notation ($V_K(t) \rightarrow \langle W(K)\rangle_k$). Full-page
+    plates of both walls follow \S3; the detailed inventories now sit
+    in the appendix.
 \end{itemize}
 
 \head{2\quad The three additions, in brief}
@@ -134,9 +141,116 @@ hole swallows is somehow recorded on its surface. Physicists call the
 idea holography. The wall's newest stone, and its best candidate for
 the physics of the next century.
 
+% ============================================================ SECTION 3 (restated formulations)
+\head{3\quad Restated and amended formulations}
+The final wall does not reproduce every formula exactly as carved: in
+five places we chose to restate a formulation. This section records
+each decision: the original as it stands on the wall (quoted from the
+official catalogue and checked against the carving; where the two
+disagree, we say so), the form we adopted for the final artwork, and
+the reasoning behind the choice. Immaterial differences of letterform
+and spacing are inventoried in the appendix.
+
+\subsection*{3.1\quad The Jones polynomial}
+\textbf{Original} --- two arcs around the trefoil; the evaluation point
+sits inside $V_K(\,\cdot\,)$:
+\[ V_K(t) = (t + t^3 - t^4)\left(t^{\frac{1}{2}} + t^{-\frac{1}{2}}\right) \]
+\[ V_K\!\left(e^{\frac{2\pi i}{k+2}}\right) = \frac{1}{Z}\int
+   \left(\mathrm{Tr}\,\mathrm{Pexp}\oint_K A\right)
+   e^{\frac{ik}{4\pi}\mathrm{CS}(A)}\,\mathcal{D}A \]
+\textbf{Final} --- three formulas; the evaluation point becomes its own
+statement:
+\[ \langle W(K)\rangle_k = (q + q^3 - q^4)\left(q^{1/2} + q^{-1/2}\right)
+   \qquad q = e^{\frac{2\pi i}{k+2}} \]
+\[ \langle W(K)\rangle_k = \frac{1}{Z}\int
+   \mathrm{Tr}\,\mathcal{P}\exp\!\left(\oint_K A\right)
+   e^{\frac{ik}{4\pi}\mathrm{CS}(A)}\,\mathcal{D}A \]
+\textbf{Why.}\enspace One statement, told in order. The bottom arc's
+path integral computes a Wilson-loop expectation value, so the final
+wall names the object honestly --- $\langle W(K)\rangle_k$, at level
+$k$ --- instead of borrowing the polynomial's $V_K$. Pulling
+$q = e^{2\pi i/(k+2)}$ out as its own formula states Witten's
+dictionary explicitly (evaluate there, and the expectation value is the
+Jones polynomial), letting the top arc give the trefoil's value in the
+standard quantum variable $q$. Definition, dictionary, value --- three
+arcs, one derivation. Script $\mathcal{P}$ marks path-ordering as an
+operator rather than a field, and the parentheses now enclose exactly
+what is exponentiated.
+
+\subsection*{3.2\quad The boundary of a boundary is zero}
+\[ \partial\partial = 0 \quad\longrightarrow\quad \partial^2 = 0 \]
+\textbf{Why.}\enspace The squared form is the working statement of the
+theorem: one operator, composed with itself, annihilating everything
+--- which is how homology actually wields it, and how the rest of the
+final wall already speaks (the exterior calculus of its Stokes and
+Maxwell items, where $\mathrm{d}^2 = 0$ is the mirror identity).
+$\partial\partial$ juxtaposes two symbols; $\partial^2$ asserts the
+identity. Same truth, sharpened to its modern form.
+
+\subsection*{3.3\quad The Dirac equation}
+\[ (i\slashed{D} - m)\psi = 0 \quad\longrightarrow\quad
+   (i\gamma^\mu \partial_\mu - m)\psi = 0 \]
+\textbf{Why.}\enspace The slash is shorthand a reader must already own,
+and the capital $\slashed{D}$ conventionally smuggles in a gauge field
+--- leaving the carving suspended between the free equation and the
+coupled one. The final wall writes the mechanism in full: gamma
+matrices contracting the spacetime derivative, the Clifford square root
+of the wave operator. That is Dirac's 1928 equation with nothing left
+to convention; coupling then enters by the visible substitution
+$\partial \rightarrow D$, not by silent capitalization.
+
+\subsection*{3.4\quad The Yang--Mills equations}
+\[ F = \mathrm{d}A + A \wedge A \qquad D_A^{*} F_A = 0
+   \quad\longrightarrow\quad
+   F_A = \mathrm{d}A + A \wedge A \qquad \mathrm{d}_A^{*} F_A = 0 \]
+The stone carves the first $F$ bare; the catalogue's typeset panel
+silently adds the subscript ($F_A$). The final wall follows the
+catalogue.\par
+\textbf{Why.}\enspace Two consistency repairs. The stone names the
+curvature $F$ in line one and $F_A$ in line two; the final wall
+subscripts both, so the object's dependence on the connection $A$ is
+explicit and the pair closes on itself --- the $F_A$ annihilated in
+line two is the $F_A$ defined in line one. And the operator family is
+unified: line one builds curvature from the lowercase exterior
+derivative $\mathrm{d}$; line two applies $\mathrm{d}_A^{*}$, the
+adjoint of its covariant extension $\mathrm{d}_A$ --- staying in the
+lowercase calculus where the original's uppercase $D_A^{*}$ switched
+alphabets mid-pair. One connection, one calculus, one case.
+
+\subsection*{3.5\quad Supersymmetry}
+\[ \{Q, Q\} = P \quad\longrightarrow\quad
+   \{Q_\alpha, \bar{Q}_{\dot{\beta}}\} =
+   2(\sigma^\mu)_{\alpha\dot{\beta}} P_\mu \]
+\textbf{Why.}\enspace The stone carves the catalogue's admitted
+shorthand --- ``an equation for the operator $Q$'' --- with indices,
+conjugation, and normalization all suppressed. The final wall carves
+the theorem: in two-component form, supercharge and conjugate
+supercharge close on the momentum through the sigma matrices. It is the
+exact statement the slogan gestures at --- the square of a
+supersymmetry is a translation --- now able to survive a reader who
+checks the indices.
+
+% ============================================================ PLATES
 \newpage
-% ============================================================ PAGE 2
-\head{3\quad Major changes by category}
+\thispagestyle{fancy}
+\begin{center}
+  {\large\bfseries Plate 1\quad The final wall --- after}\\[2pt]
+  {\footnotesize July 31, 2026 vector fabrication artwork, $42\times42$}\\[6pt]
+  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{final-wall-73126.pdf}
+\end{center}
+
+\newpage
+\thispagestyle{fancy}
+\begin{center}
+  {\large\bfseries Plate 2\quad The original Iconic Wall --- before}\\[2pt]
+  {\footnotesize Simons Center for Geometry and Physics, Stony Brook ---
+    carved limestone, dedicated May 8, 2015}\\[6pt]
+  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{original-wall-full.jpg}
+\end{center}
+
+\newpage
+% ============================================================ APPENDIX A
+\head{Appendix A\quad Summary changes by category}
 \renewcommand{\arraystretch}{1.25}
 \begin{tabularx}{\linewidth}{@{}L{2.1cm} L{3.9cm} L{4.4cm} X@{}}
 \toprule
@@ -182,7 +296,7 @@ Legend system & Key uses I--XIII, 1--10, and background A--H.
 \end{tabularx}
 
 \vspace{10pt}
-\head{4\quad Legend changes: original $\rightarrow$ final}
+\head{Appendix B\quad Legend changes: original $\rightarrow$ final}
 The final legend plaque is not a verbatim copy of the catalogue legend:
 it is a rewritten key for a new fabrication object. The numbering
 system remains; the wording is normalized and two background items are
@@ -262,30 +376,32 @@ J & \emph{No original entry} & Bekenstein--Hawking entropy & New
 \end{figure}
 
 \newpage
-% ============================================================ PAGES 3-4
-\head{5\quad Element-by-element changes}
+% ============================================================ APPENDIX C
+\head{Appendix C\quad Element-by-element changes}
 The following tables list every named item in the original key, the ten
 ellipse items, and every background item. ``Retained'' does not mean
 visually identical; in nearly every case the final version was redrawn
 or retypeset as consistent black vector art.
 
-\subsection*{5.1\quad Peripheral diagrams and medallions (I--XIII)}
+\subsection*{C.1\quad Peripheral diagrams and medallions (I--XIII)}
 \renewcommand{\arraystretch}{1.22}
 \begin{longtable}{@{}L{2.55cm} L{4.6cm} L{5.5cm} L{2.9cm}@{}}
 \toprule
 \textbf{Item} & \textbf{Original reference} & \textbf{Final version} & \textbf{Change type}\\
 \midrule
 \endhead
-I~Jones polynomial & Trefoil knot with Jones polynomial /
-  Chern--Simons expression. & Retained; redrawn as vector line art. &
-  Redraw, typography.\\
+I~Jones polynomial & Trefoil knot ringed by $V_K(t)$ and Witten's
+  Chern--Simons path integral. & Notation rewritten to Wilson-loop form
+  $\langle W(K)\rangle_k$ with $q = e^{2\pi i/(k+2)}$ stated separately;
+  redrawn as vector line art (\S3.1). & Notation change, redraw.\\
 II~Associativity in QFT & Tree-level associativity diagram. & Retained;
   redrawn. & Redraw, typography.\\
 III~Yang--Baxter equation & Braiding equality diagram with $R$-matrix
   expression. & Retained; redrawn. & Redraw, typography.\\
 IV~Lorenz attractor & Butterfly image credited to Scott Sutherland. &
-  Redrawn as vector attractor with surrounding equations; credit
-  removed. & Photo to vector.\\
+  Redrawn as vector attractor; the three equations are symbol-for-symbol
+  unchanged (letterforms and spacing only); credit removed. & Photo to
+  vector.\\
 V~Schwarzschild black hole & Embedding-diagram medallion. & Retained;
   redrawn with clean vector curves. & Redraw, spelling check.\\
 VI~Five Platonic solids & Five separate solid diagrams. & Retained;
@@ -312,7 +428,7 @@ XIII~Navier--Stokes & Flow image credited to J.D. Kim / AMS / Stony
 \bottomrule
 \end{longtable}
 
-\subsection*{5.2\quad Ellipse items (Kepler + 1--10)}
+\subsection*{C.2\quad Ellipse items (Kepler + 1--10)}
 \begin{longtable}{@{}L{2.55cm} L{4.6cm} L{5.5cm} L{2.9cm}@{}}
 \toprule
 \textbf{Item} & \textbf{Original} & \textbf{Final} & \textbf{Change type}\\
@@ -335,20 +451,22 @@ Kepler's 1st law & Star, ellipse, planet represented compositionally. &
   Retained; clearer $\hbar$, Laplacian, and potential notation. &
   Typographic cleanup.\\
 7~Dirac equation & $(i\slashed{D} - m)\psi = 0$ (compact slashed
-  form). & $(i\gamma^\mu \partial_\mu - m)\psi = 0$ (explicit form). &
-  Notation change.\\
+  form). & $(i\gamma^\mu \partial_\mu - m)\psi = 0$ (explicit form,
+  \S3.3). & Notation change.\\
 8~Atiyah--Singer & Index formula. & Retained; retypeset. & Typographic
   cleanup.\\
-9~Yang--Mills & $F = \mathrm{d}A + A\wedge A$; ${\mathrm{D}{\star}F=0}$
-  style. & $F_A = \mathrm{d}A + A\wedge A$;
-  $\mathrm{d}_A{\star}F_A = 0$. & Subscripts, operators clarified.\\
-10~Supersymmetry & $\{Q, Q\} = P$ schematic. & Expanded spinor-indexed
-  anticommutator relating supercharges to momentum. & Formula made
+9~Yang--Mills & $F = \mathrm{d}A + A\wedge A$;\ $D_A^{*} F_A = 0$
+  (stone carves the first $F$ bare; the catalogue typesets $F_A$). &
+  $F_A = \mathrm{d}A + A\wedge A$;\ $\mathrm{d}_A^{*} F_A = 0$
+  (\S3.4). & Subscripts, operator case.\\
+10~Supersymmetry & $\{Q, Q\} = P$ schematic. &
+  $\{Q_\alpha, \bar{Q}_{\dot{\beta}}\} =
+  2(\sigma^\mu)_{\alpha\dot{\beta}} P_\mu$ (\S3.5). & Formula made
   explicit.\\
 \bottomrule
 \end{longtable}
 
-\subsection*{5.3\quad Background items (A--J)}
+\subsection*{C.3\quad Background items (A--J)}
 \begin{longtable}{@{}L{2.55cm} L{4.6cm} L{5.5cm} L{2.9cm}@{}}
 \toprule
 \textbf{Item} & \textbf{Original} & \textbf{Final} & \textbf{Change type}\\
@@ -368,12 +486,15 @@ C~Stokes' theorem & Integral formula. & Retained; retypeset. &
 D~Supergravity & Generic ``Supergravity'' label and formula. & Legend
   specifies ``Minimal supergravity Lagrangian''; formula redrawn beside
   the Dynkin diagram. & Label specificity, redraw.\\
-E~Boundary of a boundary & $\partial\partial = 0$. & $\partial^2 = 0$.
-  & Equivalent, more compact.\\
+E~Boundary of a boundary & $\partial\partial = 0$. & $\partial^2 = 0$
+  (\S3.2). & Equivalent, more compact.\\
 F~Heisenberg uncertainty & $\Delta x\,\Delta p \ge \hbar/2$. &
   Retained; retypeset. & Typographic cleanup.\\
-G~Riemann zeta & Euler product--sum relationship. & Retained;
-  retypeset. & Typographic cleanup.\\
+G~Riemann zeta & Euler product--sum relationship, product on the left:
+  $\prod_p \frac{1}{1-1/p^s} = \sum_{n=1}^{\infty} \frac{1}{n^s}$. &
+  Sides exchanged --- the artwork reads
+  $\sum_{n=1}^{\infty} \frac{1}{n^s} = \prod_p \frac{1}{1-1/p^s}$;
+  retypeset. & Order, typography.\\
 H~Feynman diagrams & Particle diagram and string-interaction detail. &
   Legend expanded to ``Feynman and string interaction
   pair-of-pants''. & Label expanded.\\
