@@ -16,48 +16,43 @@ env:
 jobs:
   track:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 8
     steps:
-      - name: FedEx internal JSON tracking API
-        continue-on-error: true
+      - name: Render AfterShip portal and extract status
         run: |
-          echo "===FEDEX JSON API==="
-          DATA='{"TrackPackagesRequest":{"appType":"WTRK","uniqueKey":"","processingParameters":{},"trackingInfoList":[{"trackNumberInfo":{"trackingNumber":"'"$TRK"'","trackingQualifier":"","trackingCarrier":""}}]}}'
-          curl -s 'https://www.fedex.com/trackingCal/track' \
-            -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/128.0 Safari/537.36' \
-            -H 'Accept: application/json' \
-            -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
-            -H 'X-Requested-With: XMLHttpRequest' \
-            --data-urlencode "data=$DATA" \
-            --data 'action=trackpackages' \
-            --data 'locale=en_US' \
-            --data 'version=1' \
-            --data 'format=json' | tee fedex.json | head -c 200
-          echo ""
-          echo "===PARSED KEY FIELDS==="
-          python3 - << 'PY'
-          import json,sys
-          try:
-              d=json.load(open('fedex.json'))
-          except Exception as e:
-              print("no-json:",e); sys.exit(0)
-          try:
-              pkgs=d["TrackPackagesResponse"]["packageList"]
-          except Exception as e:
-              print("unexpected shape:",list(d.keys())); sys.exit(0)
-          for p in pkgs:
-              print("STATUS:", p.get("keyStatus"), "|", p.get("statusWithDetails") or p.get("scanEventList",[{}])[0].get("status"))
-              print("ETA:", p.get("estDeliveryDt"), p.get("estDeliveryTm"), "| delivered:", p.get("isDelivered"))
-              print("FROM:", p.get("shipperCity"), p.get("shipperStateCD"), "-> TO:", p.get("recipientCity"), p.get("recipientStateCD"))
-              print("--- scans (newest first) ---")
-              for s in p.get("scanEventList",[])[:20]:
-                  print(s.get("date"), s.get("time"), "|", s.get("status"), "|", s.get("scanLocation"))
-          PY
-
-      - name: AfterShip embedded data
-        continue-on-error: true
-        run: |
-          curl -sL "https://bizon.aftership.com/${TRK}" -o aftership.html || true
-          echo "===AFTERSHIP bytes==="; wc -c aftership.html
-          echo "===AFTERSHIP embedded json (tag / checkpoint / message) ==="
-          grep -oE '"(tag|subtag_message|checkpoint_time|location|city|state|message|expected_delivery)"[^,}]{0,160}' aftership.html | head -60 || true
+          npm init -y >/dev/null 2>&1
+          npm i playwright >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+          cat > t.js << 'EOF'
+          const { chromium } = require('playwright');
+          const TRK = process.env.TRK || '383405348169';
+          (async () => {
+            const b = await chromium.launch({ args: ['--no-sandbox'] });
+            const ctx = await b.newContext({
+              userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36',
+            });
+            // capture any JSON the SPA fetches (this is where the checkpoints live)
+            const blobs = [];
+            ctx.on('response', async (r) => {
+              const u = r.url();
+              const ct = (r.headers()['content-type'] || '');
+              if (ct.includes('json') && (u.includes('tracking') || u.includes('aftership') || u.includes('checkpoint'))) {
+                try { blobs.push({ u, body: (await r.text()).slice(0, 6000) }); } catch {}
+              }
+            });
+            const p = await ctx.newPage();
+            for (const url of [`https://bizon.aftership.com/${TRK}`, `https://track.aftership.com/fedex/${TRK}`]) {
+              try {
+                await p.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
+                await p.waitForTimeout(6000);
+                const txt = await p.evaluate(() => document.body.innerText);
+                console.log('===PAGE:', url, '===');
+                console.log(txt.replace(/\n{2,}/g, '\n').slice(0, 5000));
+              } catch (e) { console.log('nav-fail', url, e.message); }
+            }
+            console.log('===CAPTURED JSON RESPONSES===');
+            for (const x of blobs) { console.log('URL:', x.u); console.log(x.body); console.log('---'); }
+            await b.close();
+          })().catch(e => console.error('ERR:', e.message));
+          EOF
+          node t.js
