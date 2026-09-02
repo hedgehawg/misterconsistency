@@ -79,7 +79,23 @@
   .mnav-panel a:hover { color: var(--gold); background: rgba(208,164,76,.06); }
 
   /* ---------- hero ---------- */
-  .hero { padding: 96px 0 72px; border-bottom: 1px solid var(--line); }
+  .hero { padding: 96px 0 72px; border-bottom: 1px solid var(--line); position: relative; }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(14,15,18,0), rgba(14,15,18,.72) 12%, rgba(14,15,18,.72) 88%, rgba(14,15,18,0));
+  }
+  .site-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 720px; margin-top: 34px; }
+  .site-tile { position: relative; display: block; background: var(--bg-raised); border: 1px solid var(--line);
+    border-radius: 12px; padding: 18px 20px 17px; text-decoration: none; transition: border-color .25s ease; }
+  .site-tile:hover { border-color: var(--gold); }
+  .st-name { display: block; font-family: var(--serif); font-size: 19px; color: var(--text); margin-bottom: 5px; }
+  .st-desc { display: block; font-size: 13px; color: var(--text-dim); line-height: 1.45; padding-right: 18px; }
+  .st-arrow { position: absolute; top: 15px; right: 16px; color: var(--gold); font-size: 15px; }
+  @media (max-width: 640px) { .site-tiles { grid-template-columns: 1fr; } }
   .hero .kicker {
     font-size: .8rem; letter-spacing: .22em; text-transform: uppercase;
     color: var(--gold); margin-bottom: 20px; font-weight: 500;
@@ -96,7 +112,25 @@
   .hero .player { max-width: 620px; }
 
   /* ---------- sections ---------- */
-  section { padding: 80px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 84px; }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: url('assets/iconic-wall-tile.png') repeat;
+    background-size: 600px auto;
+    opacity: .3;
+  }
+  section { padding: 80px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 84px; position: relative; }
+  section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(14,15,18,0), rgba(14,15,18,.72) 12%, rgba(14,15,18,.72) 88%, rgba(14,15,18,0));
+  }
   .sec-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 14px; }
   .sec-num {
     font-family: var(--serif); font-style: italic; color: var(--gold);
@@ -496,24 +530,24 @@
     <nav>
       <a class="brand" href="#top">mister<span>consistency</span></a>
       <ul>
-        <li><a href="#music">Music</a></li>
         <li><a href="#wall">Iconic Wall</a></li>
         <li><a href="#decoherence">Decoherence</a></li>
         <li><a href="#research">Research</a></li>
         <li><a href="#curiosities">Curiosities</a></li>
         <li><a href="#gwen-bill">Gwen &amp; Bill</a></li>
+        <li><a href="#music">Music</a></li>
         <li><a href="#gattman">Gattman's World 🌎</a></li>
         <li><a href="archive.html">Archive</a></li>
       </ul>
       <details class="mnav" id="mnav">
         <summary aria-label="Open section menu">☰</summary>
         <div class="mnav-panel">
-          <a href="#music">Music</a>
           <a href="#wall">Iconic Wall</a>
           <a href="#decoherence">Decoherence</a>
           <a href="#research">Research</a>
           <a href="#curiosities">Curiosities</a>
           <a href="#gwen-bill">Gwen &amp; Bill</a>
+          <a href="#music">Music</a>
           <a href="#gattman">Gattman's World 🌎</a>
           <a href="archive.html">Archive</a>
         </div>
@@ -527,29 +561,27 @@
   <div class="hero">
     <div class="wrap">
       <div class="kicker">Scott Coulter — songs, structures &amp; studies</div>
-      <h1>Mister<br><em>Consistency</em></h1>
       <p class="lede">
         Consistently distracted...
       </p>
-      <div class="hero-player" id="hero-player" data-song="521e11b2"></div>
+      <div class="site-tiles">
+        <a class="site-tile" href="https://torussystems.io" target="_blank" rel="noopener">
+          <span class="st-name">Torus Systems</span>
+          <span class="st-desc">Institutional market-making for prediction markets</span>
+          <span class="st-arrow">&#8599;</span>
+        </a>
+        <a class="site-tile" href="https://palladiumtrain.com" target="_blank" rel="noopener">
+          <span class="st-name">Palladium Train</span>
+          <span class="st-desc">Physics-filtered data &amp; systematic markets</span>
+          <span class="st-arrow">&#8599;</span>
+        </a>
+      </div>
     </div>
   </div>
 
-  <section id="music">
-    <div class="wrap">
-      <div class="sec-head"><span class="sec-num">01</span><h2>Music</h2></div>
-      <p class="sec-sub">
-        Can be found at Suno under the handle <a href="https://suno.com/@coultron" target="_blank" rel="noopener">@coultron</a> —
-        again, all over the place.
-      </p>
-      <div class="songs" id="song-grid"></div>
-      <p class="all-songs">Also on Suno → <a href="https://suno.com/@coultron" target="_blank" rel="noopener">suno.com/@coultron</a></p>
-    </div>
-  </section>
-
   <section id="wall">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">02</span><h2>The Iconic Wall</h2></div>
+      <div class="sec-head"><span class="sec-num">01</span><h2>The Iconic Wall</h2></div>
       <p class="sec-sub">
         <a href="https://en.wikipedia.org/wiki/Jim_Simons" target="_blank" rel="noopener">James Simons</a> commissioned the Iconic Wall at Stony Brook, employing
         humanity's most durable technology for preserving information across
@@ -662,7 +694,7 @@
 
   <section id="decoherence">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">03</span><h2>Topology of Societal Decoherence</h2></div>
+      <div class="sec-head"><span class="sec-num">02</span><h2>Topology of Societal Decoherence</h2></div>
       <p class="sec-sub" style="margin-bottom:18px">
         Data suggests the &ldquo;left&rdquo; and the &ldquo;right&rdquo; no longer speak the same language.
       </p>
@@ -790,7 +822,7 @@
 
   <section id="research">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">04</span><h2>Research</h2></div>
+      <div class="sec-head"><span class="sec-num">03</span><h2>Research</h2></div>
       <p class="sec-sub">Longer-form studies and one working data venture. The PDFs open in the browser.</p>
       <div class="cards">
         <div class="card">
@@ -898,7 +930,7 @@
 
   <section id="curiosities">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">05</span><h2>Curiosities</h2></div>
+      <div class="sec-head"><span class="sec-num">04</span><h2>Curiosities</h2></div>
       <h3 style="font-family:var(--serif);font-weight:400;font-size:1.7rem;margin:26px 0 18px">Searching for an embedded message from the Creator</h3>
       <div class="grid-2">
         <figure>
@@ -943,7 +975,7 @@
 
   <section id="gwen-bill">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">06</span><h2>Frontier <span style="font-size:.6em">(model)</span> values: The Story of Gwen <span class="amp">&amp;</span> Bill</h2></div>
+      <div class="sec-head"><span class="sec-num">05</span><h2>Frontier <span style="font-size:.6em">(model)</span> values: The Story of Gwen <span class="amp">&amp;</span> Bill</h2></div>
       <p class="sec-sub">
         <span class="tag" style="display:inline-block;margin-bottom:12px">Frontier AI Model Biases · Narrative Experiment</span><br>
         We prompted each of the four frontier models to finish a story.
@@ -1171,6 +1203,19 @@
           </details>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="music">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">06</span><h2>Music</h2></div>
+      <div class="hero-player" id="hero-player" data-song="521e11b2" style="margin-bottom: 26px;"></div>
+      <p class="sec-sub">
+        Can be found at Suno under the handle <a href="https://suno.com/@coultron" target="_blank" rel="noopener">@coultron</a> —
+        again, all over the place.
+      </p>
+      <div class="songs" id="song-grid"></div>
+      <p class="all-songs">Also on Suno → <a href="https://suno.com/@coultron" target="_blank" rel="noopener">suno.com/@coultron</a></p>
     </div>
   </section>
 
