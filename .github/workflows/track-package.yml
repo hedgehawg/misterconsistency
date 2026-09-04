@@ -1,0 +1,58 @@
+name: track-package
+on:
+  workflow_dispatch:
+    inputs:
+      tracking:
+        description: 'FedEx tracking number'
+        required: true
+        default: '383405348169'
+  push:
+    branches: ['claude/bizon-remote-availability-1aspcr']
+    paths: ['.github/workflows/track-package.yml', 'tools/.track-trigger']
+
+env:
+  TRK: '383405348169'
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Render AfterShip portal and extract status
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm i playwright >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+          cat > t.js << 'EOF'
+          const { chromium } = require('playwright');
+          const TRK = process.env.TRK || '383405348169';
+          (async () => {
+            const b = await chromium.launch({ args: ['--no-sandbox'] });
+            const ctx = await b.newContext({
+              userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36',
+            });
+            // capture any JSON the SPA fetches (this is where the checkpoints live)
+            const blobs = [];
+            ctx.on('response', async (r) => {
+              const u = r.url();
+              const ct = (r.headers()['content-type'] || '');
+              if (ct.includes('json') && (u.includes('tracking') || u.includes('aftership') || u.includes('checkpoint'))) {
+                try { blobs.push({ u, body: (await r.text()).slice(0, 6000) }); } catch {}
+              }
+            });
+            const p = await ctx.newPage();
+            for (const url of [`https://bizon.aftership.com/${TRK}`, `https://track.aftership.com/fedex/${TRK}`]) {
+              try {
+                await p.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
+                await p.waitForTimeout(6000);
+                const txt = await p.evaluate(() => document.body.innerText);
+                console.log('===PAGE:', url, '===');
+                console.log(txt.replace(/\n{2,}/g, '\n').slice(0, 5000));
+              } catch (e) { console.log('nav-fail', url, e.message); }
+            }
+            console.log('===CAPTURED JSON RESPONSES===');
+            for (const x of blobs) { console.log('URL:', x.u); console.log(x.body); console.log('---'); }
+            await b.close();
+          })().catch(e => console.error('ERR:', e.message));
+          EOF
+          node t.js
