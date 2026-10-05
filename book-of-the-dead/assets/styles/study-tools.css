@@ -1,0 +1,23 @@
+/* Local study tools. Scoped to this document; no parent-site styles required. */
+.studyDialog{width:min(730px,calc(100vw - 28px));max-height:min(760px,calc(100dvh - 32px));margin:auto;padding:24px;border:1px solid #786341;border-radius:8px;background:#151713;color:#e9e2d4;font:15px/1.55 system-ui,sans-serif;box-shadow:0 20px 90px #0009;overflow:auto;overscroll-behavior:contain}
+.studyDialog::backdrop{background:#000c}
+.studyDialogHead{display:flex;align-items:center;gap:20px;justify-content:space-between;margin-bottom:22px}
+.studyDialogHead h2{font:28px/1.2 Georgia,serif;margin:0}
+.studyDialogHead button{min-height:38px}
+.studySearchLabel{display:block;margin:0 0 7px;color:#bdc9be;font-size:13px}
+.studyDialog input{box-sizing:border-box;width:100%;background:#080e0a;color:#f1eadc;border:1px solid #4d6252;border-radius:5px;padding:12px;font:16px/1.5 system-ui,sans-serif}
+.studyDialog input:focus{outline:2px solid #d9b45a;outline-offset:2px}
+.studySearchSummary{color:#c6b891;font-size:13px;min-height:20px;margin:13px 0}
+.studySearchResults{display:grid;gap:9px}
+.studyResult{display:block;width:100%;text-align:left;border:1px solid #344334;border-radius:5px;padding:14px;background:#0e150f;line-height:1.5;white-space:normal}
+.studyResult:hover,.studyResult:focus-visible{outline:1px solid #d9b45a;border-color:#d9b45a;background:#1b251b;color:inherit}
+.studyResultTitle{display:block;color:#eee4cf;font-size:16px}
+.studyResultMeta{display:block;color:#d9b45a;font-size:12px;margin:4px 0 6px}
+.studyResultExcerpt{display:block;font:14px/1.6 Georgia,serif;color:#bcbfad}
+.studySearchFoot{font-size:12px;color:#acb5a9;margin:19px 0 0}
+.readerTools{display:flex;align-items:center;gap:8px;margin:10px 0;flex-wrap:wrap}
+.readerTools button{font-size:12px;min-height:34px}
+.readerTools [role=status]{font-size:11px;color:#d9b45a}
+.noScriptNotice{position:fixed;inset:10px 10px auto;z-index:100;background:#151713;border:1px solid #d9b45a;padding:18px;color:#eee4cf}
+@media(max-width:500px){.studyDialog{padding:16px}.studyDialogHead h2{font-size:24px}.studyDialogHead{gap:12px;margin-bottom:16px}}
+@media(prefers-reduced-motion:reduce){html body main.wall{scroll-behavior:auto!important}.art .tile{transition:none!important}}

@@ -1,0 +1,37 @@
+{
+  "version": "2.5.0",
+  "date": "2026-10-05",
+  "status": "working integration build; source review and final 3D refinement pending",
+  "folder": "book-of-the-dead",
+  "expected_path": "book-of-the-dead/",
+  "publisher": "Mister Consistency",
+  "integration_and_deployment": "Claude Code in the existing GitHub Pages workflow; no direct repository access by the builder",
+  "runtime_dependencies": [],
+  "source_sheets": 37,
+  "passage_blocks": 287,
+  "column_targets": 1095,
+  "map_locations": 16,
+  "cover": {
+    "webp": "assets/cover.webp",
+    "jpeg": "assets/cover.jpg",
+    "width": 1600,
+    "height": 900,
+    "source": "assets/scans/ani-03.webp"
+  },
+  "analytics_included": false,
+  "noindex": true,
+  "fully_source_audited": false,
+  "deployed": false,
+  "browser_checks_passed": 74,
+  "browser_checks_total": 74,
+  "static_checks_passed": 15,
+  "static_checks_total": 15,
+  "negative_build_checks_passed": 3,
+  "file_count": 63,
+  "total_bytes": 32112603,
+  "largest_file": {
+    "path": "assets/scans/ani-21.webp",
+    "bytes": 1049766
+  },
+  "asset_manifest": "assets/asset-manifest.json"
+}

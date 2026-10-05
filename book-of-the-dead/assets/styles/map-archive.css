@@ -1,0 +1,86 @@
+
+  #mapHost{min-width:0}
+  #mapHost .mapTop{display:block;padding:10px 12px 8px;background:#0d1112;border-bottom:1px solid #34403e}
+  #mapHost .mapEyebrow{display:flex;justify-content:space-between;align-items:center;font:9px var(--sans);letter-spacing:.17em;color:#9aafab;text-transform:uppercase;margin-bottom:6px}
+  #mapHost .mapWhere{font-size:12px;line-height:1.4;font-weight:400;min-height:33px;color:#e8ece8}
+  #mapHost .mapWhere .k{font-size:9px;color:#d9bf7d;letter-spacing:.12em}
+  #mapHost .mapBtns{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+  #mapHost .mapBtns button{padding:4px 7px;border-radius:3px;min-height:28px;font-size:11px;color:#b5c6c1;border-color:#3b4744;background:transparent}
+  #mapHost .mapBtns button[aria-pressed=true]{border-color:#b5a16c;color:#f3d697;background:#24241c}
+  #mapHost .mapBtns button:hover,#mapHost .mapBtns button:focus-visible{color:#fff;border-color:#d5c598}
+  #mapHost .mapView{height:290px;touch-action:none;background:radial-gradient(ellipse at 45% 38%,#152021,#070b0d 78%);outline:none}
+  #mapHost .mapView:focus-visible{box-shadow:inset 0 0 0 2px #d9bf7d}
+  #mapHost .mapView::before{content:'';position:absolute;inset:13px;border:1px solid #91aca51a;pointer-events:none}
+  #mapHost .mapView svg{overflow:visible}
+  #mapHost .mapLabels .ml{transform:none;font-size:10px;border-radius:0;border-left:1px solid #8b9f99;padding:2px 5px;color:#c0d0ca;background:#080d0ee8;line-height:1.4}
+  #mapHost .mapLabels .ml.cur{border-left:2px solid #ffdb8a;color:#ffdb8a;font-weight:600}
+  #mapHost .mapLabels .ml.sec{border-color:#a7dfe6;color:#a7dfe6}
+  #mapHost .mn .dot{fill:#b2c9c0;stroke:#0b1011;stroke-width:1}
+  #mapHost .mn.cur .dot{fill:#ffe1a0;stroke:#ffe1a0}
+  #mapHost .mn.sec .dot{fill:#a7dfe6}
+  #mapHost .mn .pulse{animation:none;fill:none;stroke:#f9cf77;stroke-width:1;opacity:.7}
+  #mapHost .mn:focus{outline:none}#mapHost .mn:focus .dot{stroke:white;stroke-width:3}
+  #mapHost .mapCaption{display:flex;justify-content:space-between;gap:8px;background:#080d0e;color:#9caea7;padding:7px 12px;border-bottom:1px solid #34403e;font-size:10px;line-height:1.4}
+  #mapHost .mapCaption span:last-child{color:#cfbc89;white-space:nowrap}
+  #mapHost .mapNote{max-height:78px;font-size:12px;background:#101414;padding:9px 12px}
+  .mapList .mi{display:block;width:100%;text-align:left;border:0;border-radius:0;background:transparent;font:13px var(--sans);padding:6px 12px 6px 34px}
+  .mapList .mi:focus-visible{outline:1px solid #d9bf7d;outline-offset:-2px}
+  aside.side.mapExpanded{position:fixed;inset:12px;z-index:45;width:auto;display:grid!important;grid-template-columns:minmax(0,1fr) 310px;grid-template-rows:39px minmax(0,1fr);border:1px solid #59665b;box-shadow:0 0 0 30px #000a;max-width:none}
+  aside.side.mapExpanded #mapHost{grid-column:1;grid-row:1/-1;display:flex;flex-direction:column;min-height:0;border-right:1px solid #34403e}
+  aside.side.mapExpanded .sideTabs{grid-column:2;grid-row:1}aside.side.mapExpanded .sideBody{grid-column:2;grid-row:2}
+  aside.side.mapExpanded .mapView{height:auto!important;flex:1 1 auto;min-height:0}
+  aside.side.mapExpanded .mapWhere{min-height:0}aside.side.mapExpanded .mapEyebrow{font-size:11px}
+  aside.side.mapExpanded .mapLabels .ml{font-size:12px}aside.side.mapExpanded .mapNote{max-height:85px}
+  @media(max-height:750px){#mapHost .mapView{height:220px}#mapHost .mapWhere{min-height:0}#mapHost .mapNote{max-height:56px}}
+  @media(max-width:760px){#mapHost .mapView{height:215px}#mapHost .mapWhere{min-height:0}#mapHost .mapTop{padding:7px 10px}#mapHost .mapNote{max-height:57px}
+    aside.side.mapExpanded{inset:6px;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(270px,58%) 38px minmax(0,1fr)}
+    aside.side.mapExpanded #mapHost{grid-column:1;grid-row:1;border-right:0}aside.side.mapExpanded .sideTabs{grid-column:1;grid-row:2}aside.side.mapExpanded .sideBody{grid-column:1;grid-row:3}
+    aside.side.mapExpanded .mapNote{display:none}aside.side.mapExpanded .mapLabels .ml{font-size:10px}}
+  @media(prefers-reduced-motion:reduce){#mapHost *{animation:none!important;transition:none!important}}
+/* v2.4: real WebGL archive, native HTML markers and visible evidence boundary. */
+#mapHost .mapView{position:relative;background:#020604;overflow:hidden}
+#mapHost canvas{width:100%;height:100%;display:block;position:absolute;inset:0}
+#mapHost .mapView::before{z-index:2}
+#mapHost .mapLabels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#mapHost .mapMarker{position:absolute;transform:translate(-50%,-50%);width:28px;height:28px;padding:0;border:0;background:none;border-radius:50%;pointer-events:auto;color:#c2e4cc;z-index:3}
+#mapHost .mapMarker::before{content:'';position:absolute;left:10px;top:10px;width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 7px currentColor;border:1px solid #05160e}
+#mapHost .mapMarker.cur{color:#ffda8c;z-index:6}
+#mapHost .mapMarker.cur::before{left:7px;top:7px;width:13px;height:13px;border:1px solid #ffefc9;box-shadow:0 0 0 5px #ffd26b24,0 0 19px #ffc755}
+#mapHost .mapMarker.sec{color:#83d9ff}
+#mapHost .mapMarker:focus-visible{outline:2px solid #fff;outline-offset:3px}
+#mapHost .mapMarker .placeName{display:none;position:absolute;left:24px;top:3px;background:#041009e8;color:inherit;font:10px var(--sans);white-space:nowrap;padding:4px 6px;border-left:1px solid currentColor}
+#mapHost .mapMarker.named .placeName,#mapHost .mapMarker:focus-visible .placeName,#mapHost .mapMarker:hover .placeName{display:block}
+#mapHost .mapKey{font:10px var(--sans);padding:7px 12px;background:#080f0c;border-top:1px solid #244032;color:#9baea3;line-height:1.5;display:flex;gap:12px;flex-wrap:wrap}
+#mapHost .mapKey .gold{color:#ffda8c}#mapHost .mapKey .cyan{color:#83d9ff}
+#mapHost .mapCaption{font-size:10px;flex-wrap:wrap}
+#mapHost .mapNote{max-height:66px;overflow:auto;color:#a8b9af;flex-shrink:0}
+#mapHost .mapReview{padding:6px 12px;font:10px/1.5 var(--sans);color:#b9a777;border-top:1px solid #263c30;background:#080e0b;flex-shrink:0}
+#mapHost .mapReview a{color:inherit}
+#mapHost .mapEyebrow .buildTag{border:1px solid #45604f;border-radius:2px;padding:2px 4px;color:#c2e4cc;letter-spacing:.08em;font-size:9px}
+#mapHost .mapBtns{gap:5px}#mapHost .mapBtns button{min-height:30px}
+#mapHost .mapWhere .k{display:block;line-height:1.6}
+#mapHost .mapMotionHint{position:absolute;left:16px;bottom:15px;z-index:2;max-width:calc(100% - 32px);font:10px/1.5 var(--sans);letter-spacing:.04em;color:#89a494;pointer-events:none}
+aside.side.mapExpanded .mapMarker .placeName{font-size:11px}
+aside.side.mapExpanded .mapTop{padding:12px 16px}
+aside.side.mapExpanded .mapWhere{font:18px var(--serif);padding-bottom:5px}
+aside.side.mapExpanded .mapView{min-height:100px}
+aside.side.mapExpanded .mapNote{max-height:65px}
+.mapList .mi small{display:block;color:#7e9285;font-size:10px;line-height:1.4}
+.mapList .mf{color:#8caa96}
+@media(max-width:760px){
+ #mapHost .mapView{height:230px}
+ #mapHost .mapTop{padding:7px 10px}
+ #mapHost .mapBtns button{font-size:10px;padding:5px 6px}
+ #mapHost .mapCaption{font-size:9px;padding:5px 10px}
+ #mapHost .mapKey{font-size:9px;padding:4px 10px;gap:8px}
+ #mapHost .mapReview{font-size:9px;padding:4px 10px}
+ #mapHost .mapWhere{font-size:12px}
+ aside.side.mapExpanded{grid-template-rows:minmax(290px,66%) 38px minmax(0,1fr)}
+ aside.side.mapExpanded .mapWhere{font-size:15px;padding-bottom:0}
+ aside.side.mapExpanded .mapTop{padding:7px 10px}
+ #mapHost .mapMotionHint{font-size:9px;left:12px;bottom:10px}
+}
+
+/* Expanded inspection typography; ID specificity keeps it above compact controls. */
+#side.mapExpanded #mapHost .mapWhere{font-size:18px;line-height:1.4}
+@media(max-width:760px){#side.mapExpanded #mapHost .mapWhere{font-size:14px}}
