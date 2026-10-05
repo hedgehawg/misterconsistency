@@ -1,0 +1,656 @@
+{
+  "build": "2.5.0",
+  "main_browser_suite": {
+    "build": "2.5.0",
+    "environment": "Chromium / Xvfb / software WebGL, local assets embedded; no browser URL navigation",
+    "checks": [
+      {
+        "name": "native WebGL initializes",
+        "passed": true,
+        "detail": {
+          "engine": "WebGL",
+          "triangles": 14956,
+          "lineSegments": 20830,
+          "draws": 8,
+          "contextLost": false,
+          "bufferBytes": 4160256
+        }
+      },
+      {
+        "name": "reduced motion stops initial spin",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "retains 37 sheets, 287 blocks, 1095 columns and 16 locations",
+        "passed": true,
+        "detail": {
+          "sheets": 37,
+          "blocks": 287,
+          "columns": 1095,
+          "locations": 16
+        }
+      },
+      {
+        "name": "legacy sheet link restores correct sheet",
+        "passed": true,
+        "detail": {
+          "id": null,
+          "column": 0,
+          "sheet": 7
+        }
+      },
+      {
+        "name": "all scan tiles use embedded real assets",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "real column click opens linked reader",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "column link encodes one-based annotation index",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "reader text and selected-column highlight exist",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "scroll events preserve selected passage map context",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "clipboard fallback offers accurate selectable link",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "local preview copy does not claim a public URL",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "spell-number search returns source-linked results",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "search results use unique valid passage ids",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "name search returns passages",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "empty search is explicit",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "search input is not interpreted as markup",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "Escape closes search without clearing passage",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "Enter opens first result with stable fragment",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "browser history back restores previous selection",
+        "passed": true,
+        "detail": {
+          "id": "29-2",
+          "column": 0,
+          "sheet": 29
+        }
+      },
+      {
+        "name": "browser history forward restores next selection",
+        "passed": true,
+        "detail": {
+          "id": "11-3",
+          "column": 0,
+          "sheet": 11
+        }
+      },
+      {
+        "name": "invalid public open call returns false",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "direct passage-column link restores selection on load",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "direct passage-column link opens visible reader",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "invalid column gracefully selects whole passage",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "unknown link safely returns to first sheet",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "expanded view contains actual WebGL canvas",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "map places list assigned passages",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "map to passage link preserves selected location",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: thebes",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: cities",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: west",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: east",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: sky",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: tomb",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: sycamore",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: rosetau",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: arits",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: pylons",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: hall",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: throne",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: lake",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: fields",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: boat",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "place selector: duat",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "unassigned location has explicit evidence caveat",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "exterior view toggles",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "depth-tested surface view toggles",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "optional study route initially off",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "study route toggles on",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "keyboard rotates 3D camera",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "Home resets camera",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "spin advances 3D rotation",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause stops animation",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "slash shortcut opens modal above expanded map",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "Escape closes only topmost search dialog",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "graphics-context loss is handled",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "reader works during context loss",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "graphics context recovers",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "expanded map controls fit 320x740",
+        "passed": true,
+        "detail": {
+          "body": 320,
+          "canvas": {
+            "x": 7,
+            "y": 150.984375,
+            "width": 306,
+            "height": 253.078125,
+            "top": 150.984375,
+            "right": 313,
+            "bottom": 404.0625,
+            "left": 7
+          },
+          "bad": []
+        }
+      },
+      {
+        "name": "expanded map controls fit 390x844",
+        "passed": true,
+        "detail": {
+          "body": 390,
+          "canvas": {
+            "x": 7,
+            "y": 150.984375,
+            "width": 376,
+            "height": 335.21875,
+            "top": 150.984375,
+            "right": 383,
+            "bottom": 486.203125,
+            "left": 7
+          },
+          "bad": []
+        }
+      },
+      {
+        "name": "expanded map controls fit 760x900",
+        "passed": true,
+        "detail": {
+          "body": 760,
+          "canvas": {
+            "x": 7,
+            "y": 115.984375,
+            "width": 746,
+            "height": 407.171875,
+            "top": 115.984375,
+            "right": 753,
+            "bottom": 523.15625,
+            "left": 7
+          },
+          "bad": []
+        }
+      },
+      {
+        "name": "expanded map controls fit 768x600",
+        "passed": true,
+        "detail": {
+          "body": 768,
+          "canvas": {
+            "x": 13,
+            "y": 171.578125,
+            "width": 431,
+            "height": 262.421875,
+            "top": 171.578125,
+            "right": 444,
+            "bottom": 434,
+            "left": 13
+          },
+          "bad": []
+        }
+      },
+      {
+        "name": "expanded map controls fit 1100x760",
+        "passed": true,
+        "detail": {
+          "body": 1100,
+          "canvas": {
+            "x": 13,
+            "y": 136.578125,
+            "width": 763,
+            "height": 469.640625,
+            "top": 136.578125,
+            "right": 776,
+            "bottom": 606.21875,
+            "left": 13
+          },
+          "bad": []
+        }
+      },
+      {
+        "name": "expanded map controls fit 1500x960",
+        "passed": true,
+        "detail": {
+          "body": 1500,
+          "canvas": {
+            "x": 13,
+            "y": 136.578125,
+            "width": 1163,
+            "height": 687.03125,
+            "top": 136.578125,
+            "right": 1176,
+            "bottom": 823.609375,
+            "left": 13
+          },
+          "bad": []
+        }
+      },
+      {
+        "name": "mobile search dialog fits viewport",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mobile search opens reader overlay",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "no runtime JavaScript exceptions",
+        "passed": true,
+        "detail": []
+      }
+    ],
+    "page_errors": [],
+    "browser": "144.0.7559.96"
+  },
+  "isolated_browser_suite": {
+    "environment": "Isolated Chromium / Xvfb / software graphics, assets embedded",
+    "checks": [
+      {
+        "name": "forced unsupported graphics selects explicit vector fallback",
+        "passed": true
+      },
+      {
+        "name": "fallback retains reader and stable links",
+        "passed": true
+      },
+      {
+        "name": "fallback retains search",
+        "passed": true
+      },
+      {
+        "name": "reader selection survives mobile-to-desktop resize",
+        "passed": true
+      },
+      {
+        "name": "full historical translation drawer opens",
+        "passed": true
+      },
+      {
+        "name": "guided sheet journey advances",
+        "passed": true
+      },
+      {
+        "name": "no exceptions in isolated fallback and resize checks",
+        "passed": true
+      }
+    ],
+    "errors": []
+  },
+  "static_delivery_suite": {
+    "checks": [
+      {
+        "name": "no file over 100,000,000 bytes",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "module comfortably below 60 MB development budget",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "no movie footage, node modules, archives or font files",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "37 WebP scans and one overview",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "all 38 scan and overview files unchanged",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "historical corpus and editorial map data unchanged",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "geometry changes only overview path",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native renderer code unchanged",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "all runtime JavaScript files parse",
+        "passed": true,
+        "detail": [
+          {
+            "file": "map-fallback.js",
+            "passed": true,
+            "error": ""
+          },
+          {
+            "file": "study-tools.js",
+            "passed": true,
+            "error": ""
+          },
+          {
+            "file": "geometry.js",
+            "passed": true,
+            "error": ""
+          },
+          {
+            "file": "map-data.js",
+            "passed": true,
+            "error": ""
+          },
+          {
+            "file": "text.js",
+            "passed": true,
+            "error": ""
+          },
+          {
+            "file": "duat-webgl.js",
+            "passed": true,
+            "error": ""
+          },
+          {
+            "file": "spells.js",
+            "passed": true,
+            "error": ""
+          },
+          {
+            "file": "map.js",
+            "passed": true,
+            "error": ""
+          },
+          {
+            "file": "budge.js",
+            "passed": true,
+            "error": ""
+          },
+          {
+            "file": "viewer.js",
+            "passed": true,
+            "error": ""
+          },
+          {
+            "file": "guide.js",
+            "passed": true,
+            "error": ""
+          }
+        ]
+      },
+      {
+        "name": "all local document resource links resolve",
+        "passed": true,
+        "detail": {
+          "references": 17,
+          "missing": []
+        }
+      },
+      {
+        "name": "no root-absolute resource paths or remote startup imports",
+        "passed": true,
+        "detail": {
+          "absolute": [],
+          "runtime_external": []
+        }
+      },
+      {
+        "name": "no backend or service worker requirement",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "preview remains explicitly nonindexed",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "actual HTTP serving at /book-of-the-dead/",
+        "passed": true,
+        "detail": {
+          "files": 63,
+          "bad": []
+        }
+      },
+      {
+        "name": "actual HTTP serving at /preview/personal-site/book-of-the-dead/",
+        "passed": true,
+        "detail": {
+          "files": 63,
+          "bad": []
+        }
+      }
+    ],
+    "external_bibliography_links": [
+      "https://digi.ub.uni-heidelberg.de/diglit/budge1894bd1/0017/image,info",
+      "https://www.britishmuseum.org/collection/object/Y_EA10470-3",
+      "https://sacred-texts.com/egy/ebod/ebod13.htm"
+    ],
+    "parent_links": [
+      "../"
+    ],
+    "interpretation": "Filesystem and actual local HTTP serving checks at two path depths, not Chromium URL navigation or a live GitHub Pages deployment."
+  },
+  "negative_corpus_build_tests": {
+    "passed": 3,
+    "total": 3,
+    "cases": [
+      "invalid section rejected without changing output",
+      "missing sheet rejected without changing output",
+      "zero-width rectangle rejected"
+    ],
+    "basis": "Executed original retained work/test_build.js against unchanged corpus pipeline; shipped corpus is byte-identical."
+  },
+  "model_structure": {
+    "places": 16,
+    "triangles": 14956,
+    "line_segments": 20830,
+    "buffer_bytes": 4160256,
+    "scholarly_validation": false
+  },
+  "deployment_performed": false
+}

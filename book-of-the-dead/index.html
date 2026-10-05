@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book of the Dead — The Papyrus of Ani | Mister Consistency</title>
+<meta name="description" content="Explore all 37 facsimile sheets of the Papyrus of Ani with a linked historical translation and an interactive, interpretive 3D map. An educational study in development.">
+<link rel="stylesheet" href="assets/styles/map-archive.css">
+<link rel="stylesheet" href="assets/styles/study-tools.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script data-goatcounter="https://misterconsistency.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+:root{
+  --bg:#0f0e0c; --bg2:#171512; --bg3:#201d18; --line:#2e2a24; --ink:#e9e2d4; --ink2:#b8ae9c; --ink3:#857b6a;
+  --gold:#d9b45a; --gold2:#b8903a; --red:#b9533a; --green:#7b9a6b; --blue:#6f8fb3;
+  --serif:Georgia,"Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --topH:52px; --mmH:64px; --sideW:340px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body{display:flex;flex-direction:column;overflow:hidden}
+a{color:var(--gold)}
+button{font:inherit;color:inherit;background:none;border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer;line-height:1}
+button:hover{border-color:var(--gold2);color:var(--gold)}
+button.primary{background:var(--gold);color:#1b1608;border-color:var(--gold);font-weight:600}
+button.primary:hover{background:#e6c46e;color:#1b1608}
+button.active{background:var(--bg3);border-color:var(--gold2);color:var(--gold)}
+
+/* top bar */
+header.top{height:var(--topH);display:flex;align-items:center;gap:14px;padding:0 16px;border-bottom:1px solid var(--line);background:var(--bg2);flex:0 0 auto;z-index:20}
+header.top .brand{font-weight:600;letter-spacing:.2px;white-space:nowrap}
+header.top .brand small{font-weight:400;color:var(--ink2);margin-left:8px}
+header.top .where{margin-left:auto;display:flex;align-items:center;gap:10px;min-width:0;color:var(--ink2);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .where b{color:var(--ink)}
+header.top nav{display:flex;gap:6px;align-items:center;flex:0 0 auto}
+header.top nav .zoom{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+header.top nav .zoom button{border:0;border-radius:0;padding:6px 9px}
+header.top nav .zoom button+button{border-left:1px solid var(--line)}
+
+/* minimap */
+.minimap{height:var(--mmH);position:relative;background:#000;border-bottom:1px solid var(--line);flex:0 0 auto;cursor:pointer;user-select:none}
+.minimap img{position:absolute;left:0;top:6px;width:100%;height:calc(var(--mmH) - 20px);object-fit:fill;opacity:.85;display:block}
+.minimap .mm-stages{position:absolute;left:0;right:0;bottom:0;height:12px}
+.minimap .mm-stage{position:absolute;top:3px;height:6px;border-radius:2px;opacity:.9}
+.minimap .mm-stage span{position:absolute;top:-3px;left:0;transform:translateY(-100%);font-size:10px;color:var(--ink2);white-space:nowrap;display:none}
+.minimap .mm-view{position:absolute;top:2px;height:calc(var(--mmH) - 12px);border:2px solid var(--gold);border-radius:3px;box-shadow:0 0 0 2000px rgba(0,0,0,.35);pointer-events:none;min-width:6px}
+.minimap .mm-label{position:absolute;right:8px;top:6px;font-size:11px;color:var(--ink2);background:rgba(15,14,12,.8);padding:2px 7px;border-radius:4px;pointer-events:none}
+.minimap:hover .mm-stage span{display:block}
+
+/* main row: wall + side panel */
+.row{flex:1 1 auto;display:flex;min-height:0;position:relative}
+main.wall{flex:1 1 auto;min-width:0;overflow-x:auto;overflow-y:auto;position:relative;scrollbar-color:#3a352c #0f0e0c;scroll-behavior:smooth;cursor:grab}
+main.wall.dragging{cursor:grabbing;scroll-behavior:auto}
+main.wall::-webkit-scrollbar{height:12px}
+main.wall::-webkit-scrollbar-thumb{background:#3a352c;border-radius:6px;border:2px solid #0f0e0c}
+.track{position:relative}
+.art{position:relative;background:#000}
+.art .lowres{position:absolute;display:block;image-rendering:auto;pointer-events:none}
+.art .tile{position:absolute;display:block;opacity:0;transition:opacity .4s ease}
+.art .tile.loaded{opacity:1}
+.art .seam{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.06);pointer-events:none}
+.art .hot{position:absolute;border:1px solid transparent;border-radius:3px;cursor:pointer;transition:border-color .15s,background .15s;z-index:3}
+.art .hot:hover,.art .hot.on{border-color:rgba(217,180,90,.9);background:rgba(217,180,90,.12);box-shadow:0 0 0 1px rgba(0,0,0,.4)}
+.art .hot .tag{position:absolute;left:0;bottom:100%;transform:translateY(-4px);background:rgba(15,14,12,.92);color:var(--gold);font-size:12px;padding:3px 7px;border-radius:4px;white-space:nowrap;display:none;border:1px solid var(--gold2);z-index:5}
+.art .hot:hover .tag,.art .hot.on .tag{display:block}
+.art .sheetno{position:absolute;top:6px;font-size:11px;color:rgba(233,226,212,.55);letter-spacing:.3px;pointer-events:none;text-shadow:0 1px 2px #000;z-index:4}
+/* text blocks */
+.art .blk{position:absolute;border:1px solid rgba(120,180,255,.22);border-radius:2px;pointer-events:none;z-index:1;transition:border-color .15s,background .15s}
+.art .blk .tag{position:absolute;left:0;top:100%;transform:translateY(3px);background:rgba(15,14,12,.92);color:#9cc4ff;font-size:12px;padding:3px 7px;border-radius:4px;white-space:nowrap;display:none;border:1px solid rgba(120,180,255,.5);z-index:6}
+.art .blk.hov,.art .blk.sel{border-color:rgba(120,180,255,.75);background:rgba(120,180,255,.06)}
+.art .blk.hov .tag,.art .blk.sel .tag{display:block}
+.art .col{position:absolute;cursor:pointer;z-index:2;border-left:1px solid rgba(120,180,255,.14)}
+.art .col:hover{background:rgba(255,220,90,.22);outline:1px solid rgba(255,220,90,.8)}
+.art .col.sel{background:rgba(255,220,90,.28);outline:1px solid rgba(255,220,90,.95)}
+.art .rect{position:absolute;cursor:pointer;z-index:2}
+.art .rect:hover{background:rgba(120,180,255,.12)}
+.art .rect.sel{background:rgba(255,220,90,.2);outline:1px solid rgba(255,220,90,.9)}
+.art.noblocks .blk,.art.noblocks .col,.art.noblocks .rect{display:none}
+
+/* english band */
+.english{position:relative;border-top:1px solid var(--line);background:var(--bg)}
+.english[data-mode=look] .says,.english[data-mode=look] .why{display:none}
+.english[data-mode=says] .look,.english[data-mode=says] .why{display:none}
+.english[data-mode=why] .look,.english[data-mode=why] .says{display:none}
+.panel .tabs{display:flex;gap:2px;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-left:auto}
+.panel .tabs button{border:0;border-radius:0;padding:4px 9px;font-size:12px;color:var(--ink3)}
+.panel .tabs button+button{border-left:1px solid var(--line)}
+.panel .tabs button.on{background:var(--bg3);color:var(--gold)}
+.panel{position:absolute;top:0;bottom:0;padding:12px 18px 16px 18px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:8px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+.panel.cur{background:linear-gradient(180deg,rgba(217,180,90,.07),transparent 60%)}
+.panel .ph{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.panel .ph .no{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.panel .ph .stage{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);padding:2px 7px;border:1px solid var(--line);border-radius:10px}
+.panel h2{margin:0;font-size:19px;font-weight:600;letter-spacing:.1px;line-height:1.25}
+.panel .meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--ink2)}
+.panel .chip{border:1px solid var(--line);border-radius:10px;padding:2px 8px;color:var(--ink2);cursor:pointer;background:var(--bg2)}
+.panel .chip:hover{border-color:var(--gold2);color:var(--gold)}
+.panel .chip.sp{font-variant-numeric:tabular-nums}
+.panel .chip.tb{color:#9cc4ff;border-color:rgba(120,180,255,.35)}
+.panel .body{columns:290px;column-gap:26px;column-rule:1px solid var(--line);font-size:14.5px;line-height:1.5;color:var(--ink)}
+.panel .body p{margin:0 0 10px 0}
+.panel .body p b{color:var(--gold);font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+.panel .body p.says{font-family:var(--serif);color:#e6dcc8}
+.panel .figs{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;color:var(--ink3);align-items:center}
+.panel .figs .chip{padding:1px 7px}
+.panel .ft{margin-top:auto;padding-top:6px;display:flex;gap:8px;align-items:center;font-size:12px;color:var(--ink3)}
+.panel .ft button{font-size:12px;padding:5px 9px}
+
+/* side panel: map + reader */
+aside.side{flex:0 0 var(--sideW);width:var(--sideW);border-left:1px solid var(--line);background:var(--bg2);display:flex;flex-direction:column;min-height:0;z-index:12}
+aside.side.hidden{display:none}
+.mapTop{display:flex;align-items:center;gap:6px;padding:8px 10px 6px;border-bottom:1px solid var(--line)}
+.mapWhere{flex:1;min-width:0;font-size:13px;line-height:1.3;font-weight:600}
+.mapWhere .k{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.mapBtns{display:flex;gap:3px}
+.mapBtns button{padding:3px 7px;font-size:12px}
+.mapView{position:relative;height:270px;background:radial-gradient(ellipse at 50% 35%,#1d1a16,#0c0b09 75%);cursor:grab;user-select:none;flex:0 0 auto;overflow:hidden}
+.mapView:active{cursor:grabbing}
+.mapView svg{display:block;width:100%;height:100%}
+.mapView .mn .dot{fill:#e9e2d4;stroke:#0f0e0c;stroke-width:1.2}
+.mapView .mn.cur .dot{fill:#ffd86a}
+.mapView .mn.sec .dot{fill:#9cc4ff}
+.mapView .mn .pulse{fill:rgba(255,216,106,.18);stroke:#ffd86a;stroke-width:1.2;animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{0%{r:6;opacity:1}100%{r:18;opacity:0}}
+.mapView .mn{cursor:pointer}
+.mapView .ani{fill:#ffd86a;stroke:#ffd86a;stroke-width:1.4}
+.mapLabels{position:absolute;inset:0;pointer-events:none}
+.mapLabels .ml{position:absolute;transform:translate(-50%,0);font-size:10.5px;color:var(--ink2);background:rgba(15,14,12,.6);padding:1px 5px;border-radius:3px;white-space:nowrap;pointer-events:auto;cursor:pointer}
+.mapLabels .ml.cur{color:#ffd86a;font-weight:600;background:rgba(15,14,12,.85)}
+.mapLabels .ml.sec{color:#9cc4ff}
+.mapNote{padding:8px 12px;font-size:12.5px;line-height:1.45;color:var(--ink2);border-bottom:1px solid var(--line);flex:0 0 auto;max-height:96px;overflow:auto}
+.sideTabs{display:flex;gap:0;border-bottom:1px solid var(--line);flex:0 0 auto}
+.sideTabs button{flex:1;border:0;border-radius:0;padding:7px 6px;font-size:12px;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase}
+.sideTabs button.on{color:var(--gold);box-shadow:inset 0 -2px 0 var(--gold)}
+.sideBody{flex:1 1 auto;min-height:0;overflow:auto;scrollbar-width:thin}
+.mapList{padding:6px 0 14px}
+.mapList .mf{padding:8px 12px 3px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.mapList .mf .fn{display:inline-block;width:16px;height:16px;border-radius:50%;border:1px solid var(--line);text-align:center;line-height:14px;margin-right:6px;font-size:10px;color:var(--ink2)}
+.mapList .mi{padding:5px 12px 5px 34px;font-size:13px;color:var(--ink);cursor:pointer;position:relative;line-height:1.3}
+.mapList .mi:hover{background:var(--bg3)}
+.mapList .mi .dot{position:absolute;left:18px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--ink3)}
+.mapList .mi.cur{color:#ffd86a}.mapList .mi.cur .dot{background:#ffd86a;box-shadow:0 0 0 3px rgba(255,216,106,.25)}
+.mapList .mi.sec{color:#9cc4ff}.mapList .mi.sec .dot{background:#9cc4ff}
+/* reader (text of a clicked block) */
+.reader{display:none;padding:12px 14px 20px}
+.reader.on{display:block}
+.reader .rno{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#9cc4ff;display:flex;justify-content:space-between;align-items:center}
+.reader .rno button{border:0;padding:2px 6px;color:var(--ink3);font-size:14px}
+.reader h3{margin:4px 0 6px;font-size:16px;line-height:1.3;font-weight:600}
+.reader .rmeta{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;margin-bottom:10px}
+.reader .rmeta .chip{border:1px solid var(--line);border-radius:10px;padding:2px 8px;color:var(--ink2);background:var(--bg3)}
+.reader .rmeta .chip.map{color:#ffd86a;border-color:rgba(255,216,106,.4);cursor:pointer}
+.reader .vig{font-size:12.5px;color:var(--ink3);font-style:italic;line-height:1.45;margin:0 0 10px;padding:8px 10px;border:1px solid var(--line);border-radius:6px}
+.reader .txt{font-family:var(--serif);font-size:14.5px;line-height:1.62;color:#e6dcc8}
+.reader .txt p{margin:0 0 10px}
+.reader .txt .n{font-family:var(--sans);font-size:10px;color:#9cc4ff;vertical-align:super;margin:0 2px 0 1px;font-weight:600}
+.reader .txt .seg.hi{background:rgba(255,220,90,.22);box-shadow:0 0 0 2px rgba(255,220,90,.22);border-radius:2px}
+.reader .cols{display:flex;flex-wrap:wrap;gap:3px;margin:0 0 10px}
+.reader .cols span{width:22px;height:22px;border:1px solid var(--line);border-radius:3px;font-size:10.5px;display:flex;align-items:center;justify-content:center;color:var(--ink3);cursor:pointer;font-variant-numeric:tabular-nums}
+.reader .cols span:hover{border-color:var(--gold2);color:var(--gold)}
+.reader .cols span.on{background:rgba(255,220,90,.25);border-color:#ffd86a;color:#ffd86a}
+.reader .anal{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.5;color:var(--ink)}
+.reader .anal b{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.reader .nav{display:flex;gap:6px;margin-top:12px}
+.reader .nav button{font-size:12px;padding:5px 9px}
+.reader .here{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;margin:8px 0 0;color:var(--ink3)}
+.nodeList{padding:10px 12px}
+.nodeList h4{margin:0 0 6px;font-size:13px}
+.nodeList p{margin:0 0 10px;font-size:12.5px;color:var(--ink2);line-height:1.45}
+.nodeList .it{padding:6px 8px;border:1px solid var(--line);border-radius:6px;margin-bottom:5px;font-size:12.5px;cursor:pointer;line-height:1.35}
+.nodeList .it:hover{border-color:var(--gold2)}
+.nodeList .it small{display:block;color:var(--ink3);font-size:11px}
+
+/* popover (figures) */
+.pop .popLink{display:inline-block;margin-top:8px;color:#9cc4ff;text-decoration:none;border-bottom:1px dotted #9cc4ff;font-size:12.5px}
+.pop{position:fixed;z-index:40;max-width:320px;background:var(--bg2);border:1px solid var(--gold2);border-radius:8px;padding:10px 12px;font-size:13.5px;line-height:1.45;box-shadow:0 10px 30px rgba(0,0,0,.6);display:none}
+.pop b{display:block;color:var(--gold);margin-bottom:4px;font-size:13px}
+.pop .x{position:absolute;right:6px;top:4px;border:0;padding:2px 6px;color:var(--ink3)}
+
+/* drawer: full translation */
+aside.drawer{position:fixed;top:var(--topH);right:0;bottom:0;width:min(560px,92vw);background:var(--bg2);border-left:1px solid var(--line);transform:translateX(102%);transition:transform .25s ease;z-index:30;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,.5)}
+aside.drawer.open{transform:translateX(0)}
+aside.drawer .dh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+aside.drawer .dh h3{margin:0;font-size:14px;font-weight:600;flex:1}
+aside.drawer .dh .sub{font-size:12px;color:var(--ink2)}
+aside.drawer .dnav{display:flex;gap:4px}
+aside.drawer .db{overflow:auto;padding:16px 20px 40px;font-family:var(--serif);font-size:15px;line-height:1.6;color:#e2d9c6}
+aside.drawer .db h4{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+aside.drawer .db p{margin:0 0 12px}
+aside.drawer .db p.head{font-family:var(--sans);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+aside.drawer .db p.vig{color:var(--ink2);font-style:italic}
+aside.drawer .db .note{font-family:var(--sans);font-size:12.5px;color:var(--ink3);border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:14px;line-height:1.45}
+
+/* journey bar */
+.journey{position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(23,21,18,.96);border-top:1px solid var(--gold2);padding:10px 16px;display:none;align-items:center;gap:14px;backdrop-filter:blur(6px)}
+.journey.on{display:flex}
+.journey .jt{flex:1;min-width:0}
+.journey .jt .s{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.journey .jt .t{font-weight:600;font-size:15px;margin:2px 0}
+.journey .jt .b{font-size:13px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.journey .jp{display:flex;gap:6px;align-items:center}
+.journey .bar{position:absolute;left:0;top:-1px;height:2px;background:var(--gold)}
+.journey .count{font-size:12px;color:var(--ink3);white-space:nowrap}
+
+/* about modal */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modal .box{background:var(--bg2);border:1px solid var(--line);border-radius:10px;max-width:640px;max-height:85vh;overflow:auto;padding:22px 26px;font-size:14.5px;line-height:1.55}
+.modal .box h3{margin:0 0 10px;font-size:18px}
+.modal .box p{margin:0 0 12px;color:var(--ink)}
+.modal .box .k{font-size:12px;color:var(--ink3)}
+
+.hint{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:rgba(23,21,18,.92);border:1px solid var(--line);border-radius:20px;padding:6px 14px;font-size:12.5px;color:var(--ink2);z-index:15;pointer-events:none;transition:opacity .5s}
+.hint.gone{opacity:0}
+
+/* Keep every toolbar control reachable when the full desktop header no longer fits. */
+@media (max-width:1100px){
+  header.top{height:auto;min-height:52px;flex-wrap:wrap;padding:8px 12px;gap:8px}
+  header.top .brand small{display:none}
+  header.top .where{flex:1 1 160px}
+  header.top nav{flex:1 1 auto;min-width:0;flex-wrap:wrap;justify-content:flex-end}
+  header.top nav button{white-space:nowrap;min-height:34px}
+}
+@media (max-width:900px){ :root{--sideW:300px} .mapView{height:230px} }
+@media (max-width:760px){
+  :root{--topH:46px;--mmH:46px}
+  header.top .brand small{display:none}
+  header.top .where{display:none}
+  header.top nav button.txtbtn span{display:none}
+  header.top{position:relative;padding:8px;gap:6px}
+  header.top .brand{flex:0 0 100%;padding-right:32px}
+  header.top #btnAbout{position:absolute;right:8px;top:4px;min-height:24px;min-width:26px;padding:4px 7px}
+  header.top nav{flex:1 1 100%;justify-content:flex-start;gap:5px}
+  header.top nav button{min-height:36px}
+  header.top nav button{padding:5px 7px;font-size:12px}
+  header.top nav .zoom button{padding:5px 7px}
+  header.top .brand{font-size:13px}
+  aside.side{position:fixed;top:var(--topH);right:0;bottom:0;width:min(360px,92vw);box-shadow:-10px 0 40px rgba(0,0,0,.5);z-index:28}
+  .mapView{height:220px}
+  .panel.mobile{padding:8px 12px 12px}
+  .journey{padding:8px 10px;gap:8px}
+  .journey .jt .b{display:none}
+  .journey .count{display:none}
+  .minimap .mm-label{display:none}
+  .panel .tabs button{padding:4px 7px;font-size:11px}
+  .panel{padding:10px 12px 14px}
+  .panel h2{font-size:16px}
+  .panel .body{columns:1;font-size:13.5px}
+  .journey .jt .b{white-space:normal}
+}
+</style>
+</head>
+<body>
+<noscript><p class="noScriptNotice">This interactive study needs JavaScript. The <a href="assets/research.html">source and methodology page</a> remains readable without it.</p></noscript>
+
+<header class="top">
+  <div class="brand">The Papyrus of Ani<small>The Book of Coming Forth by Day · an English guide</small></div>
+  <div class="where" id="where"></div>
+  <nav>
+    <button id="btnJourney" class="primary">Begin the journey</button>
+    <button id="btnSearch" title="Search passages, names and spell numbers (/)" aria-haspopup="dialog">Search</button>
+    <button id="btnBlocks" class="active" title="Show or hide the clickable text columns">Text</button>
+    <button id="btnMap" class="active" title="Show or hide the map of the Duat">Map</button>
+    <button id="btnText" class="txtbtn" title="Open the complete 1895 translation for the sheet you are looking at">Full text<span> (Budge 1895)</span></button>
+    <div class="zoom"><button id="zoomOut" title="Zoom out">−</button><button id="zoomIn" title="Zoom in">+</button></div>
+    <button id="btnFull" title="Full screen (more room for the painting)">⛶</button>
+    <button id="btnAbout" title="About this page">?</button>
+  </nav>
+</header>
+
+<div class="minimap" id="minimap">
+  <img id="mmImg" alt="">
+  <div class="mm-label">Whole scroll · 37 sheets · 23.6 m · click to jump</div>
+  <div class="mm-stages" id="mmStages"></div>
+  <div class="mm-view" id="mmView"></div>
+</div>
+
+<div class="row">
+  <main class="wall" id="wall" tabindex="0" aria-label="The papyrus, scroll horizontally">
+    <div class="track" id="track">
+      <div class="art" id="art"></div>
+      <div class="english" id="english"></div>
+    </div>
+  </main>
+  <aside class="side" id="side" aria-label="Map of the Duat and the text of the column you clicked">
+    <div id="mapHost"></div>
+    <div class="sideTabs"><button id="tabLegend" class="on">Legend</button><button id="tabReader">Text</button></div>
+    <div class="sideBody" id="sideBody">
+      <div id="legendHost"></div>
+      <div class="reader" id="reader"></div>
+      <div class="nodeList" id="nodeList" style="display:none"></div>
+    </div>
+  </aside>
+</div>
+
+<div class="pop" id="pop"><button class="x" id="popX">×</button><b id="popT"></b><div id="popB"></div><div id="popMore"></div></div>
+
+<aside class="drawer" id="drawer" aria-label="Full translation">
+  <div class="dh">
+    <div>
+      <h3 id="dTitle">Full text</h3>
+      <div class="sub">E. A. Wallis Budge, <i>The Book of the Dead: the Papyrus of Ani</i> (1895) · public domain</div>
+    </div>
+    <div class="dnav"><button id="dPrev" title="Previous sheet">‹</button><button id="dNext" title="Next sheet">›</button><button id="dClose" title="Close">×</button></div>
+  </div>
+  <div class="db" id="dBody"></div>
+</aside>
+
+<div class="journey" id="journey">
+  <div class="bar" id="jBar"></div>
+  <div class="jt"><div class="s" id="jStage"></div><div class="t" id="jTitle"></div><div class="b" id="jBlurb"></div></div>
+  <div class="count" id="jCount"></div>
+  <div class="jp"><button id="jPrev">← Previous</button><button id="jNext" class="primary">Next →</button><button id="jExit" title="Exit the journey (Esc)">Exit</button></div>
+</div>
+
+<div class="modal" id="about">
+  <div class="box">
+    <h3>Book of the Dead: The Papyrus of Ani</h3>
+    <p><b>Working educational study · v2.5.</b> Explore 37 scanned sheets from the 1894 printed facsimile, the historical English translation attributed to E. A. Wallis Budge (1895), and an interpretive spatial index. The images are facsimile scans, not new photographs of the original manuscript.</p>
+    <p><b>Reading the source.</b> The historical quotation, editorial guide and map associations are different layers. A clickable column identifies an annotated region and its assigned passage; it is not a word-for-word decipherment of every hieroglyph. Boundaries and numbered highlights may be approximate. The corpus and its inherited map associations remain under review.</p>
+    <p><b>The real 3D map.</b> The cylindrical architecture, coordinates and optional study route are modern presentation choices—not a recovered Egyptian floor plan or an obligatory ancient itinerary. Gold marks the selected passage context. Rotate, zoom or select a named place to explore the linked records. A non-3D fallback retains the passage links.</p>
+    <p><b>How to explore.</b> Scroll sideways or use the minimap to move through the wall. Select a figure or column to inspect the assigned text. Search finds names, spell numbers and phrases; the reader’s copy-link control shares the selected passage or column. “Begin the journey” follows the editorial sequence of sheets.</p>
+    <p><a href="assets/research.html">Sources, method &amp; limitations</a> · <a href="../">Mister Consistency</a></p>
+    <p><button id="aboutClose" class="primary">Close</button></p>
+  </div>
+</div>
+
+<div class="hint" id="hint">Scroll sideways to explore · select a region for its assigned passage · press / to search</div>
+
+<script src="assets/js/geometry.js"></script>
+<script src="assets/js/guide.js"></script>
+<script src="assets/js/budge.js"></script>
+<script src="assets/js/text.js"></script>
+<script src="assets/js/spells.js"></script>
+<script src="assets/js/map-data.js"></script>
+<script src="assets/js/map-fallback.js"></script>
+<script src="assets/js/duat-webgl.js"></script>
+<script src="assets/js/map.js"></script>
+<script src="assets/js/viewer.js"></script>
+<script src="assets/js/study-tools.js"></script>
+</body>
+</html>
