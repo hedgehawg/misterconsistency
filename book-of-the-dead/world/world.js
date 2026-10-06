@@ -534,7 +534,7 @@ function flyTo(at, dist, dir) {
   if (reduced) { camera.position.copy(pos); controls.target.copy(target); controls.update(); return; }
   flight = { p0: camera.position.clone(), t0: controls.target.clone(), p1: pos, t1: target, start: performance.now(), ms: 1400 };
 }
-function setSection(open) { const slab = world.getObjectByName('slab'); slab.material.opacity = open ? 0.42 : 1; const b = $('section'); b.classList.toggle('on', open); b.textContent = open ? 'Section: open' : 'Section: closed'; }
+function setSection(open) { const slab = world.getObjectByName('slab'); const m = slab.material; m.opacity = open ? 0.42 : 1; m.transparent = open; m.depthWrite = !open; m.needsUpdate = true; const b = $('section'); b.classList.toggle('on', open); b.textContent = open ? 'Section: open' : 'Section: closed'; }
 function focusPlace(id, opts = {}) {
   const w = W.places[id]; if (!w) return;
   current = id; flyTo(w.at, w.dist, opts.dir || (w.dir && new THREE.Vector3(...w.dir)));
@@ -636,7 +636,6 @@ const ease = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 let last = 0;
 function tick(t) {
   requestAnimationFrame(tick);
-  if (document.hidden) return;
   const dt = Math.min(0.1, (t - last) / 1000 || 0.016); last = t;
   if (flight) { const k = Math.min(1, (t - flight.start) / flight.ms), e = ease(k); camera.position.lerpVectors(flight.p0, flight.p1, e); controls.target.lerpVectors(flight.t0, flight.t1, e); if (k >= 1) flight = null; }
   controls.update();
