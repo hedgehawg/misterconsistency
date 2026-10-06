@@ -1,6 +1,6 @@
 # Integration: Book of the Dead
 
-**Build:** v2.5.0 · working integration build · 5 October 2026  
+**Build:** v2.6.0 · tag-correction integration build · 6 October 2026  
 **Destination:** `misterconsistency.com/book-of-the-dead/`  
 **Integration and deployment:** Claude Code, in Scott’s existing site workflow.  
 **Scope:** Add this folder and a homepage entry. Do not replace the homepage, shared `/assets`, root `CNAME`, publishing branch, or Pages settings.

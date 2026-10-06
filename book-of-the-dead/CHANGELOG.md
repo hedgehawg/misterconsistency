@@ -1,3 +1,11 @@
+# v2.6.0 — 6 October 2026
+
+Tag-only corpus correction: fifteen Spell 147 blocks (11-1–11-9 and 12-1–12-6) now point to `arits`; 33-1 and 15-9–15-12 point to `lake`. The two existing tomb tags remain unchanged. No translation, image, geometry, map architecture, or application logic changed. These are navigation associations, not proof that the different fire/water passages describe one identical physical lake.
+
+The JSON list in `assets/tag-overrides-v2.6.json` must be retained when rebuilding the corpus from upstream source. A rebuild of the older specification alone would lose these corrections.
+
+## Earlier releases
+
 # v2.5.0 — Static integration and source navigation
 
 5 October 2026. Continuing from the supplied v2.4 prototype, not a restart.
