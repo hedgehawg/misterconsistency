@@ -169,8 +169,8 @@ const sunLight = new THREE.PointLight(0xfff0c6, 2.6, 0, 0); scene.add(sunLight);
 const fill = new THREE.DirectionalLight(0xdde7ff, 0.7); fill.position.set(-1, 1.4, 0.8); scene.add(fill);
 const envTex = (() => {   // what the foil and panels reflect: black sky, a hot Sun, Earth's blue glow below
   const es = new THREE.Scene();
-  es.add(new THREE.Mesh(new THREE.SphereGeometry(50, 32, 16), new THREE.MeshBasicMaterial({ color: 0x0a0c12, side: THREE.BackSide })));
-  const sunB = new THREE.Mesh(new THREE.SphereGeometry(7, 16, 8), new THREE.MeshBasicMaterial({ color: new THREE.Color(6, 5.4, 4.6) })); sunB.position.set(28, 22, 12); es.add(sunB);   // HDR: the Sun is far brighter than white
+  es.add(new THREE.Mesh(new THREE.SphereGeometry(50, 32, 16), new THREE.MeshBasicMaterial({ color: 0x1c2029, side: THREE.BackSide })));
+  const sunB = new THREE.Mesh(new THREE.SphereGeometry(10, 16, 8), new THREE.MeshBasicMaterial({ color: new THREE.Color(7, 6.3, 5.4) })); sunB.position.set(28, 22, 12); es.add(sunB);   // HDR: the Sun is far brighter than white
   const earthB = new THREE.Mesh(new THREE.SphereGeometry(26, 24, 12), new THREE.MeshBasicMaterial({ color: new THREE.Color(0.55, 0.75, 1.1) })); earthB.position.set(-8, -44, 0); es.add(earthB);
   const pm = new THREE.PMREMGenerator(renderer); const t = pm.fromScene(es, 0.04).texture; pm.dispose(); return t;
 })();
@@ -408,7 +408,7 @@ const copy = {
   geo: ['Geostationary orbit', 'not a Lagrange point', 'The circular equatorial orbit whose period is one sidereal day, 23 h 56 min 4 s: 35,786 km up, 42,164 km from Earth’s centre. It is a balance between gravity and the speed a one-day period demands, not a three-body equilibrium. L1 is some 35 times farther out.'],
   moon: ['Moon', 'drawn, not simulated', '3,474 km across, 384,400 km from Earth, one orbit every 27.3 days. It is here for scale: GEO is a ninth of the way to it, L1 and L2 are four times farther than it. Its gravity is not applied to anything in this model.'],
   mercury: ['Mercury', '0.387 AU out, an 88-day year; 4,879 km across. Drawn for context.'],
-  venus: ['Venus', '0.723 AU out, a 225-day year; 12,104 km across, well inside Earth and clear of the Sun–Earth points. The cloud map is a painted stand-in until a real one is sourced.'],
+  venus: ['Venus', '0.723 AU out, a 225-day year; 12,104 km across, well inside Earth and clear of the Sun–Earth points. Its cloud tops are what the map shows; the surface is 460 °C under them.'],
   L1: ['L1', 'unstable', 'Sunward of Earth, 1.5 million km out, roughly 1% of the way to the Sun. A craft here keeps Earth’s year with a continuous, uneclipsed view of the Sun, which is why solar and solar-wind observatories live here: SOHO since 1996, DSCOVR, ACE, Wind and Aditya-L1, among others. The point is a saddle. Nothing sits on it; each craft flies a halo or Lissajous loop and station-keeps.'],
   L2: ['L2', 'unstable', 'On the night side, the same 1.5 million km out. Sun and Earth stay on one side of the sky, so a single sunshield keeps a telescope cold: James Webb and Euclid, with Nancy Grace Roman ' + (romanArrived ? 'now in its own loop' : 'arriving in early December') + '; Gaia worked here from 2014 to 2025. The dashed path is Webb’s halo, 250,000 to 832,000 km from the point, up to 520,000 km out of the ecliptic, one loop in about six months, with a station-keeping burn on average every 42 days.'],
   L3: ['L3', 'unstable · empty', 'Opposite Earth, beyond the Sun, permanently hidden from us. It is a saddle like L1 and L2 and has no resident. A counter-Earth would not stay there, and its pull on the other planets would have given it away long ago. The crosshair marks a point, not a body.'],
@@ -443,14 +443,14 @@ dscovr.add(label('DSCOVR', 'Lissajous around L1', '', 20));
 hst.add(label('Hubble', `about ${hAlt} km up · ${Math.round(HST.P / 60)} min`, '', 20)); cxo.add(label('Chandra', `${cPer} to ${cApo} km up · ${(CXO.P / 3600).toFixed(1)} h`, '', 20));
 tk7.add(label('2010 TK7', '~300 m', '', 2)); xl5.add(label('2020 XL5', '~1.2 km', '', 5));
 
-// NASA's own models, loaded on the first fly-in: Hubble (NASA VTAD) and Chandra (NASA 3D Resources), both public domain
+// the agencies' own models, loaded on the first fly-in: Hubble by ESA/Hubble (M. Kornmesser, CC BY 4.0); Chandra, SOHO and DSCOVR from NASA 3D Resources (public domain)
 const gltfLoader = new GLTFLoader();
-const MODELS = { hubble: { url: './models/hubble.glb', size: HST.len, group: hst }, chandra: { url: './models/chandra.glb', size: CXO.span, group: cxo } };
+const MODELS = { hubble: { url: './models/hubble-esa.glb', size: HST.len, group: hst }, chandra: { url: './models/chandra.glb', size: CXO.span, group: cxo }, soho: { url: './models/soho.glb', size: CRAFT_SIZE.soho, group: soho }, dscovr: { url: './models/dscovr.glb', size: CRAFT_SIZE.dscovr, group: dscovr } };
 function loadModel(id) {
   const m = MODELS[id]; if (!m || m.state) return; m.state = 'loading';
   gltfLoader.load(m.url, (g) => {
     const s = g.scene;
-    s.traverse(o => { if (o.isMesh && o.material) { o.material.envMap = envTex; o.material.envMapIntensity = 1.0; o.material.needsUpdate = true; } });
+    s.traverse(o => { if (o.isMesh && o.material) { o.material.envMap = envTex; o.material.envMapIntensity = 1.3; o.material.needsUpdate = true; } });
     const box = new THREE.Box3().setFromObject(s), c = box.getCenter(new THREE.Vector3()), sz = box.getSize(new THREE.Vector3());
     const k = m.size / Math.max(sz.x, sz.y, sz.z); s.scale.setScalar(k); s.position.copy(c).multiplyScalar(-k);
     [...m.group.children].forEach(ch => { if (!ch.isCSS2DObject) m.group.remove(ch); });
@@ -497,7 +497,12 @@ function focusOn(id, clusterSpec) {
   controls.target.set(0, 0, 0);
   const dir = camera.position.clone(); if (dir.lengthSq() < 1e-12) dir.set(0.5, 0.8, 1);
   if (id === 'system') dir.set(0.05, 0.66, 0.75);
-  if (t.fast) { dir.copy(t.obj.position).sub(earth.position); dir.y += dir.length() * 0.25; }   // the two Earth satellites: look at them with Earth behind
+  if (t.fast) {   // the two Earth satellites: sit ahead of them on the orbit, a little outside and above, so Earth's limb lies behind
+    const radial = t.obj.position.clone().sub(earth.position), r0 = radial.length();
+    const nrm = new THREE.Vector3(0, 1, 0).applyQuaternion((id === 'hubble' ? hstOrbit : cxoOrbit).getWorldQuaternion(new THREE.Quaternion()));
+    const tangent = new THREE.Vector3().crossVectors(nrm, radial).normalize();
+    dir.copy(tangent).multiplyScalar(r0).addScaledVector(radial, 0.55).addScaledVector(nrm, r0 * 0.3);
+  }
   camWant.copy(dir.normalize().multiplyScalar(focus.dist));
   controls.minDistance = clusterSpec ? r * 0.5 : Math.max((t.r || 1) * 1.6, 1e-7);
   document.querySelectorAll('#focus .chip').forEach(b => b.classList.toggle('active', b.dataset.id === id && !clusterSpec));
@@ -735,7 +740,7 @@ function scaleBar(dist, px) {
   scaleEl.innerHTML = `<b>${txt}</b> across a third of the frame`;
 }
 
-window.__lag = { camera, hold: (t) => { if (viz) viz.hold = t; }, labels: () => (labelList || []).filter(o => o.visible && !o.element.classList.contains('faint')).map(o => { const v = new THREE.Vector3().setFromMatrixPosition(o.matrixWorld).project(camera); return { t: o.element.innerText.split(String.fromCharCode(10))[0], x: Math.round((v.x + 1) / 2 * innerWidth), cls: o.element.className }; }), span: () => { const o = new THREE.Vector3(0, 0, 0).project(camera), r = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion).project(camera); return Math.round(innerWidth / 3 / ((r.x - o.x) / 2 * innerWidth) * 1000); }, focusOn, clusterOf, T, cubes: () => visibleCubes.map(c => { const v = c.position.clone().project(camera); return { m: c.userData.members.join('+'), x: Math.round((v.x + 1) / 2 * innerWidth), y: Math.round((1 - v.y) / 2 * innerHeight) }; }) };
+window.__lag = { camera, MODELS, state: () => ({ flying, fdist: focus.dist, id: focus.id, cam: camera.position.length(), tgt: controls.target.length(), want: camWant.length(), paused, frames, lastErr }), hold: (t) => { if (viz) viz.hold = t; }, labels: () => (labelList || []).filter(o => o.visible && !o.element.classList.contains('faint')).map(o => { const v = new THREE.Vector3().setFromMatrixPosition(o.matrixWorld).project(camera); return { t: o.element.innerText.split(String.fromCharCode(10))[0], x: Math.round((v.x + 1) / 2 * innerWidth), cls: o.element.className }; }), span: () => { const o = new THREE.Vector3(0, 0, 0).project(camera), r = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion).project(camera); return Math.round(innerWidth / 3 / ((r.x - o.x) / 2 * innerWidth) * 1000); }, focusOn, clusterOf, T, cubes: () => visibleCubes.map(c => { const v = c.position.clone().project(camera); return { m: c.userData.members.join('+'), x: Math.round((v.x + 1) / 2 * innerWidth), y: Math.round((1 - v.y) / 2 * innerHeight) }; }) };
 // ---------- start ----------
 tick(0); focusOn('system'); camera.position.copy(camWant); flying = false;
 let last = performance.now();
@@ -750,7 +755,8 @@ function edgeLabels() {
     o.element.classList.toggle('edge-r', on && v.x > 0.5); o.element.classList.toggle('edge-l', on && v.x < -0.5);
   }
 }
-renderer.setAnimationLoop(now => { const dt = Math.min(0.05, (now - last) / 1000); last = now; tick(dt); controls.update(); renderer.render(scene, camera); edgeLabels(); labelRenderer.render(scene, camera); });
+let frames = 0, lastErr = null;
+renderer.setAnimationLoop(now => { const dt = Math.min(0.05, (now - last) / 1000); last = now; frames++; try { tick(dt); controls.update(); renderer.render(scene, camera); edgeLabels(); labelRenderer.render(scene, camera); } catch (e) { lastErr = String(e && e.stack || e); console.error('frame', e); } });
 addEventListener('resize', () => { applyView(); renderer.setSize(innerWidth, innerHeight); labelRenderer.setSize(innerWidth, innerHeight); });
 </script>
 </body>
