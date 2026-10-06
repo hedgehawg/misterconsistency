@@ -517,7 +517,7 @@ function buildSky() {
    the sourcing workstream (sources/G1-review.md). Placed in a band along the north of the Duat by editorial choice. */
 const AATS = [
   { n: 'I', name: 'Aat of Amentet', key: 'wherein a man liveth upon cakes and ale', paint: 'green' },
-  { n: 'II', name: 'Sekhet-Aarru', key: 'walls of iron (Budge) or steel (R&N); wheat 5 or 7 cubits, barley 7; Khus of 9 cubits', paint: 'green' },
+  { n: 'II', name: 'Sekhet-Aarru', key: 'walls of iron (Budge) or steel (R&N); wheat 5 or 7 cubits, barley 7; Khus of 9 cubits (Budge), 7 then 9 (R&N)', paint: 'green' },
   { n: 'III', name: 'Aat of the Khus', key: 'whereover none can sail; the fire thereof is blazing', paint: 'green' },
   { n: 'IV', name: 'The double mountain', key: '300 measures long; 230 (Budge) or 10 (R&N) wide; the serpent Sati-temui, 70 cubits', paint: 'green' },
   { n: 'V', name: 'Aat of the Khus', key: 'whereover none may pass; thighs seven cubits long', paint: 'green' },
@@ -566,7 +566,7 @@ function buildAats() {
         E.add(serpent(0, 44, 10, 70, 0.3, 1.4));
         break;
       }
-      case 4: for (let k = 0; k < 3; k++) E.add(figure({ head: 'man', h: 24, item: 'knife', x: -50 + k * 50, y: 0.4, z: 0, ry: Math.PI / 2 })); break;
+      case 4: for (let k = 0; k < 3; k++) E.add(figure({ head: 'man', h: 16, item: 'knife', x: -50 + k * 50, y: 0.4, z: 0, ry: Math.PI / 2 })); break;   // legs 1.5/3.5 of 16 = 6.9 cubits: the text's seven-cubit thighs
       case 5: { E.add(box(60, 0.5, 40, M.water, 0, 0.3, 0)); const fish = sph(10, M.figureDark, 0, 2, 0, 8); fish.scale.set(2.2, 0.6, 0.9); E.add(fish, cone(5, 10, M.figureDark, -26, 0.4, 0, 4)); for (let k = 0; k < 3; k++) E.add(figure({ head: k ? 'man' : 'jackal', h: 4, item: 'sceptre', x: 50 + k * 12, y: 0.4, z: -40 })); break; }
       case 6: flames(E, 18, w, d); E.add(serpent(0, 0.4, 20, 7, 0, 0.7)); break;
       case 7: E.add(box(w - 8, 0.5, 26, M.water, 0, 0.3, 0)); for (let k = 0; k < 8; k++) E.add(flame(1, 2 + (k % 3), -100 + k * 28, 0.5, 0)); E.add(figure({ head: 'man', h: 5, item: 'staff', x: 0, y: 0.4, z: 30, ry: Math.PI }), figure({ head: 'hawk', h: 2.4, x: 60, y: 0.4, z: 30 })); break;
