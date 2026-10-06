@@ -11,7 +11,7 @@
 window.BOD_LEDGER = {
   version: '0.1.0', date: '2026-10-06',
   corpus: 'E. A. Wallis Budge, The Book of the Dead: The Papyrus of Ani (London, 1895), as transcribed in the study (budge.js, text.js).',
-  unit: { name: 'royal cubit', metres: 0.523, basis: 'the text measures in cubits: in Spell 110 the river is one thousand cubits long, the wheat three cubits, the seat of the shining ones seven cubits' },
+  unit: { name: 'royal cubit', metres: 0.523, basis: 'the text measures in cubits: in Spell 110 the river is one thousand [cubits] long, the wheat three cubits, the seat of the shining ones seven cubits' },
   kinds: {
     source: 'Budge 1895, translation of the Papyrus of Ani',
     scene: 'Budge 1895, description of a vignette in the papyrus',
@@ -65,9 +65,9 @@ window.BOD_LEDGER = {
       { id:'north-door', what:'Re-stau is the underworld on the south of Naarut-f, and it is the northern door of the tomb', kind:'source', cite:[{b:'8-7'}], model:'A doorway in the north wall of the chamber leading down.' },
       { id:'opened-way', what:'I have opened the way in Re-stau; I have made a path for him in the great valley', kind:'source', cite:[{b:'11-1'},{b:'11-5'}], model:'A descending stair that opens into a great valley (see the Arits).' },
       { id:'hidden-things', what:'The door of concealed things in Re-stau; the things which are concealed in Re-stau', kind:'source', cite:[{b:'5-4'}], model:'The passage is unlit; the evidence card carries the line.' },
-      { id:'gate-vignette', what:'Re-stau, the gate of the funeral passages (Spell 17 vignette)', kind:'scene', cite:[{b:'8-3'}], model:'A gate at the foot of the stair.' },
+      { id:'gate-vignette', what:'Re-stau, the gate of the funeral passages (Spell 17 vignette)', kind:'scene', cite:[{bp:'7-10:11'},{b:'8-3'}], model:'A gate at the foot of the stair.' },
       { id:'council', what:'The council of Rosetau (Spell 18)', kind:'source', cite:[{b:'14-4'},{b:'24-2'}], model:'See the councils.' },
-      { id:'passage-form', what:'Length, slope and lining of the passages', kind:'invention', model:'A straight stair 120 cubits long falling 130 cubits (basis: none; chosen so the descent reads on screen).' }
+      { id:'passage-form', what:'Length, slope and lining of the passages', kind:'invention', model:'A straight stair 140 cubits long falling 140 cubits (basis: none; chosen so the descent reads on screen).' }
     ]},
   { id:'sycamore', name:'The sycamore of Nut', route:5,
     summary:'A pool with a tree, where the goddess in the sycamore gives water and air.',
@@ -83,8 +83,8 @@ window.BOD_LEDGER = {
       { id:'no-water', what:'What manner of land is this into which I have come? It hath not water, it hath not air; it is deep unfathomable, it is black as the blackest night', kind:'source', cite:[{b:'29-3'},{b:'29-4'}], model:'The whole underworld is unlit except where the text puts light: flames, the boat of Ra, the Field.' },
       { id:'barren', what:'The place where the acacia tree groweth not, where the tree thick with leaves existeth not, and where the ground yieldeth neither herb nor grass', kind:'source', cite:[{b:'29-5'},{b:'30-1'}], model:'Bare ground on the approach to the Hall.' },
       { id:'pools', what:'The Pool of Natron and the Pool of Nitre or Salt under the hands of the god Great Green Water; the Green Lake', kind:'source', cite:[{b:'8-2'},{b:'8-7'}], model:'Two square pools near the foot of the stair; one green lake.' },
-      { id:'two-lions', what:'Yesterday and Tomorrow, the two lions of the horizon', kind:'scene', cite:[{b:'7-4'}], model:'Two couchant lions flanking the route where it turns east.' },
-      { id:'seh-hall', what:'Ani and Tutu play draughts in the seh hall', kind:'scene', cite:[{b:'7-1'}], model:'A small pavilion near the sycamore.' },
+      { id:'two-lions', what:'Yesterday and Tomorrow, the two lions of the horizon', kind:'scene', cite:[{bp:'7-10:6'},{b:'7-4'}], model:'Two couchant lions flanking the route where it turns east.' },
+      { id:'seh-hall', what:'Ani and Tutu play draughts in the seh hall', kind:'scene', cite:[{bp:'7-10:3'},{b:'7-1'}], model:'A small pavilion near the sycamore.' },
       { id:'amenta', what:'The beautiful Amenta, Neter-khert, Ta-sert: the names of the land', kind:'source', cite:[{b:'5-4'},{b:'2-4'}], model:'Captions.' },
       { id:'overall-plan', what:'How the places lie relative to one another', kind:'editorial', model:'Arranged along the sun\'s path: in at the West, down through the gates to the Hall, out through the Field to the East. The text gives a sequence of spells, not a map.' },
       { id:'section', what:'The land of the living is drawn as a translucent slab so the underworld shows beneath it', kind:'invention', model:'A section drawing, not a claim that the Duat is visible from above.' },
@@ -113,7 +113,7 @@ window.BOD_LEDGER = {
     summary:'Ten towered gates, each a goddess with a terrible name, each with a doorkeeper, each shown as a seated guardian in a shrine with its own cornice.',
     features:[
       { id:'count', what:'Ten Pylons of the House of Osiris', kind:'source', cite:[{b:'11-10'},{b:'11-12'},{b:'11-14'},{b:'11-16'},{b:'11-18'},{b:'11-20'},{b:'12-11'},{b:'12-13'},{b:'12-15'},{b:'12-17'}], model:'Ten pylons in sequence after the seventh Arit, leading to the Hall.' },
-      { id:'first', what:'The lady of terrors, with lofty walls, the sovereign lady, the mistress of destruction; doorkeeper Neruit', kind:'source', cite:[{b:'11-10'}], model:'Pylon 1 is the tallest; its label carries the text.' },
+      { id:'first', what:'The lady of terrors, with lofty walls, the sovereign lady, the mistress of destruction; doorkeeper Neruit', kind:'source', cite:[{b:'11-10'}], model:'Pylon 1 is the tallest of the measured pylons, 36 cubits; its label carries the text.' },
       { id:'shrine-1', what:'A bird-headed deity with a disk, seated in a shrine whose cornice has khakeru ornaments', kind:'scene', cite:[{bp:'11-12:29'},{b:'11-11'}], model:'Seated silhouette in a shrine with a khakeru frieze.' },
       { id:'shrine-2', what:'Lion-headed deity in a shrine with a serpent on top', kind:'scene', cite:[{bp:'11-12:32'},{b:'11-13'}], model:'As described.' },
       { id:'shrine-3', what:'Man-headed deity; shrine ornamented with two utchats and the emblems of the orbit of the sun and of water', kind:'scene', cite:[{bp:'11-12:35'},{b:'11-15'}], model:'As described.' },
@@ -128,7 +128,7 @@ window.BOD_LEDGER = {
       { id:'ninth-girth', what:'Her girth is three hundred and fifty measures; she is clothed with mother-of-emerald of the south', kind:'source', cite:[{b:'12-15'}], dim:{value:350, unit:'measures', note:'the unit is not given; the model reads it as cubits of circumference and labels the reading'}, model:'Pylon 9 is round in plan, 350 cubits in girth (about 111 across), green.' },
       { id:'shrine-10', what:'Ram-headed deity in the atef crown with a besom; two serpents on the shrine', kind:'scene', cite:[{bp:'11-12:56'},{b:'12-18'}], model:'As described.' },
       { id:'shining', what:'The holy rulers of the pylons are in the form of shining ones', kind:'source', cite:[{b:'29-5'}], model:'The guardians are self-lit.' },
-      { id:'pylon-form', what:'The form and spacing of the pylons', kind:'invention', model:'Twin-towered pylons 24 cubits high, 80 cubits apart (basis: none in Ani). Candidates: Spell 146 in Nu has twenty-one pylons with longer descriptions, Budge 1898.' }
+      { id:'pylon-form', what:'The form and spacing of the pylons', kind:'invention', model:'Twin-towered pylons 24 cubits high (pylon 1: 36; pylon 6 unmeasured, by the text), 80 cubits apart (basis: none in Ani). Candidates: Spell 146 in Nu has twenty-one pylons with longer descriptions, Budge 1898.' }
     ]},
   { id:'cities', name:'The holy cities: the councils', route:9,
     summary:'Spell 18 asks Thoth to vindicate Ani before the councils of Heliopolis, Busiris, Letopolis, Pe and Dep, the two banks, Abydos, the judges of the dead, Naref, Rosetau and the great gods. They are tribunals in named cities, not stations on the road; the model seats them along the approach to the Hall and says so.',
@@ -146,9 +146,9 @@ window.BOD_LEDGER = {
       { id:'doors', what:'At each end is a door; the right is called Neb-Maat-heri-tep-retui-f and the left Neb-pehti-thesu-menment', kind:'scene', cite:[{bp:'31-32:1'},{b:'31-2'},{b:'32-8'}], model:'Two doors, labelled with their names.' },
       { id:'door-dialogue', what:'Anubis asks the name of the door, of its upper leaf and its lower leaf; Ani answers: Driven away of Shu; Lord of right and truth standing upon his two feet; Lord of might and power, dispenser of cattle', kind:'source', cite:[{b:'30-1'}], model:'The entrance door carries the three names on its leaves.' },
       { id:'roof', what:'The roof is crowned with a series of uraei and feathers of Maat; on its centre a seated deity with hands extended, the right over the eye of Horus and the left over a pool', kind:'scene', cite:[{bp:'31-32:1'},{b:'31-1'},{b:'32-1'}], model:'A roofline of alternating cobras and feathers; a seated figure at the centre over an eye and a pool.' },
-      { id:'weighing', what:'The weighing of the heart: the balance, Anubis testing the tongue, Thoth recording, Ammit waiting, the ape of Thoth on the beam, Ani and Tutu entering', kind:'scene', cite:[{bp:'3:1'},{b:'3-5'},{b:'3-8'},{b:'3-10'},{b:'3-3'}], model:'The balance stands at the hall\'s entrance end with the figures as described.' },
-      { id:'twelve', what:'Above, twelve gods each holding a sceptre sit on thrones before a table of offerings', kind:'scene', cite:[{bp:'3:1'},{b:'3-1'}], model:'A raised bench of twelve enthroned figures above the balance.' },
-      { id:'shai', what:'Shai, the meskhen (a cubit with human head), Meskhenet and Renenet, and the soul of Ani on a pylon, stand by the balance', kind:'scene', cite:[{bp:'3:1'},{b:'3-4'}], model:'Small figures at the balance.' },
+      { id:'weighing', what:'The weighing of the heart: the balance, Anubis testing the tongue, Thoth recording, Ammit waiting, the ape of Thoth on the beam, Ani and Tutu entering', kind:'scene', cite:[{bp:'3:2'},{b:'3-5'},{b:'3-8'},{b:'3-10'},{b:'3-3'}], model:'The balance stands at the hall\'s entrance end with the figures as described.' },
+      { id:'twelve', what:'Above, twelve gods each holding a sceptre sit on thrones before a table of offerings', kind:'scene', cite:[{bp:'3:2'},{b:'3-1'}], model:'A raised bench of twelve enthroned figures above the balance.' },
+      { id:'shai', what:'Shai, the meskhen (a cubit with human head), Meskhenet and Renenet, and the soul of Ani on a pylon, stand by the balance', kind:'scene', cite:[{bp:'3:2'},{b:'3-4'}], model:'Small figures at the balance.' },
       { id:'confession', what:'The Negative Confession before the forty-two assessors', kind:'source', cite:[{b:'31-3'},{b:'32-2'}], model:'The assessors\' bench links to the confession.' },
       { id:'end-scenes', what:'At the right end: two seated Maats; Osiris enthroned with Ani adoring; the balance with Ammit; Thoth on a pylon pedestal painting a feather', kind:'scene', cite:[{bp:'31-32:1'},{b:'32-4'},{b:'32-5'},{b:'32-6'},{b:'32-7'}], model:'Four small groups at the far end of the hall.' },
       { id:'hall-size', what:'Length, width and height of the hall', kind:'invention', model:'Forty-two seats at 3 cubits give a row of 126 cubits; hall 150 by 30 cubits, 20 high (basis: the seat count; no text figure).' },
@@ -158,11 +158,11 @@ window.BOD_LEDGER = {
     summary:'Osiris enthroned in his shrine, Isis and Nephthys behind him, the four sons of Horus on a lotus before him. Horus leads the justified Ani here.',
     features:[
       { id:'shrine', what:'Osiris, bearded, in the white crown, stands in a shrine whose roof is surmounted by a hawk\'s head and uraei; Isis behind him with her hand on his shoulder; before him on a lotus the four children of Horus', kind:'scene', cite:[{bp:'29-30:4'},{b:'30-2'}], model:'A shrine with a hawk-head finial and cobra frieze; the figures as described.' },
-      { id:'enthroned', what:'Osiris enthroned in his shrine (sheet 4); Isis and Nephthys; the four sons on the lotus; the roof of the shrine', kind:'scene', cite:[{b:'4-7'},{b:'4-8'},{b:'4-6'},{b:'4-5'}], model:'The seated form is used for the throne room.' },
-      { id:'horus-leads', what:'Horus leads Ani in; Ani kneels with his offerings and speaks before Osiris', kind:'scene', cite:[{b:'4-2'},{b:'4-4'},{b:'4-3'}], model:'Two figures approaching the dais; a kneeling figure with offerings.' },
+      { id:'enthroned', what:'Osiris enthroned in his shrine (sheet 4); Isis and Nephthys; the four sons on the lotus; the roof of the shrine', kind:'scene', cite:[{bp:'4:3'},{bp:'4:2'},{b:'4-7'},{b:'4-8'},{b:'4-6'},{b:'4-5'}], model:'The seated form is used for the throne room.' },
+      { id:'horus-leads', what:'Horus leads Ani in; Ani kneels with his offerings and speaks before Osiris', kind:'scene', cite:[{bp:'4:2'},{bp:'4:4'},{b:'4-2'},{b:'4-4'},{b:'4-3'}], model:'Two figures approaching the dais; a kneeling figure with offerings.' },
       { id:'council', what:'Spell 124: Ani enters the council of Osiris', kind:'source', cite:[{b:'24-5'}], model:'Evidence card.' },
       { id:'hymns', what:'Hymns to Osiris, lord of eternity; litany of his names; Spell 185', kind:'source', cite:[{b:'19-5'},{b:'19-6'},{b:'36-3'},{b:'36-5'}], model:'Evidence cards at the dais.' },
-      { id:'room-size', what:'The throne room', kind:'invention', model:'A square room 40 cubits across opening off the far end of the Hall (basis: none).' }
+      { id:'room-size', what:'The throne room', kind:'invention', model:'A room 44 by 40 cubits opening off the far end of the Hall (basis: none).' }
     ]},
   { id:'lake', name:'The Lake of Fire', route:12,
     summary:'A square lake of fire with a dog-headed ape seated at each corner. The papyrus draws it without its own text.',
@@ -174,7 +174,7 @@ window.BOD_LEDGER = {
       { id:'text', what:'The text of Spell 126 (the address to the four apes)', kind:'gap', model:'Not in Ani. Candidates: Spell 126 in Nu, Budge 1898.' }
     ]},
   { id:'fields', name:'Sekhet-hetepet, the Field of Reeds', route:13,
-    summary:'Paradise as an ideal Egypt. The papyrus gives the fullest picture of any place in the roll, with its own dimensions: a river a thousand cubits long, wheat three cubits, the seat of the shining ones seven cubits.',
+    summary:'Paradise as an ideal Egypt. The papyrus gives the fullest picture of any place in the roll, with its own dimensions: a river a thousand [cubits] long, wheat three cubits, the seat of the shining ones seven cubits.',
     features:[
       { id:'streams', what:'The Fields of Peace, surrounded and intersected with streams', kind:'scene', cite:[{bp:'33-34:18'},{b:'35-1'}], model:'Four long islands separated by water, bounded by water.' },
       { id:'river', what:'The river is one thousand [cubits] in its length. Not can be told its width. Not exist fishes any in it, not serpents any in it', kind:'source', cite:[{b:'35-3'}], dim:{value:1000, unit:'cubits', note:'length; width unstated and so chosen: 40 cubits, labelled'}, model:'The main channel is 1,000 cubits long.' },
@@ -198,7 +198,7 @@ window.BOD_LEDGER = {
       { id:'rudders', what:'The beautiful rudder of the northern, western, eastern and southern heaven', kind:'source', cite:[{b:'36-1'}], model:'The four rudders point to the four quarters.' },
       { id:'ladder', what:'The ladder by which the soul passes from the underworld to the body', kind:'scene', cite:[{bp:'22:7'},{b:'22-5'}], model:'A ladder rising from the eastern bank into the sky.' },
       { id:'nut', what:'Ra rises and shines upon the back of his mother the sky; Nut gives him birth; the never-resting stars sing', kind:'source', cite:[{b:'19-4'},{b:'20-2'}], model:'The sky is an arched body of stars over the whole world.' },
-      { id:'forms', what:'Transformations: swallow, golden hawk, divine hawk, serpent, crocodile, Ptah, ram, bennu, heron, lotus, light', kind:'scene', cite:[{b:'25-1'},{b:'25-2'},{b:'25-3'},{b:'27-2'},{b:'27-3'},{b:'27-4'},{b:'27-8'},{b:'27-11'},{b:'28-1'},{b:'28-2'},{b:'28-3'}], model:'Eleven small forms perched on the eastern bank, each with its spell.' },
+      { id:'forms', what:'Transformations: swallow, golden hawk, divine hawk, serpent, crocodile, Ptah, ram, bennu, heron, lotus, light', kind:'scene', cite:[{bp:'25:1'},{bp:'25:3'},{bp:'25:5'},{bp:'27:5'},{bp:'27:7'},{bp:'27:9'},{bp:'27:11'},{bp:'27:13'},{bp:'28:1'},{bp:'28:3'},{bp:'28:5'},{b:'25-1'},{b:'25-2'},{b:'25-3'},{b:'27-2'},{b:'27-3'},{b:'27-4'},{b:'27-8'},{b:'27-11'},{b:'28-1'},{b:'28-2'},{b:'28-3'}], model:'Eleven small forms perched on the eastern bank, each with its spell.' },
       { id:'hawk-wings', what:'A hawk with a back seven cubits wide and wings of emeralds of the South', kind:'source', cite:[{b:'25-5'}], dim:{value:7, unit:'cubits'}, model:'The golden hawk is 7 cubits across.' },
       { id:'sky-form', what:'The form of Nut', kind:'invention', model:'An arch of stars spanning the world; no figure is drawn. The text speaks of her back and her hands, but the papyrus does not draw her.' }
     ]},
@@ -209,7 +209,7 @@ window.BOD_LEDGER = {
       { id:'boat-form', what:'Ra, hawk-headed, seated in a boat on the sky; Horus the child on the bows; the side ornamented with feathers of Maat and the utchat; oar handles and rowlocks shaped as hawks\' heads', kind:'scene', cite:[{bp:'19:1'},{b:'19-1'},{b:'19-3'}], model:'A boat with a shrine amidships, a child figure at the bow, hawk-head oar handles.' },
       { id:'rubric-length', what:'These words shall be recited over a boat seven cubits in length, and painted green; a heaven of stars; an image of Ra on a table of stone in the fore-part', kind:'source', cite:[{b:'22-2'}], dim:{value:7, unit:'cubits', note:'the ritual model boat, not the god\'s boat; the model uses it as the only boat length the text gives and says so'}, model:'The boat is 7 cubits long and green.' },
       { id:'crew', what:'Horus in charge of the rudder, with Thoth and Maat beside him; the mariners of Ra; Ani grasps the bows of the Sektet boat and the stern of the Atet boat', kind:'source', cite:[{b:'1-3'},{b:'21-1'}], model:'Three figures at the stern; Ani at the bow.' },
-      { id:'apep', what:'The Cat of the Sun kills the serpent Apep; Ani pierces a serpent; may I destroy Apep in his hour', kind:'scene', cite:[{b:'10-1'},{b:'1-3'}], model:'A serpent in the night river ahead of the boat; the cat on the bank.' },
+      { id:'apep', what:'The Cat of the Sun kills the serpent Apep; Ani pierces a serpent; may I destroy Apep in his hour', kind:'scene', cite:[{bp:'7-10:19'},{b:'10-1'},{bp:'18:12'},{b:'18-11'},{b:'1-3'}], model:'A serpent in the night river ahead of the boat; the cat on the bank.' },
       { id:'towing', what:'Shouts of joy are raised to the ropes which tow thee along', kind:'source', cite:[{b:'21-3'}], model:'A tow rope from the bow.' },
       { id:'river', what:'The night river itself', kind:'gap', model:'Ani speaks of the boat\'s passage but does not describe the river. Candidates: the Amduat (Budge 1905) gives the river of the Duat hour by hour; cognate, labelled if admitted.' },
       { id:'river-form', what:'The course of the night river', kind:'invention', model:'A trench along the south side of the Duat from the western notch to the eastern gate (basis: the sun\'s return; no text figure).' }
@@ -217,10 +217,10 @@ window.BOD_LEDGER = {
   { id:'east', name:'The Eastern horizon (Bakhu)', route:16,
     summary:'Where Ra is reborn each morning and the justified dead come forth by day.',
     features:[
-      { id:'rising', what:'Ra rises in the eastern part of heaven as Khepera; the sun disk lifted from the djed by arms; six apes adore; Isis and Nephthys kneel on the sign for gold', kind:'scene', cite:[{bp:'2:1'},{b:'2-1'},{b:'1-1'}], model:'The eastern gate: a djed pillar with arms lifting a disk, six baboons, two kneeling goddesses.' },
+      { id:'rising', what:'Ra rises in the eastern part of heaven as Khepera; the sun disk lifted from the djed by arms; six apes adore; Isis and Nephthys kneel upon the emblem aat, or hemisphere', kind:'scene', cite:[{bp:'2:2'},{b:'2-1'},{b:'1-1'},{b:'1-3'}], model:'The eastern gate: a djed pillar with arms lifting a disk, six baboons, two kneeling goddesses on a low emblem.' },
       { id:'gate-sert', what:'The Gate of Sert is the gate of the pillars of Shu, the northern gate of the underworld; or the two leaves of the door through which Tmu passes when he goes forth in the eastern horizon', kind:'source', cite:[{b:'8-7'}], model:'A two-leaved door in the eastern cliff.' },
       { id:'coming-forth', what:'Coming forth by day: Spells 2, 9, 92, 132, 74', kind:'source', cite:[{b:'18-6'},{b:'18-8'},{b:'18-1'},{b:'18-10'},{b:'18-3'}], model:'Evidence cards at the gate.' },
-      { id:'khepera-boat', what:'Ani and Tutu adore Khepera in the boat of the rising sun', kind:'scene', cite:[{b:'10-3'}], model:'The morning boat emerging.' },
+      { id:'khepera-boat', what:'Ani and Tutu adore Khepera in the boat of the rising sun', kind:'scene', cite:[{bp:'7-10:21'},{b:'10-3'}], model:'The morning boat emerging.' },
       { id:'cliff-form', what:'The eastern mountain', kind:'invention', model:'A cliff like Manu, 60 cubits (basis: symmetry; none in the text).' }
     ]}
   ],

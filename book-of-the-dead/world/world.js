@@ -286,7 +286,7 @@ function buildArits() {
 
 const PYLONS = [
   { keeper: 'Neruit', text: 'the lady of terrors, with lofty walls', head: 'bird', item: 'disk', top: 'khakeru', h: 36 },
-  { keeper: 'Mes-Ptah', text: 'the lady of heaven, who devoureth with fire', head: 'lion', top: 'serpent' },
+  { keeper: 'Mes-Ptah', text: 'the lady of heaven, the mistress of the world, who devoureth with fire', head: 'lion', top: 'serpent' },
   { keeper: 'Sebaq', text: 'the lady of the altar', head: 'man', top: 'utchats' },
   { keeper: 'Nekau', text: 'she who prevaileth with knives', head: 'cow', top: 'uraei' },
   { keeper: 'Hentet-Arqiu', text: 'the flame, the lady of breath', head: 'hippo', top: 'flames' },
@@ -371,7 +371,7 @@ function buildHall() {
   g.add(cyl(0.2, 0.3, 4, M.gold, 185, D + 1, 10), box(4, 0.2, 0.2, M.gold, 185, D + 5.1, 10), animal(2.2, 1.4, M.figureDark, 188.5, D + 1, 10, Math.PI, 'lion'));
   g.add(box(1.2, 1.6, 1.2, M.bronze, 191.5, D + 1, 10), figure({ head: 'ibis', pose: 'sit', h: 2.4, item: 'palette', x: 191.5, y: D + 2.6, z: 10, ry: -Math.PI / 2 }), box(0.15, 2, 0.7, M.white, 193.2, D + 1, 10));
   g.add(label('The Hall of Two Truths', 120, D + H + 14, 0, 'fl big', 'hall', 'Spell 125, sheets 29 to 32; the weighing on sheet 3'));
-  g.add(label('The left door: Neb-pehti-thesu-menment', x0, D + 26, 0, 'fl', 'hall', 'Anubis asks its name. "Driven away of Shu"; upper leaf "Lord of right and truth, standing upon his two feet"; lower leaf "Lord of might and power, dispenser of cattle"'));
+  g.add(label('The left door: Neb-pehti-thesu-menment', x0, D + 26, 0, 'fl', 'hall', 'Spell 125\'s door, placed at this end by editorial choice; the text does not say which. Anubis asks its name: "Driven away of Shu"; upper leaf "Lord of right and truth, standing upon his two feet"; lower leaf "Lord of might and power, dispenser of cattle"'));
   g.add(label('The right door: Neb-Maat-heri-tep-retui-f', x1, D + 26, 0, 'fl', 'hall'));
   g.add(label('The forty-two assessors', 118, D + 6, 0, 'fl', 'hall', 'the Negative Confession, sheets 31 and 32'), label('The weighing of the heart', wx, D + 12, wz, 'fl', 'hall', 'sheet 3'));
   return merged(g, 'hall');
