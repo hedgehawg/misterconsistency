@@ -15,7 +15,7 @@
   :root {
     --bg: #0e0f12; --raised: rgba(22, 23, 28, .88); --line: #2b2c34; --text: #e8e6e1; --dim: #9a978f;
     --gold: #d0a44c; --gold-soft: rgba(208, 164, 76, .55); --bronze: #8f6f32;
-    --source: #d0a44c; --scene: #c9b27a; --editorial: #9a978f; --invention: #7f8fb0; --gap: #b5604a;
+    --source: #d0a44c; --scene: #c9b27a; --editorial: #9a978f; --invention: #7f8fb0; --gap: #b5604a; --witness: #6fb3a0;
     --serif: "Fraunces", Georgia, serif; --sans: "Inter", -apple-system, "Segoe UI", sans-serif;
   }
   * { box-sizing: border-box; }
@@ -47,7 +47,7 @@
   #caption b { color: var(--text); font-weight: 500; }
   #panel { position: fixed; right: 14px; top: 58px; bottom: 14px; width: 380px; z-index: 5; overflow: auto; background: var(--raised); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px 24px; backdrop-filter: blur(8px); transform: translateX(calc(100% + 20px)); transition: transform .25s; }
   #panel.open { transform: none; }
-  #panel .eyebrow { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+  #panel .eyebrow { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); } #panel .eyebrow a.lg { color: var(--dim); text-decoration: none; border-bottom: 1px dotted var(--dim); } #panel .eyebrow a.lg:hover { color: var(--gold); }
   #panel h2 { margin: 4px 0 8px; font-family: var(--serif); font-weight: 300; font-size: 24px; line-height: 1.15; }
   #panel .sum { margin: 0 0 14px; font-size: 13px; line-height: 1.5; color: var(--text); }
   .feats { list-style: none; margin: 0; padding: 0; }
@@ -55,9 +55,11 @@
   .fh { display: flex; gap: 8px; align-items: flex-start; }
   .badge { flex: 0 0 auto; font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; padding: 3px 7px; border-radius: 999px; border: 1px solid; margin-top: 2px; }
   .k-source .badge { color: var(--source); border-color: var(--source); } .k-scene .badge { color: var(--scene); border-color: var(--scene); }
-  .k-editorial .badge { color: var(--editorial); border-color: var(--editorial); } .k-invention .badge { color: var(--invention); border-color: var(--invention); } .k-gap .badge { color: var(--gap); border-color: var(--gap); }
+  .k-editorial .badge { color: var(--editorial); border-color: var(--editorial); } .k-invention .badge { color: var(--invention); border-color: var(--invention); } .k-gap .badge { color: var(--gap); border-color: var(--gap); } .k-witness .badge, .k-cognate .badge { color: var(--witness); border-color: var(--witness); }
   .what { font-family: var(--serif); font-size: 14.5px; line-height: 1.4; }
-  .k-source .what, .k-scene .what { color: #efe6cf; }
+  .k-source .what, .k-scene .what, .k-witness .what { color: #efe6cf; }
+  .st { margin: 6px 0 0; font-size: 11.5px; line-height: 1.45; color: var(--dim); } .st::first-letter { text-transform: uppercase; } .st-contested { color: #d98a4a; } .st-single-witness { color: var(--invention); }
+  .srcids { margin: 6px 0 0; font-size: 11px; color: var(--dim); } .srcids a { color: var(--witness); text-decoration: none; border-bottom: 1px dotted var(--witness); }
   .model { margin: 6px 0 0 0; font-size: 12px; line-height: 1.45; color: var(--dim); }
   .dim { margin: 6px 0 0; font-size: 12px; color: var(--gold); }
   .crop { display: block; overflow: hidden; margin: 10px 0 4px; border: 1px solid var(--line); border-radius: 6px; background-color: #000; background-repeat: no-repeat; width: 100%; max-width: 320px; }

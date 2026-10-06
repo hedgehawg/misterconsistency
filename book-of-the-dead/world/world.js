@@ -33,7 +33,10 @@ const M = {
   water: std(P.water, { emissive: P.water, emissiveIntensity: 0.5, roughness: 0.3, metalness: 0.2, transparent: true, opacity: 0.85 }),
   green: std(P.green, { emissive: 0x1c3a1c, emissiveIntensity: 0.3 }), grain: std(P.grain),
   flame: new THREE.MeshBasicMaterial({ color: P.flameHot }), ember: new THREE.MeshBasicMaterial({ color: P.flame }),
-  white: std(0xe8e6e1, { emissive: 0x777777, emissiveIntensity: 0.2 }), dark: std(0x0a0a0c)
+  white: std(0xe8e6e1, { emissive: 0x777777, emissiveIntensity: 0.2 }), dark: std(0x0a0a0c),
+  metal: std(P.metal, { metalness: 0.6, roughness: 0.4 }), witness: std(P.witness, { transparent: true, opacity: 0.35, depthWrite: false }),
+  tintGreen: std(P.tintGreen, { transparent: true, opacity: 0.6, depthWrite: false }), tintYellow: std(P.tintYellow, { transparent: true, opacity: 0.6, depthWrite: false }),
+  outline: new THREE.LineBasicMaterial({ color: P.witness, transparent: true, opacity: 0.9 })
 };
 
 // ---------- small geometry helpers ----------
@@ -510,7 +513,82 @@ function buildSky() {
   g.userData.place = 'sky'; return g;
 }
 
-[buildTerrain, buildThebes, buildWest, buildTomb, buildRosetau, buildPools, buildSycamore, buildArits, buildPylons, buildCouncils, buildHall, buildThrone, buildLake, buildField, buildSkyBank, buildEast, buildBoat, buildSky].forEach(fn => world.add(fn()));
+/* The fourteen Aats of the Papyrus of Nu (Spell 149) and the fifteen captions of Spell 150: a witness layer, admitted through
+   the sourcing workstream (sources/G1-review.md). Placed in a band along the north of the Duat by editorial choice. */
+const AATS = [
+  { n: 'I', name: 'Aat of Amentet', key: 'wherein a man liveth upon cakes and ale', paint: 'green' },
+  { n: 'II', name: 'Sekhet-Aarru', key: 'walls of iron (Budge) or steel (R&N); wheat 5 or 7 cubits, barley 7; Khus of 9 cubits', paint: 'green' },
+  { n: 'III', name: 'Aat of the Khus', key: 'whereover none can sail; the fire thereof is blazing', paint: 'green' },
+  { n: 'IV', name: 'The double mountain', key: '300 measures long; 230 (Budge) or 10 (R&N) wide; the serpent Sati-temui, 70 cubits', paint: 'green' },
+  { n: 'V', name: 'Aat of the Khus', key: 'whereover none may pass; thighs seven cubits long', paint: 'green' },
+  { n: 'VI', name: 'Ammehet', key: 'holy unto the gods, hidden unto the Khus; a fish within the sign', paint: 'green' },
+  { n: 'VII', name: 'The city of Ases', key: 'remote from sight; the serpent Rerek, backbone seven cubits', paint: 'green' },
+  { n: 'VIII', name: 'Ha-hetep', key: 'great and mighty one of the canal; the roarings are mighty', paint: 'green' },
+  { n: 'IX', name: 'The city Akesi', key: 'hidden from the gods; the opening is of fire; the god in his egg', paint: 'yellow' },
+  { n: 'X', name: 'The city of the gods Qahu', key: 'a man with a knife in each hand, a serpent above', paint: 'yellow' },
+  { n: 'XI', name: 'The city of Atu', key: 'a jackal-headed god with a knife; the Thigh of the Lake; a ladder to heaven', paint: 'green' },
+  { n: 'XII', name: 'Unt, at the head of Re-stau', key: 'a blazing fire; the uraei (four snakes, R&N); stars that never fail', paint: 'green' },
+  { n: 'XIII', name: 'Uart ent mu', key: 'thy waters are of fire; the stream is filled with reeds; the hippopotamus Hebetch-re-f', paint: 'green' },
+  { n: 'XIV', name: 'Aat of Kher-aba', key: 'which turneth back Hap at Tattu; a range of mountains; the double qerti of Abu', paint: 'yellow' }
+];
+const CAPTIONS150 = ['Sekhet-Aarru', 'The brow of fire', 'Mountain, exceedingly high', 'Aat of the Khus', 'Ammehet', 'Asset', 'Ha-sert', 'The brow of the gods Qahu', 'Atu', 'Unt', 'The brow of the waters', 'Aat of Kher-aba', 'Stream of the Lake of flame', 'Akesi', 'The beautiful Amentet'];
+function buildAats() {
+  const g = new THREE.Group(), y = D, z0 = -500, W0 = 240, D0 = 150;
+  const serpent = (x, y, z, len, ry = 0, r = 0.9) => { const pts = []; for (let i = 0; i <= 24; i++) pts.push(new THREE.Vector3(-len / 2 + i * len / 24, y + r + Math.sin(i * 0.9) * r * 0.6, z + Math.cos(i * 0.9) * r * 1.6)); const m = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 48, r, 6), M.figureDark); m.position.x = x; m.rotation.y = ry; return m; };
+  const enclosure = (x, w, d, h, tint, oval) => {
+    const e = grp(x, y, z0);
+    if (oval) { for (let i = 0; i < 40; i++) { const a = i / 40 * Math.PI * 2, b = (i + 1) / 40 * Math.PI * 2; const p = [w / 2 * Math.cos(a), d / 2 * Math.sin(a)], q = [w / 2 * Math.cos(b), d / 2 * Math.sin(b)]; const seg = box(Math.hypot(q[0] - p[0], q[1] - p[1]) + 0.3, h, 1.2, M.wall, (p[0] + q[0]) / 2, 0, (p[1] + q[1]) / 2); seg.rotation.y = -Math.atan2(q[1] - p[1], q[0] - p[0]); e.add(seg); } const f = new THREE.Mesh(new THREE.CircleGeometry(1, 48), tint); f.scale.set(w / 2, d / 2, 1); f.rotation.x = -Math.PI / 2; f.position.y = 0.3; e.add(f); }
+    else { e.add(box(w, h, 1.2, M.wall, 0, 0, -d / 2), box(w, h, 1.2, M.wall, 0, 0, d / 2), box(1.2, h, d, M.wall, -w / 2, 0, 0), box(1.2, h, d, M.wall, w / 2, 0, 0)); const f = new THREE.Mesh(new THREE.PlaneGeometry(w - 2, d - 2), tint); f.rotation.x = -Math.PI / 2; f.position.y = 0.3; e.add(f); }
+    return e;
+  };
+  const flames = (e, n, w, d, s = 1.6) => { for (let i = 0; i < n; i++) e.add(flame(s + (i % 3) * 0.4, 3 + (i % 4) * 1.2, -w / 2 + 6 + (i * 37) % (w - 12), 0.4, -d / 2 + 6 + (i * 53) % (d - 12))); };
+  const stand = (e, x, z, h, n, mat) => { const geo = new THREE.BoxGeometry(0.16, h, 0.16); geo.translate(0, h / 2, 0); const im = new THREE.InstancedMesh(geo, mat, n); const m4 = new THREE.Matrix4(); for (let i = 0; i < n; i++) { m4.makeTranslation(x + (Math.sin(i * 12.9898) * 43758.5453 % 1) * 24, 0.4, z + (Math.sin(i * 7.233) * 9631.13 % 1) * 10); im.setMatrixAt(i, m4); } im.userData.keep = true; e.add(im); };
+  AATS.forEach((a, i) => {
+    const x = -2210 + i * 340, tint = a.paint === 'yellow' ? M.tintYellow : M.tintGreen;
+    const big = i === 3, w = big ? 300 : W0, d = big ? 230 : D0;
+    const e = enclosure(x, w, d, i === 1 ? 10 : 6, tint, i === 8); g.add(e);
+    const E = grp(x, y, z0); g.add(E);
+    switch (i) {
+      case 0: for (let k = 0; k < 4; k++) E.add(figure({ head: 'man', pose: 'sit', h: 3.6, item: 'sceptre', x: -40 + k * 12, y: 0.4, z: 20, ry: Math.PI }), table(-40 + k * 12, 0.4, 14)); break;
+      case 1: {
+        e.children.slice(0, 4).forEach(wall => { wall.material = M.metal; });
+        E.add(box(2, 10, 1.4, M.bronze, -5, 0.4, 0), box(2, 10, 1.4, M.bronze, 5, 0.4, 0), box(12, 1.6, 1.4, M.bronze, 0, 10.4, 0));          // the door in the middle
+        E.add(box(70, 0.5, 30, M.water, 0, 0.3, 55), box(220, 0.5, 14, M.water, 0, 0.3, -60));                                                   // lake south, canal north
+        stand(E, -100, -30, 5, 160, M.grain); stand(E, -70, -30, 7, 160, M.grain); stand(E, -40, -30, 7, 160, M.green);                           // wheat 5 (Budge), wheat 7 (R&N), barley 7
+        for (let k = 0; k < 2; k++) E.add(figure({ head: 'man', h: 9, item: 'knife', x: 20 + k * 10, y: 0.4, z: -30, ry: -Math.PI / 2 })); E.add(figure({ head: 'hawk', h: 9, item: 'disk', x: 44, y: 0.4, z: -30, ry: Math.PI / 2 }));
+        for (const s of [-1, 1]) { E.add(cyl(0.7, 1, 9, M.bronzeDark, 80 + s * 12, 0.4, 20), sph(6, M.green, 80 + s * 12, 12, 20, 7)); } E.add(boat(10, M.gold, 80, 0.6, 20));
+        break;
+      }
+      case 2: flames(E, 22, w, d); for (let k = 0; k < 5; k++) E.add(figure({ head: 'man', h: 4, x: -60 + k * 30, y: 0.4, z: 40 })); break;
+      case 3: {
+        E.add(cone(95, 70, M.rock, 0, 0.4, 0, 9)); E.add(cone(70, 50, M.rock, 60, 0.4, -40, 7));                                                  // the mountain, doubly high: height invented
+        const alt = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(300, 1, 10)), M.outline); alt.position.set(0, 1.2, 0); alt.userData.keep = true; E.add(alt);   // R&N: 300 by 10
+        E.add(serpent(0, 44, 10, 70, 0.3, 1.4));
+        break;
+      }
+      case 4: for (let k = 0; k < 3; k++) E.add(figure({ head: 'man', h: 24, item: 'knife', x: -50 + k * 50, y: 0.4, z: 0, ry: Math.PI / 2 })); break;
+      case 5: { E.add(box(60, 0.5, 40, M.water, 0, 0.3, 0)); const fish = sph(10, M.figureDark, 0, 2, 0, 8); fish.scale.set(2.2, 0.6, 0.9); E.add(fish, cone(5, 10, M.figureDark, -26, 0.4, 0, 4)); for (let k = 0; k < 3; k++) E.add(figure({ head: k ? 'man' : 'jackal', h: 4, item: 'sceptre', x: 50 + k * 12, y: 0.4, z: -40 })); break; }
+      case 6: flames(E, 18, w, d); E.add(serpent(0, 0.4, 20, 7, 0, 0.7)); break;
+      case 7: E.add(box(w - 8, 0.5, 26, M.water, 0, 0.3, 0)); for (let k = 0; k < 8; k++) E.add(flame(1, 2 + (k % 3), -100 + k * 28, 0.5, 0)); E.add(figure({ head: 'man', h: 5, item: 'staff', x: 0, y: 0.4, z: 30, ry: Math.PI }), figure({ head: 'hawk', h: 2.4, x: 60, y: 0.4, z: 30 })); break;
+      case 8: { for (let k = 0; k < 10; k++) E.add(flame(1.6, 4 + (k % 3), -w / 2 + 2 + k * 2, 0.4, -14 + k * 3)); const egg = sph(9, M.gold, 20, 9, 0, 10); egg.scale.set(0.8, 1.1, 0.8); E.add(egg); E.add(animal(14, 4, M.figureDark, -w / 2 - 8, 0.4, 0, 0, 'cow')); break; }
+      case 9: { const f = figure({ head: 'man', h: 5, item: 'knife', x: -20, y: 0.4, z: 0 }); f.add(box(0.14, 1.3, 0.3, M.white, -0.7, 3.2, 0.3).rotateZ(0.5)); E.add(f, serpent(-20, 7, 0, 8, 0, 0.6)); for (let k = 0; k < 4; k++) E.add(figure({ head: 'man', h: 4, item: 'sceptre', x: 30 + k * 14, y: 0.4, z: 30 })); break; }
+      case 10: { E.add(figure({ head: 'jackal', h: 5, item: 'knife', x: -70, y: 0.4, z: 0, ry: Math.PI / 2 }), box(40, 0.5, 30, M.water, 20, 0.3, 40)); E.add(box(2, 12, 1.4, M.gold, 60, 0.4, -5), box(2, 12, 1.4, M.gold, 60, 0.4, 5), box(2, 1.4, 12, M.gold, 60, 12.4, 0)); const lad = grp(-20, 0.4, -40); lad.rotation.z = -0.15; for (const s of [-1.2, 1.2]) lad.add(box(0.5, 60, 0.5, M.gold, s, 0, 0)); for (let k = 0; k < 12; k++) lad.add(box(2.6, 0.3, 0.3, M.gold, 0, 2 + k * 5, 0)); E.add(lad); break; }
+      case 11: flames(E, 16, w, d); for (let k = 0; k < 4; k++) E.add(cone(1.2, 5, M.gold, -45 + k * 30, 0.4, -40, 6), sph(1, M.gold, -45 + k * 30, 6, -40)); break;
+      case 12: { E.add(box(w - 8, 0.5, 40, M.ember, 0, 0.3, 0)); for (let k = 0; k < 10; k++) E.add(flame(1.4, 3 + (k % 3), -100 + k * 22, 0.6, -8 + (k % 2) * 16)); stand(E, -60, 24, 3, 120, M.green); E.add(figure({ head: 'man', h: 5, item: 'staff', x: 80, y: 0.4, z: 40 }), animal(8, 4.5, M.figure, -70, 0.4, 50, 0, 'hippo')); break; }
+      case 13: { for (let k = 0; k < 5; k++) E.add(cone(22, 18 + (k % 2) * 10, M.rock, -90 + k * 45, 0.4, -40, 6)); E.add(box(w - 8, 0.5, 14, M.water, 0, 0.3, 30)); for (const s of [-1, 1]) E.add(cyl(5, 5, 3, M.bronzeDark, 95 + s * 12, 0.4, 30, 16)); E.add(serpent(95, 3.4, 30, 20, 0, 0.7));
+        [['man', 'staff'], ['jackal', null], ['hawk', 'disk'], ['lion', null], ['man', 'raised'], ['man', 'whitecrown']].forEach(([h, it], k) => E.add(figure({ head: h, h: 4, item: it, x: -100 + k * 18, y: 0.4, z: 55 }))); E.add(animal(6, 3.5, M.figure, 20, 0.4, 55, 0, 'hippo'), animal(8, 2, M.figureDark, 40, 0.4, 55, 0, 'cow')); break; }
+    }
+    g.add(label(`${a.n}. ${a.name}`, x, y + 36, z0, 'fl', 'aats', `${a.key} · painted ${a.paint}`));
+  });
+  // Spell 150: fifteen captions in Nu's order, four serpents at the corners
+  CAPTIONS150.forEach((c, k) => { const x = -2300 + k * 330; g.add(box(3, 6, 3, M.bronze, x, y, -640)); });
+  for (const [sx, sz] of [[-2400, -660], [2400, -660], [-2400, -340], [2400, -340]]) g.add(serpent(sx, y + 0.4, sz, 16, 0, 1.2));
+  g.add(label('The fourteen Aats of the Papyrus of Nu: Spell 149, a witness beside Ani', 0, y + 150, z0, 'fl big', 'aats', 'placed in this band by editorial choice'));
+  g.add(label('Spell 150: fifteen captions in Nu\'s order, and the four serpents the editors read as the cardinal points', 0, y + 14, -660, 'fl', 'aats', CAPTIONS150.join(' · ')));
+  return merged(g, 'aats');
+}
+
+[buildTerrain, buildThebes, buildWest, buildTomb, buildRosetau, buildPools, buildSycamore, buildArits, buildPylons, buildCouncils, buildHall, buildThrone, buildLake, buildField, buildSkyBank, buildEast, buildBoat, buildSky, buildAats].forEach(fn => world.add(fn()));
 
 // lights: a dim sky, a low western sun on the land of the living, and a warm glow along the Duat so the model reads
 scene.add(new THREE.HemisphereLight(0x5a6080, 0x2a2016, 1.5));
@@ -556,7 +634,8 @@ function focusOverview() {
 }
 
 // ---------- the evidence panel ----------
-const panel = $('panel'), KIND = { source: 'Source text', scene: 'Vignette, described', editorial: 'Editorial', invention: 'Invention', gap: 'Gap' };
+const panel = $('panel'), KIND = { source: 'Source text', scene: 'Vignette, described', editorial: 'Editorial', invention: 'Invention', gap: 'Gap', witness: 'Witness: Nu', cognate: 'Cognate text' };
+const EDITIONS = { 'B1898-II': 'Budge 1898, vol. II, p. ', 'RN1904': 'Renouf and Naville 1904, p. ' };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function crop(block) {
   const tile = G && G.tiles.find(t => t.n === block.n), r = block.rects && block.rects[0]; if (!tile || !r) return '';
@@ -567,15 +646,16 @@ function crop(block) {
 function citeHtml(c) {
   if (c.b) { const b = blockById[c.b]; return b ? `<a href="../#b=${c.b}" target="_blank" rel="noopener">Sheet ${b.n} · ${esc(b.title)}</a>` : `<span>block ${esc(c.b)}</span>`; }
   if (c.bp) { const [k, i] = c.bp.split(':'); const e = BU[k]; const para = e && e.paras[+i]; return `<details><summary>Budge 1895, plate${k.includes('-') ? 's' : ''} ${esc(k)} · vignette described</summary><p>${esc(para || '(paragraph not found)')}</p></details>`; }
+  if (c.e) { const [ed, pg] = c.e.split(':'); return `<span>${esc(EDITIONS[ed] || ed)}${esc(pg)}</span>`; }
   return '';
 }
 function showPlace(id) {
   const p = placeById[id]; if (!p) return;
-  let html = `<div class="ph"><span class="eyebrow">Place ${p.route} of ${L.places.length}</span><h2>${esc(p.name)}</h2><p class="sum">${esc(p.summary)}</p></div><ol class="feats">`;
+  let html = `<div class="ph"><span class="eyebrow">Place ${p.route} of ${L.places.length} · <a class="lg" href="ledger.html?place=${p.id}" target="_blank" rel="noopener">ledger entry</a></span><h2>${esc(p.name)}</h2><p class="sum">${esc(p.summary)}</p></div><ol class="feats">`;
   for (const f of p.features) {
     let cites = ''; let firstCrop = '';
     for (const c of (f.cite || [])) { cites += `<li>${citeHtml(c)}</li>`; if (!firstCrop && c.b && blockById[c.b]) firstCrop = crop(blockById[c.b]); }
-    html += `<li class="feat k-${f.kind}"><div class="fh"><span class="badge">${KIND[f.kind]}</span><span class="what">${esc(f.what)}</span></div>${f.dim ? `<div class="dim">${f.dim.value} ${esc(f.dim.unit)}${f.dim.note ? ' · ' + esc(f.dim.note) : ''}</div>` : ''}<div class="model">${esc(f.model)}</div>${firstCrop}${cites ? `<ul class="cites">${cites}</ul>` : ''}</li>`;
+    html += `<li class="feat k-${f.kind}"><div class="fh"><span class="badge">${KIND[f.kind]}</span><span class="what">${esc(f.what)}</span></div>${f.status ? `<div class="st st-${f.status}">${esc(f.status)}${f.alt ? ' · also read: ' + esc(f.alt) : ''}</div>` : ''}${f.dim ? `<div class="dim">${f.dim.value} ${esc(f.dim.unit)}${f.dim.note ? ' · ' + esc(f.dim.note) : ''}</div>` : ''}<div class="model">${esc(f.model)}</div>${firstCrop}${cites ? `<ul class="cites">${cites}</ul>` : ''}${f.src ? `<div class="srcids">Statements ${f.src.map(esc).join(', ')} · <a href="sources/G1-review.md" target="_blank" rel="noopener">admission record</a></div>` : ''}</li>`;
   }
   html += '</ol>';
   panel.innerHTML = html; panel.scrollTop = 0; panel.classList.add('open'); $('panelToggle').textContent = 'Hide evidence'; applyView();
@@ -587,6 +667,7 @@ function showOverview() {
   <li class="feat k-scene"><div class="fh"><span class="badge">Vignette, described</span><span class="what">${kinds.scene || 0} on his description of a picture in the roll</span></div></li>
   <li class="feat k-editorial"><div class="fh"><span class="badge">Editorial</span><span class="what">${kinds.editorial || 0} are our arrangement</span></div></li>
   <li class="feat k-invention"><div class="fh"><span class="badge">Invention</span><span class="what">${kinds.invention || 0} are ours, labelled, so the model can be built</span></div></li>
+  <li class="feat k-witness"><div class="fh"><span class="badge">Witness: Nu</span><span class="what">${kinds.witness || 0} come from the Papyrus of Nu through the sourcing workstream, each with its status and its other reading</span></div></li>
   <li class="feat k-gap"><div class="fh"><span class="badge">Gap</span><span class="what">${kinds.gap || 0} are gaps the papyrus does not fill; they go to the sourcing workstream</span></div></li></ol>
   <p class="sum">Select a place, or begin the journey. Each feature links to the passage in the study and shows the facsimile detail it rests on.</p>`;
   panel.classList.add('open'); $('panelToggle').textContent = 'Hide evidence'; applyView();

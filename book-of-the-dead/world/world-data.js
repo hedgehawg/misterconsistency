@@ -22,15 +22,17 @@ window.BOD_WORLD = {
     fields:   { label:'Field',     at:[ 1300, -138,    0], dist:1200, pill: 90 },
     sky:      { label:'Sky',       at:[    0,  600,    0], dist:4200, pill:1800 },
     boat:     { label:'Boat',      at:[ -300, -198,  520], dist:  90, pill: 24, dir:[1, 0.6, 0.08] },
-    east:     { label:'East',      at:[ 2470,  -90,    0], dist: 240, pill:130, dir:[-0.7, 0.45, 0.6] }
+    east:     { label:'East',      at:[ 2470,  -90,    0], dist: 240, pill:130, dir:[-0.7, 0.45, 0.6] },
+    aats:     { label:'Aats (Nu)', at:[    0, -130, -540], dist:1900, pill: 40, dir:[0.02, 1.15, 0.55] }
   },
-  // Editorial route in ledger order. Not a canonical itinerary.
-  route: ['thebes','west','tomb','rosetau','sycamore','duat','arits','pylons','cities','hall','throne','lake','fields','sky','boat','east'],
+  // Editorial route in ledger order. Not a canonical itinerary. The Aats of Nu come last: another manuscript's regions, not Ani's road.
+  route: ['thebes','west','tomb','rosetau','sycamore','duat','arits','pylons','cities','hall','throne','lake','fields','sky','boat','east','aats'],
   // House palette: bronze and gold on the dark ground.
   palette: {
     bg: 0x0e0f12, ground: 0x2a2419, rock: 0x2c271f, slab: 0x4a3d28,
     bronze: 0x8a6830, bronzeDark: 0x5a4422, gold: 0xd0a44c, goldSoft: 0x8f6f32,
     figure: 0xb8964f, figureDark: 0x7a5f36, water: 0x16464c, green: 0x3f7a3f, grain: 0x9a8840,
-    flame: 0xe0702a, flameHot: 0xffc46a, star: 0xe8e6e1
+    flame: 0xe0702a, flameHot: 0xffc46a, star: 0xe8e6e1,
+    metal: 0x8a8d94, tintGreen: 0x2f5a35, tintYellow: 0x7a6a28, witness: 0x6fb3a0
   }
 };

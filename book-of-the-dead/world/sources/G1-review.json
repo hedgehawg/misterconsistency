@@ -1,0 +1,1274 @@
+{
+ "package": "bod-world-sources-v1",
+ "archive_sha256": "d59586b4df8d8faa5aebf91eaf39f87bdd11510614b618a00690f6eb4a826459",
+ "reviewed": "2026-10-06",
+ "reviewer": "Claude (Book of the Dead World thread)",
+ "checks": [
+  "Archive SHA-256 matches the supplied .sha256; MANIFEST.sha256 verifies 20 of 20 files.",
+  "Budge 1898 vol. II pp. 264-273 read page by page in the supplied facsimile PDF; every figure in the transcription checked against the printed page: wheat 5 (ears 2, stalks 3), barley 7 (ears 3, stalks 4), Khus 9; Aat IV 300 measures by 230, serpent Sati-temui 70 cubits in length; thighs 7; Rerek backbone 7; paint rubrics; Chapter CL four serpents and fifteen captions.",
+  "Renouf and Naville 1904 opened at the cited Project Gutenberg transcription; each cited reading found verbatim: walls of steel; wheat seven, ears two, stalks five; glorified ones seven cubits then nine; sycamores of emerald; three hundred measures in length and ten in width; seventy cubits in his windings; thighs of seven cubits; backbone seven cubits; four snakes; fifteen domains instead of fourteen, the fifth divided; I adopt Renouf's translation; only four yellow, 3, 9, 10 and 14; near the stream of the lake; islands of the wandering stars; drives the Nile towards Tattu; two wells at Elephantine.",
+  "Statement statuses (65 agreed, 35 contested, 9 single-witness) accepted as recorded; no status changed."
+ ],
+ "not_resolved": [
+  "The unit behind Budge's and Naville's \"measures\" in Aat IV.",
+  "The Egyptian numerals behind the contested crop heights and the Aat IV width.",
+  "The identity of Naville's witness Aa for Chapter 150.",
+  "Whether Aat XIII, the Chapter 150 water caption, Ani's Lake of Fire and Nu's Chapter 126 are one lake."
+ ],
+ "classes": {
+  "modelled": 47,
+  "tint": 14,
+  "commentary": 4,
+  "card": 29,
+  "caption": 15
+ },
+ "statements": [
+  {
+   "id": "G1-149-COUNT",
+   "kind": "count",
+   "status": "agreed",
+   "value": 14,
+   "unit": "Aats",
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 264; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-WALL",
+   "kind": "material",
+   "status": "contested",
+   "value": "iron",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 264; RN1904 p. 302",
+   "alternatives": [
+    {
+     "source_id": "RN1904",
+     "value": "steel"
+    }
+   ]
+  },
+  {
+   "id": "G1-149-II-WHEAT-H",
+   "kind": "dimension",
+   "status": "contested",
+   "value": 5,
+   "unit": "cubits",
+   "class": "modelled",
+   "decision": "admitted as alternatives; original-language collation needed before one value is preferred",
+   "references": "B1898-II p. 264–265; RN1904 p. 302",
+   "alternatives": [
+    {
+     "source_id": "RN1904",
+     "value": 7,
+     "unit": "cubits"
+    }
+   ]
+  },
+  {
+   "id": "G1-149-II-WHEAT-E",
+   "kind": "dimension",
+   "status": "agreed",
+   "value": 2,
+   "unit": "cubits",
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 264–265; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-WHEAT-S",
+   "kind": "dimension",
+   "status": "contested",
+   "value": 3,
+   "unit": "cubits",
+   "class": "modelled",
+   "decision": "admitted as alternatives; original-language collation needed before one value is preferred",
+   "references": "B1898-II p. 264–265; RN1904 p. 302",
+   "alternatives": [
+    {
+     "source_id": "RN1904",
+     "value": 5,
+     "unit": "cubits"
+    }
+   ]
+  },
+  {
+   "id": "G1-149-II-BARLEY-H",
+   "kind": "dimension",
+   "status": "agreed",
+   "value": 7,
+   "unit": "cubits",
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 264–265; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-BARLEY-E",
+   "kind": "dimension",
+   "status": "single-witness",
+   "value": 3,
+   "unit": "cubits",
+   "class": "modelled",
+   "decision": "admitted, labelled by its one witness",
+   "references": "B1898-II p. 264–265",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-BARLEY-S",
+   "kind": "dimension",
+   "status": "single-witness",
+   "value": 4,
+   "unit": "cubits",
+   "class": "modelled",
+   "decision": "admitted, labelled by its one witness",
+   "references": "B1898-II p. 264–265",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-KHU-H",
+   "kind": "dimension",
+   "status": "contested",
+   "value": 9,
+   "unit": "cubits",
+   "class": "modelled",
+   "decision": "admitted as alternatives; original-language collation needed before one value is preferred",
+   "references": "B1898-II p. 264–265; RN1904 p. 302",
+   "alternatives": [
+    {
+     "source_id": "RN1904",
+     "occurrence": 1,
+     "value": 7,
+     "unit": "cubits"
+    },
+    {
+     "source_id": "RN1904",
+     "occurrence": 2,
+     "value": 9,
+     "unit": "cubits"
+    }
+   ]
+  },
+  {
+   "id": "G1-149-II-TREES-N",
+   "kind": "count",
+   "status": "agreed",
+   "value": 2,
+   "unit": "sycamores",
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 265; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-TREES-M",
+   "kind": "material",
+   "status": "contested",
+   "value": "turquoise",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 265; RN1904 p. 302",
+   "alternatives": [
+    {
+     "source_id": "RN1904",
+     "value": "emerald"
+    }
+   ]
+  },
+  {
+   "id": "G1-149-IV-L",
+   "kind": "dimension",
+   "status": "agreed",
+   "value": 300,
+   "unit": "measures",
+   "class": "modelled",
+   "decision": "admitted as alternatives; original-language collation needed before one value is preferred",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-IV-W",
+   "kind": "dimension",
+   "status": "contested",
+   "value": 230,
+   "unit": "measures",
+   "class": "modelled",
+   "decision": "admitted as alternatives; original-language collation needed before one value is preferred",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": [
+    {
+     "source_id": "RN1904",
+     "value": 10,
+     "unit": "measures"
+    }
+   ]
+  },
+  {
+   "id": "G1-149-IV-SERPENT",
+   "kind": "dimension",
+   "status": "contested",
+   "value": 70,
+   "unit": "cubits",
+   "class": "modelled",
+   "decision": "admitted as alternatives; original-language collation needed before one value is preferred",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": [
+    {
+     "source_id": "RN1904",
+     "value": 70,
+     "unit": "cubits",
+     "property": "in his windings"
+    }
+   ]
+  },
+  {
+   "id": "G1-149-V-THIGHS",
+   "kind": "dimension",
+   "status": "agreed",
+   "value": 7,
+   "unit": "cubits",
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-VII-BACKBONE",
+   "kind": "dimension",
+   "status": "agreed",
+   "value": 7,
+   "unit": "cubits",
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 267; RN1904 p. 304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XII-SNAKES-N",
+   "kind": "count",
+   "status": "single-witness",
+   "value": 4,
+   "unit": "snakes",
+   "class": "modelled",
+   "decision": "admitted as alternatives; original-language collation needed before one value is preferred",
+   "references": "B1898-II p. 270; RN1904 p. 306",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIV-QERTI-N",
+   "kind": "count",
+   "status": "agreed",
+   "value": 2,
+   "unit": "qerti / wells",
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-01-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 264; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-02-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 264; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-03-PAINT",
+   "kind": "material",
+   "status": "contested",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 265; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-04-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 265; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-05-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 266; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-06-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 267; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-07-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 267; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-08-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 267; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-09-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "yellow",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 268; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-10-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "yellow",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 269; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-11-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 269; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-12-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 270; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-13-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "green",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 270; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-14-PAINT",
+   "kind": "material",
+   "status": "agreed",
+   "value": "yellow",
+   "unit": null,
+   "class": "tint",
+   "decision": "admitted",
+   "references": "B1898-II p. 271; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-HORIZON",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "horizon",
+   "unit": null,
+   "class": "commentary",
+   "decision": "admitted",
+   "references": "B1898-II p. 264; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-REAP",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "reapers beside deity",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 264–265; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-DOOR",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "interior gate; east",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 264; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-WATER-S",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Lake of Kharu fowl; south",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 264; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-WATER-N",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Canal of Re fowl; north",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 264–265; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-BOAT",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "boat; wind-driven movement",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 265; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-LEATHERS",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "leathers / Teller",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 265; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-TREES-P",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Ra between trees",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 265; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-II-SKY",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "pillars of Shu / raised firmament",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 265; RN1904 p. 302",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-III-FIRE",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "fire; Khus; barred navigation",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 265; RN1904 p. 302–303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-III-FACES",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "in the land(?) / looking down",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 265; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-IV-MOUNTAIN",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "mountain",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 265; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-IV-SKY",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "sky above / sky ending at summit",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-IV-SERPENT-P",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "serpent on mountain",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-IV-WALL",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "enclosure / wall",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-IV-VALLEY",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "valley",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-V-ACCESS",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Khus; restricted access",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-V-DIET",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "consumption of shades",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-V-ROUTE",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "route toward Amentet",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 266; RN1904 p. 303",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-VI-GODS",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "gods; Sekher-At(?) / Sechez-at",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 267; RN1904 p. 303–304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-VI-FISH",
+   "kind": "arrangement",
+   "status": "single-witness",
+   "value": "fish within sign",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted, labelled by its one witness",
+   "references": "B1898-II p. 267",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-VII-FIRE",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "fire; Rerek within",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 267; RN1904 p. 304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-VII-VENOM",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "venom; destructive eyes",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 267; RN1904 p. 304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-VII-LAIR",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "den / hole",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 267; RN1904 p. 304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-VII-LYNX",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "lynx; beheading motif",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 267; RN1904 p. 304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-VIII-CANAL",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "canal / stream; guardian",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 268; RN1904 p. 304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-VIII-BIRD",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "Ennur above divine thigh / vulture on stream",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 268; RN1904 p. 304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-VIII-NORTH",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "northern horizon",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 268; RN1904 p. 304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-IX-VASE",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "crocodile snout; vase-like sign",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 268; RN1904 p. 308, note 10",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-IX-OPENING",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "fire opening; doors",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 268; RN1904 p. 304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-IX-EGG",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "god; egg",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 268; RN1904 p. 304",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-IX-ENTRY",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "great transformations / Ra supreme in attributes",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 268; RN1904 p. 305",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-X-INHAB",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Qahu gods; Khus; shades",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 269; RN1904 p. 305",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-X-FIGURE",
+   "kind": "arrangement",
+   "status": "single-witness",
+   "value": "man; paired knives; serpent above",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted, labelled by its one witness",
+   "references": "B1898-II p. 269",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-X-ISIS",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "offerings to head / before speaker",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 269; RN1904 p. 305",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-X-NEPHTHYS",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Nephthys behind",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 269; RN1904 p. 305",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-X-PATH",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "way",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 269; RN1904 p. 305",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XI-KEEPER",
+   "kind": "arrangement",
+   "status": "single-witness",
+   "value": "jackal-headed god; knife",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted, labelled by its one witness",
+   "references": "B1898-II p. 269",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XI-CAVITY",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "city / cavity",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 269; RN1904 p. 305",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XI-IRON",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "iron(?) clause",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 269; RN1904 p. 305",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XI-LAKE",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "lake relation",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 270; RN1904 p. 305",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XI-STARS",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "starry domain / islands",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 270; RN1904 p. 305",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XI-DOORS",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "doors of Maat; great deep / upper waters",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 270; RN1904 p. 305",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XI-LADDER",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "ladder to sky",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 270; RN1904 p. 306",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XII-LOCATION",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "head of / within Rosetau",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 270; RN1904 p. 306",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XII-FIRE",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "fire; snakes; restricted approach",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 270; RN1904 p. 306",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XII-STARS",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "never-failing / wandering stars",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 270; RN1904 p. 306",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIII-HIPPO",
+   "kind": "arrangement",
+   "status": "single-witness",
+   "value": "hippopotamus; beetle; right forepaw",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted, labelled by its one witness",
+   "references": "B1898-II p. 270",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIII-WATER",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "water of fire; stream",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 271; RN1904 p. 306",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIII-GREEN",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "reeds / green flowing sap",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 271; RN1904 p. 306",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIII-GUARD",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "water guardian",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 271; RN1904 p. 306",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIII-NILE",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Nile; plants; Osiris efflux",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 271; RN1904 p. 306",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIV-VIGNETTE",
+   "kind": "arrangement",
+   "status": "single-witness",
+   "value": "mountains; libation-bearer; Anubis; hawk with disk; lion-god; crowning man and god; hippopotamus; crocodile; worm",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted, labelled by its one witness",
+   "references": "B1898-II p. 271",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIV-COURSE",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "turns back at / drives towards Tattu",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 271; RN1904 p. 306–307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIV-QERTI",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "double qerti / two wells; serpent",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 272; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIV-CANAL",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "Thigh and canal head / stream and flood powers",
+   "unit": null,
+   "class": "modelled",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 272; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-149-XIV-POOLS",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "pools; streams / ponds; lakes",
+   "unit": null,
+   "class": "card",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 307",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-COUNT",
+   "kind": "count",
+   "status": "agreed",
+   "value": 15,
+   "unit": "Aats",
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-SERPENTS",
+   "kind": "count",
+   "status": "agreed",
+   "value": 4,
+   "unit": "serpents",
+   "class": "modelled",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CARDINAL",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "proposed cardinal-point symbolism",
+   "unit": null,
+   "class": "commentary",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-ORDER",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "Nu order I–XV",
+   "unit": null,
+   "class": "commentary",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 272–273; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-SPLIT",
+   "kind": "arrangement",
+   "status": "single-witness",
+   "value": "hypothesis: split fifth domain",
+   "unit": null,
+   "class": "commentary",
+   "decision": "admitted, labelled by its one witness",
+   "references": "RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-01",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Sekhet-Aarru; Ra-Heru-Khuti",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-02",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "The brow of fire; Fa-akh, Bearer of altars",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-03",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Mountain, exceedingly high",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-04",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Aat of the Khus",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-05",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Ammehet; Sekher-remu, Overthrower of fish",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-06",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Asset",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 272; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-07",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Ha-sert; Fa-pet, Bearer of Heaven",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 273; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-08",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "The brow of the god[s] Qahu",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 273; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-09",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "Atu; Sept, Sothis",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 273; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-10",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Unt; Hetemet-baiu, Destroyer of souls",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 273; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-11",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "The brow of the waters; Aa-sekhemu",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 273; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-12",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Aat of Kher-aba; Hap, Nile",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 273; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-13",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "Stream of the Lake of flame which is in the fire",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 273; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-14",
+   "kind": "arrangement",
+   "status": "agreed",
+   "value": "Akesi; Maa-Thet-f",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted",
+   "references": "B1898-II p. 273; RN1904 p. 309",
+   "alternatives": []
+  },
+  {
+   "id": "G1-150-CAP-15",
+   "kind": "arrangement",
+   "status": "contested",
+   "value": "The beautiful Amentet; gods live on cakes and ale(?)",
+   "unit": null,
+   "class": "caption",
+   "decision": "admitted with both readings shown",
+   "references": "B1898-II p. 273; RN1904 p. 309",
+   "alternatives": []
+  }
+ ]
+}

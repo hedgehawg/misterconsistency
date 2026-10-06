@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The ledger — Book of the Dead World | Mister Consistency</title>
-<meta name="description" content="The evidence ledger of the Book of the Dead World: for each of the sixteen places, every feature of the model and the passage of Budge's 1895 Papyrus of Ani that justifies it, with the gaps the papyrus does not fill.">
+<meta name="description" content="The evidence ledger of the Book of the Dead World: for each place, every feature of the model and the passage that justifies it, in Budge's 1895 Papyrus of Ani or in an admitted witness, with the gaps the papyrus does not fill.">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
 <script data-goatcounter="https://misterconsistency.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
   :root { --bg: #0e0f12; --raised: #16171c; --line: #2b2c34; --text: #e8e6e1; --dim: #9a978f; --gold: #d0a44c; --gold-soft: rgba(208,164,76,.55);
-    --source: #d0a44c; --scene: #c9b27a; --editorial: #9a978f; --invention: #7f8fb0; --gap: #b5604a; --serif: "Fraunces", Georgia, serif; --sans: "Inter", -apple-system, "Segoe UI", sans-serif; }
+    --source: #d0a44c; --scene: #c9b27a; --editorial: #9a978f; --invention: #7f8fb0; --gap: #b5604a; --witness: #6fb3a0; --serif: "Fraunces", Georgia, serif; --sans: "Inter", -apple-system, "Segoe UI", sans-serif; }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
   .wrap { max-width: 920px; margin: 0 auto; padding: 36px 16px 90px; }
@@ -37,8 +37,11 @@
   td.model { color: var(--dim); font-size: 12.5px; } td.cite { font-size: 12px; } td.cite a { color: var(--gold); text-decoration: none; border-bottom: 1px dotted var(--gold-soft); display: inline-block; margin: 0 0 3px; }
   td.cite details summary { cursor: pointer; color: var(--dim); } td.cite details p { margin: 6px 0 0; font-size: 12px; color: var(--text); }
   .badge { font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; padding: 3px 7px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
-  .k-source .badge { color: var(--source); border-color: var(--source); } .k-scene .badge { color: var(--scene); border-color: var(--scene); } .k-editorial .badge { color: var(--editorial); border-color: var(--editorial); } .k-invention .badge { color: var(--invention); border-color: var(--invention); } .k-gap .badge { color: var(--gap); border-color: var(--gap); }
+  .k-source .badge { color: var(--source); border-color: var(--source); } .k-scene .badge { color: var(--scene); border-color: var(--scene); } .k-editorial .badge { color: var(--editorial); border-color: var(--editorial); } .k-invention .badge { color: var(--invention); border-color: var(--invention); } .k-gap .badge { color: var(--gap); border-color: var(--gap); } .k-witness .badge, .k-cognate .badge { color: var(--witness); border-color: var(--witness); }
+  tr.k-witness td.what { color: #efe6cf; }
   .dimv { color: var(--gold); font-size: 12px; display: block; margin-top: 4px; }
+  .stv { display: block; margin-top: 4px; font-size: 12px; color: var(--dim); } .stv.contested { color: #d98a4a; } .stv.single-witness { color: var(--invention); }
+  .srcv { display: block; margin-top: 4px; font-size: 11px; color: var(--dim); } .srcv a { color: var(--witness); }
   ol.steps { padding-left: 20px; } ol.steps li { margin: 0 0 8px; }
   ul.plain { padding-left: 20px; } ul.plain li { margin: 0 0 8px; color: var(--text); }
   .src { border-top: 1px solid var(--line); padding: 10px 0; font-size: 13.5px; } .src b { color: var(--gold); font-weight: 500; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; display: block; margin-bottom: 3px; } .src a { color: var(--gold); }
@@ -50,7 +53,7 @@
 <div class="wrap">
   <span class="eyebrow">Mister Consistency · Book of the Dead · working study</span>
   <h1>The ledger of the world</h1>
-  <p class="lead">A three-dimensional model is a chain of claims. This page is the chain: for each of the sixteen places, every feature the model shows and the statement in Budge's 1895 Papyrus of Ani that justifies it, or the admission that nothing does.</p>
+  <p class="lead">A three-dimensional model is a chain of claims. This page is the chain: for each place, every feature the model shows and the statement that justifies it, in Budge's 1895 Papyrus of Ani or in an admitted witness, or the admission that nothing does.</p>
   <div class="nav"><a href="index.html">Open the world</a><a href="../">The study</a><a href="../assets/research.html">Sources and method</a><a href="#workstream">The gap workstream</a><a href="#departures">Deliberate departures</a></div>
   <div class="kinds" id="kinds"></div>
   <p id="unit"></p>
@@ -64,6 +67,8 @@
     <li><b>Cross-examination.</b> Every physical description that would shape the model is compared across at least two translations (Budge against Renouf, and against Faulkner or Allen where they differ). Disagreement on a dimension, a count or a material downgrades the feature to <i>contested</i>, and the model shows the contest.</li>
     <li><b>Review.</b> Before a passage enters this ledger, a fresh check confirms it exists at the cited location, by opening the source. Figures get the plain second check. Then the feature is built, labelled with its source class: <i>witness</i> for another Book of the Dead manuscript, <i>cognate</i> for a related composition such as the Amduat or the Book of Gates.</li>
   </ol>
+  <h3>Admitted so far</h3>
+  <p>G1, the fourteen Aats of the Papyrus of Nu (Spells 149 and 150), from Astra's package bod-world-sources-v1 of 2026-10-06: 109 statements, every one given a decision in the <a href="sources/G1-review.md" style="color:var(--gold)">admission record</a>. Budge's pages were read against the facsimile and every Renouf and Naville reading was found in the Gutenberg text before admission. The unit behind "measures", the Egyptian numerals behind the contested crop heights and the identity of the Lake of Fire remain open.</p>
   <h3>Gaps open on this date</h3>
   <table id="gaps"><thead><tr><th>Place</th><th>What the world needs</th><th>Candidates</th></tr></thead><tbody></tbody></table>
 
@@ -84,7 +89,8 @@
   const L = window.BOD_LEDGER, TX = window.ANI_TEXT || {}, BU = window.ANI_BUDGE || {};
   const blockById = {}; Object.keys(TX).forEach(n => TX[n].blocks.forEach(b => blockById[b.id] = Object.assign({ n: +n }, b)));
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const KIND = { source: 'Source text', scene: 'Vignette, described', editorial: 'Editorial', invention: 'Invention', gap: 'Gap' };
+  const KIND = { source: 'Source text', scene: 'Vignette, described', editorial: 'Editorial', invention: 'Invention', gap: 'Gap', witness: 'Witness: Nu', cognate: 'Cognate text' };
+  const EDITIONS = { 'B1898-II': 'Budge 1898, vol. II, p. ', 'RN1904': 'Renouf and Naville 1904, p. ' };
   const counts = {}; L.places.forEach(p => p.features.forEach(f => counts[f.kind] = (counts[f.kind] || 0) + 1));
   document.getElementById('kinds').innerHTML = Object.keys(KIND).map(k => `<div class="kind k-${k}"><b class="badge">${KIND[k]}</b>${esc(L.kinds[k])} · ${counts[k] || 0}</div>`).join('');
   document.getElementById('unit').innerHTML = `<b>Unit.</b> The ${esc(L.unit.name)}, about ${L.unit.metres} m, because ${esc(L.unit.basis)}. Corpus: ${esc(L.corpus)}`;
@@ -92,13 +98,16 @@
   const cite = c => {
     if (c.b) { const b = blockById[c.b]; return b ? `<a href="../#b=${c.b}" target="_blank" rel="noopener">Sheet ${b.n} · ${esc(b.title)}</a>` : `block ${esc(c.b)}`; }
     if (c.bp) { const [k, i] = c.bp.split(':'); const e = BU[k]; const para = e && e.paras[+i]; return `<details><summary>Budge 1895, plate${k.includes('-') ? 's' : ''} ${esc(k)} · vignette described</summary><p>${esc(para || '(paragraph not found)')}</p></details>`; }
+    if (c.e) { const [ed, pg] = c.e.split(':'); return `<span>${esc(EDITIONS[ed] || ed)}${esc(pg)}</span>`; }
     return '';
   };
-  let html = '', gaps = '';
+  const only = new URLSearchParams(location.search).get('place');
+  let html = only ? `<div class="nav"><a href="ledger.html">Show all ${L.places.length} places</a></div>` : '', gaps = '';
   for (const p of L.places) {
+    if (only && p.id !== only) { for (const f of p.features) if (f.kind === 'gap') gaps += `<tr><td><a href="ledger.html#${p.id}" style="color:var(--gold);text-decoration:none">${esc(p.name)}</a></td><td class="what">${esc(f.what)}</td><td class="model">${esc(f.model)}</td></tr>`; continue; }
     html += `<h2 id="${p.id}"><small>Place ${p.route} of ${L.places.length}</small>${esc(p.name)}</h2><p>${esc(p.summary)}</p><table><thead><tr><th>Kind</th><th>Feature</th><th>In the model</th><th>Justification</th></tr></thead><tbody>`;
     for (const f of p.features) {
-      html += `<tr class="k-${f.kind}"><td><span class="badge">${KIND[f.kind]}</span></td><td class="what">${esc(f.what)}${f.dim ? `<span class="dimv">${f.dim.value} ${esc(f.dim.unit)}${f.dim.note ? ' · ' + esc(f.dim.note) : ''}</span>` : ''}</td><td class="model">${esc(f.model)}</td><td class="cite">${(f.cite || []).map(cite).join('<br>')}</td></tr>`;
+      html += `<tr class="k-${f.kind}"><td><span class="badge">${KIND[f.kind]}</span></td><td class="what">${esc(f.what)}${f.status ? `<span class="stv ${f.status}">${esc(f.status)}${f.alt ? ' · also read: ' + esc(f.alt) : ''}</span>` : ''}${f.dim ? `<span class="dimv">${f.dim.value} ${esc(f.dim.unit)}${f.dim.note ? ' · ' + esc(f.dim.note) : ''}</span>` : ''}</td><td class="model">${esc(f.model)}</td><td class="cite">${(f.cite || []).map(cite).join('<br>')}${f.src ? `<span class="srcv">Statements ${f.src.map(esc).join(', ')} · <a href="sources/G1-review.md">admission record</a></span>` : ''}</td></tr>`;
       if (f.kind === 'gap') gaps += `<tr><td><a href="#${p.id}" style="color:var(--gold);text-decoration:none">${esc(p.name)}</a></td><td class="what">${esc(f.what)}</td><td class="model">${esc(f.model)}</td></tr>`;
     }
     html += '</tbody></table>';
