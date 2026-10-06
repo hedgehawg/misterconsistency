@@ -643,7 +643,9 @@ const pctMore = Math.round((GEO / C_EQ - 1) * 100), pctOf = Math.round(C_EQ / GE
 const lblLine = label('Earth’s equatorial circumference', `${fmt(C_EQ)} km, laid out straight from the centre`, 'pt', 0);
 const lblGap = label(`GEO is ${pctMore}% farther`, `${fmt(GEO)} km from the centre, against ${fmt(C_EQ)} km`, 'pt', 0);
 const lblL1 = label(`L1 · ${mkm} million km`, `${nCirc} circumferences end to end · ${nGeo} GEO radii`, 'pt', 0);
-const vizAll = [vizLine, vizBrace, vizRuler, lblLine, lblGap, lblL1];
+const shortBy = fmt(GEO - C_EQ), pastBy = fmt(C_EQ + R_EQ - GEO);
+const lblBand = label('GEO lies within one Earth radius of play', `from the centre the line falls ${shortBy} km short; from the surface it runs ${pastBy} km past`, 'pt', 0);
+const vizAll = [vizLine, vizBrace, vizRuler, lblLine, lblGap, lblL1, lblBand];
 vizAll.forEach(o => { o.visible = false; o.frustumCulled = false; scene.add(o); });
 const ease = (x) => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
 const _vz = Array.from({ length: 14 }, () => new THREE.Vector3());
@@ -654,13 +656,13 @@ function startViz() {
   stopViz(); focusOn('earth');
   viz = { t0: performance.now(), wasPaused: paused, done: false, beat: -1 }; paused = true; rateText();
   document.getElementById('cap-title').innerHTML = 'L1 distance<small>circumference · GEO · L1</small>';
-  document.getElementById('cap-text').textContent = `Earth’s equatorial circumference is ${fmt(C_EQ)} km. Laid out straight from the centre, it reaches ${pctOf}% of the way to geostationary orbit, ${fmt(GEO)} km out: GEO is ${pctMore}% farther. L1 is about ${mkm} million km out, ${nCirc} of those lines end to end.`;
+  document.getElementById('cap-text').textContent = `Earth’s equatorial circumference is ${fmt(C_EQ)} km. Laid out straight from the centre, it reaches ${pctOf}% of the way to geostationary orbit, ${fmt(GEO)} km out: GEO is ${pctMore}% farther. Laid from the surface instead, it runs ${pastBy} km past GEO, so the orbit sits inside the one-radius band those two anchorings sweep. L1 is about ${mkm} million km out, ${nCirc} of those lines end to end.`;
 }
 document.getElementById('viz').onclick = startViz;
 function writePts(obj, pts) { const a = obj.geometry.attributes.position; pts.forEach((p, i) => a.setXYZ(i, p.x, p.y, p.z)); a.needsUpdate = true; obj.geometry.setDrawRange(0, pts.length); }
 function vizPass(px) {
   if (!viz) return;
-  const s = (performance.now() - viz.t0) / 1000, c = earth.position, L1p = L.L1.position;
+  const s = viz.hold ?? (performance.now() - viz.t0) / 1000, c = earth.position, L1p = L.L1.position;
   const dirL1 = _vz[0].copy(L1p).sub(c).normalize();
   const dEq = _vz[1].copy(dirL1).addScaledVector(nEq, -dirL1.dot(nEq)).normalize();    // L1's bearing, in the equator's plane
   const n0 = _vz[2].crossVectors(nEq, dEq);                                              // in that plane, square to the line
@@ -668,33 +670,38 @@ function vizPass(px) {
   const up = _vz[4].set(0, 1, 0), side2 = _vz[5].crossVectors(dirL1, up).normalize();
   const viewEc = _vz[6].copy(up).multiplyScalar(0.8).addScaledVector(side2, 0.6).normalize();
   const E = _vz[7].copy(c).addScaledVector(dEq, C_EQ), G = _vz[8].copy(c).addScaledVector(dEq, GEO), M = _vz[9].copy(L1p).add(c).multiplyScalar(0.5);
-  const beat = s < 6 ? 0 : s < 11 ? 1 : s < 16 ? 2 : 3;                                 // close on Earth · the whole line · the gap · out to L1
+  const beat = s < 6 ? 0 : s < 11 ? 1 : s < 15 ? 2 : s < 21 ? 3 : 4;                    // close on Earth · the whole line · the gap · the slide · out to L1
   if (beat !== viz.beat) {
     viz.beat = beat;
-    const [tgt, dir, hw] = [[c, viewEq, 20], [c, viewEq, 60], [E, viewEq, 8], [M, viewEc, 900]][beat];
+    const [tgt, dir, hw] = [[c, viewEq, 20], [c, viewEq, 60], [E, viewEq, 8], [c, viewEq, 60], [M, viewEc, 900]][beat];
     tgtWant.copy(tgt); camWant.copy(tgt).addScaledVector(dir, vizDist(hw)); flying = true;
   }
   controls.target.lerp(tgtWant, lerpK);
   const perPx = (p) => camera.position.distanceTo(p) / px;                               // units per pixel at p
   const camUp = _vz[10].set(0, 1, 0).applyQuaternion(camera.quaternion);
   // the equator, traced from 2 s; from 5 s an arc of falling curvature whose anchor slides to the centre, until it is the straight line
-  const drawU = ease((s - 2) / 3), u = ease((s - 5) / 4.5), k = (1 - u) / R_EQ;
-  const A = _vz[11].copy(c).addScaledVector(n0, -(1 - u) * R_EQ), n = Math.max(2, Math.round(240 * drawU) + 1), pts = [];
+  const drawU = ease((s - 2) / 3), u = ease((s - 5) / 4.5), k = (1 - u) / R_EQ, slide = ease((s - 16) / 3), off = slide * R_EQ;
+  const A = _vz[11].copy(c).addScaledVector(n0, -(1 - u) * R_EQ).addScaledVector(dEq, off), n = Math.max(2, Math.round(240 * drawU) + 1), pts = [];
   for (let i = 0; i < n; i++) { const sf = i / 240 * C_EQ, q = new THREE.Vector3().copy(A); if (k > 1e-6) q.addScaledVector(dEq, Math.sin(k * sf) / k).addScaledVector(n0, (1 - Math.cos(k * sf)) / k); else q.addScaledVector(dEq, sf); pts.push(q); }
   writePts(vizLine, pts); vizLine.visible = s >= 2;
-  lblLine.visible = s >= 9.5 && beat < 3; lblLine.position.copy(c).addScaledVector(dEq, C_EQ / 2).addScaledVector(camUp, -18 * perPx(E));
+  lblLine.visible = s >= 9.5 && s < 19 && beat < 4; lblLine.position.copy(c).addScaledVector(dEq, C_EQ / 2 + off).addScaledVector(camUp, -30 * perPx(E));
+  const sub = s < 16 ? 'laid out straight from the centre' : s < 19 ? 'the anchor sliding from the centre to the surface' : 'laid out straight from the surface';
+  if (viz.sub !== sub) { viz.sub = sub; lblLine.element.innerHTML = `Earth’s equatorial circumference<span>${fmt(C_EQ)} km, ${sub}</span>`; }
   // the brace from the line's end to the GEO ring, drawn face-on to the camera
-  const b = _vz[12].copy(camUp).addScaledVector(dEq, -camUp.dot(dEq)).normalize(), W = GEO - C_EQ, hh = W * 0.4, mid = _vz[13].copy(E).addScaledVector(dEq, W / 2);
+  const over = s >= 19, E2 = along(c, dEq, C_EQ + R_EQ), from = over ? G : E, to = over ? E2 : G;
+  const b = _vz[12].copy(camUp).addScaledVector(dEq, -camUp.dot(dEq)).normalize(), W = to.distanceTo(from), hh = W * 0.4, mid = _vz[13].copy(from).addScaledVector(dEq, W / 2);
   const bez = (p0, p1, p2, p3, t) => new THREE.Vector3().addScaledVector(p0, (1 - t) ** 3).addScaledVector(p1, 3 * (1 - t) ** 2 * t).addScaledVector(p2, 3 * (1 - t) * t * t).addScaledVector(p3, t ** 3);
   const half = (from) => { const P1 = along(from, b, hh / 2), P2 = along(mid, b, hh / 2), P3 = along(mid, b, hh); return Array.from({ length: 25 }, (_, i) => bez(from, P1, P2, P3, i / 24)); };
-  const left = half(E), right = half(G); right.reverse(); writePts(vizBrace, left.concat(right.slice(1)));
-  vizBrace.visible = lblGap.visible = s >= 12.5 && beat < 3; lblGap.position.copy(mid).addScaledVector(b, hh).addScaledVector(camUp, 16 * perPx(mid));
+  const left = half(from), right = half(to); right.reverse(); writePts(vizBrace, left.concat(right.slice(1)));
+  vizBrace.visible = (s >= 12.5 && s < 15) || (over && beat < 4);
+  lblGap.visible = s >= 12.5 && s < 15; lblGap.position.copy(mid).addScaledVector(b, hh).addScaledVector(camUp, 16 * perPx(mid));
+  lblBand.visible = over && beat < 4; lblBand.position.copy(mid).addScaledVector(b, hh).addScaledVector(camUp, 16 * perPx(mid));
   // the ruler to L1: the same line, end to end
   const seg = [], gap = C_EQ * 0.1;
   for (let i = 0; i * C_EQ < L_OFF; i++) seg.push(along(c, dirL1, i * C_EQ + gap), along(c, dirL1, Math.min((i + 1) * C_EQ - gap, L_OFF)));
   writePts(vizRuler, seg);
-  vizRuler.visible = lblL1.visible = s >= 17.5; lblL1.position.copy(L1p).addScaledVector(camUp, -26 * perPx(L1p));
-  if (s >= 20 && !viz.done) { viz.done = true; paused = viz.wasPaused; rateText(); }
+  vizRuler.visible = lblL1.visible = s >= 22.5; lblL1.position.copy(L1p).addScaledVector(camUp, -26 * perPx(L1p));
+  if (s >= 25 && !viz.done) { viz.done = true; paused = viz.wasPaused; rateText(); }
 }
 
 // scale readout: what a third of the frame width spans
@@ -705,7 +712,7 @@ function scaleBar(dist, px) {
   scaleEl.innerHTML = `<b>${txt}</b> across a third of the frame`;
 }
 
-window.__lag = { labels: () => (labelList || []).filter(o => o.visible && !o.element.classList.contains('faint')).map(o => { const v = new THREE.Vector3().setFromMatrixPosition(o.matrixWorld).project(camera); return { t: o.element.innerText.split(String.fromCharCode(10))[0], x: Math.round((v.x + 1) / 2 * innerWidth), cls: o.element.className }; }), span: () => { const o = new THREE.Vector3(0, 0, 0).project(camera), r = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion).project(camera); return Math.round(innerWidth / 3 / ((r.x - o.x) / 2 * innerWidth) * 1000); }, focusOn, clusterOf, T, cubes: () => visibleCubes.map(c => { const v = c.position.clone().project(camera); return { m: c.userData.members.join('+'), x: Math.round((v.x + 1) / 2 * innerWidth), y: Math.round((1 - v.y) / 2 * innerHeight) }; }) };
+window.__lag = { hold: (t) => { if (viz) viz.hold = t; }, labels: () => (labelList || []).filter(o => o.visible && !o.element.classList.contains('faint')).map(o => { const v = new THREE.Vector3().setFromMatrixPosition(o.matrixWorld).project(camera); return { t: o.element.innerText.split(String.fromCharCode(10))[0], x: Math.round((v.x + 1) / 2 * innerWidth), cls: o.element.className }; }), span: () => { const o = new THREE.Vector3(0, 0, 0).project(camera), r = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion).project(camera); return Math.round(innerWidth / 3 / ((r.x - o.x) / 2 * innerWidth) * 1000); }, focusOn, clusterOf, T, cubes: () => visibleCubes.map(c => { const v = c.position.clone().project(camera); return { m: c.userData.members.join('+'), x: Math.round((v.x + 1) / 2 * innerWidth), y: Math.round((1 - v.y) / 2 * innerHeight) }; }) };
 // ---------- start ----------
 tick(0); focusOn('system'); camera.position.copy(camWant); flying = false;
 let last = performance.now();
