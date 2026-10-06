@@ -561,7 +561,8 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 function crop(block) {
   const tile = G && G.tiles.find(t => t.n === block.n), r = block.rects && block.rects[0]; if (!tile || !r) return '';
   const cw = (r[1] - r[0]) * tile.w, ch = (r[3] - r[2]) * G.bandH, Wd = 320, sc = Wd / cw, H = Math.min(200, Math.round(ch * sc));
-  return `<a class="crop" href="../#b=${block.id}" target="_blank" rel="noopener" style="height:${H}px" title="Open this passage in the study"><img loading="lazy" alt="Facsimile detail: ${esc(block.title)}" src="../assets/scans/ani-${String(block.n).padStart(2, '0')}.webp" style="width:${Math.round(tile.w * sc)}px;margin-left:${-Math.round(r[0] * tile.w * sc)}px;margin-top:${-Math.round((tile.top + r[2] * G.bandH) * sc)}px"></a>`;
+  // drawn as a background so no host stylesheet can resize it; the sheet is scaled so the cited rectangle fills the card
+  return `<a class="crop" href="../#b=${block.id}" target="_blank" rel="noopener" role="img" aria-label="Facsimile detail: ${esc(block.title)}" title="Open this passage in the study" style="height:${H}px;background-image:url('../assets/scans/ani-${String(block.n).padStart(2, '0')}.webp');background-size:${Math.round(tile.w * sc)}px auto;background-position:${-Math.round(r[0] * tile.w * sc)}px ${-Math.round((tile.top + r[2] * G.bandH) * sc)}px"></a>`;
 }
 function citeHtml(c) {
   if (c.b) { const b = blockById[c.b]; return b ? `<a href="../#b=${c.b}" target="_blank" rel="noopener">Sheet ${b.n} · ${esc(b.title)}</a>` : `<span>block ${esc(c.b)}</span>`; }
