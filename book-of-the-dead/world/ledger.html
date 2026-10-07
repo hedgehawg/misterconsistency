@@ -69,6 +69,7 @@
   </ol>
   <h3>Admitted so far</h3>
   <p>G1, the fourteen Aats of the Papyrus of Nu (Spells 149 and 150), from Astra's package bod-world-sources-v1 of 2026-10-06: 109 statements, every one given a decision in the <a href="sources/G1-review.md" style="color:var(--gold)">admission record</a>. Budge's pages were read against the facsimile and every Renouf and Naville reading was found in the Gutenberg text before admission. The unit behind "measures", the Egyptian numerals behind the contested crop heights and the identity of the Lake of Fire remain open.</p>
+  <p id="admitted-g2g4">G2 to G4, from Astra's package bod-world-sources-v2.1 of 2026-10-06: Spell 146 split by witness (the Papyrus of Nu to pylon XIV, Heru-em-khebit from XV, Ani's ten alongside), Spell 144 in Nu beside Ani's 147, and the door of the Hall part by part from the Nu conclusion of Spell 125, with the four repeated confessions of Ani's list read in Budge's interlinear. 105 statements (44 agreed, 32 single-witness, 29 contested), every one given a decision in the <a href="sources/G2-G4-review.md" style="color:var(--gold)">admission record</a>: 26 already, 16 outline, 45 card, 2 lead, 12 label, 4 annotation. Budge's nineteen pages were read against the facsimile, every Renouf reading was found on its page in the Gutenberg text, and the 1895 interlinear was read in the Internet Archive text layer. No Nu copy of Spell 147 was found in the editions searched. The unit behind "measures" (Aat IV, pylon IX) remains open; Lepsius's forty-cubit schoinion in Naville's note is a lead, not a conversion.</p>
   <h3>Gaps open on this date</h3>
   <table id="gaps"><thead><tr><th>Place</th><th>What the world needs</th><th>Candidates</th></tr></thead><tbody></tbody></table>
 
@@ -89,11 +90,12 @@
   const L = window.BOD_LEDGER, TX = window.ANI_TEXT || {}, BU = window.ANI_BUDGE || {};
   const blockById = {}; Object.keys(TX).forEach(n => TX[n].blocks.forEach(b => blockById[b.id] = Object.assign({ n: +n }, b)));
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const KIND = { source: 'Source text', scene: 'Vignette, described', editorial: 'Editorial', invention: 'Invention', gap: 'Gap', witness: 'Witness: Nu', cognate: 'Cognate text' };
-  const EDITIONS = { 'B1898-II': 'Budge 1898, vol. II, p. ', 'RN1904': 'Renouf and Naville 1904, p. ' };
+  const KIND = { source: 'Source text', scene: 'Vignette, described', editorial: 'Editorial', invention: 'Invention', gap: 'Gap', witness: 'Witness', cognate: 'Cognate text' };
+  const EDITIONS = { 'B1898-II': 'Budge 1898, vol. II, p. ', 'RN1904': 'Renouf and Naville 1904, p. ', 'B1895': 'Budge 1895, The Papyrus of Ani, p. ' };
+  const recordFor = ids => ids[0].startsWith('G1-') ? 'sources/G1-review.md' : 'sources/G2-G4-review.md';
   const counts = {}; L.places.forEach(p => p.features.forEach(f => counts[f.kind] = (counts[f.kind] || 0) + 1));
   document.getElementById('kinds').innerHTML = Object.keys(KIND).map(k => `<div class="kind k-${k}"><b class="badge">${KIND[k]}</b>${esc(L.kinds[k])} · ${counts[k] || 0}</div>`).join('');
-  document.getElementById('unit').innerHTML = `<b>Unit.</b> The ${esc(L.unit.name)}, about ${L.unit.metres} m, because ${esc(L.unit.basis)}. Corpus: ${esc(L.corpus)}`;
+  document.getElementById('unit').innerHTML = `<b>Unit.</b> The ${esc(L.unit.name)}, about ${L.unit.metres} m, because ${esc(L.unit.basis)}. Corpus: ${esc(L.corpus)}<br><b>Statuses.</b> ${esc(L.statusRule || '')}`;
   document.getElementById('ver').textContent = `v${L.version}, ${L.date}`;
   const cite = c => {
     if (c.b) { const b = blockById[c.b]; return b ? `<a href="../#b=${c.b}" target="_blank" rel="noopener">Sheet ${b.n} · ${esc(b.title)}</a>` : `block ${esc(c.b)}`; }
@@ -107,7 +109,7 @@
     if (only && p.id !== only) { for (const f of p.features) if (f.kind === 'gap') gaps += `<tr><td><a href="ledger.html#${p.id}" style="color:var(--gold);text-decoration:none">${esc(p.name)}</a></td><td class="what">${esc(f.what)}</td><td class="model">${esc(f.model)}</td></tr>`; continue; }
     html += `<h2 id="${p.id}"><small>Place ${p.route} of ${L.places.length}</small>${esc(p.name)}</h2><p>${esc(p.summary)}</p><table><thead><tr><th>Kind</th><th>Feature</th><th>In the model</th><th>Justification</th></tr></thead><tbody>`;
     for (const f of p.features) {
-      html += `<tr class="k-${f.kind}"><td><span class="badge">${KIND[f.kind]}</span></td><td class="what">${esc(f.what)}${f.status ? `<span class="stv ${f.status}">${esc(f.status)}${f.alt ? ' · also read: ' + esc(f.alt) : ''}</span>` : ''}${f.dim ? `<span class="dimv">${f.dim.value} ${esc(f.dim.unit)}${f.dim.note ? ' · ' + esc(f.dim.note) : ''}</span>` : ''}</td><td class="model">${esc(f.model)}</td><td class="cite">${(f.cite || []).map(cite).join('<br>')}${f.src ? `<span class="srcv">Statements ${f.src.map(esc).join(', ')} · <a href="sources/G1-review.md">admission record</a></span>` : ''}</td></tr>`;
+      html += `<tr class="k-${f.kind}"><td><span class="badge">${KIND[f.kind]}</span></td><td class="what">${esc(f.what)}${f.status ? `<span class="stv ${f.status}">${esc(f.status)}${f.alt ? ' · also read: ' + esc(f.alt) : ''}</span>` : ''}${f.dim ? `<span class="dimv">${f.dim.value} ${esc(f.dim.unit)}${f.dim.note ? ' · ' + esc(f.dim.note) : ''}</span>` : ''}</td><td class="model">${esc(f.model)}</td><td class="cite">${(f.cite || []).map(cite).join('<br>')}${f.src ? `<span class="srcv">Statements ${f.src.map(esc).join(', ')} · <a href="${recordFor(f.src)}">admission record</a></span>` : ''}</td></tr>`;
       if (f.kind === 'gap') gaps += `<tr><td><a href="#${p.id}" style="color:var(--gold);text-decoration:none">${esc(p.name)}</a></td><td class="what">${esc(f.what)}</td><td class="model">${esc(f.model)}</td></tr>`;
     }
     html += '</tbody></table>';

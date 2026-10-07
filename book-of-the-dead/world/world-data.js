@@ -14,7 +14,7 @@ window.BOD_WORLD = {
     sycamore: { label:'Sycamore',  at:[-2250, -138,   20], dist: 110, pill: 30 },
     duat:     { label:'The Duat',  at:[    0, -120,    0], dist:3400, pill:420 },
     arits:    { label:'Arits',     at:[-1720, -130,    0], dist: 400, pill: 70 },
-    pylons:   { label:'Pylons',    at:[ -880, -115,    0], dist: 700, pill:110 },
+    pylons:   { label:'Pylons',    at:[ -905, -115,  -50], dist:1030, pill:110, dir:[0, 0.62, 1] },
     cities:   { label:'Councils',  at:[ -180, -135,    0], dist: 260, pill: 12 },
     hall:     { label:'Hall',      at:[  120, -128,    0], dist: 260, pill: 95 },
     throne:   { label:'Throne',    at:[  222, -130,    0], dist: 110, pill:170 },

@@ -270,6 +270,8 @@ const ARITS = [
   { keeper: 'Atek-au-kehaq-kheru', watcher: 'An-hri', herald: 'Ates-hra', heads: ['jackal', 'dog', 'dog'], items: ['corn', 'knife', 'knife'] },
   { keeper: 'Sekhem-Matenu-sen', watcher: 'Aa-maa-kheru', herald: 'Khesef-khemi', heads: ['hare', 'lion', 'man'], items: ['knife', 'knife', 'corn'] }
 ];
+// Spell 144 in the Papyrus of Nu (Budge 1898, vol. II, pp. 240 to 241): doorkeeper, watcher, herald at each of seven Arits; a witness beside Ani's 147 (sources/G2-G4-review.md)
+const NU144 = [['Sekhet-hra-asht-aru', 'Semetu', 'Hu-kheru'], ['Tun-hat', 'Se-qet-hra', 'Sabes'], ['Am-huat-ent-peh-fi', 'Res-hra', 'Uaau'], ['Khesef-hra-asht-kheru', 'Res-ab', 'Neteka-hra-khesef-atu'], ['Ankh-em-fentu', 'Ashebu', 'Teb-her-kehaat'], ['Aken-tau-k-ha-kheru', 'An-hra', 'Metes-hra-ari-she'], ['Metes-sen', 'Aaa-kheru', 'Khesef-hra-khemiu']];
 function buildArits() {
   const g = new THREE.Group();
   g.add(box(480, 40, 30, M.rock, -1710, D, -95), box(480, 40, 30, M.rock, -1710, D, 95));
@@ -279,7 +281,7 @@ function buildArits() {
     if (i === 0) for (let k = -2; k <= 2; k++) gate.add(box(0.5, 1.6, 0.5, M.gold, 0, 16, k * 2.6));
     a.heads.forEach((h, k) => gate.add(figure({ head: h, pose: 'sit', h: 4.5, item: a.items[k], x: -5, y: 0, z: (k - 1) * 9, ry: -Math.PI / 2 })));
     g.add(gate);
-    g.add(label(`Arit ${i + 1}`, x, D + 20, 0, 'fl', 'arits', `${a.keeper} · ${a.watcher} · ${a.herald}`));
+    g.add(label(`Arit ${i + 1}`, x, D + 20, 0, 'fl', 'arits', `Ani: ${a.keeper} · ${a.watcher} · ${a.herald} · Nu, Spell 144: ${NU144[i].join(' · ')}`));
   });
   for (let i = 0; i < 12; i++) g.add(box(2.4, 0.9, 1, M.ember, -1888 + i * 2.5, D, 12), light(-1874, D + 2, 12, P.flame, 400, 40));
   g.add(label('The Seven Arits in the great valley', -1700, D + 48, 0, 'fl big', 'arits', 'Spell 147, sheets 11 and 12'));
@@ -299,6 +301,21 @@ const PYLONS = [
   { keeper: 'Ari-su-tchesef', text: 'her girth is three hundred and fifty measures', head: 'lion', item: 'besom', top: 'uraei', round: true },
   { keeper: 'Sekhen-ur', text: 'she who is loud of voice', head: 'ram', item: 'atef', top: 'serpents' }
 ];
+/* Pylons XI to XXI of Spell 146 (Budge 1898, vol. II, pp. 256 to 258): Nu to XIV, Heru-em-khebit from XV. A witness layer beyond Ani's tenth,
+   admitted through the sourcing workstream (sources/G2-G4-review.md); drawn as ghosts because the editions give no form or size; Naville's reading is on the ledger card. */
+const MORE_PYLONS = [
+  { n: 'XI', w: 'Nu', text: 'she who slaughtereth always the burner up of fiends', alt: 'Naville: acclamations in the daytime and in the twilight, not on the day of darkness' },
+  { n: 'XII', w: 'Nu', text: 'thou who invokest thy two lands', alt: 'Naville: those who come through the morning heat, not with flashings and with fire' },
+  { n: 'XIII', w: 'Nu', text: 'Osiris bringeth his two hands over her; Hapi sends forth splendour', alt: 'Naville: Isis extends her two hands upon her; she lightens the Nile in its hidden abode' },
+  { n: 'XIV', w: 'Nu', text: 'lady of might, who danceth on the blood-red ones', alt: 'Naville: who dances on the impure' },
+  { n: 'XV', w: 'Heru-em-khebit', text: 'the Fiend, red of hair and eyes, who cometh forth by night', alt: 'Naville agrees: red hair and eyes, who comes out at night' },
+  { n: 'XVI', w: 'Heru-em-khebit', text: 'terrible one, the lady of the rain-storm', alt: 'Naville: the lady of the morning dew, who sprinkles her sparks of fire; partly from the royal-tomb Spell 145' },
+  { n: 'XVII', w: 'Heru-em-khebit', text: 'hewer-in-pieces in blood, Ahabit (?), lady of hair', alt: 'Naville: Aahit, the lady of the uauai plants' },
+  { n: 'XVIII', w: 'Heru-em-khebit', text: 'lover of the fire, lady of the Great House', alt: 'Naville: the lady of the palace' },
+  { n: 'XIX', w: 'Heru-em-khebit', text: 'dispenser of light, lady of the writings of Ptah', alt: 'Naville: the lady of the books written by Thoth himself' },
+  { n: 'XX', w: 'Heru-em-khebit', text: 'she who dwelleth within the cavern of her lord', alt: 'Naville agrees: within the cavern of her lord' },
+  { n: 'XXI', w: 'Heru-em-khebit', text: 'knife which cutteth', alt: 'Naville: she who cuts the stone by her word' }
+];
 function buildPylons() {
   const g = new THREE.Group();
   PYLONS.forEach((p, j) => {
@@ -306,7 +323,7 @@ function buildPylons() {
     if (p.round) {
       const r = 350 / (2 * Math.PI), t0 = Math.asin(7.5 / r);
       for (const start of [Math.PI / 2 + t0, Math.PI * 1.5 + t0]) { const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, 30, 64, 1, false, start, Math.PI - 2 * t0), M.green); m.position.y = 15; py.add(m); }
-      py.add(label('The ninth pylon, round: 350 measures about', 0, 34, 0, 'fl', 'pylons', 'read as cubits of circumference; the unit is not in the text'));
+      py.add(label('The ninth pylon, round: 350 measures about', 0, 34, 0, 'fl', 'pylons', 'drawn one measure to one cubit for display; the unit is not in the text; Nu and the Leyden papyrus also give 350, as girth'));
     } else {
       for (const sgn of [-1, 1]) { const tower = new THREE.Mesh(new THREE.CylinderGeometry(5, 6.5, h, 4), M.bronze); tower.rotation.y = Math.PI / 4; tower.position.set(0, h / 2, sgn * 14); py.add(tower); if (p.fire) { py.add(flame(2.2, 6, 0, h, sgn * 14)); } }
       py.add(box(10, 3, 14, M.bronze, 0, 12, 0));
@@ -324,10 +341,25 @@ function buildPylons() {
     if (p.top === 'flames') for (let k = -2; k <= 2; k++) sh.add(flame(0.35, 1.3, k * 1, top, 0));
     if (p.top === 'hawks') { for (const s of [-1.4, 1.4]) sh.add(figure({ head: 'man', h: 1.2, x: s, y: top, z: 0 })); for (const s of [-0.5, 0.5]) sh.add(cyl(0.05, 0.05, 0.9, M.gold, s, top, 0)); }
     py.add(sh);
-    py.add(label(`Pylon ${j + 1}: ${p.text}`, 0, Math.min(h, 60) + 6, 0, 'fl', 'pylons', `doorkeeper ${p.keeper}`));
+    py.add(label(`Pylon ${j + 1}: ${p.text}`, 0, Math.min(h, 60) + 6 + (j % 2 ? 14 : 0), 0, 'fl', 'pylons', `doorkeeper ${p.keeper}`));   // alternate heights so neighbouring labels clear each other
     g.add(py);
   });
-  g.add(label('The Ten Pylons of the House of Osiris', -900, D + 90, 0, 'fl big', 'pylons', 'Spell 146, sheets 11 and 12'));
+  // the eleven witness pylons: a second row behind Ani's ten (north, by editorial choice), as translucent ghosts with their edges drawn
+  const ghost = new THREE.MeshBasicMaterial({ color: P.witness, transparent: true, opacity: 0.28, depthWrite: false });
+  MORE_PYLONS.forEach((p, k) => {
+    const x = -1260 + k * 80, z = -110, py = grp(x, D, z);
+    for (const sgn of [-1, 1]) {
+      const geo = new THREE.CylinderGeometry(5, 6.5, 24, 4);
+      const fill = new THREE.Mesh(geo, ghost); fill.rotation.y = Math.PI / 4; fill.position.set(0, 12, sgn * 14); fill.userData.keep = true; py.add(fill);
+      const o = new THREE.LineSegments(new THREE.EdgesGeometry(geo), M.outline); o.rotation.y = Math.PI / 4; o.position.set(0, 12, sgn * 14); o.userData.keep = true; py.add(o);
+    }
+    const lintelGeo = new THREE.BoxGeometry(10, 3, 14), lintelFill = new THREE.Mesh(lintelGeo, ghost); lintelFill.position.y = 13.5; lintelFill.userData.keep = true; py.add(lintelFill);
+    const lintel = new THREE.LineSegments(new THREE.EdgesGeometry(lintelGeo), M.outline); lintel.position.y = 13.5; lintel.userData.keep = true; py.add(lintel);
+    py.add(label(`${p.n} · ${p.w}`, 0, k % 2 ? 46 : 30, 0, 'fl', 'pylons', p.text));   // Naville's reading is on the ledger card
+    g.add(py);
+  });
+  g.add(label('Pylons XI to XXI of Spell 146: the Papyrus of Nu to XIV, Heru-em-khebit from XV', -860, D + 92, -110, 'fl', 'pylons', 'a witness beside Ani\'s ten (Budge 1898), set in this second row by editorial choice; ghosts, because the editions give no form or size'));
+  g.add(label('The Ten Pylons of the House of Osiris', -900, D + 205, 0, 'fl big', 'pylons', 'Spell 146, sheets 11 and 12'));
   return merged(g, 'pylons');
 }
 
@@ -374,7 +406,13 @@ function buildHall() {
   g.add(cyl(0.2, 0.3, 4, M.gold, 185, D + 1, 10), box(4, 0.2, 0.2, M.gold, 185, D + 5.1, 10), animal(2.2, 1.4, M.figureDark, 188.5, D + 1, 10, Math.PI, 'lion'));
   g.add(box(1.2, 1.6, 1.2, M.bronze, 191.5, D + 1, 10), figure({ head: 'ibis', pose: 'sit', h: 2.4, item: 'palette', x: 191.5, y: D + 2.6, z: 10, ry: -Math.PI / 2 }), box(0.15, 2, 0.7, M.white, 193.2, D + 1, 10));
   g.add(label('The Hall of Two Truths', 120, D + H + 14, 0, 'fl big', 'hall', 'Spell 125, sheets 29 to 32; the weighing on sheet 3'));
-  g.add(label('The left door: Neb-pehti-thesu-menment', x0, D + 26, 0, 'fl', 'hall', 'Spell 125\'s door, placed at this end by editorial choice; the text does not say which. Anubis asks its name: "Driven away of Shu"; upper leaf "Lord of right and truth, standing upon his two feet"; lower leaf "Lord of might and power, dispenser of cattle"'));
+  // the door part by part, after the Nu conclusion of Spell 125 (Budge 1898, vol. II, p. 199; Renouf 1904, pp. 218 to 219): a witness layer on Ani's door
+  g.add(label('The door part by part, after Nu (Spell 125; Budge 1898 p. 199, Renouf 1904 pp. 218 to 219)', x0, D + 26, 0, 'fl', 'hall'));
+  g.add(label('Lintels and posts (Budge) · side posts and lintels (Renouf)', x0, D + 20, 0, 'fl', 'hall'));
+  g.add(label('Guardian of the leaf (Budge) · Keeper of the Door (Renouf): the elbow, or the knee, of Shu', x0, D + 14, 0, 'fl', 'hall'));
+  g.add(label('Bolts, fastening, socket (Budge) · leaf, lock, latch (Renouf)', x0, D + 8, 0, 'fl', 'hall'));
+  g.add(label('Threshold: "Ox of [the god] Seb" in both · the floor asks the names of the two feet', x0, D + 2, 0, 'fl', 'hall'));
+  g.add(label('The left door: Neb-pehti-thesu-menment', x0, D + 37, 0, 'fl', 'hall', 'Spell 125\'s door, placed at this end by editorial choice; the text does not say which. Anubis asks its name: "Driven away of Shu"; upper leaf "Lord of right and truth, standing upon his two feet"; lower leaf "Lord of might and power, dispenser of cattle"'));
   g.add(label('The right door: Neb-Maat-heri-tep-retui-f', x1, D + 26, 0, 'fl', 'hall'));
   g.add(label('The forty-two assessors', 118, D + 6, 0, 'fl', 'hall', 'the Negative Confession, sheets 31 and 32'), label('The weighing of the heart', wx, D + 12, wz, 'fl', 'hall', 'sheet 3'));
   return merged(g, 'hall');
@@ -634,8 +672,9 @@ function focusOverview() {
 }
 
 // ---------- the evidence panel ----------
-const panel = $('panel'), KIND = { source: 'Source text', scene: 'Vignette, described', editorial: 'Editorial', invention: 'Invention', gap: 'Gap', witness: 'Witness: Nu', cognate: 'Cognate text' };
-const EDITIONS = { 'B1898-II': 'Budge 1898, vol. II, p. ', 'RN1904': 'Renouf and Naville 1904, p. ' };
+const panel = $('panel'), KIND = { source: 'Source text', scene: 'Vignette, described', editorial: 'Editorial', invention: 'Invention', gap: 'Gap', witness: 'Witness', cognate: 'Cognate text' };
+const EDITIONS = { 'B1898-II': 'Budge 1898, vol. II, p. ', 'RN1904': 'Renouf and Naville 1904, p. ', 'B1895': 'Budge 1895, The Papyrus of Ani, p. ' };
+const recordFor = ids => ids[0].startsWith('G1-') ? 'sources/G1-review.md' : 'sources/G2-G4-review.md';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function crop(block) {
   const tile = G && G.tiles.find(t => t.n === block.n), r = block.rects && block.rects[0]; if (!tile || !r) return '';
@@ -655,7 +694,7 @@ function showPlace(id) {
   for (const f of p.features) {
     let cites = ''; let firstCrop = '';
     for (const c of (f.cite || [])) { cites += `<li>${citeHtml(c)}</li>`; if (!firstCrop && c.b && blockById[c.b]) firstCrop = crop(blockById[c.b]); }
-    html += `<li class="feat k-${f.kind}"><div class="fh"><span class="badge">${KIND[f.kind]}</span><span class="what">${esc(f.what)}</span></div>${f.status ? `<div class="st st-${f.status}">${esc(f.status)}${f.alt ? ' · also read: ' + esc(f.alt) : ''}</div>` : ''}${f.dim ? `<div class="dim">${f.dim.value} ${esc(f.dim.unit)}${f.dim.note ? ' · ' + esc(f.dim.note) : ''}</div>` : ''}<div class="model">${esc(f.model)}</div>${firstCrop}${cites ? `<ul class="cites">${cites}</ul>` : ''}${f.src ? `<div class="srcids">Statements ${f.src.map(esc).join(', ')} · <a href="sources/G1-review.md" target="_blank" rel="noopener">admission record</a></div>` : ''}</li>`;
+    html += `<li class="feat k-${f.kind}"><div class="fh"><span class="badge">${KIND[f.kind]}</span><span class="what">${esc(f.what)}</span></div>${f.status ? `<div class="st st-${f.status}">${esc(f.status)}${f.alt ? ' · also read: ' + esc(f.alt) : ''}</div>` : ''}${f.dim ? `<div class="dim">${f.dim.value} ${esc(f.dim.unit)}${f.dim.note ? ' · ' + esc(f.dim.note) : ''}</div>` : ''}<div class="model">${esc(f.model)}</div>${firstCrop}${cites ? `<ul class="cites">${cites}</ul>` : ''}${f.src ? `<div class="srcids">Statements ${f.src.map(esc).join(', ')} · <a href="${recordFor(f.src)}" target="_blank" rel="noopener">admission record</a></div>` : ''}</li>`;
   }
   html += '</ol>';
   panel.innerHTML = html; panel.scrollTop = 0; panel.classList.add('open'); $('panelToggle').textContent = 'Hide evidence'; applyView();
@@ -667,7 +706,7 @@ function showOverview() {
   <li class="feat k-scene"><div class="fh"><span class="badge">Vignette, described</span><span class="what">${kinds.scene || 0} on his description of a picture in the roll</span></div></li>
   <li class="feat k-editorial"><div class="fh"><span class="badge">Editorial</span><span class="what">${kinds.editorial || 0} are our arrangement</span></div></li>
   <li class="feat k-invention"><div class="fh"><span class="badge">Invention</span><span class="what">${kinds.invention || 0} are ours, labelled, so the model can be built</span></div></li>
-  <li class="feat k-witness"><div class="fh"><span class="badge">Witness: Nu</span><span class="what">${kinds.witness || 0} come from the Papyrus of Nu through the sourcing workstream, each with its status and its other reading</span></div></li>
+  <li class="feat k-witness"><div class="fh"><span class="badge">Witness</span><span class="what">${kinds.witness || 0} come from other manuscripts and editions through the sourcing workstream (the Papyrus of Nu, Heru-em-khebit, the Leyden papyrus, Renouf's reading), each with its status and its other reading</span></div></li>
   <li class="feat k-gap"><div class="fh"><span class="badge">Gap</span><span class="what">${kinds.gap || 0} are gaps the papyrus does not fill; they go to the sourcing workstream</span></div></li></ol>
   <p class="sum">Select a place, or begin the journey. Each feature links to the passage in the study and shows the facsimile detail it rests on.</p>`;
   panel.classList.add('open'); $('panelToggle').textContent = 'Hide evidence'; applyView();
