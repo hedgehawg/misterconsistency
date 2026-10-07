@@ -36,7 +36,8 @@ const M = {
   white: std(0xe8e6e1, { emissive: 0x777777, emissiveIntensity: 0.2 }), dark: std(0x0a0a0c),
   metal: std(P.metal, { metalness: 0.6, roughness: 0.4 }), witness: std(P.witness, { transparent: true, opacity: 0.35, depthWrite: false }),
   tintGreen: std(P.tintGreen, { transparent: true, opacity: 0.6, depthWrite: false }), tintYellow: std(P.tintYellow, { transparent: true, opacity: 0.6, depthWrite: false }),
-  outline: new THREE.LineBasicMaterial({ color: P.witness, transparent: true, opacity: 0.9 })
+  outline: new THREE.LineBasicMaterial({ color: P.witness, transparent: true, opacity: 0.9 }),
+  ghost: new THREE.MeshBasicMaterial({ color: P.witness, transparent: true, opacity: 0.28, depthWrite: false })   // witness layers drawn as translucent ghosts
 };
 
 // ---------- small geometry helpers ----------
@@ -345,7 +346,7 @@ function buildPylons() {
     g.add(py);
   });
   // the eleven witness pylons: a second row behind Ani's ten (north, by editorial choice), as translucent ghosts with their edges drawn
-  const ghost = new THREE.MeshBasicMaterial({ color: P.witness, transparent: true, opacity: 0.28, depthWrite: false });
+  const ghost = M.ghost;
   MORE_PYLONS.forEach((p, k) => {
     const x = -1260 + k * 80, z = -110, py = grp(x, D, z);
     for (const sgn of [-1, 1]) {
@@ -472,8 +473,28 @@ function buildField() {
   for (let k = 0; k < 3; k++) g.add(figure({ head: 'man', h: 7, item: 'staff', x: 900 + k * 9, y: y + 1.6, z: 250, ry: Math.PI / 2 }));
   // the city Hetep on the far bank: named, not described
   const hetep = grp(2050, y, -330); for (const [w, d, dx, dz] of [[60, 2, 0, -29], [60, 2, 0, 29], [2, 60, -29, 0], [2, 60, 29, 0]]) hetep.add(box(w, 8, d, M.wall, dx, 0, dz)); g.add(hetep);
+  // The Field of the Papyrus of Nebseni (Spell 110, sheet 17; Budge 1898, vol. II, p. 170): a witness overlay south of Ani's islands, by editorial
+  // choice, in the witness colour (sources/G5-review.md). Sizes and spacing are the model's; Nebseni gives names and counts, not dimensions.
+  const N = grp(0, y, 0), zN = 540;
+  const pool = (x, z, name) => { const p = sph(22, M.ghost, x, 0.3, z, 10); p.scale.set(1.4, 0.08, 1); p.userData.keep = true; N.add(p); N.add(label(name, x, 6, z, 'fl', 'fields')); };
+  ['Urti (var. Hemat)', 'Hetep (var. Hast)', 'Qetqet'].forEach((n, k) => pool(960 + k * 70, zN - 40, n));
+  ['Nebt-taui', 'Uakha', 'Kha (?)', 'Hetep'].forEach((n, k) => pool(1220 + k * 70, zN - 40, n));
+  ['a pool, name illegible', 'a pool, name illegible'].forEach((n, k) => pool(1540 + k * 70, zN - 40, n));
+  const bowl = new THREE.Mesh(new THREE.RingGeometry(30, 34, 32, 1, 0, Math.PI), M.ghost); bowl.rotation.x = -Math.PI / 2; bowl.position.set(1110, 0.5, zN + 70); bowl.userData.keep = true; N.add(bowl);
+  N.add(label('A division shaped like a bowl: the birth-place of the god of the city, Qenqen[et nebt]', 1110, 10, zN + 70, 'fl', 'fields'));
+  const isle = new THREE.Mesh(new THREE.BoxGeometry(110, 1.6, 60), M.ghost); isle.position.set(1290, 0.8, zN + 80); isle.userData.keep = true; N.add(isle);
+  for (let k = 0; k < 4; k++) N.add(figure({ head: 'man', pose: 'sit', h: 5, item: 'sceptre', mat: M.ghost, x: 1260 + k * 14, y: 1.6, z: zN + 80, ry: Math.PI }));
+  N.add(stair(5, 0.7, 0.8, 6, M.ghost, 1325, 1.6, zN + 98));
+  N.add(label('An island whereon are four gods and a flight of steps: the great company of the gods who are in Sekhet-hetep', 1290, 12, zN + 80, 'fl', 'fields'));
+  const canal = new THREE.Mesh(new THREE.BoxGeometry(220, 0.5, 16), M.ghost); canal.position.set(1560, 0.2, zN + 90); canal.userData.keep = true; N.add(canal);
+  const tch = boat(22, M.ghost, 1650, 0.6, zN + 90, 0, false); tch.add(stair(3, 0.7, 0.7, 5, M.ghost, -1.8, 1.4, 0));
+  for (let k = 0; k < 2; k++) for (const side of [3, -3]) { tch.add(cyl(0.12, 0.12, 6, M.ghost, -8.5 + k * 2.2, -1, side).rotateX(side > 0 ? 0.5 : -0.5), cyl(0.12, 0.12, 6, M.ghost, 6.3 + k * 2.2, -1, side).rotateX(side > 0 ? 0.5 : -0.5)); }   // four oars at the bows, four at the stern (Budge p. 170); the split two a side is the model's
+  N.add(tch);
+  N.add(label('The boat Tchetetfet, eight oars, four at the bows and four at the stern, with a flight of steps, at the end of a canal: the Domain of Neth', 1480, 10, zN + 90, 'fl', 'fields'));
+  N.add(label('The Field of the Papyrus of Nebseni (Spell 110, sheet 17): a witness beside Ani\'s, Budge 1898', 1640, 40, zN - 110, 'fl', 'fields', 'its pools, its bowl-shaped birth-place, its island of four gods and its boat, placed south of Ani\'s islands by editorial choice; sizes invented; its stream of one thousand [measures] is the twin of Ani\'s river'));
+  g.add(N);
   g.add(label('Sekhet-hetepet, the Field of Reeds', 1300, y + 60, 0, 'fl big', 'fields', 'Spell 110, sheets 34 and 35'));
-  g.add(label('The river: one thousand cubits long, "not can be told its width"', 1300, y + 6, 160, 'fl', 'fields', 'Spell 110'), label('Sekhet-aanre: ploughing', 1200, y + 12, 80, 'fl', 'fields'));
+  g.add(label('The river: one thousand cubits long, "not can be told its width"', 1300, y + 6, 160, 'fl', 'fields', 'Spell 110; the unit is Budge\'s bracket: [cubits] for Ani, [measures] for Nebseni\'s stream of one thousand'), label('Sekhet-aanre: ploughing', 1200, y + 12, 80, 'fl', 'fields'));
   g.add(label('The seat of the shining ones: seven cubits', 910, y + 12, 250, 'fl', 'fields'), label('Wheat three cubits', 980, y + 8, -80, 'fl', 'fields'));
   g.add(label('Boats of eight oars with serpent heads and a flight of steps', 1400, y + 10, 340, 'fl', 'fields'), label('Hetep: named, not described', 2050, y + 12, -330, 'fl gap', 'fields'));
   g.add(label('Thoth presents Ani and his ka', 900, y + 12, -240, 'fl', 'fields'));
@@ -706,7 +727,7 @@ function showOverview() {
   <li class="feat k-scene"><div class="fh"><span class="badge">Vignette, described</span><span class="what">${kinds.scene || 0} on his description of a picture in the roll</span></div></li>
   <li class="feat k-editorial"><div class="fh"><span class="badge">Editorial</span><span class="what">${kinds.editorial || 0} are our arrangement</span></div></li>
   <li class="feat k-invention"><div class="fh"><span class="badge">Invention</span><span class="what">${kinds.invention || 0} are ours, labelled, so the model can be built</span></div></li>
-  <li class="feat k-witness"><div class="fh"><span class="badge">Witness</span><span class="what">${kinds.witness || 0} come from other manuscripts and editions through the sourcing workstream (the Papyrus of Nu, Heru-em-khebit, the Leyden papyrus, Renouf's reading), each with its status and its other reading</span></div></li>
+  <li class="feat k-witness"><div class="fh"><span class="badge">Witness</span><span class="what">${kinds.witness || 0} come from other manuscripts and editions through the sourcing workstream (the Papyri of Nu, Nebseni and Heru-em-khebit, the Leyden papyrus, Renouf's reading), each with its status and its other reading</span></div></li>
   <li class="feat k-gap"><div class="fh"><span class="badge">Gap</span><span class="what">${kinds.gap || 0} are gaps the papyrus does not fill; they go to the sourcing workstream</span></div></li></ol>
   <p class="sum">Select a place, or begin the journey. Each feature links to the passage in the study and shows the facsimile detail it rests on.</p>`;
   panel.classList.add('open'); $('panelToggle').textContent = 'Hide evidence'; applyView();

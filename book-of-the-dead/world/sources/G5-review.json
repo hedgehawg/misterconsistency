@@ -1,0 +1,957 @@
+{
+ "package": "bod-world-sources-v3.1",
+ "date": "2026-10-07",
+ "checks": {
+  "archive_sha256": "e269f010e0f63e64fa114c38b78fefc7f1e1d9ea95eceedef4c7e06f0b9056f4",
+  "archive_matches_supplied_checksum": true,
+  "manifest_files": 23,
+  "manifest_files_verified": 23,
+  "statements": 72,
+  "by_status": {
+   "single-witness": 44,
+   "contested": 19,
+   "agreed": 9
+  },
+  "by_kind": {
+   "arrangement": 26,
+   "count": 24,
+   "dimension": 16,
+   "material": 6
+  },
+  "by_scope": {
+   "110": 62,
+   "109-context": 10
+  },
+  "facsimile_pages_read": "The eight pages of evidence/Budge1898-II-G5-facsimile.pdf (printed pp. 169 to 176) were read page by page against the transcriptions: the Nu attribution of Spell 109 (sheet 12) and its wheat, barley and reaper figures; the Nebseni attribution of Spell 110 (sheet 17); the sixteen vignette items with the bracketed [measures] and the length of heaven; Budge's description of Ani's vignette with its seven cubits, three cubits, eight oars and two boat names; the Hawk of one thousand cubits by two thousand [cubits in width]; the two Lake of double Fire clauses; the section and pool notes on pp. 174 to 176.",
+  "renouf_gutenberg": "RN1904 quotations: 28; found verbatim: 28; on the cited page: 28",
+  "renouf_note": "Renouf's inline note numbers, which the package keeps in its quotations, were removed before matching.",
+  "ani_corpus": "B1895-Ani quotations: 8; in the study corpus: 4; in the 1895 text layer verbatim: 3, with the OCR's misreadings allowed: 0, by a fragment only: 3; on the cited page: 6 of 6",
+  "ani_routes": [
+   "G5-110-ANI-RIVER-LENGTH corpus | not found | p. null (claimed 364)",
+   "G5-110-ANI-RIVER-WIDTH corpus | not found | p. null (claimed 364)",
+   "G5-110-ANI-KHUS-HEIGHT | text layer | p. 365",
+   "G5-110-ANI-WHEAT-HEIGHT | text layer | p. 365",
+   "G5-110-ANI-OARS corpus | text layer, fragment only | p. 365",
+   "G5-110-ANI-BOAT-ENDS corpus | text layer, fragment only | p. 365",
+   "G5-110-ANI-ASHET | text layer, fragment only | p. 365",
+   "G5-110-ANI-BIRTHPLACE | text layer | p. 365"
+  ],
+  "budge1895_notes": {
+   "all_pages_as_claimed": true,
+   "items": [
+    {
+     "quote": "The river is",
+     "page_claimed": 364,
+     "line": 40535,
+     "page_found": 364
+    },
+    {
+     "quote": "one thousand [cubits]",
+     "page_claimed": 364,
+     "line": 40544,
+     "page_found": 364
+    },
+    {
+     "quote": "In the Nebseni papyrus they are called",
+     "page_claimed": 364,
+     "line": 40627,
+     "page_found": 364
+    },
+    {
+     "quote": "Instead of three, the Nebseni papyrus has four ovals",
+     "page_claimed": 364,
+     "line": 40641,
+     "page_found": 364
+    },
+    {
+     "quote": "A boat of eight oars, each end",
+     "page_claimed": 365,
+     "line": 40663,
+     "page_found": 365
+    },
+    {
+     "quote": "flood (?) of [heaven]",
+     "page_claimed": 365,
+     "line": 40667,
+     "page_found": 365
+    },
+    {
+     "quote": "Their length is cubits seven the wheat cubits three",
+     "page_claimed": 365,
+     "line": 40675,
+     "page_found": 365
+    },
+    {
+     "quote": "Nebseni papyrus four gods dwell on this island",
+     "page_claimed": 365,
+     "line": 40703,
+     "page_found": 365
+    },
+    {
+     "quote": "is not marked in the Ani papyrus",
+     "page_claimed": 365,
+     "line": 40709,
+     "page_found": 365
+    }
+   ]
+  },
+  "errata_addendum": {
+   "archive": "bod-world-sources-v2.1-errata-01.zip",
+   "sha256": "9ebad40854be81a8785b21042722f8d6087c1caad8be89445b6450ea58b7217d",
+   "matches_supplied_checksum": true,
+   "manifest_files": 4,
+   "manifest_files_verified": 4,
+   "corrections": [
+    "G3-144-THREE-ROLES: Aken-tau-keha-kheru -> Aken-tau-k-ha-kheru",
+    "G3-147-02-HEADS: 259 -> 258"
+   ],
+   "accepted_v21_sha256_now": "e27e3661f22478925f81839ca1f59d2e4f10e8c1d597c21dabf9a572ab315be6",
+   "accepted_v21_unchanged": true,
+   "note": "The addendum restates the two corrections already in sources/G2-G4-review.md; nothing was applied from it."
+  }
+ },
+ "status_rule": "A feature that gathers several statements takes the weakest status among them: contested if any is contested, otherwise single-witness if any is, otherwise agreed; where a feature's own text records a differing reading that no numbered statement covers, it is contested and says so. Its text names the parts that differ.",
+ "status_checks": [
+  {
+   "feature": "fields/streams",
+   "status": "single-witness",
+   "worst_of_g5_statements": "single-witness",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/river",
+   "status": "single-witness",
+   "worst_of_g5_statements": "single-witness",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/wheat",
+   "status": "single-witness",
+   "worst_of_g5_statements": "single-witness",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/shining-seat",
+   "status": "single-witness",
+   "worst_of_g5_statements": "single-witness",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/boats",
+   "status": "single-witness",
+   "worst_of_g5_statements": "single-witness",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/reaping",
+   "status": "single-witness",
+   "worst_of_g5_statements": "single-witness",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/thoth",
+   "status": "single-witness",
+   "worst_of_g5_statements": "single-witness",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/lake-peace",
+   "status": "contested",
+   "worst_of_g5_statements": "contested",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/work",
+   "status": "contested",
+   "worst_of_g5_statements": "contested",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/nebseni-plan",
+   "status": "single-witness",
+   "worst_of_g5_statements": "single-witness",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/ani-1898",
+   "status": "contested",
+   "worst_of_g5_statements": "contested",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/hawk",
+   "status": "single-witness",
+   "worst_of_g5_statements": "single-witness",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/text-110",
+   "status": "contested",
+   "worst_of_g5_statements": "contested",
+   "other_statements": 0,
+   "ok": true
+  },
+  {
+   "feature": "fields/barley-height",
+   "status": "contested",
+   "worst_of_g5_statements": "contested",
+   "other_statements": 7,
+   "ok": true
+  }
+ ],
+ "corrections": [],
+ "classes": {
+  "overlay": "drawn in the witness overlay south of Ani's islands, with its label (sizes invented)",
+  "label": "carried as text on a label in the model",
+  "already": "already modelled from Ani's own text or Budge's 1895 description; the witness adds its citation",
+  "card": "evidence-card text only: utterances, names, similes and readings that fix no geometry"
+ },
+ "by_class": {
+  "overlay": 10,
+  "already": 25,
+  "card": 35,
+  "label": 2
+ },
+ "statements": [
+  {
+   "id": "G5-110-NEB-STREAMS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "fields/streams",
+   "text": "The illustrated field is surrounded and intersected by streams."
+  },
+  {
+   "id": "G5-110-NEB-CITY-SIGNS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "Three city-signs appear above the paddling boat."
+  },
+  {
+   "id": "G5-110-NEB-FIRST-POOLS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "overlay",
+   "feature": "fields/nebseni-plan",
+   "text": "The first group comprises three pools/lakes: Urti, Hetep and Qetqet."
+  },
+  {
+   "id": "G5-110-NEB-BENNU",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "Nebseni grasps a Bennu bird perched on a stand."
+  },
+  {
+   "id": "G5-110-NEB-KA-SIGNS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "Three ka symbols precede the Bennu scene."
+  },
+  {
+   "id": "G5-110-NEB-KHU-SIGNS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "Three khu symbols precede the Bennu scene."
+  },
+  {
+   "id": "G5-110-NEB-FLOWER",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "Nebseni is seated, smelling a flower."
+  },
+  {
+   "id": "G5-110-NEB-OFFERINGS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "An offering table occurs in the vignette."
+  },
+  {
+   "id": "G5-110-NEB-SECOND-POOLS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "overlay",
+   "feature": "fields/nebseni-plan",
+   "text": "The second group comprises four pools/lakes: Nebt-taui, Uakha, Kha(?) and Hetep."
+  },
+  {
+   "id": "G5-110-NEB-RIVER-LENGTH",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "dimension",
+   "class": "label",
+   "feature": "fields/river",
+   "text": "The stream beside the ox-ploughing scene has a stated length of one thousand."
+  },
+  {
+   "id": "G5-110-NEB-RIVER-WIDTH",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "dimension",
+   "class": "label",
+   "feature": "fields/river",
+   "text": "The width of that stream is explicitly not tellable."
+  },
+  {
+   "id": "G5-110-NEB-RIVER-LIFE",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "already",
+   "feature": "fields/river",
+   "text": "That stream is said to contain neither fish nor worms."
+  },
+  {
+   "id": "G5-110-NEB-ISLAND-LENGTH",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "dimension",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "An island is described as having the length of heaven."
+  },
+  {
+   "id": "G5-110-NEB-BIRTHPLACE-BOWL",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "overlay",
+   "feature": "fields/nebseni-plan",
+   "text": "A bowl-shaped division carries the birthplace inscription."
+  },
+  {
+   "id": "G5-110-NEB-ISLAND-GODS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "overlay",
+   "feature": "fields/nebseni-plan",
+   "text": "Four gods occupy the island accompanying the company-of-gods legend."
+  },
+  {
+   "id": "G5-110-NEB-ISLAND-STEPS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "overlay",
+   "feature": "fields/nebseni-plan",
+   "text": "A flight of steps appears on the four-god island."
+  },
+  {
+   "id": "G5-110-NEB-BOAT-OARS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "overlay",
+   "feature": "fields/nebseni-plan",
+   "text": "Tchetetfet is described with eight oars."
+  },
+  {
+   "id": "G5-110-NEB-BOAT-OAR-GROUPS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "overlay",
+   "feature": "fields/nebseni-plan",
+   "text": "The oars are described as four at the bows and four at the stern."
+  },
+  {
+   "id": "G5-110-NEB-BOAT-CANAL",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "overlay",
+   "feature": "fields/nebseni-plan",
+   "text": "Tchetetfet floats at the end of a canal, at the Domain of Neth."
+  },
+  {
+   "id": "G5-110-NEB-BOAT-STEPS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "overlay",
+   "feature": "fields/nebseni-plan",
+   "text": "Tchetetfet contains a flight of steps."
+  },
+  {
+   "id": "G5-110-NEB-UNREAD-POOLS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "overlay",
+   "feature": "fields/nebseni-plan",
+   "text": "Two further pools have illegible names in Budge’s description."
+  },
+  {
+   "id": "G5-110-NEB-FLANKS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "Two supplementary scenes flank Nebseni’s field illustration."
+  },
+  {
+   "id": "G5-110-NEB-ATTENDANTS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "In the second flanking scene one youth pours a libation and another brings raiment."
+  },
+  {
+   "id": "G5-110-NEB-INSCRIPTION-LINES",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "The short inscription before Nebseni is described as three lines."
+  },
+  {
+   "id": "G5-110-ANI-GOD-HEADS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "already",
+   "feature": "fields/thoth",
+   "text": "Ani offers before a hare-headed, snake-headed and bull-headed god, with Thoth behind."
+  },
+  {
+   "id": "G5-110-ANI-FIRST-OVALS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "already",
+   "feature": "fields/thoth",
+   "text": "Three ovals occur in Ani’s first field register."
+  },
+  {
+   "id": "G5-110-ANI-SECOND-POOLS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/ani-1898",
+   "text": "Ani’s second register has three pools rather than Nebseni’s second group of four."
+  },
+  {
+   "id": "G5-110-ANI-GRAIN-COLOURS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "material",
+   "class": "already",
+   "feature": "fields/reaping",
+   "text": "Ani’s grain heaps are described as red and white."
+  },
+  {
+   "id": "G5-110-ANI-SYMBOL-GROUPS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/reaping",
+   "text": "Ani’s vignette has three kas and three khus, tentatively read as food of the khus."
+  },
+  {
+   "id": "G5-110-ANI-RIVER-LENGTH",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/river",
+   "text": "Ani’s river caption is rendered as one thousand [cubits] in Budge 1895."
+  },
+  {
+   "id": "G5-110-ANI-RIVER-WIDTH",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/river",
+   "text": "Ani’s river caption also leaves the width unmeasurable."
+  },
+  {
+   "id": "G5-110-ANI-RIVER-LIFE",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "already",
+   "feature": "fields/river",
+   "text": "Ani’s stream is described as containing neither fish nor serpents."
+  },
+  {
+   "id": "G5-110-ANI-KHUS-HEIGHT",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/shining-seat",
+   "text": "The khus in Ani’s labelled region are seven cubits high."
+  },
+  {
+   "id": "G5-110-ANI-WHEAT-HEIGHT",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/wheat",
+   "text": "Ani’s labelled wheat is three cubits high."
+  },
+  {
+   "id": "G5-110-ANI-REAPERS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "fields/reaping",
+   "text": "Perfected sāhu reap the labelled crop in Ani’s scene."
+  },
+  {
+   "id": "G5-110-ANI-BOATS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "already",
+   "feature": "fields/boats",
+   "text": "Budge distinguishes the boats Behutu-tcheser and Tchefau in Ani’s lower register."
+  },
+  {
+   "id": "G5-110-ANI-OARS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "already",
+   "feature": "fields/boats",
+   "text": "Ani’s first lower boat is described with eight oars."
+  },
+  {
+   "id": "G5-110-ANI-BOAT-ENDS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "fields/boats",
+   "text": "The eight-oared boat is described as serpent-headed at each end and carrying steps."
+  },
+  {
+   "id": "G5-110-ANI-ASHET",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/ani-1898",
+   "text": "Ashet is treated as a region in 1898, but a stream/flood (?) of heaven in 1895."
+  },
+  {
+   "id": "G5-110-ANI-BIRTHPLACE",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/ani-1898",
+   "text": "Budge’s 1898 Ani description includes a birthplace that his 1895 note says is not marked in Ani."
+  },
+  {
+   "id": "G5-110-OPENING-BUILDING",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "The opening has a doubtful building in Budge but turning towards the field in Renouf."
+  },
+  {
+   "id": "G5-110-HETEP-WATER",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "fields/lake-peace",
+   "text": "The great boat travels on a lake in Budge and a stream in Renouf."
+  },
+  {
+   "id": "G5-110-SHU-MANSION",
+   "gap": "G5",
+   "scope": "110",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "fields/lake-peace",
+   "text": "Both translators associate the boat’s acquisition with Shu’s abode."
+  },
+  {
+   "id": "G5-110-NAVIGATION",
+   "gap": "G5",
+   "scope": "110",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "fields/lake-peace",
+   "text": "The speaker sails on the field’s waterways to reach its inhabited or named divisions."
+  },
+  {
+   "id": "G5-110-FARMING",
+   "gap": "G5",
+   "scope": "110",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "fields/work",
+   "text": "Both translations include planting/ploughing and reaping within the field."
+  },
+  {
+   "id": "G5-110-ACTIVITY-FIGHT-GRIND",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/work",
+   "text": "Budge’s fight and Renouf’s grind differ within the list of field activities."
+  },
+  {
+   "id": "G5-110-HAWK-LENGTH",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "dimension",
+   "class": "card",
+   "feature": "fields/hawk",
+   "text": "Horus is compared to a Hawk one thousand cubits long."
+  },
+  {
+   "id": "G5-110-HAWK-WIDTH",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "dimension",
+   "class": "card",
+   "feature": "fields/hawk",
+   "text": "The Hawk comparison continues with two thousand [cubits in width]."
+  },
+  {
+   "id": "G5-110-SHU-SUPPORTS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "material",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "The translated passage calls Shu’s supports watery, with an editorial question mark."
+  },
+  {
+   "id": "G5-110-CRYSTAL",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "material",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "The phrase like crystal is a comparison in the setting-in-life passage."
+  },
+  {
+   "id": "G5-110-DOUBLE-FIRE",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "Budge’s repeated Lake of double Fire wording has incompatible evil/all-evil versus no-evil clauses."
+  },
+  {
+   "id": "G5-110-REGION-TYPES",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "The field contains named waters and divisions, but cities/nomes/lakes versus domains/districts/streams differ."
+  },
+  {
+   "id": "G5-110-TCHESERT",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "Budge has plunging into lakes of Tchesert; Renouf has saluting the stream of T’eserit."
+  },
+  {
+   "id": "G5-110-HORNED-FIGURE",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "The horns and hair are attached to the adjacent god in Budge’s syntax but to T’eserit in Renouf’s parentheses."
+  },
+  {
+   "id": "G5-110-HORNS-COUNT",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "Budge explicitly gives two horns in the Tchesert-adjacent figure passage."
+  },
+  {
+   "id": "G5-110-NETTING",
+   "gap": "G5",
+   "scope": "110",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "Both running translations include catching reptiles at the Qenqentet/Kankanit invocation."
+  },
+  {
+   "id": "G5-110-MOORING",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "The final mooring object is a post in Budge and a Block of Moorage in Renouf."
+  },
+  {
+   "id": "G5-110-TURQUOISE",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "material",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "Budge’s turquoise/sky language corresponds to blue or emerald-light language in Renouf."
+  },
+  {
+   "id": "G5-109-NU-WHEAT-TOTAL",
+   "gap": "G5",
+   "scope": "109-context",
+   "status": "contested",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/barley-height",
+   "text": "Spell 109: wheat height in Budge versus Renouf."
+  },
+  {
+   "id": "G5-109-NU-WHEAT-EAR",
+   "gap": "G5",
+   "scope": "109-context",
+   "status": "agreed",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/barley-height",
+   "text": "Spell 109: wheat ear in Budge versus Renouf."
+  },
+  {
+   "id": "G5-109-NU-WHEAT-STALK",
+   "gap": "G5",
+   "scope": "109-context",
+   "status": "contested",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/barley-height",
+   "text": "Spell 109: wheat stalk in Budge versus Renouf."
+  },
+  {
+   "id": "G5-109-NU-BARLEY-TOTAL",
+   "gap": "G5",
+   "scope": "109-context",
+   "status": "agreed",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/barley-height",
+   "text": "Spell 109: barley height in Budge versus Renouf."
+  },
+  {
+   "id": "G5-109-NU-BARLEY-EAR",
+   "gap": "G5",
+   "scope": "109-context",
+   "status": "contested",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/barley-height",
+   "text": "Spell 109: barley ear in Budge versus Renouf."
+  },
+  {
+   "id": "G5-109-NU-BARLEY-STALK",
+   "gap": "G5",
+   "scope": "109-context",
+   "status": "contested",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/barley-height",
+   "text": "Spell 109: barley stalk in Budge versus Renouf."
+  },
+  {
+   "id": "G5-109-NU-KHUS",
+   "gap": "G5",
+   "scope": "109-context",
+   "status": "agreed",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "fields/barley-height",
+   "text": "Spell 109’s reapers are nine cubits high in both translations."
+  },
+  {
+   "id": "G5-109-NU-WALL",
+   "gap": "G5",
+   "scope": "109-context",
+   "status": "contested",
+   "kind": "material",
+   "class": "card",
+   "feature": "fields/barley-height",
+   "text": "Spell 109 names iron walls in Budge and a steel wall in Renouf."
+  },
+  {
+   "id": "G5-109-NU-SYCAMORE-COUNT",
+   "gap": "G5",
+   "scope": "109-context",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/barley-height",
+   "text": "Two sycamores bracket Rā’s emergence in Spell 109."
+  },
+  {
+   "id": "G5-109-NU-SYCAMORE-MATERIAL",
+   "gap": "G5",
+   "scope": "109-context",
+   "status": "contested",
+   "kind": "material",
+   "class": "card",
+   "feature": "fields/barley-height",
+   "text": "The two sycamores are turquoise in Budge and Emerald in Renouf."
+  },
+  {
+   "id": "G5-110-TWO-FIGHTERS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "Two divine fighters/Warrior gods are reconciled in both running translations."
+  },
+  {
+   "id": "G5-110-EYES-PATH",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "Budge’s ways of two eyes and Renouf’s double path do not establish two constructed corridors."
+  },
+  {
+   "id": "G5-110-PURIFYING-HORNS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "fields/text-110",
+   "text": "Renouf gives a pair of purifying horns where Budge gives the best of the divine libations."
+  },
+  {
+   "id": "G5-110-NEB-THOUSANDS",
+   "gap": "G5",
+   "scope": "110",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "fields/nebseni-plan",
+   "text": "The offering formula promises thousands of good and pure things."
+  }
+ ],
+ "not_resolved": [
+  "The Egyptian unit behind the river's bracketed [cubits] (Ani) and [measures] (Nebseni): Budge supplies both; nothing is converted.",
+  "A Spell 110 in the Papyrus of Nu: Budge's 1898 volume gives Nebseni's; whether Nu has one was not sought beyond that volume.",
+  "Renouf's Spell 109 wheat of 7 cubits against his parts 2 and 4: kept as printed, not reconciled; Budge's 5 is 2 and 3.",
+  "The same-author discrepancies on Ani's vignette (Ashet as region or stream; the birth-place marked or not) between Budge 1895 and 1898.",
+  "The illegible names of Nebseni's two last pools, the uncertain Kha (?), and the corrupt passages Renouf marks (the stream of T'eserit, the omitted lines of p. 194).",
+  "No \"lake of the uraei\" was found in Spell 110; the Lake of Fire (G6) remains open."
+ ]
+}

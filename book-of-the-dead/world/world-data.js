@@ -19,7 +19,7 @@ window.BOD_WORLD = {
     hall:     { label:'Hall',      at:[  120, -128,    0], dist: 260, pill: 95 },
     throne:   { label:'Throne',    at:[  222, -130,    0], dist: 110, pill:170 },
     lake:     { label:'Lake',      at:[  120, -138,  160], dist: 150, pill: 24 },
-    fields:   { label:'Field',     at:[ 1300, -138,    0], dist:1200, pill: 90 },
+    fields:   { label:'Field',     at:[ 1300, -138,  190], dist:1500, pill: 90, dir:[0.2, 0.75, 1] },
     sky:      { label:'Sky',       at:[    0,  600,    0], dist:4200, pill:1800 },
     boat:     { label:'Boat',      at:[ -300, -198,  520], dist:  90, pill: 24, dir:[1, 0.6, 0.08] },
     east:     { label:'East',      at:[ 2470,  -90,    0], dist: 240, pill:130, dir:[-0.7, 0.45, 0.6] },
