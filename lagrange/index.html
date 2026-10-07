@@ -28,6 +28,7 @@
   #title .sub { font-size: 12px; color: var(--dim); }
   #scale { position: fixed; left: 14px; top: 78px; z-index: 6; font-size: 11px; color: var(--dim); pointer-events: none; letter-spacing: .02em; }
   #scale b { color: var(--text); font-weight: 500; }
+  #date { position: fixed; left: 14px; top: 96px; z-index: 6; font-size: 11px; color: var(--dim); pointer-events: none; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
 
   #focus { right: 14px; top: 12px; max-width: 58vw; justify-content: flex-end; pointer-events: auto; }
   .chip, .tog {
@@ -72,11 +73,13 @@
     #caption p { font-size: 12px; line-height: 1.4; }
     #title .sub { display: none; }
     #scale { top: 60px; }
+    #date { top: 78px; }
   }
   @media (max-width: 720px) {
     #title h1 { font-size: 18px; }
     #title .sub { display: none; }
     #scale { top: 58px; }
+    #date { top: 76px; }
     #focus { position: static; pointer-events: auto; max-width: none; justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; margin-right: -14px; }
     #focus::-webkit-scrollbar { display: none; }
     .chip.sep { margin-left: 0; }
@@ -94,6 +97,7 @@
   <div class="sub">Five places where a small mass keeps Earth's year</div>
 </div>
 <div id="scale"></div>
+<div id="date"></div>
 <div id="bottom">
   <div id="focus" class="chip-bar"></div>
   <div id="caption"><h2 id="cap-title">System</h2><p id="cap-text"></p></div>
@@ -105,7 +109,7 @@
     <button class="tog" id="viz" title="Earth’s circumference laid out straight, against GEO and then L1">Visualize L1 distance</button>
     <button class="tog" id="fs" title="Full screen">Full screen</button>
   </div>
-  <div id="foot"><b>To scale.</b> Every size and distance is true; where an object would be smaller than a pixel, a translucent cube marks it. Click a cube to fly in. Orbits are circular and coplanar; halo loops are schematic; no lunar perturbation.</div>
+  <div id="foot"><b>To scale.</b> Every size and distance is true; where an object would be smaller than a pixel, a translucent cube marks it. Click a cube to fly in. Planets and Moon by analytic ephemeris, spacecraft and Trojans by JPL Horizons; the date is real.</div>
 </div>
 <div id="nowebgl">This figure needs WebGL. The essay above it stands on its own.</div>
 
@@ -115,13 +119,13 @@ import * as THREE from 'three';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from './vendor/CSS2DRenderer.js';
 import { GLTFLoader } from './vendor/GLTFLoader.js';
+import * as ASTRO from './astro.js';
 
 // ---------- units: 1 scene unit = 1,000 km. Everything below is a real figure. ----------
 const AU = 149597.87;
 const R = { sun: 695.7, mercury: 2.4397, venus: 6.0518, earth: 6.371, moon: 1.7374 };
-const D_MOON = 384.4, GEO = 42.164, L_OFF = 1497;        // L1/L2 ≈ 0.01 AU from Earth (Hill-radius approximation)
-const P = { earth: 365.25, mercury: 87.97, venus: 224.7, moon: 27.32 };
-const A = { mercury: 0.387 * AU, venus: 0.723 * AU };
+const D_MOON = 384.4, GEO = 42.164;
+const MU = 1 / (ASTRO.SUN_OVER_EM + 1), GAM = ASTRO.collinear(MU), L_OFF = GAM.l1 * AU;   // the collinear points from the real mass ratio: L1 1,497,600 km, L2 1,507,700 km at 1 AU
 // halo paths: Webb at its published amplitudes; the L1 loops at a similar scale; periods ≈ six months
 const HALO = { webb: { a: 832, b: 520, c: 250, T: 182 }, roman: { a: 600, b: 420, c: 220, T: 182 }, soho: { a: 650, b: 200, c: 150, T: 178 }, dscovr: { a: 500, b: 300, c: 120, T: 178 } };
 const CRAFT_SIZE = { webb: 21.2e-6, roman: 12e-6, soho: 9.5e-6, dscovr: 5.4e-6 };   // longest dimension in scene units (1 unit = 1,000 km): 21.2 m, 12 m, 9.5 m, 5.4 m; Roman and DSCOVR approximate
@@ -130,11 +134,11 @@ const HST = { a: 6854.87, e: 0.00131, i: 28.59, P: 5648.19, len: 13.2e-6 };     
 const CXO = { a: 80784.88, e: 0.76655, i: 57.65, P: 228510.5, q: 18859.44, Q: 142710.32, len: 13.8e-6, span: 19.5e-6 };   // 13.8 m with the sunshade open, 19.5 m across the arrays (scene units)
 const hAlt = Math.round((HST.a - 6378.137) / 10) * 10, cPer = (Math.round((CXO.q - 6378.137) / 100) * 100).toLocaleString('en-US'), cApo = (Math.round((CXO.Q - 6378.137) / 1000) * 1000).toLocaleString('en-US');
 const ROCK = { tk7: 0.00015, xl5: 0.0006 };                                             // radii in scene units: 150 m and 600 m
-const DEG = Math.PI / 180, TILT = 23.4 * DEG;
+const DEG = Math.PI / 180, TILT = ASTRO.OBLIQUITY * DEG;
 // Roman: launched 30 Aug 2026 11:26 UTC; L2 insertion about 100 days after launch (NASA). Drawn in transit until then.
-const ROMAN_LAUNCH = Date.UTC(2026, 7, 30, 11, 26), ROMAN_CRUISE_DAYS = 100;
-const romanFrac = (Date.now() - ROMAN_LAUNCH) / (ROMAN_CRUISE_DAYS * 86400e3);
-const romanArrived = romanFrac >= 1;
+const ROMAN_JD = ASTRO.julianDay(new Date(Date.UTC(2026, 7, 30, 11, 26))), ROMAN_CRUISE_DAYS = 100;
+const romanFracAt = (t) => (t - ROMAN_JD) / ROMAN_CRUISE_DAYS;
+const romanArrived = romanFracAt(ASTRO.julianDay(new Date())) >= 1;
 
 let renderer;
 try { renderer = new THREE.WebGLRenderer({ antialias: true, logarithmicDepthBuffer: true, powerPreference: 'high-performance' }); }
@@ -186,7 +190,7 @@ const envTex = (() => {   // what the foil and panels reflect: black sky, a hot 
 function label(title, sub, cls, near) {
   const d = document.createElement('div'); d.className = 'lbl' + (cls ? ' ' + cls : '');
   d.innerHTML = sub ? `${title}<span>${sub}</span>` : title;
-  const o = new CSS2DObject(d); o.element = d; o.userData.near = near || 0; return o;
+  const o = new CSS2DObject(d); o.element = d; o.userData.near = near || 0; o.userData.title = title; o.userData.sub = sub; return o;
 }
 const tex = new THREE.TextureLoader();
 const map = (u) => { const t = tex.load(u); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
@@ -247,15 +251,20 @@ const coronaMat = new THREE.ShaderMaterial({
 const sunGlow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), coronaMat); sunGlow.renderOrder = 2;
 sun.add(sunGlow); sun.add(label('Sun', '', '', 0)); scene.add(sun);
 const orbits = new THREE.Group(); scene.add(orbits);
-orbits.add(circle(AU, 0x3a4154), circle(A.venus, 0x4a4030, 0.9), circle(A.mercury, 0x3a3a3a, 0.9));
+function orbitPath(key, periodDays, color, opacity) {
+  const t0 = ASTRO.julianDay(new Date()), pts = Array.from({ length: 361 }, (_, i) => { const p = ASTRO.planetKm(key, t0 + i / 360 * periodDays); return new THREE.Vector3(p.x / 1000, p.z / 1000, -p.y / 1000); });
+  const l = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color, transparent: opacity < 1, opacity })); l.frustumCulled = false; return l;
+}
+orbits.add(orbitPath('emb', 365.256, 0x3a4154, 1), orbitPath('venus', 224.701, 0x4a4030, 0.9), orbitPath('mercury', 87.969, 0x3a3a3a, 0.9));
 
-const earth = planet(R.earth, './textures/earth.jpg'); earth.children[0].rotation.z = TILT; earth.add(label('Earth', '', '', 0));
-const geo = circle(GEO, 0xd0a44c, 0.85, 256); geo.rotation.z = TILT; earth.add(geo);
+const earth = planet(R.earth, './textures/earth.jpg'); earth.add(label('Earth', '', '', 0));
+const geo = circle(GEO, 0xd0a44c, 0.85, 256); earth.add(geo);
 const geoLabel = label('GEO', '42,164 km · 6.6 R⊕ · not a Lagrange point', 'pt', 400); geoLabel.position.set(GEO * 0.7, 0, GEO * 0.7); geo.add(geoLabel);
-const moonOrbit = circle(D_MOON, 0x4a4a52, 0.9, 256); moonOrbit.rotation.x = 5.1 * DEG; earth.add(moonOrbit);
+const moonOrbit = new THREE.Line(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(121 * 3), 3)), new THREE.LineBasicMaterial({ color: 0x4a4a52, transparent: true, opacity: 0.9 })); moonOrbit.frustumCulled = false; earth.add(moonOrbit);   // the Moon's real path over the coming month
 // the two telescope orbits live in an equatorial frame that also turns with the rotating view
 const eqFrame = new THREE.Group(); earth.add(eqFrame);
-const Y_AXIS = new THREE.Vector3(0, 1, 0), Q_TILT = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), TILT);
+const Y_AXIS = new THREE.Vector3(0, 1, 0), Q_TILT = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -TILT), _qf = new THREE.Quaternion(), _qs = new THREE.Quaternion();
+const PM_OFFSET = 0;   // the map's prime meridian sits at local +x; checked against the subsolar point (7 Oct 2026 12:00 UTC: 3.4° W, equation of time 12 min)
 const hstOrbit = circle(HST.a / 1000, 0x9a8a62, 0.9, 256); hstOrbit.rotation.x = HST.i * DEG; eqFrame.add(hstOrbit);
 const cxoPts = Array.from({ length: 257 }, (_, i) => { const nu = i / 256 * Math.PI * 2, r = CXO.a / 1000 * (1 - CXO.e * CXO.e) / (1 + CXO.e * Math.cos(nu)); return new THREE.Vector3(Math.cos(nu) * r, 0, Math.sin(nu) * r); });
 const cxoOrbit = new THREE.Line(new THREE.BufferGeometry().setFromPoints(cxoPts), new THREE.LineBasicMaterial({ color: 0x9a8a62, transparent: true, opacity: 0.9 })); cxoOrbit.rotation.x = CXO.i * DEG; eqFrame.add(cxoOrbit);
@@ -287,8 +296,45 @@ function haloLine(h, color) {
   l.computeLineDistances(); return l;
 }
 const halos = { webb: haloLine(HALO.webb, 0xd0a44c), roman: haloLine(HALO.roman, 0x9a8a62), soho: haloLine(HALO.soho, 0xd0a44c), dscovr: haloLine(HALO.dscovr, 0x9a8a62) };
-Object.values(halos).forEach(h => scene.add(h));
+Object.values(halos).forEach(h => { h.frustumCulled = false; scene.add(h); });
 halos.roman.visible = romanArrived;
+// ---------- JPL Horizons ephemerides: daily heliocentric positions, interpolated; beyond a craft's published span its last loop repeats ----------
+const EPH = { ready: false, bodies: {} };
+fetch('./ephem.json').then(r => r.json()).then(j => { EPH.bodies = j.bodies; EPH.ready = true; }).catch(e => console.warn('ephemeris', e));
+const CRAFT_POINT = { webb: 'L2', roman: 'L2', soho: 'L1', dscovr: 'L1' };
+const S = (p) => ({ x: p.x / 1000, y: p.z / 1000, z: -p.y / 1000 });                    // km, ecliptic J2000 → scene units (y up)
+const rotY = (p, a) => { const c = Math.cos(a), s = Math.sin(a); return { x: p.x * c + p.z * s, y: p.y, z: -p.x * s + p.z * c }; };
+function embAt(t) { const e = S(ASTRO.planetKm('emb', t)); const r = Math.hypot(e.x, e.y, e.z); return { e, r, u: { x: e.x / r, y: e.y / r, z: e.z / r }, ang: Math.atan2(e.z, e.x) }; }
+function lpointAt(which, t, m) {                                                      // L1 or L2 at time t from the barycentre geometry
+  m = m || embAt(t); const g = which === 'L1' ? -GAM.l1 : GAM.l2;
+  return { x: m.e.x + m.u.x * g * m.r, y: m.e.y + m.u.y * g * m.r, z: m.e.z + m.u.z * g * m.r };
+}
+function tableRaw(b, t) {                                                               // linear interpolation inside the table, else null
+  const i = (t - b.jd0) / b.step; if (i < 0 || i > b.n - 1) return null;
+  const k = Math.min(Math.floor(i), b.n - 2), f = i - k, a = b.xyz[k], c = b.xyz[k + 1];
+  return S({ x: a[0] + (c[0] - a[0]) * f, y: a[1] + (c[1] - a[1]) * f, z: a[2] + (c[2] - a[2]) * f });
+}
+function ephemPos(id, t) {                                                              // scene position (inertial, km/1000) or null
+  const b = EPH.bodies[id]; if (!b) return null;
+  const end = b.jd0 + (b.n - 1) * b.step, pt = CRAFT_POINT[id];
+  if (t >= b.jd0 && t <= end) return tableRaw(b, t);
+  if (!pt || !b.period || t < b.jd0) return null;
+  const te = t - b.period * Math.ceil((t - end) / b.period);                               // the same phase of the last published loop
+  const p = tableRaw(b, te), m0 = embAt(te), m1 = embAt(t), L0 = lpointAt(pt, te, m0), L1 = lpointAt(pt, t, m1);
+  const d = rotY({ x: p.x - L0.x, y: p.y - L0.y, z: p.z - L0.z }, m0.ang - m1.ang);
+  return { x: L1.x + d.x, y: L1.y + d.y, z: L1.z + d.z, replay: true, until: end };
+}
+function trailPoints(id, t, days, nPts) {                                               // the craft's path as offsets from its point, in the frame turning with Earth (Earth on +x)
+  const b = EPH.bodies[id], pt = CRAFT_POINT[id]; if (!b || !pt) return null;
+  const out = [];
+  for (let i = 0; i < nPts; i++) {
+    const ti = t - days + 2 * days * i / (nPts - 1), p = ephemPos(id, ti); if (!p) continue;
+    const m = embAt(ti), L = lpointAt(pt, ti, m);
+    out.push(rotY({ x: p.x - L.x, y: p.y - L.y, z: p.z - L.z }, m.ang));
+  }
+  return out.length > 2 ? out : null;
+}
+const trailMode = { webb: false, roman: false, soho: false, dscovr: false };
 
 // spacecraft and rocks, built at unit size then scaled to true metres
 const M = {
@@ -404,13 +450,13 @@ const romanLine = romanArrived
 const copy = {
   system: ['System', 'Everything here is at true size and distance: 1 AU is 150 million km, and Earth is a dot 12,742 km wide on a circle 940 million km round. The five Lagrange points go round with it. L1 and L2 lie 1.5 million km from Earth on the Sun–Earth line, 1% of the way; L4 and L5 sit 60° ahead of and behind Earth on its own orbit. What is too small to see is boxed: click a cube to fly in.'],
   sun: ['Sun', 'The five points belong to the pair, not to either body: they are where the Sun’s gravity, Earth’s gravity and the centrifugal term of a frame turning once a year cancel. The Sun is 1.39 million km across, 109 Earths; from Earth it subtends half a degree.'],
-  earth: ['Earth', 'True size: 12,742 km across. The thin gold ring is geostationary orbit, 42,164 km from the centre, 6.6 Earth radii, about 5% more than one Earth circumference out. The faint grey circle is the Moon’s orbit, 384,400 km out; GEO is about a ninth of the way there. The two bronze loops are Hubble, about ' + hAlt + ' km up, and Chandra, swinging out to ' + cApo + ' km. L1 and L2 are four lunar distances out, beyond this frame.'],
+  earth: ['Earth', 'True size: 12,742 km across. The thin gold ring is geostationary orbit, 42,164 km from the centre, 6.6 Earth radii, about 5% more than one Earth circumference out. The faint grey line is the Moon’s path over the month ahead, about 384,400 km out; GEO is about a ninth of the way there. The two bronze loops are Hubble, about ' + hAlt + ' km up, and Chandra, swinging out to ' + cApo + ' km. L1 and L2 are four lunar distances out, beyond this frame.'],
   geo: ['Geostationary orbit', 'not a Lagrange point', 'The circular equatorial orbit whose period is one sidereal day, 23 h 56 min 4 s: 35,786 km up, 42,164 km from Earth’s centre. It is a balance between gravity and the speed a one-day period demands, not a three-body equilibrium. L1 is some 35 times farther out.'],
-  moon: ['Moon', 'drawn, not simulated', '3,474 km across, 384,400 km from Earth, one orbit every 27.3 days. It is here for scale: GEO is a ninth of the way to it, L1 and L2 are four times farther than it. Its gravity is not applied to anything in this model.'],
+  moon: ['Moon', 'analytic ephemeris', '3,474 km across, 363,000 to 406,000 km from Earth, one orbit every 27.3 days, placed by a truncated lunar theory that agrees with JPL Horizons to about 60 km. It is here for scale: GEO is a ninth of the way to it, L1 and L2 are four times farther than it. Its pull on the spacecraft is in their Horizons paths; the Lagrange points are reckoned from the Earth–Moon barycentre.'],
   mercury: ['Mercury', '0.387 AU out, an 88-day year; 4,879 km across. Drawn for context.'],
   venus: ['Venus', '0.723 AU out, a 225-day year; 12,104 km across, well inside Earth and clear of the Sun–Earth points. Its cloud tops are what the map shows; the surface is 460 °C under them.'],
   L1: ['L1', 'unstable', 'Sunward of Earth, 1.5 million km out, roughly 1% of the way to the Sun. A craft here keeps Earth’s year with a continuous, uneclipsed view of the Sun, which is why solar and solar-wind observatories live here: SOHO since 1996, DSCOVR, ACE, Wind and Aditya-L1, among others. The point is a saddle. Nothing sits on it; each craft flies a halo or Lissajous loop and station-keeps.'],
-  L2: ['L2', 'unstable', 'On the night side, the same 1.5 million km out. Sun and Earth stay on one side of the sky, so a single sunshield keeps a telescope cold: James Webb and Euclid, with Nancy Grace Roman ' + (romanArrived ? 'now in its own loop' : 'arriving in early December') + '; Gaia worked here from 2014 to 2025. The dashed path is Webb’s halo, 250,000 to 832,000 km from the point, up to 520,000 km out of the ecliptic, one loop in about six months, with a station-keeping burn on average every 42 days.'],
+  L2: ['L2', 'unstable', 'On the night side, the same 1.5 million km out. Sun and Earth stay on one side of the sky, so a single sunshield keeps a telescope cold: James Webb and Euclid, with Nancy Grace Roman ' + (romanArrived ? 'now in its own loop' : 'arriving in early December') + '; Gaia worked here from 2014 to 2025. The dashed path is Webb’s halo as JPL Horizons has flown it, 150 days either side of today: 250,000 to 832,000 km from the point, up to 520,000 km out of the ecliptic, one loop in about six months, with a station-keeping burn on average every 42 days.'],
   L3: ['L3', 'unstable · empty', 'Opposite Earth, beyond the Sun, permanently hidden from us. It is a saddle like L1 and L2 and has no resident. A counter-Earth would not stay there, and its pull on the other planets would have given it away long ago. The crosshair marks a point, not a body.'],
   L4: ['L4', 'stable', 'Sixty degrees ahead of Earth on its orbit. Because the Sun outweighs Earth by far more than the roughly 25-to-1 the mathematics requires, this point is stable: not a well but a hilltop of the effective potential, where the Coriolis force turns any drift into a loop around it. Earth’s only confirmed Trojans both librate here: 2010 TK7, about 300 m, found by WISE in 2010 on a tadpole path and only temporarily held; and 2020 XL5, a dark C-type about 1.2 km across, found by Pan-STARRS in 2020, likely to be ejected by Venus encounters within some 10,000 years. Both are drawn at true size; the cubes nearby mark them. No spacecraft is stationed here: STEREO A passed by in September 2009 on its way out round the Sun and again in June 2026 on its way back, and is drifting on at about 22° a year; OSIRIS-REx swept the region for asteroids in February 2017.'],
   L5: ['L5', 'stable · empty', 'Sixty degrees behind Earth, the mirror of L4 and just as stable, but with no confirmed Earth Trojan; the asteroid 2010 SO16 passes nearby on a horseshoe orbit. Nothing man-made is stationed here either: STEREO B passed by in October 2009 and fell silent in 2014, Spitzer drifted through in December 2011, Hayabusa2 imaged the region in April 2017 and STEREO A passed by in October 2020 on its way home. ESA’s Vigil space-weather mission is planned for L5. Jupiter’s L4 and L5 hold thousands of Trojans; the same geometry in a bigger system.'],
@@ -463,7 +509,7 @@ Object.entries(T).forEach(([id, t]) => { const b = document.createElement('butto
 // ---------- state: absolute positions in doubles; scene positions relative to a floating origin ----------
 const abs = {};
 let hstPh = 0, cxoPh = 0.9;
-let day = 40, paused = matchMedia('(prefers-reduced-motion: reduce)').matches, rotating = false;
+let jd = ASTRO.julianDay(new Date()), paused = matchMedia('(prefers-reduced-motion: reduce)').matches, rotating = false;
 let focus = { id: 'system', dist: AU * Math.max(3.4, 2.92 / viewAspect()) }, flying = false, cluster = null;
 const camWant = new THREE.Vector3(), origin = { x: 0, y: 0, z: 0 };
 let viz = null, lerpK = 0.07, fastPause = false; const tgtWant = new THREE.Vector3();
@@ -511,54 +557,94 @@ function focusOn(id, clusterSpec) {
   if (clusterSpec) document.getElementById('cap-title').innerHTML = clusterSpec.title;
 }
 
-// ---------- motion (doubles) ----------
-function rot(p, ang) { const c = Math.cos(ang), s = Math.sin(ang); return { x: p.x * c + p.z * s, y: p.y, z: -p.x * s + p.z * c }; }
+// ---------- motion: analytic planets and Moon, Horizons spacecraft and Trojans, a real clock ----------
+function rot(p, ang) { return rotY(p, ang); }
+const dateEl = document.getElementById('date');
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const fmtDate = (t) => { const d = ASTRO.dateOfJD(t); return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
+let dateTick = 0, trailTick = 0;
+const moonPts = new Float32Array(121 * 3);
 function tick(dt) {
-  const dDay = paused ? 0 : dt * ((Number(rate.value) / 100) * 6.5 + 1.6); day += dDay;
+  const dDay = paused ? 0 : dt * ((Number(rate.value) / 100) * 6.5 + 1.6); jd += dDay;
   hstPh += Math.min(dDay / (HST.P / 86400), 0.5 * dt) * Math.PI * 2;                     // at most half a turn a second, so they can be followed
   cxoPh = (cxoPh + Math.min(dDay / (CXO.P / 86400), 0.5 * dt) * Math.PI * 2) % (Math.PI * 2);
-  const ang = day / P.earth * Math.PI * 2;
-  const E = { x: Math.cos(ang) * AU, y: 0, z: Math.sin(ang) * AU };
-  const radial = { x: Math.cos(ang), y: 0, z: Math.sin(ang) }, along = { x: -Math.sin(ang), y: 0, z: Math.cos(ang) };
+  if (++dateTick % 20 === 0) { const d = ASTRO.dateOfJD(jd); dateEl.textContent = `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()} · ${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')} UTC`; }
+  const m = embAt(jd), ang = m.ang, radial = m.u, along = { x: -m.u.z, y: 0, z: m.u.x };
   const at = (base, r, a, n) => ({ x: base.x + radial.x * r + along.x * a, y: base.y + n, z: base.z + radial.z * r + along.z * a });
-  abs.sun = { x: 0, y: 0, z: 0 }; abs.earth = E;
-  const mA = day / P.mercury * Math.PI * 2 + 0.7, vA = day / P.venus * Math.PI * 2 + 2.1, moonA = day / P.moon * Math.PI * 2;
-  abs.mercury = { x: Math.cos(mA) * A.mercury, y: 0, z: Math.sin(mA) * A.mercury };
-  abs.venus = { x: Math.cos(vA) * A.venus, y: 0, z: Math.sin(vA) * A.venus };
-  abs.moon = { x: E.x + Math.cos(moonA) * D_MOON, y: Math.sin(moonA) * D_MOON * Math.sin(5.1 * DEG), z: E.z + Math.sin(moonA) * D_MOON };
-  abs.L1 = at(E, -L_OFF, 0, 0); abs.L2 = at(E, L_OFF, 0, 0); abs.L3 = { x: -E.x, y: 0, z: -E.z };
-  abs.L4 = { x: Math.cos(ang + Math.PI / 3) * AU, y: 0, z: Math.sin(ang + Math.PI / 3) * AU };
-  abs.L5 = { x: Math.cos(ang - Math.PI / 3) * AU, y: 0, z: Math.sin(ang - Math.PI / 3) * AU };
-  const onHalo = (base, h, ph) => at(base, Math.sin(ph) * h.c, Math.cos(ph) * h.a, Math.sin(ph) * h.b);
-  abs.webb = onHalo(abs.L2, HALO.webb, day / HALO.webb.T * Math.PI * 2);
-  abs.roman = romanArrived ? onHalo(abs.L2, HALO.roman, day / HALO.roman.T * Math.PI * 2 + 2.3) : at(E, L_OFF * Math.min(Math.max(romanFrac, 0.03), 0.97), 0, 0);
-  abs.soho = onHalo(abs.L1, HALO.soho, day / HALO.soho.T * Math.PI * 2 + 0.6);
-  abs.dscovr = onHalo(abs.L1, HALO.dscovr, day / HALO.dscovr.T * Math.PI * 2 + 2.5);
-  const tt = day / 400;   // tadpole wander, suggested not computed
-  abs.tk7 = { x: abs.L4.x + Math.cos(tt) * 9000, y: Math.sin(tt * 0.7) * 2500, z: abs.L4.z + Math.sin(tt) * 6000 };
-  abs.xl5 = { x: abs.L4.x - Math.sin(tt * 0.8) * 11000, y: -Math.cos(tt * 0.5) * 2000, z: abs.L4.z + Math.cos(tt * 0.8) * 7000 };
+  const E = S(ASTRO.earthKm(jd)), mg = S(ASTRO.moonGeoKm(jd));
+  abs.sun = { x: 0, y: 0, z: 0 }; abs.earth = E; abs.moon = { x: E.x + mg.x, y: E.y + mg.y, z: E.z + mg.z };
+  abs.mercury = S(ASTRO.planetKm('mercury', jd)); abs.venus = S(ASTRO.planetKm('venus', jd));
+  abs.L1 = lpointAt('L1', jd, m); abs.L2 = lpointAt('L2', jd, m);
+  abs.L3 = { x: -m.u.x * GAM.l3 * m.r, y: -m.u.y * GAM.l3 * m.r, z: -m.u.z * GAM.l3 * m.r };
+  const c60 = Math.cos(Math.PI / 3), s60 = Math.sin(Math.PI / 3);                           // L4 leads Earth: +60° about the ecliptic pole (counterclockwise from the north)
+  abs.L4 = { x: m.e.x * c60 + m.e.z * s60, y: m.e.y, z: -m.e.x * s60 + m.e.z * c60 };
+  abs.L5 = { x: m.e.x * c60 - m.e.z * s60, y: m.e.y, z: m.e.x * s60 + m.e.z * c60 };
+  const onHalo = (base, hh, ph) => at(base, Math.sin(ph) * hh.c, Math.cos(ph) * hh.a, Math.sin(ph) * hh.b);
+  const fallback = {
+    webb: () => onHalo(abs.L2, HALO.webb, jd / HALO.webb.T * Math.PI * 2),
+    roman: () => {
+      const sch = romanFracAt(jd) >= 1 ? onHalo(abs.L2, HALO.roman, jd / HALO.roman.T * Math.PI * 2 + 2.3) : at(E, L_OFF * Math.min(Math.max(romanFracAt(jd), 0.03), 0.97), 0, 0);
+      const b = EPH.bodies.roman; if (!b || jd <= b.end || jd < b.jd0) return sch;
+      if (!b.lastOff) { const p = tableRaw(b, b.end), m0 = embAt(b.end), L0 = lpointAt('L2', b.end, m0); b.lastOff = { x: p.x - L0.x, y: p.y - L0.y, z: p.z - L0.z, ang: m0.ang }; }
+      const d = rotY(b.lastOff, b.lastOff.ang - m.ang), w = Math.min(1, (jd - b.end) / 30);
+      return { x: (abs.L2.x + d.x) * (1 - w) + sch.x * w, y: (abs.L2.y + d.y) * (1 - w) + sch.y * w, z: (abs.L2.z + d.z) * (1 - w) + sch.z * w };
+    },
+    soho: () => onHalo(abs.L1, HALO.soho, jd / HALO.soho.T * Math.PI * 2 + 0.6),
+    dscovr: () => onHalo(abs.L1, HALO.dscovr, jd / HALO.dscovr.T * Math.PI * 2 + 2.5),
+  };
+  const replayNote = {};
+  for (const id of ['webb', 'roman', 'soho', 'dscovr']) { const p = EPH.ready ? ephemPos(id, jd) : null; abs[id] = p || fallback[id](); trailMode[id] = !!p; replayNote[id] = p && p.replay ? p.until : (p ? null : (EPH.bodies[id] && jd > EPH.bodies[id].end ? EPH.bodies[id].end : null)); }
+  halos.roman.visible = trailMode.roman || romanArrived;
+  for (const id of ['webb', 'roman', 'soho', 'dscovr']) {
+    const lbl = T[id].obj.children.find(c => c.isCSS2DObject); if (!lbl) continue;
+    const note = replayNote[id] ? (EPH.bodies[id].period ? 'last loop repeated past ' : 'schematic past ') + fmtDate(replayNote[id]) : '';
+    if (lbl.userData.note !== note) { lbl.userData.note = note; lbl.element.innerHTML = `${lbl.userData.title}<span>${lbl.userData.sub}${note ? ' · ' + note : ''}</span>`; }
+  }
+  for (const id of ['tk7', 'xl5']) { const p = EPH.ready ? ephemPos(id, jd) : null; abs[id] = p || { x: abs.L4.x, y: abs.L4.y, z: abs.L4.z }; }
   const rotX = (p, a) => ({ x: p.x, y: p.y * Math.cos(a) - p.z * Math.sin(a), z: p.y * Math.sin(a) + p.z * Math.cos(a) });
-  const rotZ = (p, a) => ({ x: p.x * Math.cos(a) - p.y * Math.sin(a), y: p.x * Math.sin(a) + p.y * Math.cos(a), z: p.z });
-  const hL = rotZ(rotX({ x: Math.cos(hstPh) * HST.a / 1000, y: 0, z: Math.sin(hstPh) * HST.a / 1000 }, HST.i * DEG), TILT);
-  abs.hubble = { x: E.x + hL.x, y: E.y + hL.y, z: E.z + hL.z };
+  const hL = rotX({ x: Math.cos(hstPh) * HST.a / 1000, y: 0, z: Math.sin(hstPh) * HST.a / 1000 }, HST.i * DEG);        // in the equatorial frame (tilt applied below)
+  const tiltX = (p) => rotX(p, -TILT);
+  const hW = tiltX(hL); abs.hubble = { x: E.x + hW.x, y: E.y + hW.y, z: E.z + hW.z };
   let Ea = cxoPh + CXO.e * Math.sin(cxoPh);                                                // Kepler's equation for Chandra's ellipse
   for (let k = 0; k < 8; k++) Ea -= (Ea - CXO.e * Math.sin(Ea) - cxoPh) / (1 - CXO.e * Math.cos(Ea));
   const rC = CXO.a / 1000 * (1 - CXO.e * Math.cos(Ea)), nu = 2 * Math.atan2(Math.sqrt(1 + CXO.e) * Math.sin(Ea / 2), Math.sqrt(1 - CXO.e) * Math.cos(Ea / 2));
-  const cL = rotZ(rotX({ x: Math.cos(nu) * rC, y: 0, z: Math.sin(nu) * rC }, CXO.i * DEG), TILT);
-  abs.chandra = { x: E.x + cL.x, y: E.y + cL.y, z: E.z + cL.z };
+  const cW = tiltX(rotX({ x: Math.cos(nu) * rC, y: 0, z: Math.sin(nu) * rC }, CXO.i * DEG));
+  abs.chandra = { x: E.x + cW.x, y: E.y + cW.y, z: E.z + cW.z };
+  // the Moon's path for the month ahead, relative to Earth, and the craft trails in the frame turning with Earth
+  if (trailTick++ % 15 === 0) {
+    for (let i = 0; i <= 120; i++) { const t = jd + i / 120 * 27.55, g = S(ASTRO.moonGeoKm(t)), q = rotating ? rot(g, ang) : g; moonPts[i * 3] = q.x; moonPts[i * 3 + 1] = q.y; moonPts[i * 3 + 2] = q.z; }
+    moonOrbit.geometry.attributes.position.array.set(moonPts); moonOrbit.geometry.attributes.position.needsUpdate = true;
+    for (const id of ['webb', 'roman', 'soho', 'dscovr']) {
+      if (!trailMode[id]) continue;
+      const d0 = trailPoints(id, jd, 150, 151); if (!d0) { trailMode[id] = false; continue; }
+      const h = halos[id];
+      if (!h.userData.trail || h.geometry.attributes.position.count !== d0.length) { h.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(d0.length * 3), 3)); h.geometry.setDrawRange(0, d0.length); }
+      h.userData.trail = { d0 };
+    }
+  }
   if (rotating) for (const k in abs) abs[k] = rot(abs[k], ang);
 
   const o = targetAbs(); origin.x = o.x; origin.y = o.y; origin.z = o.z;
   const rel = (k) => new THREE.Vector3(abs[k].x - origin.x, abs[k].y - origin.y, abs[k].z - origin.z);
   sun.position.copy(rel('sun')); orbits.position.copy(sun.position); sunLight.position.copy(sun.position);
   earth.position.copy(rel('earth')); moon.position.copy(rel('moon')); mercury.position.copy(rel('mercury')); venus.position.copy(rel('venus'));
-  earth.children[0].rotation.y += dt * 0.6; sun.rotation.y += dt * 0.025;
+  sun.rotation.y += dt * 0.025;
+  _qf.setFromAxisAngle(Y_AXIS, rotating ? ang : 0);                                       // the display frame
+  earth.children[0].quaternion.copy(_qf).multiply(Q_TILT).multiply(_qs.setFromAxisAngle(Y_AXIS, ASTRO.gmst(jd) + PM_OFFSET));   // real tilt and real rotation
+  geo.quaternion.copy(_qf).multiply(Q_TILT); eqFrame.quaternion.copy(_qf).multiply(Q_TILT);
   for (const k of ['L1', 'L2', 'L3', 'L4', 'L5']) L[k].position.copy(rel(k));
   const q = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(new THREE.Vector3(radial.x, 0, radial.z), new THREE.Vector3(0, 1, 0), new THREE.Vector3(along.x, 0, along.z)));
   if (rotating) q.premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), ang));
-  [[halos.webb, 'L2'], [halos.roman, 'L2'], [halos.soho, 'L1'], [halos.dscovr, 'L1']].forEach(([h, k]) => { h.position.copy(rel(k)); h.quaternion.copy(q); });
+  [[halos.webb, 'L2'], [halos.roman, 'L2'], [halos.soho, 'L1'], [halos.dscovr, 'L1']].forEach(([h, k]) => {
+    const id = Object.keys(halos).find(n => halos[n] === h);
+    if (trailMode[id] && h.userData.trail) {                                             // re-anchor the stored offsets to the point as it is this frame
+      const Lc = abs[k], arr = h.geometry.attributes.position.array;
+      h.userData.trail.d0.forEach((d, i) => { const dd = rotating ? d : rot(d, -ang); arr[i * 3] = Lc.x + dd.x - origin.x; arr[i * 3 + 1] = Lc.y + dd.y - origin.y; arr[i * 3 + 2] = Lc.z + dd.z - origin.z; });
+      h.geometry.attributes.position.needsUpdate = true; h.computeLineDistances(); h.position.set(0, 0, 0); h.quaternion.identity();
+    } else { h.position.copy(rel(k)); h.quaternion.copy(q); }
+  });
   jwst.position.copy(rel('webb')); roman.position.copy(rel('roman')); soho.position.copy(rel('soho')); dscovr.position.copy(rel('dscovr'));
-  hst.position.copy(rel('hubble')); cxo.position.copy(rel('chandra')); eqFrame.quaternion.setFromAxisAngle(Y_AXIS, rotating ? ang : 0).multiply(Q_TILT);
+  hst.position.copy(rel('hubble')); cxo.position.copy(rel('chandra'));
   const sd = rotating ? rot(radial, ang) : radial, sunDir = new THREE.Vector3(sd.x, 0, sd.z);
   [jwst, roman].forEach(c => c.lookAt(c.position.clone().add(sunDir)));
   [soho, dscovr].forEach(c => c.lookAt(c.position.clone().sub(sunDir)));
@@ -662,7 +748,7 @@ renderer.domElement.addEventListener('pointerup', e => {
 
 // ---------- "Visualize L1 distance": the equator laid out straight, against GEO, then against L1 ----------
 const C_EQ = 40.075, R_EQ = C_EQ / (2 * Math.PI);                        // equatorial circumference, 40,075 km
-const nEq = new THREE.Vector3(-Math.sin(TILT), Math.cos(TILT), 0);        // normal of the equator, the GEO ring's plane
+const nEq = new THREE.Vector3(0, Math.cos(TILT), -Math.sin(TILT));         // Earth's pole in scene coordinates: the normal of the equator and of the GEO ring
 const vizMat = new THREE.LineBasicMaterial({ color: 0xf0c660 });
 const lineGeom = (n) => new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
 const vizLine = new THREE.Line(lineGeom(241), vizMat), vizBrace = new THREE.Line(lineGeom(49), vizMat), vizRuler = new THREE.LineSegments(lineGeom(80), vizMat);
@@ -740,7 +826,7 @@ function scaleBar(dist, px) {
   scaleEl.innerHTML = `<b>${txt}</b> across a third of the frame`;
 }
 
-window.__lag = { camera, MODELS, state: () => ({ flying, fdist: focus.dist, id: focus.id, cam: camera.position.length(), tgt: controls.target.length(), want: camWant.length(), paused, frames, lastErr }), hold: (t) => { if (viz) viz.hold = t; }, labels: () => (labelList || []).filter(o => o.visible && !o.element.classList.contains('faint')).map(o => { const v = new THREE.Vector3().setFromMatrixPosition(o.matrixWorld).project(camera); return { t: o.element.innerText.split(String.fromCharCode(10))[0], x: Math.round((v.x + 1) / 2 * innerWidth), cls: o.element.className }; }), span: () => { const o = new THREE.Vector3(0, 0, 0).project(camera), r = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion).project(camera); return Math.round(innerWidth / 3 / ((r.x - o.x) / 2 * innerWidth) * 1000); }, focusOn, clusterOf, T, cubes: () => visibleCubes.map(c => { const v = c.position.clone().project(camera); return { m: c.userData.members.join('+'), x: Math.round((v.x + 1) / 2 * innerWidth), y: Math.round((1 - v.y) / 2 * innerHeight) }; }) };
+window.__lag = { camera, MODELS, EPH, abs, jd: () => jd, setJD: (t) => { jd = t; }, trailPoints, ephemPos, lpointAt, embAt, origin, state: () => ({ flying, fdist: focus.dist, id: focus.id, cam: camera.position.length(), tgt: controls.target.length(), want: camWant.length(), paused, frames, lastErr }), hold: (t) => { if (viz) viz.hold = t; }, labels: () => (labelList || []).filter(o => o.visible && !o.element.classList.contains('faint')).map(o => { const v = new THREE.Vector3().setFromMatrixPosition(o.matrixWorld).project(camera); return { t: o.element.innerText.split(String.fromCharCode(10))[0], x: Math.round((v.x + 1) / 2 * innerWidth), cls: o.element.className }; }), span: () => { const o = new THREE.Vector3(0, 0, 0).project(camera), r = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion).project(camera); return Math.round(innerWidth / 3 / ((r.x - o.x) / 2 * innerWidth) * 1000); }, focusOn, clusterOf, T, cubes: () => visibleCubes.map(c => { const v = c.position.clone().project(camera); return { m: c.userData.members.join('+'), x: Math.round((v.x + 1) / 2 * innerWidth), y: Math.round((1 - v.y) / 2 * innerHeight) }; }) };
 // ---------- start ----------
 tick(0); focusOn('system'); camera.position.copy(camWant); flying = false;
 let last = performance.now();
