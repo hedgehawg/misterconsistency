@@ -36,6 +36,11 @@
   #title .eyebrow { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
   #title h1 { margin: 0; font-family: var(--serif); font-weight: 300; font-size: 22px; letter-spacing: .01em; line-height: 1.15; }
   #title .sub { font-size: 12px; color: var(--dim); }
+  #scale { position: fixed; left: 14px; top: 84px; z-index: 5; pointer-events: none; font-size: 11px; color: var(--dim); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+  #scale .bar { position: relative; height: 1px; background: var(--gold-soft); margin: 0 0 5px; width: 160px; }
+  #scale .bar::before, #scale .bar::after { content: ""; position: absolute; top: -4px; width: 1px; height: 9px; background: var(--gold-soft); } #scale .bar::before { left: 0; } #scale .bar::after { right: 0; }
+  #scale .bar i { position: absolute; top: -3px; left: 50%; width: 1px; height: 7px; background: var(--gold-soft); }
+  #scale b { color: var(--text); font-weight: 500; } #scale .note { margin-top: 3px; font-size: 10px; color: var(--dim); }
   #chips { right: 14px; top: 12px; max-width: 52vw; justify-content: flex-end; }
   .chip, .tog { background: var(--raised); color: var(--dim); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: 11.5px; letter-spacing: .02em; cursor: pointer; backdrop-filter: blur(6px); transition: color .15s, border-color .15s; }
   .chip:hover, .tog:hover { color: var(--text); border-color: #3c3d46; }
@@ -68,7 +73,7 @@
   .cites details summary { cursor: pointer; color: var(--dim); } .cites details p { margin: 6px 0 0; color: var(--text); font-size: 12px; line-height: 1.5; }
   #stats { display: none; }
   @media (max-width: 760px) {
-    #title { max-width: 60vw; } #title h1 { font-size: 18px; } #chips { position: fixed; right: 10px; left: 10px; top: auto; bottom: 54px; max-width: none; justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+    #title { max-width: 60vw; } #title h1 { font-size: 18px; } #scale { top: 76px; left: 10px; } #scale .note { display: none; } #chips { position: fixed; right: 10px; left: 10px; top: auto; bottom: 54px; max-width: none; justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
     #panel { left: 10px; right: 10px; width: auto; top: auto !important; bottom: 100px; max-height: 46vh; transform: translateY(calc(100% + 120px)); } #panel.open { transform: none; }
     #caption { display: none; } #controls { left: 10px; bottom: 10px; }
   }
@@ -83,6 +88,7 @@
   <h1>The World of the Papyrus of Ani</h1>
   <span class="sub">An interpretive model built from Budge's 1895 text. Unit: the royal cubit. Every feature is in the ledger.</span>
 </div>
+<div id="scale" aria-label="Scale at the point of focus"><div class="bar"><i></i></div><div><b id="scaleC">500 cubits</b> · <span id="scaleM">262 m</span></div><div class="note">1 royal cubit = 0.523 m · at the point of focus · Nu's "measures" are not converted</div></div>
 <div class="chip-bar" id="chips"></div>
 <aside id="panel" aria-live="polite"></aside>
 

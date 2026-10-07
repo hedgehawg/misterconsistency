@@ -710,6 +710,17 @@ canvas.addEventListener('pointerup', e => {
   const hits = ray.intersectObjects(world.children, true); for (const h of hits) { let o = h.object; while (o && !o.userData.place) o = o.parent; if (o && o.userData.place && o.userData.place !== 'duat') { journey.off(); focusPlace(o.userData.place); return; } }
 });
 
+// ---------- scale bar: a round number of cubits at the point of focus, with the metric equivalent ----------
+const STEPS = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000], CUBIT_M = L.unit.metres;
+const scaleBarEl = document.querySelector('#scale .bar'), scaleC = $('scaleC'), scaleM = $('scaleM'); let scaleShown = '';
+const metres = m => m >= 1000 ? (m / 1000).toFixed(m >= 10000 ? 0 : 1) + ' km' : m >= 10 ? Math.round(m) + ' m' : m.toFixed(m < 1 ? 2 : 1) + ' m';
+function scaleBar() {
+  const d = camera.position.distanceTo(controls.target), cubitsPerPx = 2 * d * Math.tan(camera.fov * Math.PI / 360) / innerHeight;
+  let n = STEPS[0]; for (const s of STEPS) if (s / cubitsPerPx <= 240) n = s;
+  const px = n / cubitsPerPx, text = `${n.toLocaleString('en-GB')} cubit${n === 1 ? '' : 's'} · ${metres(n * CUBIT_M)}`;
+  if (text !== scaleShown) { scaleShown = text; scaleBarEl.style.width = Math.round(px) + 'px'; scaleC.textContent = `${n.toLocaleString('en-GB')} cubit${n === 1 ? '' : 's'}`; scaleM.textContent = metres(n * CUBIT_M); }
+}
+
 // ---------- loop ----------
 const flames = []; world.traverse(o => { if (o.userData.flame) flames.push(o); });
 function resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); labelRenderer.setSize(w, h); applyView(); }
@@ -723,6 +734,7 @@ function tick(t) {
   controls.update();
   if (!reduced) for (let i = 0; i < flames.length; i++) { const f = flames[i]; f.scale.y = 0.85 + 0.3 * Math.sin(t * 0.012 + i * 1.7); }
   const dist = camera.position.distanceTo(controls.target); camera.near = Math.max(0.5, dist * 0.004); camera.updateProjectionMatrix();
+  scaleBar();
   renderer.render(scene, camera); labelRenderer.render(scene, camera);
 }
 // start

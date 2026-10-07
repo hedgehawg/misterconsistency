@@ -272,7 +272,7 @@ window.BOD_LEDGER = {
     { id:'modern', status:'cross-examination only', cite:'R. O. Faulkner, The Ancient Egyptian Book of the Dead (1972, rev. 1985); T. G. Allen, The Book of the Dead or Going Forth by Day (1974). In copyright: consulted and cited, never reproduced.', need:'disagreements with Budge\'s readings of physical descriptions' }
   ],
   departures: [
-    'The unit is the royal cubit because the text measures in cubits; the metre equivalent (0.523 m) is a modern convention.',
+    'The unit is the royal cubit because the text measures in cubits; the metre equivalent (0.523 m) is a modern convention. The scale bar on the model gives a round number of cubits at the point of focus with its metric equivalent; Nu\'s "measures" are never converted.',
     'The places are arranged along the sun\'s path, west to east and down and up. The papyrus gives a sequence of spells, not a map.',
     'The land of the living is drawn as a translucent slab so the Duat shows beneath it: a section drawing.',
     'The ninth pylon\'s "three hundred and fifty measures" is read as cubits of circumference; the unit is not in the text.',
