@@ -1,0 +1,1377 @@
+{
+ "package": "bod-world-sources-v2.1",
+ "date": "2026-10-06",
+ "checks": {
+  "archive_sha256": "e27e3661f22478925f81839ca1f59d2e4f10e8c1d597c21dabf9a572ab315be6",
+  "archive_matches_supplied_checksum": true,
+  "manifest_files": 65,
+  "manifest_files_verified": 65,
+  "statements": 105,
+  "by_gap": {
+   "G2": 44,
+   "G3": 37,
+   "G4": 24
+  },
+  "by_status": {
+   "agreed": 44,
+   "single-witness": 32,
+   "contested": 29
+  },
+  "by_kind": {
+   "count": 26,
+   "arrangement": 54,
+   "dimension": 4,
+   "material": 21
+  },
+  "facsimile_pages_read": "The 19 pages of evidence/Budge1898-II-G2-G4-facsimile.pdf (printed pp. 196 to 201, 240 to 243, 253 to 261) were read page by page against the transcriptions: Nu I to XIV and Heru-em-khebit XV to XXI, the p. 256 note on Ani's ten pylons, fourteen shrines, three hundred and fifty measures, pylon VI's unknown height and breadth, the seven rosters of Spell 144 and the seven of 147 with their head sequences, the rubric quantities of 144, the Thenna rubric, the door parts of 125 with the Nu Guardian footnote, and the Nu attribution on p. 196. Page 257 was read from the image, as the package warns.",
+  "renouf_gutenberg": "RN1904 quotations: 94; found verbatim: 94; on the cited page: 93",
+  "renouf_note": "Found with the printed page markers of the Gutenberg transcription; the one quotation flagged off-page (\"the dark sky, the black sky\", note 8 to Spell 144) is on p. 292, where the transcriber's correction markup splits the phrase.",
+  "ani_corpus": "B1895-ANI quotations: 12; found in the study corpus: 12",
+  "budge1895_text_layer": {
+   "all_pages_as_claimed": true,
+   "interlinear": [
+    {
+     "quote": "an t'au - a",
+     "page_claimed": 198,
+     "line": 28500,
+     "page_found": 198,
+     "ok": true
+    },
+    {
+     "quote": "teh -a",
+     "page_claimed": 199,
+     "line": 28599,
+     "page_found": 199,
+     "ok": true
+    },
+    {
+     "quote": "an metmet -a",
+     "page_claimed": 200,
+     "line": 28627,
+     "page_found": 200,
+     "ok": true
+    },
+    {
+     "quote": "an nek -a hemt /a",
+     "page_claimed": 200,
+     "line": 28641,
+     "page_found": 200,
+     "ok": true
+    },
+    {
+     "quote": "an nek-d hemt t'a",
+     "page_claimed": 200,
+     "line": 28645,
+     "page_found": 200,
+     "ok": true
+    },
+    {
+     "quote": "an teh - a",
+     "page_claimed": 201,
+     "line": 28661,
+     "page_found": 201,
+     "ok": true
+    },
+    {
+     "quote": "an semetmet - a",
+     "page_claimed": 201,
+     "line": 28699,
+     "page_found": 201,
+     "ok": true
+    },
+    {
+     "quote": "an dri - a",
+     "page_claimed": 202,
+     "line": 28751,
+     "page_found": 202,
+     "ok": true
+    },
+    {
+     "quote": "committed theft (?)",
+     "page_claimed": 202,
+     "line": 28765,
+     "page_found": 202,
+     "ok": true
+    }
+   ],
+   "nebseni": [
+    {
+     "quote": "Strider, who comest forth from Bast",
+     "page_claimed": 350,
+     "line": 39750,
+     "page_found": 350
+    },
+    {
+     "quote": "Sekheriu, who comest forth from Unth",
+     "page_claimed": 350,
+     "line": 39770,
+     "page_found": 350
+    }
+   ],
+   "running": [
+    {
+     "entry": "(3)",
+     "page_claimed": 347,
+     "line": 39589,
+     "page_found": 347
+    },
+    {
+     "entry": "(14)",
+     "page_claimed": 348,
+     "line": 39629,
+     "page_found": 348
+    },
+    {
+     "entry": "(17)",
+     "page_claimed": 348,
+     "line": 39638,
+     "page_found": 348
+    },
+    {
+     "entry": "(20)",
+     "page_claimed": 348,
+     "line": 39647,
+     "page_found": 348
+    },
+    {
+     "entry": "(21)",
+     "page_claimed": 348,
+     "line": 39650,
+     "page_found": 348
+    },
+    {
+     "entry": "(24)",
+     "page_claimed": 348,
+     "line": 39659,
+     "page_found": 348
+    },
+    {
+     "entry": "(31)",
+     "page_claimed": 349,
+     "line": 39683,
+     "page_found": 349
+    },
+    {
+     "entry": "(38)",
+     "page_claimed": 349,
+     "line": 39706,
+     "page_found": 349
+    }
+   ],
+   "note": "The Internet Archive text layer of Budge 1895 holds every interlinear string the package cites, on the pages claimed; the line numbers the package gives do not match this copy of the text layer (the strings sit about 1,280 lines later), so the lines are recorded here afresh. Nebseni 16 and 32 fall under the p. 350 header: the package is right and the brief's p. 351 was wrong."
+  },
+  "facsimile_crops": "The four paired crops from sheets 31 and 32 were inspected: 3 and 38 differ in their sign groups; 14 and 24 repeat the same core group; 31 carries an extra sign below the red negation; 21 ends with an extra bird sign."
+ },
+ "status_rule": "A feature that gathers several statements takes the weakest status among them: contested if any is contested, otherwise single-witness if any is, otherwise agreed; where a feature's own text records a differing reading that no numbered statement covers, it is contested and says so. Its text names the parts that differ.",
+ "status_checks": [
+  {
+   "feature": "arits/nu-144",
+   "status": "agreed",
+   "worst_of_statements": "agreed",
+   "ok": true
+  },
+  {
+   "feature": "arits/vignette-144",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "arits/guardians-1",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "arits/guardians-2",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "arits/guardians-3",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "arits/guardians-4",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "arits/guardians-5",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "arits/guardians-6",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "arits/guardians-7",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "arits/coals",
+   "status": "agreed",
+   "worst_of_statements": "agreed",
+   "ok": true
+  },
+  {
+   "feature": "arits/valley",
+   "status": "agreed",
+   "worst_of_statements": "agreed",
+   "ok": true
+  },
+  {
+   "feature": "arits/utterances-147",
+   "status": "contested",
+   "worst_of_statements": "contested",
+   "ok": true
+  },
+  {
+   "feature": "arits/rubric-144",
+   "status": "contested",
+   "worst_of_statements": "contested",
+   "ok": true
+  },
+  {
+   "feature": "pylons/twenty-one",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shared-ten",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shrine-1",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shrine-2",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shrine-3",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shrine-4",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shrine-5",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shrine-6",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/sixth-size",
+   "status": "contested",
+   "worst_of_statements": "contested",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shrine-7",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shrine-8",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/eighth-fire",
+   "status": "contested",
+   "worst_of_statements": "contested",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shrine-9",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/ninth-girth",
+   "status": "contested",
+   "worst_of_statements": "contested",
+   "ok": true
+  },
+  {
+   "feature": "pylons/shrine-10",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "pylons/eleven-more",
+   "status": "contested",
+   "worst_of_statements": "contested",
+   "ok": true
+  },
+  {
+   "feature": "hall/confession",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "hall/door-inventory",
+   "status": "contested",
+   "worst_of_statements": "contested",
+   "ok": true
+  },
+  {
+   "feature": "hall/door-floor",
+   "status": "contested",
+   "worst_of_statements": "contested",
+   "ok": true
+  },
+  {
+   "feature": "hall/door-announcer",
+   "status": "agreed",
+   "worst_of_statements": "agreed",
+   "ok": true
+  },
+  {
+   "feature": "hall/rubric-125",
+   "status": "single-witness",
+   "worst_of_statements": "single-witness",
+   "ok": true
+  },
+  {
+   "feature": "throne/osiris-house",
+   "status": "contested",
+   "worst_of_statements": "contested",
+   "ok": true
+  },
+  {
+   "feature": "sky/firmament-144",
+   "status": "contested",
+   "worst_of_statements": "contested",
+   "ok": true
+  }
+ ],
+ "corrections": [
+  {
+   "id": "G3-144-THREE-ROLES",
+   "field": "name",
+   "package": "Aken-tau-keha-kheru",
+   "verified": "Aken-tau-k-ha-kheru",
+   "where": "Budge 1898, vol. II, p. 241 (facsimile page 8); the package transcription G3-budge1898-144.txt and arits-rosters.json carry the first form. The ledger and the model use the printed form."
+  },
+  {
+   "id": "G3-147-02-HEADS",
+   "field": "page",
+   "package": "259",
+   "verified": "258",
+   "where": "The second Arit's vignette is printed at the foot of p. 258 (facsimile page 16); p. 259 opens with its text. The ledger cites 258."
+  },
+  {
+   "id": "G4-ii (all four)",
+   "field": "line",
+   "package": "text-layer lines 27224 to 27473",
+   "verified": "lines 28500 to 28765 in the Internet Archive text layer downloaded 2026-10-06",
+   "where": "Content and pages match; the line locators do not reproduce."
+  }
+ ],
+ "classes": {
+  "outline": "drawn as an outline pylon with its label (geometry in the witness colour)",
+  "label": "carried as text on a label in the model",
+  "already": "already modelled from Ani's own text or Budge's 1895 description; the witness adds its citation",
+  "card": "evidence-card text only: utterances, rubrics, riddles and readings that fix no geometry",
+  "lead": "an editor's lead recorded for the open unit questions; nothing adopted",
+  "annotation": "a note on the study's text; no model change"
+ },
+ "by_class": {
+  "already": 26,
+  "outline": 16,
+  "card": 45,
+  "lead": 2,
+  "label": 12,
+  "annotation": 4
+ },
+ "statements": [
+  {
+   "id": "G2-COUNT-COMPOSITE",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "count",
+   "class": "outline",
+   "feature": "pylons/twenty-one",
+   "text": "Budge’s chapter 146 presentation runs to twenty-one pylons."
+  },
+  {
+   "id": "G2-COUNT-NU-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "pylons/twenty-one",
+   "text": "Budge describes fourteen shrines in the Nu chapter 146 vignette."
+  },
+  {
+   "id": "G2-COUNT-ANI",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "already",
+   "feature": "pylons/twenty-one",
+   "text": "Ani’s presentation contains ten pylons."
+  },
+  {
+   "id": "G2-SHRINE-RESIDENT",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shared-ten",
+   "text": "A god is shown seated inside each shrine/pylon in the descriptions of Nu and Lc."
+  },
+  {
+   "id": "G2-146-I-WALLS",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "dimension",
+   "class": "card",
+   "feature": "pylons/shared-ten",
+   "text": "Pylon I is described with high/lofty walls."
+  },
+  {
+   "id": "G2-146-II-FIRE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "material",
+   "class": "card",
+   "feature": "pylons/shared-ten",
+   "text": "Budge explicitly makes pylon II a devourer with fire; Naville calls her the consuming one."
+  },
+  {
+   "id": "G2-146-III-ALTAR",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "pylons/shared-ten",
+   "text": "Pylon III has an altar/altars epithet."
+  },
+  {
+   "id": "G2-146-IV-KNIVES",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "pylons/shared-ten",
+   "text": "Pylon IV is associated with knives."
+  },
+  {
+   "id": "G2-146-V-FLAME",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "material",
+   "class": "card",
+   "feature": "pylons/shared-ten",
+   "text": "Pylon V is named fire/the flame."
+  },
+  {
+   "id": "G2-146-VI-DIMENSIONS",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "dimension",
+   "class": "card",
+   "feature": "pylons/sixth-size",
+   "text": "Pylon VI’s dimensions are expressly unknown; the dimensional terms differ."
+  },
+  {
+   "id": "G2-146-VI-SERPENT",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "count",
+   "class": "card",
+   "feature": "pylons/sixth-size",
+   "text": "The creature above/on VI differs: one serpent of unknown size versus serpents of unknown number."
+  },
+  {
+   "id": "G2-146-VI-POSITION",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/sixth-size",
+   "text": "A serpent or serpents are on/above pylon VI."
+  },
+  {
+   "id": "G2-146-VII-SHROUD",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "material",
+   "class": "card",
+   "feature": "pylons/shared-ten",
+   "text": "Pylon VII is associated with wrapping the dead in a robe/shroud."
+  },
+  {
+   "id": "G2-146-VIII-FIRE",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "material",
+   "class": "already",
+   "feature": "pylons/eighth-fire",
+   "text": "Pylon VIII has unquenchable burning flame."
+  },
+  {
+   "id": "G2-146-VIII-APPENDAGE",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "pylons/eighth-fire",
+   "text": "VIII’s reaching flame tongues differ from an extended hand."
+  },
+  {
+   "id": "G2-146-IX-GIRTH",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "dimension",
+   "class": "already",
+   "feature": "pylons/ninth-girth",
+   "text": "Pylon IX’s girth/circumference is three hundred and fifty measures."
+  },
+  {
+   "id": "G2-146-IX-GEM-LIGHT",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "material",
+   "class": "card",
+   "feature": "pylons/ninth-girth",
+   "text": "IX emits light compared to southern uatch stone/emerald."
+  },
+  {
+   "id": "G2-146-IX-ANI-GEM",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "material",
+   "class": "already",
+   "feature": "pylons/ninth-girth",
+   "text": "Ani’s pylon IX is clothed with mother-of-emerald of the south."
+  },
+  {
+   "id": "G2-146-XI-TIME",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "The time associated with acclaim of XI differs."
+  },
+  {
+   "id": "G2-146-XII-FIRE-HEAT",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "material",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XII’s destroying flash/fire differs from morning heat."
+  },
+  {
+   "id": "G2-146-XIII-HANDS",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "count",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "Two hands are extended over XIII."
+  },
+  {
+   "id": "G2-146-XIII-ACTOR",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "The god extending hands over XIII differs."
+  },
+  {
+   "id": "G2-146-XIII-NILE",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XIII is associated with illumination of the Nile in a hidden place."
+  },
+  {
+   "id": "G2-146-XIV-RED",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "material",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XIV’s objects of dancing are blood-red ones versus the impure."
+  },
+  {
+   "id": "G2-146-XV-RED",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "material",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XV’s personified figure has red hair and eyes."
+  },
+  {
+   "id": "G2-146-XV-NIGHT",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XV’s figure comes out by night."
+  },
+  {
+   "id": "G2-146-XVI-WEATHER",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XVI is lady of the rain-storm versus lady of the morning dew."
+  },
+  {
+   "id": "G2-146-XVI-SPARKS",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "material",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "Naville’s XVI throws heat and sparks of fire."
+  },
+  {
+   "id": "G2-146-XVII-HAIR-PLANTS",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XVII is associated with hair versus uauai plants."
+  },
+  {
+   "id": "G2-146-XVIII-HOUSE",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XVIII has a Great House/palace association."
+  },
+  {
+   "id": "G2-146-XIX-BOOKS",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XIX’s writings are assigned to Ptah in Budge and to Thoth in Naville."
+  },
+  {
+   "id": "G2-146-XX-CAVERN",
+   "gap": "G2",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XX dwells in the cavern of her lord."
+  },
+  {
+   "id": "G2-146-XXI-CUTTING",
+   "gap": "G2",
+   "status": "contested",
+   "kind": "material",
+   "class": "outline",
+   "feature": "pylons/eleven-more",
+   "text": "XXI is a knife which cuts versus a figure who cuts stone by her word."
+  },
+  {
+   "id": "G2-146-IX-40-CUBIT-NOTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "dimension",
+   "class": "lead",
+   "feature": "pylons/ninth-girth",
+   "text": "Naville reports Lepsius’s interpretation as a forty-cubit schoinion."
+  },
+  {
+   "id": "G2-ANI-01-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shrine-1",
+   "text": "Ani pylon 1: witness-specific guardian and shrine decoration."
+  },
+  {
+   "id": "G2-ANI-02-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shrine-2",
+   "text": "Ani pylon 2: witness-specific guardian and shrine decoration."
+  },
+  {
+   "id": "G2-ANI-03-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shrine-3",
+   "text": "Ani pylon 3: witness-specific guardian and shrine decoration."
+  },
+  {
+   "id": "G2-ANI-04-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shrine-4",
+   "text": "Ani pylon 4: witness-specific guardian and shrine decoration."
+  },
+  {
+   "id": "G2-ANI-05-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shrine-5",
+   "text": "Ani pylon 5: witness-specific guardian and shrine decoration."
+  },
+  {
+   "id": "G2-ANI-06-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shrine-6",
+   "text": "Ani pylon 6: witness-specific guardian and shrine decoration."
+  },
+  {
+   "id": "G2-ANI-07-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shrine-7",
+   "text": "Ani pylon 7: witness-specific guardian and shrine decoration."
+  },
+  {
+   "id": "G2-ANI-08-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shrine-8",
+   "text": "Ani pylon 8: witness-specific guardian and shrine decoration."
+  },
+  {
+   "id": "G2-ANI-09-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shrine-9",
+   "text": "Ani pylon 9: witness-specific guardian and shrine decoration."
+  },
+  {
+   "id": "G2-ANI-10-VIGNETTE",
+   "gap": "G2",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "pylons/shrine-10",
+   "text": "Ani pylon 10: witness-specific guardian and shrine decoration."
+  },
+  {
+   "id": "G3-144-SEVEN",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "label",
+   "feature": "arits/nu-144",
+   "text": "Spell 144 enumerates seven Arits/gates."
+  },
+  {
+   "id": "G3-144-THREE-ROLES",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "label",
+   "feature": "arits/nu-144",
+   "text": "Each gate in144 is supplied with three named roles."
+  },
+  {
+   "id": "G3-144-VIGNETTE-TWO",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/vignette-144",
+   "text": "The144 vignette tradition is described with two visible officials at a door, distinct from the three text roles."
+  },
+  {
+   "id": "G3-144-VIGNETTE-KNIVES",
+   "gap": "G3",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "arits/vignette-144",
+   "text": "Budge describes the two visible officials as each holding a knife."
+  },
+  {
+   "id": "G3-147-THREE-FIGURES",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "already",
+   "feature": "arits/vignette-144",
+   "text": "Ani147’s gate pictures are described with three figures each."
+  },
+  {
+   "id": "G3-147-01-HEADS",
+   "gap": "G3",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "arits/guardians-1",
+   "text": "Ani147 gate1: the three head forms recorded by Budge."
+  },
+  {
+   "id": "G3-147-02-HEADS",
+   "gap": "G3",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "arits/guardians-2",
+   "text": "Ani147 gate2: the three head forms recorded by Budge."
+  },
+  {
+   "id": "G3-147-03-HEADS",
+   "gap": "G3",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "arits/guardians-3",
+   "text": "Ani147 gate3: the three head forms recorded by Budge."
+  },
+  {
+   "id": "G3-147-04-HEADS",
+   "gap": "G3",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "arits/guardians-4",
+   "text": "Ani147 gate4: the three head forms recorded by Budge."
+  },
+  {
+   "id": "G3-147-05-HEADS",
+   "gap": "G3",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "arits/guardians-5",
+   "text": "Ani147 gate5: the three head forms recorded by Budge."
+  },
+  {
+   "id": "G3-147-06-HEADS",
+   "gap": "G3",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "arits/guardians-6",
+   "text": "Ani147 gate6: the three head forms recorded by Budge."
+  },
+  {
+   "id": "G3-147-07-HEADS",
+   "gap": "G3",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "arits/guardians-7",
+   "text": "Ani147 gate7: the three head forms recorded by Budge."
+  },
+  {
+   "id": "G3-147-I-COALS",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "material",
+   "class": "already",
+   "feature": "arits/coals",
+   "text": "147’s first-gate address mentions a wall/walls of burning coals."
+  },
+  {
+   "id": "G3-147-I-VALLEY",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "already",
+   "feature": "arits/valley",
+   "text": "147’s first-gate address mentions the great valley."
+  },
+  {
+   "id": "G3-147-III-WATER",
+   "gap": "G3",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "arits/utterances-147",
+   "text": "147 III’s speaker is hidden in a great deep versus associated with a secret stream."
+  },
+  {
+   "id": "G3-147-V-JAWS",
+   "gap": "G3",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "arits/utterances-147",
+   "text": "147 V has jaw bones; Naville repeats a two-jaw reading but explicitly proposes closed doors in a note."
+  },
+  {
+   "id": "G3-147-V-BACKBONE",
+   "gap": "G3",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "arits/utterances-147",
+   "text": "147 V’s second object is a backbone in Budge but books in the comparison."
+  },
+  {
+   "id": "G3-144-FIRMAMENT",
+   "gap": "G3",
+   "status": "contested",
+   "kind": "material",
+   "class": "card",
+   "feature": "sky/firmament-144",
+   "text": "144’s firmament has no material in Budge; Naville prints steel and suggests dark/black sky in his note."
+  },
+  {
+   "id": "G3-144-SHRINE",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "arits/nu-144",
+   "text": "The deceased is hidden within a divine house/shrine."
+  },
+  {
+   "id": "G3-144-RUBRIC-YELLOW",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "material",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "The gods’ representation is written/drawn in yellow ink."
+  },
+  {
+   "id": "G3-144-RUBRIC-FIGURE",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "The ritual uses a figure/statue of the deceased."
+  },
+  {
+   "id": "G3-144-RUBRIC-FOUR-PARTS",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "The bull offerings name thigh/haunch, head, heart and hoof."
+  },
+  {
+   "id": "G3-144-RUBRIC-RED-BULL",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "material",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "The offered bull is red."
+  },
+  {
+   "id": "G3-144-RUBRIC-BLOOD",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Four vessels/vases of blood are prescribed."
+  },
+  {
+   "id": "G3-144-RUBRIC-BLOOD-SOURCE",
+   "gap": "G3",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "The excluded blood source is breast in Budge and heart in Naville."
+  },
+  {
+   "id": "G3-144-RUBRIC-WHITE-LOAVES",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Sixteen white loaves are prescribed."
+  },
+  {
+   "id": "G3-144-RUBRIC-LOAF-SHAPE",
+   "gap": "G3",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Naville adds pointed form to the sixteen white loaves."
+  },
+  {
+   "id": "G3-144-RUBRIC-PERSEN",
+   "gap": "G3",
+   "status": "contested",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Budge gives eight pasen/persen loaves; Naville gives eight round loaves."
+  },
+  {
+   "id": "G3-144-RUBRIC-SHENEN",
+   "gap": "G3",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Budge includes eight shenen loaves with no separately named counterpart in Naville’s list."
+  },
+  {
+   "id": "G3-144-RUBRIC-KHENFU",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Eight khenfu/chenfu loaves are prescribed."
+  },
+  {
+   "id": "G3-144-RUBRIC-HEBENNU",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Eight hebennu loaves are prescribed."
+  },
+  {
+   "id": "G3-144-RUBRIC-BEER",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Eight large vessels/casks of beer are prescribed."
+  },
+  {
+   "id": "G3-144-RUBRIC-GRAIN",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Eight grain containers are given, with the number bracket-supplied by Budge."
+  },
+  {
+   "id": "G3-144-RUBRIC-MILK-FOUR",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Four containers of white-cow milk are prescribed."
+  },
+  {
+   "id": "G3-144-RUBRIC-EARTHENWARE",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "material",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "The milk containers are earthenware."
+  },
+  {
+   "id": "G3-144-RUBRIC-TWICE",
+   "gap": "G3",
+   "status": "contested",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "Both rubrics say twice, but the action differs."
+  },
+  {
+   "id": "G3-144-RUBRIC-HOUR",
+   "gap": "G3",
+   "status": "agreed",
+   "kind": "count",
+   "class": "card",
+   "feature": "arits/rubric-144",
+   "text": "The ritual includes a fourth-hour instruction."
+  },
+  {
+   "id": "G4-125-BOLTS-LEAF",
+   "gap": "G4",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "label",
+   "feature": "hall/door-inventory",
+   "text": "Door inventory: Budge bolts; Renouf Leaf."
+  },
+  {
+   "id": "G4-125-RIGHT",
+   "gap": "G4",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "label",
+   "feature": "hall/door-inventory",
+   "text": "Door inventory: Budge [right] lintel; Renouf right side."
+  },
+  {
+   "id": "G4-125-LEFT",
+   "gap": "G4",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "label",
+   "feature": "hall/door-inventory",
+   "text": "Door inventory: Budge [left] lintel; Renouf left side post."
+  },
+  {
+   "id": "G4-125-THRESHOLD",
+   "gap": "G4",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "label",
+   "feature": "hall/door-inventory",
+   "text": "Door inventory: Budge threshold; Renouf Threshold."
+  },
+  {
+   "id": "G4-125-FASTENING-LOCK",
+   "gap": "G4",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "label",
+   "feature": "hall/door-inventory",
+   "text": "Door inventory: Budge fastening; Renouf Lock."
+  },
+  {
+   "id": "G4-125-SOCKET-LATCH",
+   "gap": "G4",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "label",
+   "feature": "hall/door-inventory",
+   "text": "Door inventory: Budge socket of the fastening; Renouf Latch."
+  },
+  {
+   "id": "G4-125-SHU-KEEPER",
+   "gap": "G4",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "label",
+   "feature": "hall/door-inventory",
+   "text": "Door inventory: Budge guardian of the leaf; Renouf Keeper of the Door."
+  },
+  {
+   "id": "G4-125-POSTS-LINTELS",
+   "gap": "G4",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "label",
+   "feature": "hall/door-inventory",
+   "text": "Door inventory: Budge posts; Renouf Lintels."
+  },
+  {
+   "id": "G4-125-ANNOUNCER",
+   "gap": "G4",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "hall/door-announcer",
+   "text": "Door inventory: Budge guardian of the door; Renouf Doorkeeper."
+  },
+  {
+   "id": "G4-125-EXTRA-NU-GUARDIAN",
+   "gap": "G4",
+   "status": "single-witness",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "hall/door-inventory",
+   "text": "Budge records an extra Nu Guardian with the name Ox of Seb after the posts."
+  },
+  {
+   "id": "G4-125-FLOOR",
+   "gap": "G4",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "label",
+   "feature": "hall/door-floor",
+   "text": "The floor itself requires the names of the entrant’s feet."
+  },
+  {
+   "id": "G4-125-TWO-FEET",
+   "gap": "G4",
+   "status": "agreed",
+   "kind": "count",
+   "class": "label",
+   "feature": "hall/door-floor",
+   "text": "The floor requires two feet to be named."
+  },
+  {
+   "id": "G4-125-RIGHT-FOOT",
+   "gap": "G4",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "hall/door-floor",
+   "text": "Right foot password."
+  },
+  {
+   "id": "G4-125-LEFT-FOOT",
+   "gap": "G4",
+   "status": "agreed",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "hall/door-floor",
+   "text": "Left foot password."
+  },
+  {
+   "id": "G4-125-ROOF",
+   "gap": "G4",
+   "status": "agreed",
+   "kind": "material",
+   "class": "card",
+   "feature": "throne/osiris-house",
+   "text": "The Osiris-house riddle has a fiery heaven/roof."
+  },
+  {
+   "id": "G4-125-WALLS",
+   "gap": "G4",
+   "status": "contested",
+   "kind": "arrangement",
+   "class": "card",
+   "feature": "throne/osiris-house",
+   "text": "Walls are surmounted by living uraei in Budge but are living uraei in the comparison."
+  },
+  {
+   "id": "G4-125-WATER-FLOOR",
+   "gap": "G4",
+   "status": "agreed",
+   "kind": "material",
+   "class": "card",
+   "feature": "throne/osiris-house",
+   "text": "The house floor is a stream/running water in the Osiris riddle."
+  },
+  {
+   "id": "G4-125-RUBRIC-CLAY",
+   "gap": "G4",
+   "status": "agreed",
+   "kind": "material",
+   "class": "card",
+   "feature": "hall/rubric-125",
+   "text": "The representation is drawn on a new tile/clean brick of clay."
+  },
+  {
+   "id": "G4-125-RUBRIC-SANDALS",
+   "gap": "G4",
+   "status": "single-witness",
+   "kind": "material",
+   "class": "card",
+   "feature": "hall/rubric-125",
+   "text": "The ritual specifies white sandals; Budge additionally specifies leather."
+  },
+  {
+   "id": "G4-125-FOOT-WOOD-NOTE",
+   "gap": "G4",
+   "status": "single-witness",
+   "kind": "material",
+   "class": "lead",
+   "feature": "hall/door-floor",
+   "text": "Renouf’s note identifies the left-foot password word as denoting a wooden striking object."
+  },
+  {
+   "id": "G4-ii-ANI-03-38",
+   "gap": "G4",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "annotation",
+   "feature": "hall/confession",
+   "text": "Ani3 and38 do not repeat the same Egyptian wording: Budge renders different constructions with the same running-English denial of theft."
+  },
+  {
+   "id": "G4-ii-ANI-14-24",
+   "gap": "G4",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "annotation",
+   "feature": "hall/confession",
+   "text": "Ani14 and24 repeat the denied-act wording at the lexical level represented by Budge's an teh-a."
+  },
+  {
+   "id": "G4-ii-ANI-17-31",
+   "gap": "G4",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "annotation",
+   "feature": "hall/confession",
+   "text": "Ani17 and31 are not exact lexical repetitions: Budge records metmet versus semetmet, while giving both the same eavesdropping gloss."
+  },
+  {
+   "id": "G4-ii-ANI-20-21",
+   "gap": "G4",
+   "status": "single-witness",
+   "kind": "count",
+   "class": "annotation",
+   "feature": "hall/confession",
+   "text": "Ani20 and21 repeat the wife-of-a-man clause in Budge's interlinear reading, with a visible spelling difference rather than identical glyph strings."
+  }
+ ],
+ "not_resolved": [
+  "The Egyptian word behind \"measures\" at Aat IV (Spell 149) and at pylon IX (Spell 146): unidentified; Lepsius's forty-cubit schoinion in Naville's note 5 (p. 296) is a lead, not a conversion.",
+  "Spell 147 in the Papyrus of Nu: not located in Budge 1898 (the English volume, and the Nu inventory and contents of the hieroglyphic volume) or in Renouf and Naville 1904; the wider public-domain corpus is unsearched.",
+  "The damaged noun at Ani 38 in the 1895 interlinear; the printed 1895 interlinear pages themselves were not retrieved by Astra (the Heidelberg scan refused the requests) and were not inspected here.",
+  "An independent direct translation of the eight Ani clauses of G4-ii: Renouf's edited list is the only second translation read, and it is cross-manuscript.",
+  "The Egyptian wording behind the door parts of Spell 125 (bolts or leaf, lintels or posts, socket or latch, elbow or knee): the two translators are not reconciled."
+ ]
+}

@@ -1,24 +1,25 @@
 {
-  "build": "2.5.0",
+  "build": "2.6.0",
   "algorithm": "SHA-256",
   "excludes": [
-    "assets/asset-manifest.json"
+    "assets/asset-manifest.json",
+    "MANIFEST.sha256"
   ],
   "files": [
     {
       "path": "CHANGELOG.md",
-      "bytes": 2320,
-      "sha256": "f8dcb2a5764ef949265233bec8ad577f3695e5a6498073a3b0d34fd913f04444"
+      "bytes": 2953,
+      "sha256": "ce4d6299ae466bfffe64c93e32c924f1eb777dc09b3d69a63043d7f7fbe5b272"
     },
     {
       "path": "INTEGRATION.md",
-      "bytes": 9817,
-      "sha256": "ccafd0649b73781b210f563c7a11d78bf8944cbc7ab46147ffe503943000a9e0"
+      "bytes": 9824,
+      "sha256": "ff2db635819d6340c80cf3ec74750011b3ecb4811e252264978e6c3d3deb3c9b"
     },
     {
       "path": "VERIFICATION.md",
-      "bytes": 5416,
-      "sha256": "5d6b805077f8ad47fa83d7ac3995d7f936078a384ab843b6872625a3d619c9c9"
+      "bytes": 6047,
+      "sha256": "bc5838d1c189049e62dfabd2fa75f7dee28511a03fb4c080163b0610515a93a6"
     },
     {
       "path": "assets/SOURCE_CREDITS.md",
@@ -87,8 +88,8 @@
     },
     {
       "path": "assets/js/text.js",
-      "bytes": 740890,
-      "sha256": "ef10633b2432ffe8169c8f013973c87e8f48b241d066fbb0d6834136e12a8f6b"
+      "bytes": 740945,
+      "sha256": "2945f5da2bcd0066f315686e303311674cb2fd2bfa30342681e505b32fe84fa9"
     },
     {
       "path": "assets/js/viewer.js",
@@ -97,8 +98,8 @@
     },
     {
       "path": "assets/release.json",
-      "bytes": 1108,
-      "sha256": "c4f1d4c1730f923923f6402f22a528f76d9e10fb4c73989733f341c76e132076"
+      "bytes": 1136,
+      "sha256": "c8801efcd57361567fac22954740477c34c5bd769d9078ecbf082c01d6eb43f5"
     },
     {
       "path": "assets/research.html",
@@ -304,6 +305,16 @@
       "path": "assets/styles/study-tools.css",
       "bytes": 2237,
       "sha256": "edaed31d99dba8f6a700f1fdf4cd23a6c723e64228212482f8f11c94e5e2de84"
+    },
+    {
+      "path": "assets/tag-overrides-v2.6.json",
+      "bytes": 381,
+      "sha256": "7a71b2cdf2a995e6734824f883cff0878a237cef336e88abbc27554829781bca"
+    },
+    {
+      "path": "assets/tag-verification-v2.6.json",
+      "bytes": 1987,
+      "sha256": "56bba796047d0ee9db8e37ab61b23a9a64ffc24e247f60ae8abf59cef1cc8e32"
     },
     {
       "path": "assets/verification.json",

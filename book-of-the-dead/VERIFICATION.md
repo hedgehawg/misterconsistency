@@ -1,3 +1,11 @@
+# Verification — v2.6.0 tag correction
+
+6 October 2026. Exactly 20 corpus `map` fields were changed and tested against the requested IDs. A parsed-object comparison proves every other text/geometry/column field is unchanged. All shipped JavaScript files pass `node --check`. Tomb tags 33-7 and 34-1 remain `tomb`. The current results are in `assets/tag-verification-v2.6.json`.
+
+**No browser suite was rerun for v2.6.** The following v2.5 report and `assets/verification.json` are retained as historical baseline results, not certification of this release. No live deployment or original-language source review is claimed.
+
+---
+
 # Verification — v2.5.0 working integration build
 
 5 October 2026. Tests refer to the packaged application in this folder, not just the old v2.4 page. This report does not certify scholarly accuracy or a public deployment.

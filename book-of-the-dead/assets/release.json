@@ -1,7 +1,7 @@
 {
-  "version": "2.5.0",
-  "date": "2026-10-05",
-  "status": "working integration build; source review and final 3D refinement pending",
+  "version": "2.6.0",
+  "date": "2026-10-06",
+  "status": "tag-correction integration build; source review and final 3D refinement pending",
   "folder": "book-of-the-dead",
   "expected_path": "book-of-the-dead/",
   "publisher": "Mister Consistency",
@@ -22,16 +22,13 @@
   "noindex": true,
   "fully_source_audited": false,
   "deployed": false,
-  "browser_checks_passed": 74,
-  "browser_checks_total": 74,
-  "static_checks_passed": 15,
-  "static_checks_total": 15,
-  "negative_build_checks_passed": 3,
-  "file_count": 63,
-  "total_bytes": 32112603,
-  "largest_file": {
-    "path": "assets/scans/ani-21.webp",
-    "bytes": 1049766
-  },
-  "asset_manifest": "assets/asset-manifest.json"
+  "browser_checks_passed": null,
+  "browser_checks_total": null,
+  "static_checks_passed": null,
+  "static_checks_total": null,
+  "negative_build_checks_passed": null,
+  "asset_manifest": "assets/asset-manifest.json",
+  "tag_corrections": 20,
+  "baseline_verification": "assets/verification.json",
+  "current_verification": "assets/tag-verification-v2.6.json"
 }
