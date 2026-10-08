@@ -4,8 +4,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from './vendor/CSS2DRenderer.js';
+import { createJourneyAudio } from './world-audio.js';
 
-const W = window.BOD_WORLD, L = window.BOD_LEDGER, TX = window.ANI_TEXT || {}, BU = window.ANI_BUDGE || {}, G = window.ANI_GEOM;
+const W = window.BOD_WORLD, L = window.BOD_LEDGER, J = window.BOD_JOURNEY, TX = window.ANI_TEXT || {}, BU = window.ANI_BUDGE || {}, G = window.ANI_GEOM;
 const P = W.palette, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = id => document.getElementById(id);
 const placeById = Object.fromEntries(L.places.map(p => [p.id, p]));
@@ -729,7 +730,8 @@ function showOverview() {
   <li class="feat k-invention"><div class="fh"><span class="badge">Invention</span><span class="what">${kinds.invention || 0} are ours, labelled, so the model can be built</span></div></li>
   <li class="feat k-witness"><div class="fh"><span class="badge">Witness</span><span class="what">${kinds.witness || 0} come from other manuscripts and editions through the sourcing workstream (the Papyri of Nu, Nebseni and Heru-em-khebit, the Leyden papyrus, Renouf's reading), each with its status and its other reading</span></div></li>
   <li class="feat k-gap"><div class="fh"><span class="badge">Gap</span><span class="what">${kinds.gap || 0} are gaps the papyrus does not fill; they go to the sourcing workstream</span></div></li></ol>
-  <p class="sum">Select a place, or begin the journey. Each feature links to the passage in the study and shows the facsimile detail it rests on.</p>`;
+  <p class="sum">Select a place, or begin the journey: one room at a time, at your own pace, with narration and music. Each feature links to the passage in the study and shows the facsimile detail it rests on.</p>
+  <p class="credits">The journey's narration was written for this model and is spoken by ${esc(J.voice)}. Music by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0: ${[...new Set(Object.values(J.music).map(m => m.title))].map(esc).join(', ')}.</p>`;
   panel.classList.add('open'); $('panelToggle').textContent = 'Hide evidence'; applyView();
 }
 // with the evidence panel open, centre the view in the space left of it
@@ -737,6 +739,7 @@ function applyView() {
   const w = innerWidth, h = innerHeight, open = panel.classList.contains('open') && w > 760, P = open ? panel.offsetWidth + 28 : 0;
   if (P) { camera.aspect = (w + P) / h; camera.setViewOffset(w + P, h, P, 0, w, h); } else { camera.clearViewOffset(); camera.aspect = w / h; }
   camera.updateProjectionMatrix();
+  $('jc').style.left = w > 760 ? ((w - P) / 2) + 'px' : '';   // the journey console sits centred in the same space
 }
 
 // ---------- chips, journey, controls ----------
@@ -748,17 +751,29 @@ const evChip = mkChip('evidence', 'Hide evidence', true); evChip.id = 'panelTogg
 // the panel sits below however many rows the chips take
 function layoutPanel() { panel.style.top = (chipBar.offsetTop + chipBar.offsetHeight + 10) + 'px'; }
 new ResizeObserver(layoutPanel).observe(chipBar); layoutPanel();
-const journey = { i: -1, on: false, off() { this.on = false; this.i = -1; $('journey').classList.remove('on'); $('jbtn').textContent = 'Begin the journey'; },
-  start() { this.on = true; this.i = 0; $('journey').classList.add('on'); $('jbtn').textContent = 'End the journey'; this.go(); },
-  go() { const id = W.route[this.i]; focusPlace(id); $('jpos').textContent = `${this.i + 1} of ${W.route.length}`; },
-  next() { if (!this.on) return this.start(); this.i = (this.i + 1) % W.route.length; this.go(); }, prev() { if (!this.on) return this.start(); this.i = (this.i - 1 + W.route.length) % W.route.length; this.go(); } };
+// the journey: one room at a time, at the visitor's pace, each with a narration clip and a music bed (world-audio.js, journey.js)
+const jc = $('jc'), jcLine = $('jc-line'), jcNext = $('jc-next'), jcPrev = $('jc-prev'), jcSound = $('jc-sound');
+const roomLabel = i => W.places[W.route[i]].label || placeById[W.route[i]].name;
+const audio = createJourneyAudio(J, { onLine: text => { jcLine.textContent = text; }, onEnd: () => { jcNext.classList.add('ready'); } });
+const journey = { i: -1, on: false,
+  off() { if (!this.on) return; this.on = false; this.i = -1; audio.stop(); jc.hidden = true; document.body.classList.remove('journey'); $('jbtn').textContent = 'Begin the journey'; },
+  start() { this.on = true; this.i = 0; audio.start(); jc.hidden = false; document.body.classList.add('journey'); $('jbtn').textContent = 'End the journey'; this.go(); },
+  go() {
+    const i = this.i, n = W.route.length, id = W.route[i]; focusPlace(id);
+    $('jc-pos').textContent = `Room ${i + 1} of ${n}`; $('jc-title').textContent = placeById[id].name; jcLine.textContent = ''; jcNext.classList.remove('ready');
+    jcPrev.textContent = `\u2039 ${roomLabel((i - 1 + n) % n)}`; jcNext.textContent = i === n - 1 ? 'Back to Thebes \u203a' : `Next: ${roomLabel(i + 1)} \u203a`;
+    audio.room(i);
+  },
+  next() { if (!this.on) return this.start(); this.i = (this.i + 1) % W.route.length; this.go(); },
+  prev() { if (!this.on) return this.start(); this.i = (this.i - 1 + W.route.length) % W.route.length; this.go(); } };
 $('jbtn').onclick = () => journey.on ? (journey.off(), focusOverview()) : journey.start();
-$('jnext').onclick = () => journey.next(); $('jprev').onclick = () => journey.prev();
+jcNext.onclick = () => journey.next(); jcPrev.onclick = () => journey.prev();
+jcSound.onclick = () => { const m = audio.mute(!audio.muted); jcSound.textContent = m ? 'Sound off' : 'Sound on'; jcSound.classList.toggle('on', !m); };
 $('panelToggle').onclick = () => { const open = panel.classList.toggle('open'); $('panelToggle').textContent = open ? 'Hide evidence' : 'Show evidence'; applyView(); };
 $('section').onclick = () => { sectionManual = true; setSection(world.getObjectByName('slab').material.opacity > 0.6); };
 $('labelsBtn').onclick = e => { const hidden = $('labels').classList.toggle('hidden'); e.currentTarget.classList.toggle('on', !hidden); e.currentTarget.textContent = hidden ? 'Labels off' : 'Labels on'; };
 $('fs').onclick = () => { const el = document.documentElement; if (document.fullscreenElement) document.exitFullscreen(); else if (el.requestFullscreen) el.requestFullscreen().catch(() => {}); };
-if (window.self !== window.top) $('fs').style.display = 'none';
+if (!document.fullscreenEnabled) $('fs').style.display = 'none';   // hidden where full screen is not allowed (a frame without allowfullscreen)
 addEventListener('keydown', e => { if (e.target.closest('input,textarea')) return; if (e.key === 'ArrowRight') journey.next(); if (e.key === 'ArrowLeft') journey.prev(); if (e.key === 'Escape') { journey.off(); focusOverview(); } });
 
 // click on the model: fly to the place it belongs to
@@ -804,3 +819,4 @@ if (q && W.places[q]) { const w = W.places[q]; const d = new THREE.Vector3(...(w
 else showOverview();
 requestAnimationFrame(tick);
 setTimeout(() => { const r = renderer.info.render; $('stats').textContent = `${r.calls} calls · ${r.triangles} triangles`; console.log('world render:', r.calls, 'draw calls,', r.triangles, 'triangles,', featureLabels.length, 'feature labels'); }, 1500);
+window.__bod = { journey, audio, J, W, L, camera, controls, focusPlace, focusOverview };

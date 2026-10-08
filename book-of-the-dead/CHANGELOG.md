@@ -1,3 +1,7 @@
+# World journey v0.5 — 8 October 2026
+
+Added by the Websites thread on `main` (the world's files are otherwise the Book of the Dead World thread's): the journey now has narration and a score. `world/journey/SCRIPT.md` is the narration (17 rooms, one clip each, spoken by Microsoft's neural voice Ryan en-GB via edge-tts; every statement is in the ledger); `world/journey.js` is generated from it with clip durations and the act-to-music map; `world/journey/music/` holds seven Kevin MacLeod tracks (incompetech.com, CC BY 4.0), loudness-matched to -18 LUFS and re-encoded at 96 kbps; `world/world-audio.js` plays them (one bed per act, looped, crossfaded between acts, ducked under narration; every play() runs inside the click that asked for it). `world.js` gains the journey console (room, subtitle, back/next, sound) and a `window.__bod` debug handle; the bottom-left ‹ n of 17 › nav is replaced by the console; the Full screen button now hides only where full screen is not allowed, so it works inside the homepage's allowfullscreen frame. Tools: `misterconsistency-inbox/bod-tools/` (make_journey.py, encode_music.py). No ledger, geometry or corpus change.
+
 # v2.6.0 — 6 October 2026
 
 Tag-only corpus correction: fifteen Spell 147 blocks (11-1–11-9 and 12-1–12-6) now point to `arits`; 33-1 and 15-9–15-12 point to `lake`. The two existing tomb tags remain unchanged. No translation, image, geometry, map architecture, or application logic changed. These are navigation associations, not proof that the different fire/water passages describe one identical physical lake.
