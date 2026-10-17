@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><link rel="icon" href="data:,">
+<title>Private page</title>
+<style>
+:root{--page:#0d0d0d;--surface:#1a1a19;--ring:#2a2a28;--ink:#f2efe8;--ink2:#b8b4aa;--muted:#8a877f;--gold:#d0a44c}
+html,body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100%}
+main{max-width:420px;margin:14vh auto 0;padding:0 20px}
+h1{font-size:20px;font-weight:650;letter-spacing:-.2px;margin:0 0 6px}
+p{color:var(--ink2);margin:0 0 18px}
+form{background:var(--surface);border:1px solid var(--ring);border-radius:14px;padding:18px}
+label{display:block;color:var(--muted);font-size:12px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px}
+input{width:100%;box-sizing:border-box;background:#111;border:1px solid var(--ring);border-radius:10px;color:var(--ink);font:16px/1.2 ui-monospace,Consolas,monospace;padding:12px 14px;letter-spacing:.5px}
+input:focus{outline:none;border-color:var(--gold)}
+button{margin-top:12px;width:100%;background:var(--gold);color:#1a1300;border:0;border-radius:10px;font:650 15px/1 system-ui,sans-serif;padding:13px;cursor:pointer}
+button:disabled{opacity:.55;cursor:default}
+#s{margin-top:12px;min-height:20px;color:var(--muted);font-size:13px}
+#s.err{color:#f08a8a}
+footer{margin-top:26px;color:var(--muted);font-size:12px;line-height:1.6}
+</style></head>
+<body><main>
+<h1>Private page</h1>
+<p>Enter the key Scott gave you. Everything stays in your browser.</p>
+<form id="f" autocomplete="off"><label for="k">Key</label><input id="k" type="password" inputmode="text" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="xxxxxx-xxxxxx-xxxxxx">
+<button id="b" type="submit">Unlock</button><div id="s"></div></form>
+<footer>The page behind this key is encrypted on the server and decrypted only on your device. If the key does not work, ask Scott.</footer>
+</main>
+<script>
+(function(){
+  var ITER=600000, AAD=new TextEncoder().encode("coin-want-list"), f=document.getElementById("f"), k=document.getElementById("k"), b=document.getElementById("b"), s=document.getElementById("s");
+  var payloadP=null;
+  function status(t,err){s.textContent=t;s.className=err?"err":"";}
+  function norm(p){return (p||"").trim().toLowerCase().replace(/[^a-z0-9]/g,"");}
+  function withDashes(p){return p.replace(/(.{6})(?=.)/g,"$1-");}
+  function getPayload(){ if(!payloadP){ payloadP=fetch(new URL("payload.bin",location.href).href,{cache:"force-cache"}).then(function(r){ if(!r.ok) throw new Error("payload "+r.status); return r.arrayBuffer(); }); } return payloadP; }
+  async function unlock(pass){
+    var p=norm(pass); if(p.length<18){status("That key is too short.",true);return false;}
+    b.disabled=true; status("Unlocking\u2026");
+    try{
+      var buf=new Uint8Array(await getPayload());
+      if(String.fromCharCode(buf[0],buf[1],buf[2],buf[3])!=="CWL1") throw new Error("bad payload");
+      var salt=buf.slice(4,20), nonce=buf.slice(20,32), ct=buf.slice(32);
+      var base=await crypto.subtle.importKey("raw",new TextEncoder().encode(withDashes(p)),"PBKDF2",false,["deriveKey"]);
+      var key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:salt,iterations:ITER,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+      var plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:nonce,additionalData:AAD},key,ct);
+      var html=new TextDecoder().decode(plain);
+      try{sessionStorage.setItem("cwl-k",withDashes(p));}catch(e){}
+      document.open(); document.write(html); document.close();
+      return true;
+    }catch(e){ status("That key did not open it. Check the characters and try again.",true); b.disabled=false; return false; }
+  }
+  f.addEventListener("submit",function(ev){ev.preventDefault();unlock(k.value);});
+  var m=location.hash.match(/[#&]k=([^&]+)/); var saved=null; try{saved=sessionStorage.getItem("cwl-k");}catch(e){}
+  if(m){ k.value=decodeURIComponent(m[1]); unlock(k.value); } else if(saved){ k.value=saved; unlock(saved); } else { k.focus(); }
+  if(!window.crypto||!crypto.subtle) status("This browser cannot decrypt the page. Try Safari, Chrome, Edge or Firefox.",true);
+})();
+</script></body></html>
