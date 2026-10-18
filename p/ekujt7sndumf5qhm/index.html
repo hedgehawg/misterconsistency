@@ -32,7 +32,7 @@ footer{margin-top:26px;color:var(--muted);font-size:12px;line-height:1.6}
   function status(t,err){s.textContent=t;s.className=err?"err":"";}
   function norm(p){return (p||"").trim().toLowerCase().replace(/[^a-z0-9]/g,"");}
   function withDashes(p){return p.replace(/(.{6})(?=.)/g,"$1-");}
-  function getPayload(){ if(!payloadP){ payloadP=fetch(new URL("payload.bin",location.href).href,{cache:"force-cache"}).then(function(r){ if(!r.ok) throw new Error("payload "+r.status); return r.arrayBuffer(); }); } return payloadP; }
+  function getPayload(){ if(!payloadP){ payloadP=fetch(new URL("payload.bin?v=f2d3b12e335c",location.href).href,{cache:"no-cache"}).then(function(r){ if(!r.ok) throw new Error("payload "+r.status); return r.arrayBuffer(); }); } return payloadP; }
   async function unlock(pass){
     var p=norm(pass); if(p.length<18){status("That key is too short.",true);return false;}
     b.disabled=true; status("Unlocking\u2026");
