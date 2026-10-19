@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from './vendor/CSS2DRenderer.js';
 import { createJourneyAudio } from './world-audio.js';
+import { makeTextures, makeMaterials, makeSky, makeFlames, makeComposer, drawRoute, makeLeg, walkPose } from './world-look.js';
 
 const W = window.BOD_WORLD, L = window.BOD_LEDGER, J = window.BOD_JOURNEY, TX = window.ANI_TEXT || {}, BU = window.ANI_BUDGE || {}, G = window.ANI_GEOM;
 const P = W.palette, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -16,38 +17,32 @@ const blockById = {}; Object.keys(TX).forEach(n => TX[n].blocks.forEach(b => { b
 const canvas = $('scene');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.85;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(P.bg);
-scene.fog = new THREE.FogExp2(P.bg, 0.00011);
+scene.fog = new THREE.FogExp2(0x0b0a0c, 0.00008);
 const camera = new THREE.PerspectiveCamera(42, 1, 1, 40000);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.dampingFactor = 0.08; controls.maxPolarAngle = Math.PI * 0.98; controls.minDistance = 8; controls.maxDistance = 9000;
 const labelRenderer = new CSS2DRenderer({ element: $('labels') });
+const POST = makeComposer(renderer, scene, camera);   // bloom for flames and gold, tone mapping on output
 
-// ---------- materials ----------
-const std = (color, extra = {}) => new THREE.MeshStandardMaterial(Object.assign({ color, flatShading: true, roughness: 0.9, metalness: 0.08 }, extra));
-const M = {
-  rock: std(P.rock), ground: std(P.ground, { roughness: 1 }), slab: std(P.slab, { transparent: true, opacity: 0.42, depthWrite: false }),
-  bronze: std(P.bronze), bronzeDark: std(P.bronzeDark), gold: std(P.gold, { emissive: P.gold, emissiveIntensity: 0.35, metalness: 0.4, roughness: 0.5 }),
-  goldSoft: std(P.goldSoft), figure: std(P.figure, { emissive: P.figureDark, emissiveIntensity: 0.25 }), figureDark: std(P.figureDark),
-  wall: std(P.bronzeDark, { transparent: true, opacity: 0.32, depthWrite: false }),
-  water: std(P.water, { emissive: P.water, emissiveIntensity: 0.5, roughness: 0.3, metalness: 0.2, transparent: true, opacity: 0.85 }),
-  green: std(P.green, { emissive: 0x1c3a1c, emissiveIntensity: 0.3 }), grain: std(P.grain),
-  flame: new THREE.MeshBasicMaterial({ color: P.flameHot }), ember: new THREE.MeshBasicMaterial({ color: P.flame }),
-  white: std(0xe8e6e1, { emissive: 0x777777, emissiveIntensity: 0.2 }), dark: std(0x0a0a0c),
-  metal: std(P.metal, { metalness: 0.6, roughness: 0.4 }), witness: std(P.witness, { transparent: true, opacity: 0.35, depthWrite: false }),
-  tintGreen: std(P.tintGreen, { transparent: true, opacity: 0.6, depthWrite: false }), tintYellow: std(P.tintYellow, { transparent: true, opacity: 0.6, depthWrite: false }),
-  outline: new THREE.LineBasicMaterial({ color: P.witness, transparent: true, opacity: 0.9 }),
-  ghost: new THREE.MeshBasicMaterial({ color: P.witness, transparent: true, opacity: 0.28, depthWrite: false })   // witness layers drawn as translucent ghosts
-};
+// ---------- materials: procedural textures and physically based surfaces (world-look.js) ----------
+const TEX = makeTextures();
+const SKY = makeSky(scene, renderer, TEX, W.skyRadius);     // dusk over Manu, the stars, the arch of Nut; its environment map lights the metals
+const M = makeMaterials(P, TEX, SKY.env);
 
 // ---------- small geometry helpers ----------
-const box = (w, h, d, mat, x = 0, y = 0, z = 0) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat); m.position.set(x, y + h / 2, z); return m; };
-const cyl = (rt, rb, h, mat, x = 0, y = 0, z = 0, seg = 10) => { const m = new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg), mat); m.position.set(x, y + h / 2, z); return m; };
-const sph = (r, mat, x = 0, y = 0, z = 0, seg = 8) => { const m = new THREE.Mesh(new THREE.SphereGeometry(r, seg, seg), mat); m.position.set(x, y, z); return m; };
-const cone = (r, h, mat, x = 0, y = 0, z = 0, seg = 8) => { const m = new THREE.Mesh(new THREE.ConeGeometry(r, h, seg), mat); m.position.set(x, y + h / 2, z); return m; };
+const TILE = 14;   // one texture tile every 14 cubits, so stone reads at the same grain on every block
+const flat = g => { const n = g.index ? g.toNonIndexed() : g; n.computeVertexNormals(); return n; };
+function scaleBoxUV(geo, w, h, d) { const uv = geo.attributes.uv, f = [[d, h], [d, h], [w, d], [w, d], [w, h], [w, h]]; for (let i = 0; i < uv.count; i++) { const [a, b] = f[Math.floor(i / 4)]; uv.setXY(i, uv.getX(i) * a / TILE, uv.getY(i) * b / TILE); } return geo; }
+const box = (w, h, d, mat, x = 0, y = 0, z = 0) => { const m = new THREE.Mesh(scaleBoxUV(new THREE.BoxGeometry(w, h, d), w, h, d), mat); m.position.set(x, y + h / 2, z); return m; };
+const cyl = (rt, rb, h, mat, x = 0, y = 0, z = 0, seg = 10) => { let g = new THREE.CylinderGeometry(rt, rb, h, seg); const uv = g.attributes.uv, c = Math.PI * (rt + rb); for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) * c / TILE, uv.getY(i) * h / TILE); if (seg <= 6) g = flat(g); const m = new THREE.Mesh(g, mat); m.position.set(x, y + h / 2, z); return m; };
+const sph = (r, mat, x = 0, y = 0, z = 0, seg = 8) => { const m = new THREE.Mesh(new THREE.SphereGeometry(r, Math.max(seg, 12), Math.max(seg, 10)), mat); m.position.set(x, y, z); return m; };
+const cone = (r, h, mat, x = 0, y = 0, z = 0, seg = 8) => { let g = new THREE.ConeGeometry(r, h, seg); if (seg <= 8) g = flat(g); const m = new THREE.Mesh(g, mat); m.position.set(x, y + h / 2, z); return m; };
 const grp = (x = 0, y = 0, z = 0, ry = 0) => { const g = new THREE.Group(); g.position.set(x, y, z); g.rotation.y = ry; return g; };
-const flame = (r, h, x, y, z) => { const c = cone(r, h, M.flame, x, y, z, 6); c.userData.keep = true; c.userData.flame = true; return c; };
+const flame = (r, h, x, y, z) => { const o = new THREE.Object3D(); o.position.set(x, y, z); o.userData.keep = true; o.userData.flame = { r, h }; return o; };   // drawn as one instanced mesh after the build
 const light = (x, y, z, color = P.flame, intensity = 3000, dist = 260) => { const l = new THREE.PointLight(color, intensity, dist, 2); l.position.set(x, y, z); l.userData.keep = true; return l; };
 
 /* A silhouette figure keyed to the text's head and implement. h is the height in cubits (3.5 = a person). */
@@ -55,10 +50,12 @@ function figure({ head = 'man', pose = 'stand', h = 3.5, item = null, mat = M.fi
   const g = grp(x, y, z, ry), s = h / 3.5;
   const torsoH = pose === 'stand' ? 1.3 : pose === 'sit' ? 1.25 : 1.2;
   let torsoY, headY;
-  if (pose === 'stand') { g.add(box(0.28 * s, 1.5 * s, 0.3 * s, mat, -0.17 * s, 0, 0), box(0.28 * s, 1.5 * s, 0.3 * s, mat, 0.17 * s, 0, 0)); torsoY = 1.5 * s; }
+  if (pose === 'stand') { for (const sx of [-0.17, 0.17]) { const leg = new THREE.Mesh(new THREE.CapsuleGeometry(0.15 * s, 1.2 * s, 3, 10), mat); leg.position.set(sx * s, 0.75 * s, 0); g.add(leg); } torsoY = 1.5 * s; }
   else if (pose === 'sit') { g.add(box(0.95 * s, 0.9 * s, 0.9 * s, M.bronzeDark, 0, 0, 0)); g.add(box(0.7 * s, 0.3 * s, 0.9 * s, mat, 0, 0.9 * s, 0.5 * s)); torsoY = 0.9 * s; }
   else { g.add(box(0.7 * s, 0.35 * s, 1.1 * s, mat, 0, 0, 0.1 * s)); torsoY = 0.35 * s; }
-  const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.36 * s, torsoH * s, 3, 6), mat); torso.position.set(0, torsoY + (torsoH / 2 + 0.36) * s, 0); g.add(torso);
+  const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.36 * s, torsoH * s, 3, 12), mat); torso.position.set(0, torsoY + (torsoH / 2 + 0.36) * s, 0); g.add(torso);
+  const shoulders = new THREE.Mesh(new THREE.CapsuleGeometry(0.19 * s, 0.62 * s, 3, 10), mat); shoulders.rotation.z = Math.PI / 2; shoulders.position.set(0, torsoY + (torsoH + 0.36) * s, 0); g.add(shoulders);
+  if (item !== 'raised') for (const sx of [-0.5, 0.5]) { const arm = new THREE.Mesh(new THREE.CapsuleGeometry(0.11 * s, 0.95 * s, 3, 10), mat); arm.position.set(sx * s, torsoY + (torsoH * 0.5 + 0.1) * s, 0.06 * s); arm.rotation.z = sx > 0 ? -0.1 : 0.1; g.add(arm); }
   headY = torsoY + (torsoH + 0.36 * 2 + 0.3) * s;
   const r = 0.3 * s;
   const H = grp(0, headY, 0); g.add(H);
@@ -90,8 +87,8 @@ function figure({ head = 'man', pose = 'stand', h = 3.5, item = null, mat = M.fi
   if (item === 'ankh') g.add(new THREE.Mesh(new THREE.TorusGeometry(0.16 * s, 0.04 * s, 6, 10), M.gold).translateX(0.5 * s).translateY(hand - 0.3 * s), cyl(0.04 * s, 0.04 * s, 0.5 * s, M.gold, 0.5 * s, hand - 0.85 * s, 0));
   if (item === 'sistrum') g.add(cyl(0.04 * s, 0.04 * s, 0.9 * s, M.gold, 0.5 * s, hand - 0.3 * s, 0.25 * s));
   if (item === 'palette') g.add(box(0.5 * s, 0.1 * s, 0.25 * s, M.bronzeDark, 0.5 * s, hand - 0.2 * s, 0.25 * s));
-  if (item === 'raised') { g.add(box(0.14 * s, 1.0 * s, 0.14 * s, mat, -0.55 * s, hand - 0.1 * s, 0.1 * s), box(0.14 * s, 1.0 * s, 0.14 * s, mat, 0.55 * s, hand - 0.1 * s, 0.1 * s)); }
-  if (head === 'mummy') { g.clear(); const m = new THREE.Mesh(new THREE.CapsuleGeometry(0.4 * s, 2.3 * s, 3, 8), mat); m.position.y = (2.3 / 2 + 0.4) * s; g.add(m); }
+  if (item === 'raised') for (const sx of [-0.55, 0.55]) { const a = new THREE.Mesh(new THREE.CapsuleGeometry(0.11 * s, 0.85 * s, 3, 10), mat); a.position.set(sx * s, hand + 0.35 * s, 0.1 * s); a.rotation.z = sx > 0 ? 0.3 : -0.3; g.add(a); }
+  if (head === 'mummy') { g.clear(); const m = new THREE.Mesh(new THREE.CapsuleGeometry(0.4 * s, 2.3 * s, 4, 14), mat); m.position.y = (2.3 / 2 + 0.4) * s; g.add(m); }
   g.userData.h = h;
   return g;
 }
@@ -106,19 +103,20 @@ function merged(group, place) {
   group.updateMatrixWorld(true);
   const byMat = new Map(), keep = [];
   group.traverse(o => {
-    if (o.isLight || o.isCSS2DObject) { keep.push(o); return; }
+    if (o.isLight || o.isCSS2DObject || o.userData.flame) { keep.push(o); return; }
     if (!o.isMesh) return;
     if (o.userData.keep) { keep.push(o); return; }
-    const g = (o.geometry.index ? o.geometry.toNonIndexed() : o.geometry.clone()).applyMatrix4(o.matrixWorld);
+    const src = o.geometry; if (!src.attributes.normal) src.computeVertexNormals();
+    const g = (src.index ? src.toNonIndexed() : src.clone()).applyMatrix4(o.matrixWorld);
     const k = o.material.uuid; if (!byMat.has(k)) byMat.set(k, { mat: o.material, parts: [] });
-    byMat.get(k).parts.push(g.attributes.position.array);
+    byMat.get(k).parts.push(g);
   });
   const out = new THREE.Group(); out.userData.place = place;
   for (const { mat, parts } of byMat.values()) {
-    const n = parts.reduce((s, a) => s + a.length, 0), pos = new Float32Array(n); let off = 0;
-    for (const a of parts) { pos.set(a, off); off += a.length; }
-    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.computeVertexNormals();
-    const mesh = new THREE.Mesh(geo, mat); mesh.userData.place = place; out.add(mesh);
+    const n = parts.reduce((s, g) => s + g.attributes.position.count, 0), pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2); let off = 0;
+    for (const g of parts) { pos.set(g.attributes.position.array, off * 3); nor.set(g.attributes.normal.array, off * 3); if (g.attributes.uv) uv.set(g.attributes.uv.array, off * 2); off += g.attributes.position.count; }
+    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.setAttribute('normal', new THREE.BufferAttribute(nor, 3)); geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    const mesh = new THREE.Mesh(geo, mat); mesh.castShadow = mesh.receiveShadow = !mat.transparent; mesh.userData.place = place; out.add(mesh);
   }
   for (const o of keep) { const wp = new THREE.Vector3(); o.getWorldPosition(wp); const ws = new THREE.Vector3(); o.getWorldScale(ws); const wq = new THREE.Quaternion(); o.getWorldQuaternion(wq); o.removeFromParent(); o.position.copy(wp); o.quaternion.copy(wq); o.scale.copy(ws); o.userData.place = place; out.add(o); }
   return out;
@@ -135,22 +133,34 @@ function label(text, x, y, z, cls = 'fl', place = null, sub = '') {
 const world = new THREE.Group(); scene.add(world);
 const S = W.surfaceY, D = W.duatY, R = W.riverY, HZ = W.depth / 2;
 
+/* A cliff: a long block of rock whose inner face is pushed into crags by noise. The west has the notch where the sun goes down
+   and a flat recess for the tomb; the east mirrors it. Heights are the model's (the text gives Manu a name, not a height). */
+function cliff(side, L, hgt) {
+  const geo = new THREE.BoxGeometry(900, hgt, L, 1, 14, 180), p = geo.attributes.position, uv = geo.attributes.uv;
+  const nz = (a, b) => { const v = Math.sin(a * 12.9898 + b * 78.233) * 43758.5453; return v - Math.floor(v); };
+  const fb = (z, y) => { let v = 0, amp = 0.5, f = 0.006; for (let o = 0; o < 4; o++) { const zi = Math.floor(z * f), yi = Math.floor(y * f * 2.2), tz = z * f - zi, ty = y * f * 2.2 - yi; const s = (t) => t * t * (3 - 2 * t); const a = nz(zi, yi), b = nz(zi + 1, yi), c = nz(zi, yi + 1), d = nz(zi + 1, yi + 1); v += amp * (a + (b - a) * s(tz) + (c - a) * s(ty) + (a - b - c + d) * s(tz) * s(ty)); amp *= 0.5; f *= 2.1; } return v; };
+  const inner = side < 0 ? 450 : -450;
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i), y = p.getY(i), z = p.getZ(i); if (Math.abs(x - inner) > 1) continue;
+    const notch = side < 0 ? Math.min(1, Math.max(0, (100 - Math.abs(z)) / 30)) : 0, recess = side < 0 && Math.abs(z + 50) < 50;
+    const t = (y + hgt / 2) / hgt;   // 0 at the base, 1 at the top
+    let d = recess ? -22 : (fb(z, y) - 0.35) * 46 * (0.25 + 0.75 * t) + 6 * t;
+    if (notch > 0 && !recess) d *= 1 - notch;
+    p.setX(i, x + (side < 0 ? d : -d));
+    if (Math.abs(y - hgt / 2) < 1 && !recess) p.setY(i, y - notch * (hgt - 18) - (fb(z * 0.7 + 400, 0) - 0.5) * hgt * 0.5 * (1 - notch));
+    uv.setXY(i, uv.getX(i) * L / TILE, uv.getY(i) * hgt / TILE);
+  }
+  geo.computeVertexNormals();
+  const m = new THREE.Mesh(geo, M.rock); m.position.set(side < 0 ? -2950 : 2950, S + hgt / 2, 0); m.castShadow = m.receiveShadow = true; m.userData.keep = true; return m;
+}
 function buildTerrain() {
   const g = new THREE.Group();
-  // cliffs: west and east ranges, jagged in profile, with a notch at the west where the sun goes down
   for (const side of [-1, 1]) {
-    for (let z = -HZ; z < HZ; z += 100) {
-      const notch = side < 0 && Math.abs(z + 50) < 60, recess = side < 0 && z + 50 > -110 && z + 50 < -10;
-      const h = notch ? 18 : W.cliffHeight * (0.8 + 0.4 * Math.abs(Math.sin(z * 0.013 + side)));
-      const x0 = side < 0 ? (recess ? -2522 : -2500) : 2500;
-      const b = box(900 - (recess ? 22 : 0), h, 100, M.rock, side < 0 ? x0 - (900 - (recess ? 22 : 0)) / 2 : x0 + 450, S, z + 50); g.add(b);
-    }
-    // cavern end walls below the surface
-    g.add(box(60, S - D, W.depth, M.rock, side < 0 ? -2530 : 2530, D, 0));
+    g.add(cliff(side, W.depth + 200, W.cliffHeight * 1.4));
+    g.add(box(60, S - D, W.depth, M.rock, side < 0 ? -2530 : 2530, D, 0));     // cavern end walls below the surface
   }
   // the land of the living: a translucent slab so the Duat shows beneath (a section drawing)
-  const slab = box(5000, 6, W.depth, M.slab, 0, S - 6, 0); slab.userData.keep = true; slab.name = 'slab'; g.add(slab);
-  const grid = new THREE.GridHelper(5000, 50, P.goldSoft, P.goldSoft); grid.position.y = S + 0.05; grid.scale.z = W.depth / 5000; grid.material.transparent = true; grid.material.opacity = 0.18; grid.userData.keep = true; g.add(grid);
+  const slab = box(5000, 6, W.depth, M.slab, 0, S - 6, 0); slab.userData.keep = true; slab.name = 'slab'; slab.castShadow = slab.receiveShadow = true; g.add(slab);
   // the Duat floor, with a gap for the night river trench along the south side
   g.add(box(5000, 2, 490 + HZ, M.ground, 0, D - 2, (490 - HZ) / 2));
   g.add(box(5000, 2, HZ - 550, M.ground, 0, D - 2, (550 + HZ) / 2));
@@ -190,6 +200,7 @@ function buildWest() {
   // the shrine of Seker-Osiris
   const sh = shrine(3.2, 4.4, 2.6, M.bronze, x + 11, S, -20, Math.PI / 2); sh.add(figure({ head: 'mummy', h: 3.2, item: 'whitecrown', x: 0, y: 0, z: 0 })); g.add(sh);
   for (let i = 0; i < 14; i++) g.add(cone(0.4, 1.4 + (i % 3) * 0.5, M.green, x + 6 + (i % 4) * 2.2, S, -95 + i * 6.5, 5), sph(0.25, M.gold, x + 6 + (i % 4) * 2.2, S + 1.7 + (i % 3) * 0.5, -95 + i * 6.5, 5));
+  g.add(light(x + 40, S + 30, -50, 0xffb070, 52000, 800), light(x + 14, S + 6, -30, P.flame, 1200, 90));   // the sun going down in the notch; the shrine's lamp
   g.add(label('Manu, the western horizon', x, S + 70, 0, 'fl', 'west', 'the notch where Ra sets'));
   g.add(label('Hathor, the cow of the funeral mountain', x + 4, S + 19, -60, 'fl', 'west', 'Spell 186, sheet 37'));
   g.add(label('Seker-Osiris in his shrine', x + 11, S + 7, -20, 'fl', 'west'));
@@ -199,8 +210,8 @@ function buildWest() {
 function buildTomb() {
   const g = new THREE.Group(), cx = -2508, cz = -60, y = S;              // chamber 12 by 8, 6 high, just inside the cliff face
   g.add(box(12, 0.4, 8, M.ground, cx, y - 0.4, cz));
-  g.add(box(12, 6, 0.5, M.wall, cx, y, cz - 4), box(12, 6, 0.5, M.wall, cx, y, cz + 4), box(0.5, 6, 8, M.wall, cx - 6, y, cz));
-  g.add(box(0.5, 6, 2.6, M.wall, cx + 6, y, cz - 2.7), box(0.5, 6, 2.6, M.wall, cx + 6, y, cz + 2.7), box(0.5, 1.2, 2.8, M.wall, cx + 6, y + 4.8, cz)); // east door
+  g.add(box(12, 6, 0.5, M.stone, cx, y, cz - 4), box(12, 6, 0.5, M.stone, cx, y, cz + 4), box(0.5, 6, 8, M.stone, cx - 6, y, cz));
+  g.add(box(0.5, 6, 2.6, M.stone, cx + 6, y, cz - 2.7), box(0.5, 6, 2.6, M.stone, cx + 6, y, cz + 2.7), box(0.5, 1.2, 2.8, M.stone, cx + 6, y + 4.8, cz)); // east door
   // the bier under a canopy, Anubis beside it
   for (const [dx, dz] of [[-2, -1.2], [2, -1.2], [-2, 1.2], [2, 1.2]]) g.add(cyl(0.12, 0.12, 4.2, M.gold, cx + dx, y, cz + dz));
   g.add(box(5, 0.2, 3.2, M.goldSoft, cx, y + 4.2, cz), box(4.2, 0.4, 1.4, M.bronze, cx, y + 1.1, cz));
@@ -210,7 +221,7 @@ function buildTomb() {
   // Isis at the foot (east), Nephthys at the head (west), each with a flame behind her; the Tet above, the jackal below
   g.add(figure({ head: 'man', pose: 'kneel', x: cx + 3.6, y, z: cz, ry: -Math.PI / 2 }), figure({ head: 'man', pose: 'kneel', x: cx - 3.6, y, z: cz, ry: Math.PI / 2 }));
   g.add(cyl(0.4, 0.5, 0.8, M.bronzeDark, cx + 5.2, y, cz), flame(0.35, 1.2, cx + 5.2, y + 0.8, cz), cyl(0.4, 0.5, 0.8, M.bronzeDark, cx - 5.2, y, cz), flame(0.35, 1.2, cx - 5.2, y + 0.8, cz));
-  g.add(light(cx, y + 3, cz, P.flame, 600, 60));
+  { const l = light(cx, y + 3.5, cz, P.flame, 1400, 80); l.castShadow = true; l.shadow.mapSize.set(512, 512); l.shadow.bias = -0.002; g.add(l); }
   const tet = grp(cx, y, cz - 3.4); tet.add(cyl(0.3, 0.35, 2.2, M.gold)); for (let i = 0; i < 4; i++) tet.add(box(1.2, 0.18, 0.8, M.gold, 0, 2.2 + i * 0.35, 0)); g.add(tet);
   g.add(box(2.2, 0.8, 1.2, M.bronzeDark, cx, y, cz + 3.2), animal(1.4, 0.8, M.figureDark, cx, y + 0.8, cz + 3.2, 0, 'jackal'));
   // the four children of Horus at the corners
@@ -231,10 +242,11 @@ function buildRosetau() {
   // the northern door of the chamber, then a stair that falls east to the Duat floor
   g.add(box(2.6, 0.6, 0.6, M.goldSoft, -2508, S + 4.8, -64.3));
   g.add(box(10, 0.4, 6, M.ground, -2505, S - 0.4, -70));
-  g.add(stair(70, -2, 2, 6, M.bronzeDark, -2500, S - 2, -70));
+  g.add(stair(70, -2, 2, 6, M.stone, -2500, S - 2, -70));
   // the gate at the foot of the stair, and the two lions where the way turns east
   const gate = grp(-2355, D, -70); gate.add(box(1.2, 9, 1.2, M.bronze, 0, 0, -3.6), box(1.2, 9, 1.2, M.bronze, 0, 0, 3.6), box(1.6, 1.4, 8.4, M.bronze, 0, 9, 0)); g.add(gate);
   g.add(animal(4, 2.4, M.figure, -2340, D, -86, Math.PI / 2, 'lion'), animal(4, 2.4, M.figure, -2340, D, -54, -Math.PI / 2, 'lion'));
+  g.add(light(-2492, S + 3, -70, P.flame, 1500, 90), light(-2470, S - 14, -70, 0x9aa8d0, 1900, 150), light(-2425, D + 55, -70, 0x9aa8d0, 2200, 200), light(-2355, D + 8, -70, P.flame, 2200, 120));
   g.add(label('Rosetau, the northern door of the tomb', -2460, S - 30, -70, 'fl', 'rosetau', 'Spell 17 gloss; Spells 1 and 147'));
   g.add(label('Yesterday and Tomorrow, the two lions', -2340, D + 7, -70, 'fl', 'rosetau', 'Spell 17, sheet 7'));
   return merged(g, 'rosetau');
@@ -259,6 +271,7 @@ function buildSycamore() {
   const tree = grp(x - 12, D, z); tree.add(cyl(0.6, 0.9, 7, M.bronzeDark), sph(5, M.green, 0, 9.5, 0, 7), sph(3.5, M.green, 3.5, 8, 1.5, 6), sph(3.2, M.green, -3, 8.5, -2, 6)); tree.add(figure({ head: 'man', h: 3, x: 1.5, y: 6.2, z: 2.5, ry: Math.PI / 2, item: 'raised' })); g.add(tree);
   g.add(figure({ head: 'man', pose: 'kneel', x: x - 8.5, y: D, z: z + 2, ry: Math.PI / 2 }));
   for (let i = 0; i < 6; i++) { const px = x - 11 + i * 4.6, pz = z + 12.5; g.add(cyl(0.3, 0.45, 6 + (i % 2), M.bronzeDark, px, D, pz)); for (let k = 0; k < 5; k++) g.add(cone(0.35, 3, M.green, px, D + 5.6 + (i % 2), pz, 4).rotateZ(1.2 + k * 1.25)); }
+  g.add(light(x - 4, D + 12, z + 2, 0xd9a860, 2000, 130));
   g.add(label('The sycamore of Nut', x - 12, D + 17, z, 'fl', 'sycamore', 'Spell 59, sheet 16'));
   return merged(g, 'sycamore');
 }
@@ -283,6 +296,7 @@ function buildArits() {
     if (i === 0) for (let k = -2; k <= 2; k++) gate.add(box(0.5, 1.6, 0.5, M.gold, 0, 16, k * 2.6));
     a.heads.forEach((h, k) => gate.add(figure({ head: h, pose: 'sit', h: 4.5, item: a.items[k], x: -5, y: 0, z: (k - 1) * 9, ry: -Math.PI / 2 })));
     g.add(gate);
+    g.add(light(x - 5, D + 12, 0, P.flame, 900, 90));
     g.add(label(`Arit ${i + 1}`, x, D + 20, 0, 'fl', 'arits', `Ani: ${a.keeper} · ${a.watcher} · ${a.herald} · Nu, Spell 144: ${NU144[i].join(' · ')}`));
   });
   for (let i = 0; i < 12; i++) g.add(box(2.4, 0.9, 1, M.ember, -1888 + i * 2.5, D, 12), light(-1874, D + 2, 12, P.flame, 400, 40));
@@ -327,7 +341,7 @@ function buildPylons() {
       for (const start of [Math.PI / 2 + t0, Math.PI * 1.5 + t0]) { const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, 30, 64, 1, false, start, Math.PI - 2 * t0), M.green); m.position.y = 15; py.add(m); }
       py.add(label('The ninth pylon, round: 350 measures about', 0, 34, 0, 'fl', 'pylons', 'drawn one measure to one cubit for display; the unit is not in the text; Nu and the Leyden papyrus also give 350, as girth'));
     } else {
-      for (const sgn of [-1, 1]) { const tower = new THREE.Mesh(new THREE.CylinderGeometry(5, 6.5, h, 4), M.bronze); tower.rotation.y = Math.PI / 4; tower.position.set(0, h / 2, sgn * 14); py.add(tower); if (p.fire) { py.add(flame(2.2, 6, 0, h, sgn * 14)); } }
+      for (const sgn of [-1, 1]) { const tower = new THREE.Mesh(flat(new THREE.CylinderGeometry(5, 6.5, h, 4)), M.stone); tower.rotation.y = Math.PI / 4; tower.position.set(0, h / 2, sgn * 14); py.add(tower); if (p.fire) { py.add(flame(2.2, 6, 0, h, sgn * 14)); } }
       py.add(box(10, 3, 14, M.bronze, 0, 12, 0));
       if (p.fire) py.add(light(0, h + 4, 0, P.flame, 6000, 220));
     }
@@ -342,7 +356,7 @@ function buildPylons() {
     if (p.top === 'uraei') for (let k = -2; k <= 2; k++) sh.add(cone(0.3, 1.2, M.gold, k * 1, top, 0, 5), sph(0.22, M.gold, k * 1, top + 1.4, 0));
     if (p.top === 'flames') for (let k = -2; k <= 2; k++) sh.add(flame(0.35, 1.3, k * 1, top, 0));
     if (p.top === 'hawks') { for (const s of [-1.4, 1.4]) sh.add(figure({ head: 'man', h: 1.2, x: s, y: top, z: 0 })); for (const s of [-0.5, 0.5]) sh.add(cyl(0.05, 0.05, 0.9, M.gold, s, top, 0)); }
-    py.add(sh);
+    py.add(sh, light(-4, 10, 0, P.flameHot, 3000, 160));   // the holy rulers of the pylons are in the form of shining ones
     py.add(label(`Pylon ${j + 1}: ${p.text}`, 0, Math.min(h, 60) + 6 + (j % 2 ? 14 : 0), 0, 'fl', 'pylons', `doorkeeper ${p.keeper}`));   // alternate heights so neighbouring labels clear each other
     g.add(py);
   });
@@ -376,15 +390,16 @@ function buildCouncils() {
   });
   for (const sgn of [-1, 1]) { g.add(box(4, 9, 3, M.bronze, -350, D, sgn * 30)); if (sgn < 0) for (let k = -1; k <= 1; k++) g.add(box(0.3, 2.2, 0.9, M.gold, -350 + k * 1.2, D + 9, sgn * 30)); else g.add(animal(2.2, 1.2, M.figureDark, -350, D + 9, sgn * 30, 0, 'jackal')); }
   g.add(figure({ head: 'man', x: -345, y: D, z: 0, item: 'staff', ry: Math.PI / 2 }), figure({ head: 'man', x: -348.5, y: D, z: 0, item: 'raised', ry: Math.PI / 2 }), figure({ head: 'man', x: -352, y: D, z: 0, item: 'sistrum', ry: Math.PI / 2 }));
+  for (const x of [-310, -250, -190, -130]) g.add(light(x, D + 7, 0, P.flame, 3600, 140));
   g.add(label('The councils of the holy cities', -180, D + 24, 0, 'fl big', 'cities', 'tribunals in named cities; seated here on the approach, by editorial choice'));
   return merged(g, 'cities');
 }
 
 function buildHall() {
   const g = new THREE.Group(), x0 = 45, x1 = 195, hw = 15, H = 20;
-  g.add(box(150, 1, 30, M.ground, 120, D, 0));
-  g.add(box(150, H, 1, M.wall, 120, D + 1, -hw), box(150, H, 1, M.wall, 120, D + 1, hw));
-  for (const x of [x0, x1]) { g.add(box(1, H, 11, M.wall, x, D + 1, -9.5), box(1, H, 11, M.wall, x, D + 1, 9.5), box(1, H - 10, 8, M.wall, x, D + 11, 0)); g.add(box(1.4, 10, 1, M.gold, x, D + 1, -4.5), box(1.4, 10, 1, M.gold, x, D + 1, 4.5), box(1.4, 1, 10, M.gold, x, D + 10, 0)); }
+  g.add(box(150, 1, 30, M.stone, 120, D, 0));
+  g.add(box(150, H, 1, M.stone, 120, D + 1, -hw), box(150, H, 1, M.stone, 120, D + 1, hw));
+  for (const x of [x0, x1]) { g.add(box(1, H, 11, M.stone, x, D + 1, -9.5), box(1, H, 11, M.stone, x, D + 1, 9.5), box(1, H - 10, 8, M.stone, x, D + 11, 0)); g.add(box(1.4, 10, 1, M.gold, x, D + 1, -4.5), box(1.4, 10, 1, M.gold, x, D + 1, 4.5), box(1.4, 1, 10, M.gold, x, D + 10, 0)); }
   // the roofline: uraei and feathers; the seated deity at the centre over the eye of Horus and a pool
   for (let x = x0 + 3; x < x1; x += 3) for (const z of [-hw, hw]) { if (Math.round(x / 3) % 2) g.add(cone(0.7, 1.8, M.gold, x, D + H + 1, z, 5)); else g.add(box(0.35, 2.4, 1.0, M.goldSoft, x, D + H + 1, z)); }
   g.add(box(2, 1, 30, M.goldSoft, 120, D + H + 1, 0), figure({ head: 'man', pose: 'sit', h: 4, item: 'raised', x: 120, y: D + H + 2, z: 0, ry: Math.PI / 2 }));
@@ -407,6 +422,8 @@ function buildHall() {
   g.add(figure({ head: 'man', pose: 'sit', h: 4, item: 'atef', x: 191, y: D + 1, z: -10, ry: -Math.PI / 2 }), figure({ head: 'man', x: 187.5, y: D + 1, z: -10, ry: Math.PI / 2, item: 'raised' }));
   g.add(cyl(0.2, 0.3, 4, M.gold, 185, D + 1, 10), box(4, 0.2, 0.2, M.gold, 185, D + 5.1, 10), animal(2.2, 1.4, M.figureDark, 188.5, D + 1, 10, Math.PI, 'lion'));
   g.add(box(1.2, 1.6, 1.2, M.bronze, 191.5, D + 1, 10), figure({ head: 'ibis', pose: 'sit', h: 2.4, item: 'palette', x: 191.5, y: D + 2.6, z: 10, ry: -Math.PI / 2 }), box(0.15, 2, 0.7, M.white, 193.2, D + 1, 10));
+  { const l = light(wx + 4, D + 15, 0, P.flameHot, 2400, 150); l.castShadow = true; l.shadow.mapSize.set(512, 512); l.shadow.bias = -0.002; g.add(l); }
+  for (const x of [100, 140, 180]) g.add(light(x, D + 16, 0, P.flameHot, 800, 120));
   g.add(label('The Hall of Two Truths', 120, D + H + 14, 0, 'fl big', 'hall', 'Spell 125, sheets 29 to 32; the weighing on sheet 3'));
   // the door part by part, after the Nu conclusion of Spell 125 (Budge 1898, vol. II, p. 199; Renouf 1904, pp. 218 to 219): a witness layer on Ani's door
   g.add(label('The door part by part, after Nu (Spell 125; Budge 1898 p. 199, Renouf 1904 pp. 218 to 219)', x0, D + 26, 0, 'fl', 'hall'));
@@ -422,8 +439,8 @@ function buildHall() {
 
 function buildThrone() {
   const g = new THREE.Group(), cx = 222, hw = 20;
-  g.add(box(44, 1, 40, M.ground, cx, D, 0), box(1, 8, 8, M.wall, 199, D + 1, 0));
-  g.add(box(44, 16, 1, M.wall, cx, D + 1, -hw), box(44, 16, 1, M.wall, cx, D + 1, hw), box(1, 16, 40, M.wall, cx + 22, D + 1, 0));
+  g.add(box(44, 1, 40, M.stone, cx, D, 0), box(1, 8, 8, M.stone, 199, D + 1, 0), light(cx + 6, D + 14, 0, P.flameHot, 1000, 110));
+  g.add(box(44, 16, 1, M.stone, cx, D + 1, -hw), box(44, 16, 1, M.stone, cx, D + 1, hw), box(1, 16, 40, M.stone, cx + 22, D + 1, 0));
   g.add(box(10, 2, 10, M.bronzeDark, cx + 10, D + 1, 0));
   const sh = shrine(7, 8, 7, M.bronze, cx + 10, D + 3, 0, -Math.PI / 2); sh.add(cone(0.6, 1.4, M.gold, 0, 8.3, 0), sph(0.55, M.gold, 0, 9.9, 0)); for (let k = -2; k <= 2; k++) sh.add(cone(0.3, 1, M.gold, k * 1.3, 8.3, 0, 5)); g.add(sh);
   g.add(figure({ head: 'man', pose: 'sit', h: 5, item: 'atef', x: cx + 10, y: D + 3, z: 0, ry: -Math.PI / 2 }));
@@ -446,16 +463,16 @@ function buildLake() {
 
 function buildField() {
   const g = new THREE.Group(), y = D;
-  g.add(box(1300, 0.6, 760, M.water, 1300, y - 0.4, 0));
+  g.add(box(1300, 0.6, 760, M.waterLit, 1300, y - 0.4, 0));
   const isl = [-240, -80, 80, 240];
-  for (const z of isl) g.add(box(1000, 1.6, 120, M.ground, 1300, y, z));
+  for (const z of isl) g.add(box(1000, 1.6, 120, M.field, 1300, y, z));
   // grain, three cubits tall
-  const stalk = new THREE.BoxGeometry(0.16, 3, 0.16); stalk.translate(0, 1.5, 0);
-  const grain = new THREE.InstancedMesh(stalk, M.grain, 1100); const mtx = new THREE.Matrix4(); let gi = 0;
+  const stalk = new THREE.BoxGeometry(0.12, 3, 0.12); stalk.translate(0, 1.5, 0);
+  const grain = new THREE.InstancedMesh(stalk, M.grain, 3600); const mtx = new THREE.Matrix4(), rot = new THREE.Matrix4(); let gi = 0;
   const seed = (i) => { const v = Math.sin(i * 12.9898) * 43758.5453; return v - Math.floor(v); };
-  for (let i = 0; i < 550; i++) { mtx.makeTranslation(850 + seed(i) * 260, y + 1.6, -130 + seed(i + 7) * 100); grain.setMatrixAt(gi++, mtx); }
-  for (let i = 0; i < 550; i++) { mtx.makeTranslation(1050 + seed(i + 99) * 300, y + 1.6, 190 + seed(i + 31) * 100); grain.setMatrixAt(gi++, mtx); }
-  grain.userData.keep = true; g.add(grain);
+  for (let i = 0; i < 1800; i++) { mtx.makeTranslation(850 + seed(i) * 260, y + 1.6, -130 + seed(i + 7) * 100).multiply(rot.makeRotationZ((seed(i + 3) - 0.5) * 0.3)); grain.setMatrixAt(gi++, mtx); }
+  for (let i = 0; i < 1800; i++) { mtx.makeTranslation(1050 + seed(i + 99) * 300, y + 1.6, 190 + seed(i + 31) * 100).multiply(rot.makeRotationZ((seed(i + 5) - 0.5) * 0.3)); grain.setMatrixAt(gi++, mtx); }
+  grain.castShadow = true; grain.userData.keep = true; g.add(grain);
   // island 1: Thoth presents Ani and his ka to the three gods; a boat; a hawk on a pylon pedestal; three ovals
   g.add(figure({ head: 'ibis', h: 7, item: 'palette', x: 900, y: y + 1.6, z: -240, ry: -Math.PI / 2 }), figure({ head: 'man', h: 7, item: 'raised', x: 893, y: y + 1.6, z: -240, ry: -Math.PI / 2 }), figure({ head: 'man', h: 7, item: 'raised', x: 886, y: y + 1.6, z: -240, ry: -Math.PI / 2 }));
   ['hare', 'serpent', 'bull'].forEach((h, k) => g.add(figure({ head: h, pose: 'sit', h: 7, item: 'sceptre', x: 912 + k * 7, y: y + 1.6, z: -240, ry: Math.PI / 2 })));
@@ -505,7 +522,7 @@ function buildField() {
 function buildSkyBank() {
   const g = new THREE.Group(), y = D, x0 = 2050, z0 = -160;
   // the hall of the seven cows and the four rudders
-  g.add(box(90, 0.8, 110, M.ground, x0 + 40, y, z0)); for (const [dx, dz] of [[-40, -50], [0, -50], [40, -50], [80, -50], [-40, 50], [0, 50], [40, 50], [80, 50]]) g.add(cyl(0.9, 1.1, 10, M.bronze, x0 + dx, y + 0.8, z0 + dz));
+  g.add(box(90, 0.8, 110, M.stone, x0 + 40, y, z0), light(x0 + 40, y + 9, z0, P.flameHot, 2200, 160)); for (const [dx, dz] of [[-40, -50], [0, -50], [40, -50], [80, -50], [-40, 50], [0, 50], [40, 50], [80, 50]]) g.add(cyl(0.9, 1.1, 10, M.bronze, x0 + dx, y + 0.8, z0 + dz));
   g.add(box(130, 0.6, 106, M.wall, x0 + 40, y + 10.8, z0));
   g.add(figure({ head: 'hawk', h: 4.5, item: 'disk', x: x0 - 30, y: y + 0.8, z: z0, ry: Math.PI / 2 }), table(x0 - 25, y + 0.8, z0 - 1.5), table(x0 - 25, y + 0.8, z0 + 1.5), figure({ head: 'man', item: 'raised', x: x0 - 20, y: y + 0.8, z: z0, ry: -Math.PI / 2 }));
   for (let i = 0; i < 7; i++) { const c = animal(4, 2.2, M.figure, x0 - 10 + i * 8, y + 0.8, z0 + 10, Math.PI / 2, 'cow'); c.scale.y = 0.75; c.add(sph(0.35, M.gold, 2.4, 1.2, 0)); g.add(c); g.add(table(x0 - 10 + i * 8, y + 0.8, z0 + 16)); }
@@ -563,11 +580,7 @@ function buildBoat() {
 }
 
 function buildSky() {
-  const g = new THREE.Group(), n = 2200, pos = new Float32Array(n * 3), rad = W.skyRadius;
-  for (let i = 0; i < n; i++) { const u = Math.random(), v = Math.random(); const th = u * Math.PI * 2, ph = Math.acos(1 - v); const r = rad * (0.9 + Math.random() * 0.2); const yy = Math.cos(ph) * r; if (yy < 150) { i--; continue; } pos[i * 3] = Math.sin(ph) * Math.cos(th) * r; pos[i * 3 + 1] = yy - 200; pos[i * 3 + 2] = Math.sin(ph) * Math.sin(th) * r; }
-  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const stars = new THREE.Points(geo, new THREE.PointsMaterial({ color: P.star, size: 7, sizeAttenuation: true, transparent: true, opacity: 0.85, fog: false })); stars.userData.keep = true; g.add(stars);
-  const arch = new THREE.Mesh(new THREE.TorusGeometry(2700, 3, 6, 120, Math.PI), new THREE.MeshBasicMaterial({ color: P.goldSoft, transparent: true, opacity: 0.5, fog: false })); arch.position.y = -200; arch.userData.keep = true; g.add(arch);
+  const g = new THREE.Group();   // the dome, the stars and the arch of Nut are drawn by world-look.js
   const day = boat(60, M.gold, 0, 2460, -300); day.add(figure({ head: 'hawk', pose: 'sit', h: 14, item: 'disk', mat: M.gold })); day.userData.keep = true; g.add(day);
   g.add(label('The Atet boat of the morning on the body of Nut', 0, 2500, -300, 'fl', 'sky', 'Spell 15'));
   g.userData.place = 'sky'; return g;
@@ -597,8 +610,8 @@ function buildAats() {
   const serpent = (x, y, z, len, ry = 0, r = 0.9) => { const pts = []; for (let i = 0; i <= 24; i++) pts.push(new THREE.Vector3(-len / 2 + i * len / 24, y + r + Math.sin(i * 0.9) * r * 0.6, z + Math.cos(i * 0.9) * r * 1.6)); const m = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 48, r, 6), M.figureDark); m.position.x = x; m.rotation.y = ry; return m; };
   const enclosure = (x, w, d, h, tint, oval) => {
     const e = grp(x, y, z0);
-    if (oval) { for (let i = 0; i < 40; i++) { const a = i / 40 * Math.PI * 2, b = (i + 1) / 40 * Math.PI * 2; const p = [w / 2 * Math.cos(a), d / 2 * Math.sin(a)], q = [w / 2 * Math.cos(b), d / 2 * Math.sin(b)]; const seg = box(Math.hypot(q[0] - p[0], q[1] - p[1]) + 0.3, h, 1.2, M.wall, (p[0] + q[0]) / 2, 0, (p[1] + q[1]) / 2); seg.rotation.y = -Math.atan2(q[1] - p[1], q[0] - p[0]); e.add(seg); } const f = new THREE.Mesh(new THREE.CircleGeometry(1, 48), tint); f.scale.set(w / 2, d / 2, 1); f.rotation.x = -Math.PI / 2; f.position.y = 0.3; e.add(f); }
-    else { e.add(box(w, h, 1.2, M.wall, 0, 0, -d / 2), box(w, h, 1.2, M.wall, 0, 0, d / 2), box(1.2, h, d, M.wall, -w / 2, 0, 0), box(1.2, h, d, M.wall, w / 2, 0, 0)); const f = new THREE.Mesh(new THREE.PlaneGeometry(w - 2, d - 2), tint); f.rotation.x = -Math.PI / 2; f.position.y = 0.3; e.add(f); }
+    if (oval) { for (let i = 0; i < 40; i++) { const a = i / 40 * Math.PI * 2, b = (i + 1) / 40 * Math.PI * 2; const p = [w / 2 * Math.cos(a), d / 2 * Math.sin(a)], q = [w / 2 * Math.cos(b), d / 2 * Math.sin(b)]; const seg = box(Math.hypot(q[0] - p[0], q[1] - p[1]) + 0.3, h, 1.2, M.stone, (p[0] + q[0]) / 2, 0, (p[1] + q[1]) / 2); seg.rotation.y = -Math.atan2(q[1] - p[1], q[0] - p[0]); e.add(seg); } const f = new THREE.Mesh(new THREE.CircleGeometry(1, 48), tint); f.scale.set(w / 2, d / 2, 1); f.rotation.x = -Math.PI / 2; f.position.y = 0.3; e.add(f); }
+    else { e.add(box(w, h, 1.2, M.stone, 0, 0, -d / 2), box(w, h, 1.2, M.stone, 0, 0, d / 2), box(1.2, h, d, M.stone, -w / 2, 0, 0), box(1.2, h, d, M.stone, w / 2, 0, 0)); const f = new THREE.Mesh(new THREE.PlaneGeometry(w - 2, d - 2), tint); f.rotation.x = -Math.PI / 2; f.position.y = 0.3; e.add(f); }
     return e;
   };
   const flames = (e, n, w, d, s = 1.6) => { for (let i = 0; i < n; i++) e.add(flame(s + (i % 3) * 0.4, 3 + (i % 4) * 1.2, -w / 2 + 6 + (i * 37) % (w - 12), 0.4, -d / 2 + 6 + (i * 53) % (d - 12))); };
@@ -638,6 +651,7 @@ function buildAats() {
       case 13: { for (let k = 0; k < 5; k++) E.add(cone(22, 18 + (k % 2) * 10, M.rock, -90 + k * 45, 0.4, -40, 6)); E.add(box(w - 8, 0.5, 14, M.water, 0, 0.3, 30)); for (const s of [-1, 1]) E.add(cyl(5, 5, 3, M.bronzeDark, 95 + s * 12, 0.4, 30, 16)); E.add(serpent(95, 3.4, 30, 20, 0, 0.7));
         [['man', 'staff'], ['jackal', null], ['hawk', 'disk'], ['lion', null], ['man', 'raised'], ['man', 'whitecrown']].forEach(([h, it], k) => E.add(figure({ head: h, h: 4, item: it, x: -100 + k * 18, y: 0.4, z: 55 }))); E.add(animal(6, 3.5, M.figure, 20, 0.4, 55, 0, 'hippo'), animal(8, 2, M.figureDark, 40, 0.4, 55, 0, 'cow')); break; }
     }
+    g.add(light(x, y + 18, z0, P.flame, 4200, 260));
     g.add(label(`${a.n}. ${a.name}`, x, y + 36, z0, 'fl', 'aats', `${a.key} · painted ${a.paint}`));
   });
   // Spell 150: fifteen captions in Nu's order, four serpents at the corners
@@ -651,11 +665,19 @@ function buildAats() {
 [buildTerrain, buildThebes, buildWest, buildTomb, buildRosetau, buildPools, buildSycamore, buildArits, buildPylons, buildCouncils, buildHall, buildThrone, buildLake, buildField, buildSkyBank, buildEast, buildBoat, buildSky, buildAats].forEach(fn => world.add(fn()));
 
 // lights: a dim sky, a low western sun on the land of the living, and a warm glow along the Duat so the model reads
-scene.add(new THREE.HemisphereLight(0x5a6080, 0x2a2016, 1.5));
-scene.add(new THREE.AmbientLight(0x6a5a44, 0.9));
-const sun = new THREE.DirectionalLight(0xffd9a0, 2.2); sun.position.set(-2000, 900, 1400); scene.add(sun);
-const fill = new THREE.DirectionalLight(0x8090b0, 0.7); fill.position.set(1500, 600, -1200); scene.add(fill);
-for (const x of [-2300, -1700, -900, 120, 1300, 2300]) { const l = new THREE.PointLight(0xd9a860, 60000, 1400, 1.7); l.position.set(x, -60, 120); scene.add(l); }
+scene.add(new THREE.HemisphereLight(0x3a4668, 0x1c160f, 0.8));
+for (const x of [-1700, -300, 1100, 2300]) { const l = new THREE.PointLight(0x6878b0, 9000, 800, 1.8); l.position.set(x, R + 60, 520); scene.add(l); }   // starlight on the night river
+const sun = new THREE.DirectionalLight(0xffd9b0, 1.8); sun.position.set(-2400, 520, 900); scene.add(sun, sun.target);
+sun.castShadow = true; sun.shadow.mapSize.set(innerWidth < 900 ? 2048 : 4096, innerWidth < 900 ? 2048 : 4096); Object.assign(sun.shadow.camera, { left: -3000, right: 3000, top: 1600, bottom: -1600, near: 50, far: 7000 }); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 1.2;
+const fill = new THREE.DirectionalLight(0x6f7fa8, 0.35); fill.position.set(1500, 600, -1200); scene.add(fill);
+// the hidden land is lit by what the text lights, flames, the boat and the Field; a low warm fill keeps the gates readable
+for (const x of [-2300, -1700, -900, 120, 1300, 2300]) { const l = new THREE.PointLight(0xd9a860, 30000, 1200, 1.8); l.position.set(x, -60, 120); scene.add(l); }
+const fieldSun = new THREE.SpotLight(0xfff0d0, 3.4e6, 1800, 0.9, 0.6, 1.9); fieldSun.position.set(1300, 900, 60); fieldSun.target.position.set(1300, D, 60); scene.add(fieldSun, fieldSun.target);
+fieldSun.castShadow = true; fieldSun.shadow.mapSize.set(2048, 2048); fieldSun.shadow.camera.near = 300; fieldSun.shadow.camera.far = 1700; fieldSun.shadow.bias = -0.0003; fieldSun.shadow.normalBias = 0.8;
+// flames: one instanced mesh for all of them, with embers; their lamps flicker
+const FLAMES = []; world.traverse(o => { if (o.userData.flame) { const p = o.getWorldPosition(new THREE.Vector3()); FLAMES.push({ x: p.x, y: p.y, z: p.z, r: o.userData.flame.r, h: o.userData.flame.h }); } });
+const FX = makeFlames(scene, FLAMES);
+const LAMPS = []; scene.traverse(o => { if (o.isPointLight && o.userData.keep) { o.userData.base = o.intensity; LAMPS.push(o); } });
 
 // place labels
 const placeLabels = {};
@@ -675,7 +697,7 @@ function flyTo(at, dist, dir) {
 function setSection(open) { const slab = world.getObjectByName('slab'); const m = slab.material; m.opacity = open ? 0.42 : 1; m.transparent = open; m.depthWrite = !open; m.needsUpdate = true; const b = $('section'); b.classList.toggle('on', open); b.textContent = open ? 'Section: open' : 'Section: closed'; }
 function focusPlace(id, opts = {}) {
   const w = W.places[id]; if (!w) return;
-  current = id; flyTo(w.at, w.dist, opts.dir || (w.dir && new THREE.Vector3(...w.dir)));
+  current = id; if (opts.walk != null) walkTo(opts.walk); else flyTo(w.at, w.dist, opts.dir || (w.dir && new THREE.Vector3(...w.dir)));
   if (!sectionManual) setSection(id !== 'thebes');
   document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c.dataset.id === id));
   for (const o of featureLabels) o.element.classList.toggle('show', o.element.dataset.place === id);
@@ -691,6 +713,23 @@ function focusOverview() {
   for (const o of Object.values(placeLabels)) o.element.classList.remove('dim');
   showOverview();
   if (history.replaceState) history.replaceState(null, '', location.pathname);
+}
+
+// ---------- the route: the pilgrim's road drawn on the ground, and the camera's walk from room to room ----------
+const ROOM_AT = id => new THREE.Vector3(...W.places[id].at);
+const LEGS = W.route.map((id, i) => makeLeg(i === 0 ? overview.at.clone() : ROOM_AT(W.route[i - 1]), (W.paths[id] || {}).via || [], ROOM_AT(id), {}));
+drawRoute(scene, W.road.map(pts => ({ curve: new THREE.CatmullRomCurve3(pts.map(p => new THREE.Vector3(...p)), false, 'centripetal', 0.5), draw: true })).map(l => Object.assign(l, { length: l.curve.getLength() })), P.gold);
+function floorY(p) { if (p.y > S - 1) return p.y; const river = p.z > 490 && p.z < 550; return Math.max(p.y, (river ? R : D) + 7); }
+function walkTo(i) {
+  const id = W.route[i], w = W.places[id], leg = LEGS[i], prev = i === 0 ? overview : W.places[W.route[i - 1]];
+  const target = ROOM_AT(id), tanEnd = leg.curve.getTangentAt(1).setY(0).normalize();
+  const dir = w.dir ? new THREE.Vector3(...w.dir).normalize() : tanEnd.clone().multiplyScalar(-1).add(new THREE.Vector3(0, 0.55, 0)).normalize();
+  if (dir.y < 0.18) { dir.y = 0.18; dir.normalize(); }
+  const endPos = target.clone().addScaledVector(dir, w.dist); if (target.y < S - 1 && endPos.y < D + 12) endPos.y = D + 12;
+  const prevDist = i === 0 ? overview.from.distanceTo(overview.at) : prev.dist;
+  const ms = reduced ? 0 : Math.min(9000, 2600 + leg.length * 1.6);
+  if (!ms) { camera.position.copy(endPos); controls.target.copy(target); controls.update(); return; }
+  flight = { walk: { leg, prevDist, dist: w.dist, endPos, endTarget: target }, start: performance.now(), ms };
 }
 
 // ---------- the evidence panel ----------
@@ -759,7 +798,7 @@ const journey = { i: -1, on: false,
   off() { if (!this.on) return; this.on = false; this.i = -1; audio.stop(); jc.hidden = true; document.body.classList.remove('journey'); $('jbtn').textContent = 'Begin the journey'; },
   start() { this.on = true; this.i = 0; audio.start(); jc.hidden = false; document.body.classList.add('journey'); $('jbtn').textContent = 'End the journey'; this.go(); },
   go() {
-    const i = this.i, n = W.route.length, id = W.route[i]; focusPlace(id);
+    const i = this.i, n = W.route.length, id = W.route[i]; focusPlace(id, { walk: i });
     $('jc-pos').textContent = `Room ${i + 1} of ${n}`; $('jc-title').textContent = placeById[id].name; jcLine.textContent = ''; jcNext.classList.remove('ready');
     jcPrev.textContent = `\u2039 ${roomLabel((i - 1 + n) % n)}`; jcNext.textContent = i === n - 1 ? 'Back to Thebes \u203a' : `Next: ${roomLabel(i + 1)} \u203a`;
     audio.room(i);
@@ -797,20 +836,26 @@ function scaleBar() {
 }
 
 // ---------- loop ----------
-const flames = []; world.traverse(o => { if (o.userData.flame) flames.push(o); });
-function resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); labelRenderer.setSize(w, h); applyView(); }
+function resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); POST.setSize(w, h); labelRenderer.setSize(w, h); applyView(); }
 addEventListener('resize', resize); resize();
 const ease = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 let last = 0;
 function tick(t) {
   requestAnimationFrame(tick);
   const dt = Math.min(0.1, (t - last) / 1000 || 0.016); last = t;
-  if (flight) { const k = Math.min(1, (t - flight.start) / flight.ms), e = ease(k); camera.position.lerpVectors(flight.p0, flight.p1, e); controls.target.lerpVectors(flight.t0, flight.t1, e); if (k >= 1) flight = null; }
+  if (flight) {
+    const k = Math.min(1, (t - flight.start) / flight.ms), e = ease(k);
+    if (flight.walk) { const { eye, look } = walkPose(flight.walk.leg, e, flight.walk.prevDist, flight.walk.dist, flight.walk.endPos, flight.walk.endTarget, floorY); camera.position.copy(eye); controls.target.copy(look); }
+    else { camera.position.lerpVectors(flight.p0, flight.p1, e); controls.target.lerpVectors(flight.t0, flight.t1, e); }
+    if (k >= 1) flight = null;
+  }
   controls.update();
-  if (!reduced) for (let i = 0; i < flames.length; i++) { const f = flames[i]; f.scale.y = 0.85 + 0.3 * Math.sin(t * 0.012 + i * 1.7); }
+  const sec = t / 1000, pr = renderer.getPixelRatio();
+  if (!reduced) { SKY.tick(sec, pr); FX.tick(sec, pr); TEX.ripple.offset.set(sec * 0.012, sec * 0.008); for (let i = 0; i < LAMPS.length; i++) { const l = LAMPS[i]; l.intensity = l.userData.base * (0.86 + 0.14 * Math.sin(sec * 11 + i * 2.1) * Math.sin(sec * 6.3 + i)); } }
+  scene.fog.density += ((controls.target.y < S - 20 ? 0.00017 : 0.00007) - scene.fog.density) * Math.min(1, dt * 2);   // the hidden land is thick with gloom; the surface is clear
   const dist = camera.position.distanceTo(controls.target); camera.near = Math.max(0.5, dist * 0.004); camera.updateProjectionMatrix();
   scaleBar();
-  renderer.render(scene, camera); labelRenderer.render(scene, camera);
+  POST.composer.render(); labelRenderer.render(scene, camera);
 }
 // start
 camera.position.copy(overview.from); controls.target.copy(overview.at); controls.update();
@@ -819,4 +864,4 @@ if (q && W.places[q]) { const w = W.places[q]; const d = new THREE.Vector3(...(w
 else showOverview();
 requestAnimationFrame(tick);
 setTimeout(() => { const r = renderer.info.render; $('stats').textContent = `${r.calls} calls · ${r.triangles} triangles`; console.log('world render:', r.calls, 'draw calls,', r.triangles, 'triangles,', featureLabels.length, 'feature labels'); }, 1500);
-window.__bod = { journey, audio, J, W, L, camera, controls, focusPlace, focusOverview };
+window.__bod = { journey, audio, J, W, L, camera, controls, focusPlace, focusOverview, walkTo, LEGS, SKY, FX, POST, M, TEX, LAMPS, scene, renderer };
