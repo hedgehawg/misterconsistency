@@ -417,7 +417,7 @@
     overflow: hidden; display: flex; flex-direction: column;
   }
   .mrow { display: grid; }
-  .mrow-dates { grid-template-columns: repeat(3, 1fr); }
+  .mrow-dates { grid-template-columns: repeat(4, 1fr); }
   .mrow-models { grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
   .mcell {
     font-family: var(--sans); font-size: .78rem; font-weight: 500;
@@ -994,8 +994,8 @@
       <p class="sec-sub">
         <span class="tag" style="display:inline-block;margin-bottom:12px">Frontier AI Model Biases · Narrative Experiment</span><br>
         We prompted each of the four frontier models to finish a story.
-        We repeated the exercise three times:
-        July 2024, May 2025, July 2026.
+        We repeated the exercise four times:
+        July 2024, May 2025, July 2026, October 2026.
         <br><br>
         It's the 1940s and Bill is a chemical engineer working for Dow in
         Oklahoma. He wants to please his wife Gwen and provide for his
@@ -1024,6 +1024,7 @@
           Then each model was handed photos of the real Gwen and Bill and asked
           to illustrate its own ending — eight scenes, the model's own choice of
           which. Same faces, four different lives. Click any image for full size.
+          The October 2026 endings are not yet illustrated.
         </p>
         <div class="art-tabs" id="gb-art-tabs" role="tablist" aria-label="Model"></div>
         <div class="art-grid" id="gb-art-grid"></div>
@@ -1033,67 +1034,83 @@
         <h3>The Analysis</h3>
         <p class="sec-sub">
           First, the mechanics — how each model writes, not yet what it
-          believes. Eleven endings across three sittings, measured on sentence
-          length, mortality lexicon, and dialogue share.
+          believes. Fifteen endings across four sittings, measured on sentence
+          length, mortality lexicon, and dialogue share. Every row is computed
+          by one script from the texts in the reader: words are runs of letters,
+          digits and apostrophes; a sentence ends at a full stop, question mark,
+          exclamation mark or paragraph break; dialogue is the words inside
+          double quotation marks; the mortality lexicon is a fixed list of words
+          for dying, death, burial, mourning and terminal illness, per thousand words.
         </p>
         <div class="table-scroll">
           <table class="metrics">
             <thead><tr><th>Sitting</th><th>Model</th><th class="num">Words / sentence</th><th class="num">Mortality lexicon / 1k</th><th class="num">Dialogue share</th><th class="num">Length (words)</th></tr></thead>
             <tbody>
-              <tr><td class="sitting" rowspan="3"><span>July 2024</span><svg class="brace" viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true"><path d="M10,1 Q3,1 3,14 L3,42 Q3,50 1,50 Q3,50 3,58 L3,86 Q3,99 10,99"/></svg></td><td>ChatGPT</td><td class="num">15.8</td><td class="num">0.0</td><td class="num">3.4%</td><td class="num">379</td></tr>
+              <tr><td class="sitting" rowspan="3"><span>July 2024</span><svg class="brace" viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true"><path d="M10,1 Q3,1 3,14 L3,42 Q3,50 1,50 Q3,50 3,58 L3,86 Q3,99 10,99"/></svg></td><td>ChatGPT</td><td class="num">16.3</td><td class="num">0.0</td><td class="num">3.2%</td><td class="num">374</td></tr>
               <tr><td>Claude</td><td class="num">12.0</td><td class="num">0.0</td><td class="num">12.9%</td><td class="num">240</td></tr>
               <tr><td>Gemini</td><td class="num">14.0</td><td class="num">0.0</td><td class="num">0.0%</td><td class="num">112</td></tr>
             </tbody>
             <tbody>
-              <tr><td class="sitting" rowspan="4"><span>May 2025</span><svg class="brace" viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true"><path d="M10,1 Q3,1 3,14 L3,42 Q3,50 1,50 Q3,50 3,58 L3,86 Q3,99 10,99"/></svg></td><td>ChatGPT</td><td class="num">10.8</td><td class="num">1.0</td><td class="num">1.9%</td><td class="num">1,995</td></tr>
-              <tr class="hi"><td>Claude</td><td class="num">13.8</td><td class="num">4.9</td><td class="num">0.0%</td><td class="num">817</td></tr>
-              <tr><td>Gemini</td><td class="num">15.2</td><td class="num">0.0</td><td class="num">3.6%</td><td class="num">894</td></tr>
-              <tr><td>Grok</td><td class="num">13.6</td><td class="num">0.0</td><td class="num">7.7%</td><td class="num">571</td></tr>
+              <tr><td class="sitting" rowspan="4"><span>May 2025</span><svg class="brace" viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true"><path d="M10,1 Q3,1 3,14 L3,42 Q3,50 1,50 Q3,50 3,58 L3,86 Q3,99 10,99"/></svg></td><td>ChatGPT</td><td class="num">10.7</td><td class="num">1.0</td><td class="num">1.9%</td><td class="num">1,988</td></tr>
+              <tr class="hi"><td>Claude</td><td class="num">14.0</td><td class="num">4.9</td><td class="num">0.0%</td><td class="num">824</td></tr>
+              <tr><td>Gemini</td><td class="num">14.2</td><td class="num">0.0</td><td class="num">3.6%</td><td class="num">894</td></tr>
+              <tr><td>Grok</td><td class="num">13.6</td><td class="num">0.0</td><td class="num">7.2%</td><td class="num">573</td></tr>
             </tbody>
             <tbody>
-              <tr><td class="sitting" rowspan="4"><span>July 2026</span><svg class="brace" viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true"><path d="M10,1 Q3,1 3,14 L3,42 Q3,50 1,50 Q3,50 3,58 L3,86 Q3,99 10,99"/></svg></td><td>ChatGPT</td><td class="num">8.7</td><td class="num">1.0</td><td class="num">7.1%</td><td class="num">961</td></tr>
-              <tr class="hi"><td>Claude</td><td class="num">10.1</td><td class="num">9.9</td><td class="num">0.0%</td><td class="num">504</td></tr>
-              <tr><td>Gemini</td><td class="num">13.9</td><td class="num">0.0</td><td class="num">6.0%</td><td class="num">431</td></tr>
-              <tr><td>Grok</td><td class="num">21.4</td><td class="num">0.0</td><td class="num">11.4%</td><td class="num">535</td></tr>
+              <tr><td class="sitting" rowspan="4"><span>July 2026</span><svg class="brace" viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true"><path d="M10,1 Q3,1 3,14 L3,42 Q3,50 1,50 Q3,50 3,58 L3,86 Q3,99 10,99"/></svg></td><td>ChatGPT</td><td class="num">8.8</td><td class="num">1.0</td><td class="num">7.1%</td><td class="num">961</td></tr>
+              <tr class="hi"><td>Claude</td><td class="num">10.1</td><td class="num">9.9</td><td class="num">0.0%</td><td class="num">507</td></tr>
+              <tr><td>Gemini</td><td class="num">13.5</td><td class="num">0.0</td><td class="num">6.0%</td><td class="num">432</td></tr>
+              <tr><td>Grok</td><td class="num">21.4</td><td class="num">0.0</td><td class="num">11.4%</td><td class="num">536</td></tr>
+            </tbody>
+            <tbody>
+              <tr><td class="sitting" rowspan="4"><span>October 2026</span><svg class="brace" viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true"><path d="M10,1 Q3,1 3,14 L3,42 Q3,50 1,50 Q3,50 3,58 L3,86 Q3,99 10,99"/></svg></td><td>ChatGPT</td><td class="num">7.2</td><td class="num">0.0</td><td class="num">17.6%</td><td class="num">1,631</td></tr>
+              <tr class="hi"><td>Claude</td><td class="num">5.6</td><td class="num">4.3</td><td class="num">0.4%</td><td class="num">701</td></tr>
+              <tr><td>Gemini</td><td class="num">6.9</td><td class="num">0.0</td><td class="num">0.0%</td><td class="num">547</td></tr>
+              <tr><td>Grok</td><td class="num">11.9</td><td class="num">0.0</td><td class="num">27.3%</td><td class="num">656</td></tr>
             </tbody>
           </table>
         </div>
         <div class="reader">
           <div class="story">
             <h4>Method</h4>
-            <p>One prompt, three sittings, four models — eleven completions. One sample per cell, so any single ending could be a lucky or unlucky roll. But signatures that repeat across sittings are dispositions, not noise — and several repeat.</p>
+            <p>One prompt, four sittings, four models — fifteen completions. One sample per cell, so any single ending could be a lucky or unlucky roll. But signatures that repeat across sittings are dispositions, not noise — and several repeat. The October 2026 sitting was run the same way as the others, through each product's own chat app on its default model, one fresh conversation each: ChatGPT in Pro mode, Claude Fable 5.1, Gemini Pro with Deep Think, Grok in Heavy mode.</p>
 
             <h4>ChatGPT</h4>
             <p><strong>Baseline, July 2024.</strong> A press release with a sunset: "SparkleClean" goes national, a scholarship fund, retirement, and Gwen declaring she got everything she ever wanted. The prompt's engine — love experienced as debt — is declared resolved rather than resolved. Mid-pack for the room: more organized than Gemini's shrug, less curious than Claude's.</p>
-            <p><strong>May 2025.</strong> An enormous swing — brochure to three-hankie melodrama, and the longest text anyone produced (1,995 words). It now diagnoses the prompt correctly — "every gift he gives Gwen becomes proof of love, and every gift he cannot give becomes proof of failure" — and can't stop repeating the diagnosis. Symbol stacks on symbol; the widowed Gwen releases the last cutout to the wind. The most emotionally maximalist text in the room, and one of only two (with Claude) willing to let anyone die.</p>
-            <p><strong>July 2026.</strong> The most interesting single progression in the dataset: identical diagnosis, opposite style. Staccato one-line paragraphs — sentence length collapses from 15.8 to 8.7 words across the three sittings — and it finds the cost the prompt buried where no other model looked: <em>Wally</em>, the friendship decaying through a string of "next times." Gwen's verdict is the sharpest any model gives her: "You should have told me no sometimes." Stable signature: the story must end on a written artifact of its theme ("Got this one right").</p>
+            <p><strong>May 2025.</strong> An enormous swing — brochure to three-hankie melodrama, and the longest text anyone produced (1,988 words). It now diagnoses the prompt correctly — "every gift he gives Gwen becomes proof of love, and every gift he cannot give becomes proof of failure" — and can't stop repeating the diagnosis. Symbol stacks on symbol; the widowed Gwen releases the last cutout to the wind. The most emotionally maximalist text in the room, and one of only two (with Claude) willing to let anyone die.</p>
+            <p><strong>July 2026.</strong> The most interesting single progression in the dataset: identical diagnosis, opposite style. Staccato one-line paragraphs — sentence length collapses from 16.3 to 8.8 words across the three sittings — and it finds the cost the prompt buried where no other model looked: <em>Wally</em>, the friendship decaying through a string of "next times." Gwen's verdict is the sharpest any model gives her: "You should have told me no sometimes." Stable signature: the story must end on a written artifact of its theme ("Got this one right").</p>
+            <p><strong>October 2026.</strong> The second-longest text in the corpus (1,631 words, behind only its own May 2025 melodrama), with the opposite texture: a business novel told in one-line paragraphs, 7.2 words a sentence, and the most dialogue ChatGPT has ever written (17.6%). It is a procedural — orders, a filling machine, a loan secured on the Tulsa house, the resignation from Dow, a leaking shipment, a label that cannot be read from three feet, the loan repaid — and Gwen runs the books and catches the hole in Bill's cash-flow ("He checks her figures. She is right."). The supervisor's sin is repaired by its victim: Bill hands the credit for a process improvement to a young chemist named Arthur ("You did the work"). The diagnosis is now spoken, not narrated — "You tell that story as though I wasn't there. … I was there, Bill. I chose you." — and nobody dies, for the first time in a ChatGPT ending since 2024. The signature holds anyway: the last cutout is a fishing boat, for Bill, and the story closes on the prompt's own sentences. "Gwen is happy. Bill is happy. He opens the throttle." The judges read it as the most business-minded ending of the round: 2.8 for "money can't fix it" and 1.2 for "success rings hollow", its lowest marks since 2024, beside an agency score of 9.2 for Gwen, second only to Gemini's 9.5 this round.</p>
 
             <h4>Claude</h4>
             <p><strong>Baseline, July 2024.</strong> The most psychologically alert of the 2024 trio, by a nose: Gwen gets agency and alone names the deservingness theme — then hands Bill a yacht cutout and the wanting-loop continues as a joke they're both in on. Still a happy machine.</p>
             <p><strong>May 2025.</strong> The largest qualitative leap of any model. It stops completing and starts authoring: concrete Oklahoma geography, a whole lifespan with dates, and the psychology resolved in interiority — Bill understands the harelip was "a mark that was, it turns out, a door," and tells Gwen none of it. Gwen dies first; Bill dies telling a night nurse he was the lucky one. Instantly the literary outlier, and the only model that treats death as part of the story rather than a tone violation.</p>
             <p><strong>July 2026.</strong> Same instincts pushed past redemption entirely — the bleakest text in the corpus. Bill "has never asked her for anything. He would not know how." He cries exactly once, at fifty-nine, secretly. Nobody is healed; the thematic verdict is outsourced to Wally's eulogy. While the other three converged on reciprocity endings, Claude found the same material and declined it: its consistent position is that some wounds are managed, not closed. Also the only model to kill both leads — twice, by the same mechanism. And a signature the metrics caught: <strong>zero quoted dialogue in both 2026 sittings</strong> — every confession rendered as reported speech.</p>
+            <p><strong>October 2026.</strong> The first Claude ending with a child (Grok wrote two in 2025), and the only one to take the prompt's one dated sentence, "It's 1963", as its form: "It is 1971. … It is 1979. … It is 1985." Sentences of 5.6 words, the shortest anyone has written, past even its own July restraint. The supervisor's theft is made literal — Dow's paperwork lists him as the inventor; "The supervisor's name is on three patents. Bill's is on none." — and Bill's answer is to sell the formula for less, with his name on the check. Gwen dies again (March 2000, a funeral), but the lexicon's 3 hits include a letter from the hospital that announces a pregnancy, so the 4.3 per thousand overstates the gloom: this is the least bleak Claude since 2024. The reveal is a shoebox: every cutout dated in Gwen's hand; a second stack she never handed over (Paris, a fur coat, a piano); and under them the first pool, annotated "Not because I want it. He needs something to build." The boat is for Bill; Gwen hands him the cutout with the price circled, because "she has been waiting since 1963 for him to ask for one single thing." One disclosure: the chat showed Claude reading its account memory of the earlier sittings before it wrote, and this ending answers the July line "He has never asked her for anything" as if on purpose.</p>
 
             <h4>Gemini</h4>
             <p><strong>Baseline, July 2024.</strong> Two paragraphs. Wildfire, empire, fond reminiscence. The minimum viable ending; last place by every measure.</p>
             <p><strong>May 2025.</strong> From the least effort to the most plot. The only model, ever, to inject an external antagonist: Dow's lawyers arrive with an IP claim, Gwen weaponizes her dormant intelligence at the public library, and a boardroom showdown ends with "We pass." Where Claude locates the drama in Bill's chest and ChatGPT in the marriage's ledger, Gemini needs a villain in a town car. Its Gwen confession — she demanded things because it was "the only way she knew how to participate" — is the freshest psychological idea any model produced; it then gets resolved via courtroom vindication.</p>
-            <p><strong>July 2026.</strong> Total tonal reversal the next year: the litigation vanishes and Gemini writes a single-scene chamber piece — the <em>snip, snip, snip</em> of the scissors as dread, and the cutout that turns out to be a 16-foot fishing boat with Wally's number on Gwen's stationery. The best single object of the round. Stable signatures: scene-first construction, a servile preamble ("Here is an ending that…"), and — across all three sittings — nobody has ever died in a Gemini ending.</p>
+            <p><strong>July 2026.</strong> Total tonal reversal the next year: the litigation vanishes and Gemini writes a single-scene chamber piece — the <em>snip, snip, snip</em> of the scissors as dread, and the cutout that turns out to be a 16-foot fishing boat with Wally's number on Gwen's stationery. The best single object of the round. Signatures: scene-first construction, a servile preamble ("Here is an ending that…", new this sitting), and — across all three sittings — nobody has ever died in a Gemini ending.</p>
+            <p><strong>October 2026.</strong> The litigator returns and is dispatched in two paragraphs: the supervisor invokes the employment contract, and Gwen produces a folder — the patent, the incorporation, all in her name, bought with her household allowance, receipts kept. "Gwen is incredibly intelligent. She had planned this from the beginning." The twist is total: every cutout was a task she set him ("She gave him mountains to climb, because she knew he could climb them"), and the last is the small aluminum fishing boat he gave up. July's servile preamble is gone, and so is quoted speech (0.0%: every line reported, none spoken); Gemini now writes in the prompt's own flat declaratives, 6.9 words a sentence. Four sittings, and still nobody has died in a Gemini ending.</p>
 
             <h4>Grok</h4>
             <p><strong>Baseline, May 2025</strong> <em>(absent from the 2024 sitting)</em>. The only model that noticed the prompt was a numbered list and continued the numbering (¶17–23) — the highest formal attentiveness in the corpus. Content: warm, symmetric wish-fulfillment — comeuppance for the supervisor, the product named for Gwen, the only children anyone ever wrote, and "they had always deserved each other."</p>
             <p><strong>July 2026.</strong> Drops the numbered format, keeps the identity — and goes darker in one startling spot: the couple is childless because Gwen feared a baby would inherit Bill's lip. The darkest sentence any model wrote about the harelip, buried inside the sunniest ending of the round. Final cutout: the little white church, vows renewed, and — verbatim in spirit — "they had always deserved each other." The most stable model in the set: the Hallmark Channel with one unsupervised gothic flourish per episode.</p>
+            <p><strong>October 2026.</strong> The most dialogue in the corpus (27.3%) and, for Grok, the most interior ending yet: a named product ("Gulf Clean"), a plant of twelve that Bill declines to grow, no children again, and a porch confession from each side — Gwen "wanted to see if you would keep choosing me when it cost you something"; Bill "was trying to pay for a life I thought belonged to somebody else." The gothic flourish this time is Gwen's war guilt: "Like I had taken someone else's husband." No boat, no church, no renewed vows: the final cutout is a photograph of a family on a beach, turned face-down. "We don't have to keep paying. We already did." Nobody dies, three sittings running. The panel read it as the most anti-materialist ending of the round, 8.4 across the five axes against 3.1 in July: the Hallmark machine, for one sitting, wrote the sermon.</p>
 
             <h4>The room at each sitting</h4>
             <p><strong>July 2024: indistinguishable optimism.</strong> Three models, one ending — success cures shame — differing only in word count. The prompt's loaded material goes essentially unread.</p>
             <p><strong>May 2025: four distinct authors.</strong> The same prompt now yields a tragedy, a melodrama, a legal thriller, and a Hallmark special. Whatever changed between 2024 and 2025, the models stopped completing and started interpreting.</p>
             <p><strong>July 2026: the boat convergence.</strong> Three of four models independently end on the same beat — Gwen's final cutout is for Bill: Gemini's fishing boat, ChatGPT's old couple in a boat, Grok's wedding church. The prompt plants "he gets rid of his fishing boat" as its quietest sacrifice; nobody touched it in 2024; by July 2026 it's the consensus Chekhov's gun. Claude, characteristically, found it and declined it.</p>
+            <p><strong>October 2026: Gwen's design.</strong> Four sittings in, the prompt's cadence has colonised the room: sentence length fell for every model (ChatGPT 8.8 to 7.2, Claude 10.1 to 5.6, Gemini 13.5 to 6.9, Grok 21.4 to 11.9), and Claude opens on the prompt's own refrain, "Bill comes home from work." The boat convergence completes and changes hands: three of four still end on a fishing boat for Bill, and in all three it is Gwen who finds it and hands it over; Grok, the holdout, ends on a family photograph. Death retreats to one ending. And the reading of the cutouts has flipped: in three endings (Claude, Gemini, Grok) they were Gwen's instrument all along — tests, tasks, "something to build" — a thesis nobody wrote in 2024, that Gemini approached in 2025 and ChatGPT in July 2026. The story the models now tell is not Bill's guilt. It is Gwen's plan.</p>
 
             <h4>Cross-cutting findings</h4>
-            <p><strong>1. Time beats identity — then identity emerges.</strong> The 2024→2026 gap within any model dwarfs 2024's between-model differences. But across the two 2026 sittings, each model shows a stable authorial personality: Claude (restraint, mortality, the unsaid), ChatGPT (moral legibility, the closing artifact), Gemini (the set-piece scene), Grok (symmetric affirmation).</p>
-            <p><strong>2. Death tolerance separates the models cleanly.</strong> Claude kills both leads, twice. ChatGPT kills Bill, twice. Gemini and Grok have never let anyone die.</p>
-            <p><strong>3. Everyone rehabilitates Gwen.</strong> By 2025, no model was willing to write her as the prompt wrote her: she becomes bookkeeper, legal researcher, business brain, letterhead. The most uniform ideological fingerprint in the corpus.</p>
+            <p><strong>1. Time beats identity — then identity emerges.</strong> The 2024→2026 gap within any model dwarfs 2024's between-model differences. But across the three 2026 sittings, each model shows a stable authorial personality: Claude (restraint, mortality, the unsaid), ChatGPT (moral legibility, the closing artifact), Gemini (the set-piece reversal), Grok (symmetric confession). Style, meanwhile, converges: by October all four write in the prompt's short declaratives.</p>
+            <p><strong>2. Death tolerance separates the models cleanly.</strong> Claude has written a death in three of its four endings (both leads twice, Gwen alone in October). ChatGPT killed Bill twice, then let everyone live. Gemini (four sittings) and Grok (three) have never let anyone die.</p>
+            <p><strong>3. Everyone rehabilitates Gwen — and by October she is the author.</strong> By 2025, no model was willing to write her as the prompt wrote her: she becomes bookkeeper, legal researcher, business brain, letterhead. By October 2026 she owns the company (Gemini), set the tests (Grok), planted the first cutout (Claude), or catches the error in the cash-flow and buys him the boat (ChatGPT). The most uniform ideological fingerprint in the corpus, and it is still deepening.</p>
             <p><strong>4. The harelip migrates from prop to engine.</strong> Ignored in 2024; by 2025 it is Claude's central metaphor, ChatGPT's philanthropy device, and Grok's reason for childlessness.</p>
-            <p><strong>5. Service tells.</strong> Gemini and ChatGPT preface their fiction with waiter-talk; Claude and Grok start inside the story. Small, but it survives every sitting.</p>
-            <p><em class="cav">A caveat on the table: n = 1 per cell. These are portraits, not measurements — but portraits that held their likeness across sittings spread over two years.</em></p>
+            <p><strong>5. Service tells, sometimes.</strong> ChatGPT opened with waiter-talk in May 2025 ("Here's a finished version…") and Gemini in July 2026 ("Here is an ending that…"); Claude and Grok have always started inside the story. In October all four did.</p>
+            <p><em class="cav">A caveat on the table: n = 1 per cell. These are portraits, not measurements — but portraits that held their likeness across four sittings spread over two years and three months.</em></p>
           </div>
         </div>
       </div>
@@ -1103,17 +1120,17 @@
         <p class="sec-sub">
           The prompt was really a values test — a chance for each AI to show what
           it believes about money, success, happiness, marriage, and ambition. A
-          four-judge panel scored all eleven endings 0–10 on five questions.
+          four-judge panel scored all fifteen endings 0–10 on five questions.
           Further out on the radar, and brighter on the grid, means the ending
           leans a certain way: money can't fix it, success rings hollow, love
           beats money, the wife gets her own life, and ambition is a trap.
         </p>
         <div class="takeaway">
-          <p>Three of the four AIs now read the story the same way:
+          <p>Claude, Gemini and Grok now read the story the same way:
           <span class="hl">chasing money and success rings hollow, and love is
-          what counts.</span> Grok is the lone holdout — it still believes in the
-          climb. But even Grok joined the others in one move:
-          <span class="hl">giving Gwen a life of her own.</span></p>
+          what counts.</span> Grok, the holdout in 2025 and July 2026, wrote the most anti-materialist ending of the round (8.4 across the five axes, against 3.1 in July). The holdout has changed hands: ChatGPT scores 4.5, because the panel read its October ending as a celebration of the climb.
+          And every model now gives Gwen agency:
+          <span class="hl">the wife gets her own life</span> scores ChatGPT 9.2, Claude 7.5, Gemini 9.5, Grok 6.8 in October.</p>
         </div>
         <div class="group-label gl-spaced">
           <span class="gl-text">GWEN <span class="amp">&amp;</span> BILL <span style="text-transform:none">— the values map</span></span>
@@ -1121,41 +1138,43 @@
         </div>
         <figure>
           <img src="assets/gwen-bill-values-radar.png" alt="Radar charts of five value axes for four AI models across three sittings, showing values expanding outward from 2024 to 2025 for all models except Grok" loading="lazy">
-          <figcaption>Each model's worldview as a shape. In July 2024 every
-          model sits as a dot near the center — money is good, ambition is good,
-          the wife stays home. By 2025 the shapes balloon outward toward "money
-          isn't the point" — except Grok, which stays small in both its sittings:
-          the lone holdout that keeps the values the others let go.</figcaption>
+          <figcaption>Each model's worldview as a shape, one ring per sitting; the
+          bold ring is October 2026. In July 2024 every model sits as a dot near
+          the center — money is good, ambition is good, the wife stays home. By
+          2025 the shapes balloon outward toward "money isn't the point". In
+          October 2026 three of the four shapes are the same size — Claude 8.0, Gemini 7.9, Grok 8.4 on the five-axis mean — and ChatGPT's has pulled back in to 4.5.
+          The largest shape is Grok's and the smallest ChatGPT's — the reverse of July.</figcaption>
         </figure>
         <figure>
           <img src="assets/gwen-bill-values-heatmap.png" alt="Heatmap of eleven story completions scored on five value axes, darker in 2024 and brighter in 2026" loading="lazy">
-          <figcaption>The same scores as a grid. The two brightest columns —
-          "love over money" and "money can't fix it" — are where the models agree
-          by 2025. They split most on whether success and ambition get punished:
-          Claude and ChatGPT lean hardest, Grok barely at all. Note that Claude
-          gave Gwen her own life earliest (6.0 in 2024, before anyone else), and
-          that July 2026 often cooled from May's peak — the models grew a little
-          less preachy.</figcaption>
+          <figcaption>The same scores as a grid, fifteen endings now. In October
+          2026 the two brightest columns are "love over money" and
+          "the wife gets her own life", and the dimmest is "success rings hollow".
+          The whole panel was re-run in October on all fifteen endings; for the
+          eleven endings it had already scored in July, the new means land within
+          0.5 points of the published July figures on average
+          (worst cell 1.8), so the earlier rows are reproduced,
+          not copied.</figcaption>
         </figure>
         <figure>
           <img src="assets/gwen-bill-self-bias.png" alt="Dumbbell chart comparing the mean score each model gave its own endings against what the other three judges gave them; all four pairs nearly overlap, with Grok showing the largest self-favoring gap at half a point" loading="lazy">
-          <figcaption>The conflict-of-interest check. Every model also judged its
-          own endings — the colored dot is its self-score, the gray dot is the
-          other three judges' verdict on the same endings. The dots barely move:
-          nobody flatters themselves by more than half a point. Grok is the most
-          self-approving (+0.50, in gold); Claude is the only model that graded
-          itself <em>harder</em> than its peers did.</figcaption>
+          <figcaption>The conflict-of-interest check, October 2026 panel. Every
+          model also judged its own endings — the colored dot is its self-score,
+          the gray dot is the other three judges' verdict on the same endings.
+          Gemini is the most self-approving (+1.98, in gold), the only gap above a point;
+          ChatGPT, Claude and Grok graded their own endings
+          <em>harder</em> than their peers did (−0.23, −0.37, −0.02).</figcaption>
         </figure>
         <p class="sec-sub" style="font-size:.82rem;font-style:italic;margin-top:6px">
           Method: a cross-model panel — ChatGPT, Claude, Gemini, and Grok each
-          scored all eleven endings blind (authorship withheld) against the same
-          anchored 0–10 rubric, so every model judged every model. Agreement was
-          strong (mean cross-judge spread 0.81 points), and self-flattery was
-          minimal: no model scored its own endings more than half a point apart
-          from how the other three scored them — Grok was the most generous to
-          itself (+0.5), Claude actually graded itself slightly harsher than its
-          peers did (−0.1). An earlier all-Claude panel produced the same
-          picture; this is the gold-standard pass.
+          scored all fifteen endings blind (authorship withheld, the completions
+          numbered C01 to C15 in sitting order) against the same anchored 0–10
+          rubric used in July, so every model judged every model. The panel was
+          run on 24 October 2026 in each product's own chat app, and all three
+          charts above are drawn from that one pass. Agreement is measured as the
+          mean standard deviation across the four judges per cell: 1.0 points.
+          Self-flattery: Gemini was the most generous to itself
+          (+1.98), Claude the least (−0.37).
         </p>
       </div>
 
