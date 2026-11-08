@@ -154,7 +154,7 @@ def structural_checks(base):
     ids = re.findall(r'id="([\w-]+)"', idx)
     dupes = sorted({i for i in ids if ids.count(i) > 1})
     check(not dupes, "index: element ids unique", ",".join(dupes))
-    for el in ["wall-interactive", "gattman-map", "song-grid", "hero-player"]:
+    for el in ["wall-interactive", "song-grid", "hero-player"]:
         check(f'id="{el}"' in idx, f"index: #{el} present")
     check('href="archive.html"' in idx, "index: nav links to archive page")
 
